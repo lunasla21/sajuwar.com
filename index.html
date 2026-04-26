@@ -68,8 +68,15 @@
       gap: 8px;
     }
 
-    .card {
-      margin-top: 16px;
+    .report-text {
+      white-space: pre-wrap;
+      line-height: 1.85;
+    }
+
+    .lock {
+      color: #f4dc8a;
+      font-weight: bold;
+      text-align: center;
     }
   </style>
 </head>
@@ -78,6 +85,7 @@
   <div class="app">
     <div class="hero">
       <h1>프리미엄 사주 리포트</h1>
+      <p>원국 · 지장간 · 신강신약 · 오행 세력 · 대운 흐름 · 프리미엄 해석</p>
     </div>
 
     <div class="form-card">
@@ -123,24 +131,30 @@
       const hourSelect = document.getElementById("hour");
       const minuteSelect = document.getElementById("minute");
 
+      yearSelect.innerHTML = `<option value="">출생연도</option>`;
+      monthSelect.innerHTML = `<option value="">월</option>`;
+      daySelect.innerHTML = `<option value="">일</option>`;
+      hourSelect.innerHTML = `<option value="">시</option>`;
+      minuteSelect.innerHTML = `<option value="">분</option>`;
+
       for (let y = 1950; y <= 2026; y++) {
-        yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+        yearSelect.innerHTML += `<option value="${y}">${y}년</option>`;
       }
 
       for (let m = 1; m <= 12; m++) {
-        monthSelect.innerHTML += `<option value="${pad(m)}">${m}</option>`;
+        monthSelect.innerHTML += `<option value="${pad(m)}">${m}월</option>`;
       }
 
       for (let d = 1; d <= 31; d++) {
-        daySelect.innerHTML += `<option value="${pad(d)}">${d}</option>`;
+        daySelect.innerHTML += `<option value="${pad(d)}">${d}일</option>`;
       }
 
       for (let h = 0; h <= 23; h++) {
-        hourSelect.innerHTML += `<option value="${pad(h)}">${h}</option>`;
+        hourSelect.innerHTML += `<option value="${pad(h)}">${h}시</option>`;
       }
 
       for (let m = 0; m < 60; m += 10) {
-        minuteSelect.innerHTML += `<option value="${pad(m)}">${m}</option>`;
+        minuteSelect.innerHTML += `<option value="${pad(m)}">${m}분</option>`;
       }
     }
 
@@ -148,12 +162,15 @@
 
     function unlock() {
       isPaid = true;
-      alert("결제 완료 테스트");
-      document.getElementById("result").innerHTML = lastFullResult;
+      alert("결제 완료 테스트: 전체 리포트가 열렸습니다.");
+
+      if (lastFullResult) {
+        document.getElementById("result").innerHTML = lastFullResult;
+      }
     }
 
     async function analyze() {
-      const name = document.getElementById("name").value;
+      const name = document.getElementById("name").value.trim();
       const year = document.getElementById("year").value;
       const month = document.getElementById("month").value;
       const day = document.getElementById("day").value;
@@ -163,43 +180,96 @@
 
       const resultBox = document.getElementById("result");
 
-      resultBox.innerHTML = "분석 중...";
+      if (!name || !year || !month || !day || !hour || !minute || !gender) {
+        resultBox.innerHTML = `<div class="card">입력 정보를 모두 선택해주세요.</div>`;
+        return;
+      }
+
+      resultBox.innerHTML = `<div class="card">리포트를 생성 중입니다...</div>`;
 
       try {
-        // 🔥 핵심 수정 (localhost 제거)
         const res = await fetch("/analyze", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            name,
+            name: name,
             birth: `${year}-${month}-${day}`,
             time: `${hour}:${minute}`,
-            gender
+            gender: gender
           })
         });
 
         const data = await res.json();
 
-        lastFullResult = data.result;
+        if (!res.ok) {
+          resultBox.innerHTML = `<div class="card">서버 오류: ${data.result || "응답 오류"}</div>`;
+          return;
+        }
 
-        const preview = data.result.slice(0, 300);
+        const report = data.result || "리포트 결과가 비어 있습니다.";
+        const preview = report.slice(0, 500);
 
-        resultBox.innerHTML = isPaid
-          ? `<div class="card">${data.result}</div>`
-          : `<div class="card">${preview}...<br><br>🔒 결제 후 전체보기 가능</div>`;
+        const pillarsHTML = data.pillars ? `
+          <div class="card">
+            <h3 class="section-title">1. 사주팔자 원국표</h3>
+            <p>년주: ${data.pillars.year}</p>
+            <p>월주: ${data.pillars.month}</p>
+            <p>일주: ${data.pillars.day}</p>
+            <p>시주: ${data.pillars.hour}</p>
+          </div>
+        ` : "";
+
+        const daewoonHTML = data.daewoon ? `
+          <div class="card">
+            <h3 class="section-title">2. 대운 흐름</h3>
+            <div class="report-text">
+${data.daewoon.startInfo || ""}
+
+${data.daewoon.list ? data.daewoon.list.map(d =>
+`${d.startAge}세~${d.endAge}세: ${d.ganji}대운 (${d.startYear}년~${d.endYear}년)`
+).join("\n") : ""}
+            </div>
+          </div>
+        ` : "";
+
+        const fullHTML = `
+          ${pillarsHTML}
+          ${daewoonHTML}
+          <div class="card">
+            <h3 class="section-title">프리미엄 해석</h3>
+            <div class="report-text">${report}</div>
+          </div>
+        `;
+
+        const previewHTML = `
+          ${pillarsHTML}
+          ${daewoonHTML}
+          <div class="card">
+            <h3 class="section-title">무료 미리보기</h3>
+            <div class="report-text">${preview}...</div>
+          </div>
+          <div class="card lock">
+            🔒 여기서부터는 프리미엄 해석입니다.<br>
+            전체 리포트와 PDF 저장은 결제 후 확인 가능합니다.
+          </div>
+        `;
+
+        lastFullResult = fullHTML;
+        resultBox.innerHTML = isPaid ? fullHTML : previewHTML;
 
       } catch (err) {
-        resultBox.innerHTML = "연결 오류 발생";
+        resultBox.innerHTML = `<div class="card">연결 오류 발생: ${err.message}</div>`;
       }
     }
 
     function downloadPDF() {
       if (!isPaid) {
-        alert("결제 후 사용 가능");
+        alert("PDF 저장은 결제 후 가능합니다.");
         return;
       }
+
       window.print();
     }
   </script>
