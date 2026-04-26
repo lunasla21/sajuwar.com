@@ -1,278 +1,196 @@
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
-require("dotenv").config();
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>사주전쟁</title>
+  <style>
+    body{margin:0;background:#0b0b0b;color:#f7f1df;font-family:Arial,sans-serif;padding:24px}
+    .app{max-width:850px;margin:auto}
+    .box{background:#171717;border:1px solid #8a6a18;border-radius:18px;padding:24px;margin:18px 0}
+    h1,h2,h3{color:#d4af37}
+    input,select,button{width:100%;padding:14px;margin:7px 0;border-radius:12px;border:1px solid #8a6a18;box-sizing:border-box}
+    input,select{background:#0e0e0e;color:#fff}
+    button{background:linear-gradient(135deg,#d4af37,#f4dc8a);font-weight:800;cursor:pointer}
+    button.secondary{background:#2a2a2a;color:#d4af37}
+    .row{display:flex;gap:10px}
+    .report{white-space:pre-wrap;line-height:1.9}
+    .lock{text-align:center;color:#f4dc8a;font-weight:800}
+    .manse{width:100%;border-collapse:collapse;text-align:center}
+    .manse td,.manse th{border:1px solid #8a6a18;padding:12px}
+    .big{font-size:30px;font-weight:900;color:#f4dc8a}
+    @media(max-width:700px){.row{flex-direction:column}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="box" style="text-align:center">
+    <h1>⚔️ 사주전쟁</h1>
+    <p>내 사주 전쟁터 · 병력 구성 · 아이템 해금 시기</p>
+  </div>
 
-const OpenAI = require("openai");
+  <div class="box">
+    <input id="name" placeholder="이름" />
+    <div class="row">
+      <select id="year"></select>
+      <select id="month"></select>
+      <select id="day"></select>
+    </div>
+    <div class="row">
+      <select id="hour"></select>
+      <select id="minute"></select>
+    </div>
+    <select id="gender">
+      <option value="">성별 선택</option>
+      <option value="남자">남자</option>
+      <option value="여자">여자</option>
+    </select>
+    <button onclick="analyze()">전투 분석 시작하기</button>
+    <button class="secondary" onclick="unlock()">결제하고 전체보기</button>
+    <button class="secondary" onclick="downloadPDF()">PDF 저장</button>
+  </div>
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+  <div id="result"></div>
+</div>
 
-app.use(cors());
-app.use(express.json());
-app.use(express.static(__dirname));
+<script>
+let isPaid = false;
+let lastFullResult = "";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function pad(n){ return String(n).padStart(2,"0"); }
 
-// 천간, 지지
-const stems = ["갑", "을", "병", "정", "무", "기", "경", "신", "임", "계"];
-const branches = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"];
+function fillOptions(){
+  const year=document.getElementById("year");
+  const month=document.getElementById("month");
+  const day=document.getElementById("day");
+  const hour=document.getElementById("hour");
+  const minute=document.getElementById("minute");
 
-// 입춘 기준 연도 보정
-// 실전에서는 매년 입춘 시각이 조금씩 다르지만, 우선 2월 4일 기준으로 보정
-function adjustYearByIpchun(year, month, day, hour = 0) {
-  const y = Number(year);
-  const m = Number(month);
-  const d = Number(day);
+  year.innerHTML='<option value="">출생연도</option>';
+  month.innerHTML='<option value="">월</option>';
+  day.innerHTML='<option value="">일</option>';
+  hour.innerHTML='<option value="">시</option>';
+  minute.innerHTML='<option value="">분</option>';
 
-  // 2월 4일 전이면 전년도 사주년으로 봄
-  if (m < 2 || (m === 2 && d < 4)) {
-    return y - 1;
+  for(let y=1950;y<=2026;y++) year.innerHTML+=`<option value="${y}">${y}년</option>`;
+  for(let m=1;m<=12;m++) month.innerHTML+=`<option value="${pad(m)}">${m}월</option>`;
+  for(let d=1;d<=31;d++) day.innerHTML+=`<option value="${pad(d)}">${d}일</option>`;
+  for(let h=0;h<=23;h++) hour.innerHTML+=`<option value="${pad(h)}">${h}시</option>`;
+  for(let m=0;m<60;m+=10) minute.innerHTML+=`<option value="${pad(m)}">${m}분</option>`;
+}
+fillOptions();
+
+function renderPillars(p){
+  if(!p) return "";
+  return `
+  <div class="box">
+    <h2>1. 사주팔자 원국표</h2>
+    <table class="manse">
+      <tr><th></th><th>년</th><th>월</th><th>일</th><th>시</th></tr>
+      <tr><td>간지</td>
+        <td class="big">${p.year || "-"}</td>
+        <td class="big">${p.month || "-"}</td>
+        <td class="big">${p.day || "-"}</td>
+        <td class="big">${p.hour || "-"}</td>
+      </tr>
+    </table>
+  </div>`;
+}
+
+function renderDaewoon(d){
+  if(!d || !d.list) return "";
+  return `
+  <div class="box">
+    <h2>2. 대운 흐름</h2>
+    <div class="report">${d.startInfo || ""}
+${d.list.map(x=>`${x.startAge}세~${x.endAge}세: ${x.ganji}대운 (${x.startYear}년~${x.endYear}년)`).join("\n")}</div>
+  </div>`;
+}
+
+function cleanText(t){
+  return (t || "결과가 비어 있습니다.")
+    .replace(/\*\*/g,"")
+    .replace(/###/g,"")
+    .replace(/(\d+\.\s)/g,"\n\n$1")
+    .trim();
+}
+
+function unlock(){
+  isPaid=true;
+  alert("결제 완료 테스트: 전체 리포트가 열렸습니다.");
+  if(lastFullResult) document.getElementById("result").innerHTML=lastFullResult;
+}
+
+async function analyze(){
+  const name=document.getElementById("name").value.trim();
+  const year=document.getElementById("year").value;
+  const month=document.getElementById("month").value;
+  const day=document.getElementById("day").value;
+  const hour=document.getElementById("hour").value;
+  const minute=document.getElementById("minute").value;
+  const gender=document.getElementById("gender").value;
+  const result=document.getElementById("result");
+
+  if(!name || !year || !month || !day || !hour || !minute || !gender){
+    result.innerHTML='<div class="box">입력 정보를 모두 선택해주세요.</div>';
+    return;
   }
 
-  return y;
-}
+  result.innerHTML='<div class="box">⚔️ 전투 분석 중입니다...</div>';
 
-// 년주 계산
-function getYearPillar(adjustedYear) {
-  const index = adjustedYear - 4;
-  const gan = stems[((index % 10) + 10) % 10];
-  const ji = branches[((index % 12) + 12) % 12];
-  return gan + ji;
-}
+  try{
+    const res=await fetch("/analyze",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        name,
+        birth:`${year}-${month}-${day}`,
+        time:`${hour}:${minute}`,
+        gender
+      })
+    });
 
-// 월주는 절기 기준이 원칙이나, 현재는 입춘 보정 연도 기반의 1차 계산
-function getMonthPillar(adjustedYear, month) {
-  const m = Number(month);
+    const data=await res.json();
 
-  // 사주 월지: 입춘부터 인월 시작
-  // 양력 월 기준으로 대략 매핑
-  const monthBranches = {
-    1: "축",
-    2: "인",
-    3: "묘",
-    4: "진",
-    5: "사",
-    6: "오",
-    7: "미",
-    8: "신",
-    9: "유",
-    10: "술",
-    11: "해",
-    12: "자",
-  };
-
-  const ji = monthBranches[m];
-
-  // 년간에 따른 월간 시작
-  const yearGan = getYearPillar(adjustedYear)[0];
-
-  const startGanMap = {
-    갑: "병",
-    기: "병",
-    을: "무",
-    경: "무",
-    병: "경",
-    신: "경",
-    정: "임",
-    임: "임",
-    무: "갑",
-    계: "갑",
-  };
-
-  const startGan = startGanMap[yearGan];
-  const startIndex = stems.indexOf(startGan);
-
-  // 인월을 0으로 보고 월간 순행
-  const offset = m === 1 ? 11 : m - 2;
-  const gan = stems[(startIndex + offset) % 10];
-
-  return gan + ji;
-}
-
-// 일주는 정밀 만세력 라이브러리 전 단계용 임시 계산
-function getDayPillar(year, month, day) {
-  const base = new Date(1900, 0, 31);
-  const target = new Date(Number(year), Number(month) - 1, Number(day));
-  const diffDays = Math.floor((target - base) / (1000 * 60 * 60 * 24));
-
-  const gan = stems[((diffDays + 0) % 10 + 10) % 10];
-  const ji = branches[((diffDays + 0) % 12 + 12) % 12];
-
-  return gan + ji;
-}
-
-// 시주 계산
-function getHourPillar(dayPillar, hour) {
-  const h = Number(hour);
-
-  let hourBranchIndex;
-  if (h === 23 || h === 0) hourBranchIndex = 0;
-  else hourBranchIndex = Math.floor((h + 1) / 2) % 12;
-
-  const dayGan = dayPillar[0];
-
-  const startGanMap = {
-    갑: "갑",
-    기: "갑",
-    을: "병",
-    경: "병",
-    병: "무",
-    신: "무",
-    정: "경",
-    임: "경",
-    무: "임",
-    계: "임",
-  };
-
-  const startGan = startGanMap[dayGan];
-  const startIndex = stems.indexOf(startGan);
-  const gan = stems[(startIndex + hourBranchIndex) % 10];
-  const ji = branches[hourBranchIndex];
-
-  return gan + ji;
-}
-
-function makePillars(year, month, day, hour) {
-  const adjustedYear = adjustYearByIpchun(year, month, day, hour);
-
-  const yearPillar = getYearPillar(adjustedYear);
-  const monthPillar = getMonthPillar(adjustedYear, month);
-  const dayPillar = getDayPillar(year, month, day);
-  const hourPillar = getHourPillar(dayPillar, hour);
-
-  return {
-    year: yearPillar,
-    month: monthPillar,
-    day: dayPillar,
-    hour: hourPillar,
-    adjustedYear,
-    originalYear: Number(year),
-    ipchunApplied: adjustedYear !== Number(year),
-  };
-}
-
-function makeDaewoon(year) {
-  const y = Number(year);
-
-  return {
-    startInfo: "현재 대운은 테스트 버전입니다. 추후 성별·음양·절기 기준으로 정밀 계산 예정입니다.",
-    list: [
-      { startAge: 5, endAge: 14, ganji: "갑자", startYear: y + 5, endYear: y + 14 },
-      { startAge: 15, endAge: 24, ganji: "을축", startYear: y + 15, endYear: y + 24 },
-      { startAge: 25, endAge: 34, ganji: "병인", startYear: y + 25, endYear: y + 34 },
-      { startAge: 35, endAge: 44, ganji: "정묘", startYear: y + 35, endYear: y + 44 },
-      { startAge: 45, endAge: 54, ganji: "무진", startYear: y + 45, endYear: y + 54 },
-    ],
-  };
-}
-
-async function handleAnalyze(req, res) {
-  try {
-    const { name, birth, time, gender } = req.body;
-
-    if (!name || !birth || !time || !gender) {
-      return res.status(400).json({
-        result: "입력값이 부족합니다.",
-      });
+    if(!res.ok){
+      result.innerHTML=`<div class="box">서버 오류: ${data.result || data.error || "응답 오류"}</div>`;
+      return;
     }
 
-    const [year, month, day] = birth.split("-");
-    const [hour, minute] = time.split(":");
+    const report=cleanText(data.result);
+    const preview=report.slice(0,700);
 
-    const pillars = makePillars(year, month, day, hour);
-    const daewoon = makeDaewoon(pillars.adjustedYear);
+    const fullHTML=`
+      ${renderPillars(data.pillars)}
+      ${renderDaewoon(data.daewoon)}
+      <div class="box">
+        <h2>3. 프리미엄 전투 해석</h2>
+        <div class="report">${report}</div>
+      </div>`;
 
-    const ipchunNotice = pillars.ipchunApplied
-      ? `※ 이 사주는 입춘 전 출생으로 판단되어, 사주년은 ${pillars.originalYear}년이 아니라 ${pillars.adjustedYear}년 기준으로 보정했습니다.`
-      : `※ 이 사주는 입춘 이후 출생으로 판단되어 ${pillars.adjustedYear}년 기준으로 봅니다.`;
+    const previewHTML=`
+      ${renderPillars(data.pillars)}
+      ${renderDaewoon(data.daewoon)}
+      <div class="box">
+        <h2>무료 미리보기</h2>
+        <div class="report">${preview}...</div>
+      </div>
+      <div class="box lock">🔒 숨겨진 아이템과 전체 전투 전략은 결제 후 확인 가능합니다.</div>`;
 
-    const prompt = `
-이름: ${name}
-성별: ${gender}
-출생 정보: ${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분
+    lastFullResult=fullHTML;
+    result.innerHTML=isPaid ? fullHTML : previewHTML;
 
-${ipchunNotice}
-
-사주팔자:
-년주: ${pillars.year}
-월주: ${pillars.month}
-일주: ${pillars.day}
-시주: ${pillars.hour}
-
-위 정보를 바탕으로 "사주 전쟁" 컨셉의 프리미엄 리포트를 작성해줘.
-
-반드시 아래 구조로 작성해줘.
-
-1. 전장 배치
-- 이 사람의 원국이 어떤 전쟁터인지 설명
-
-2. 병력 구성
-- 오행을 병력처럼 설명
-- 강한 기운과 약한 기운 구분
-
-3. 일간 캐릭터
-- 일간을 주인공 캐릭터처럼 설명
-
-4. 아이템 해금 시기
-- 인생에서 기회가 열리는 시기를 상징적으로 설명
-- 돈, 직업, 관계, 이동운 중심
-
-5. 위험 구간
-- 조심해야 할 선택, 관계, 감정 패턴
-
-6. 전투 전략
-- 지금부터 어떻게 움직이면 좋은지 현실적인 조언
-
-7. 프리미엄 한 줄 결론
-- 강렬한 문장으로 마무리
-
-문체:
-- 한국어
-- 고급스럽고 몰입감 있게
-- 게임처럼 너무 가볍지는 않게
-- 명리 상담의 깊이를 유지
-`;
-
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content:
-            "너는 명리학 기반으로 사주를 전쟁터, 병력, 아이템, 타이밍의 세계관으로 해석하는 프리미엄 사주 상담가다.",
-        },
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-    });
-
-    res.json({
-      result: completion.choices[0].message.content,
-      pillars,
-      daewoon,
-      ipchunNotice,
-    });
-  } catch (error) {
-    console.error("분석 오류:", error);
-    res.status(500).json({
-      result:
-        "서버 오류가 발생했습니다. OPENAI_API_KEY 또는 server.js 코드를 확인해주세요.",
-    });
+  }catch(e){
+    result.innerHTML=`<div class="box">연결 오류 발생: ${e.message}</div>`;
   }
 }
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
-app.post("/analyze", handleAnalyze);
-app.post("/api/saju", handleAnalyze);
-
-app.listen(PORT, () => {
-  console.log(`서버 실행됨: ${PORT}`);
-});
+function downloadPDF(){
+  if(!isPaid){
+    alert("PDF 저장은 결제 후 가능합니다.");
+    return;
+  }
+  window.print();
+}
+</script>
+</body>
+</html>
