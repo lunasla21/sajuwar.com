@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>프리미엄 사주 리포트</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #0f0f0f;
+      color: #f7f1df;
+      padding: 24px;
+    }
+
+    .app {
+      max-width: 760px;
+      margin: auto;
+    }
+
+    .hero, .form-card, .card {
+      background: #1c1c1c;
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .hero {
+      text-align: center;
+    }
+
+    .hero h1, .section-title {
+      color: #d4af37;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 13px;
+      margin: 7px 0;
+      border-radius: 12px;
+      border: 1px solid rgba(212,175,55,0.25);
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+
+    input, select {
+      background: #111;
+      color: #f7f1df;
+    }
+
+    button {
+      background: linear-gradient(135deg, #d4af37, #f4dc8a);
+      color: #111;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+    }
+
+    button.secondary {
+      background: #2c2c2c;
+      color: #d4af37;
+      border: 1px solid rgba(212,175,55,0.45);
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .manse-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      text-align: center;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,0.35);
+    }
+
+    .manse-table th,
+    .manse-table td {
+      border-right: 1px solid rgba(212,175,55,0.25);
+      border-bottom: 1px solid rgba(212,175,55,0.18);
+      padding: 12px 6px;
+    }
+
+    .manse-table th:last-child,
+    .manse-table td:last-child {
+      border-right: none;
+    }
+
+    .manse-label {
+      width: 60px;
+      color: #b8aa80;
+      font-size: 12px;
+      background: rgba(212,175,55,0.08);
+    }
+
+    .gan {
+      font-size: 34px;
+      font-weight: 900;
+      color: #f4dc8a;
+    }
+
+    .ji {
+      font-size: 30px;
+      font-weight: 900;
+      color: #e0c56a;
+    }
+
+    .hidden {
+      font-size: 13px;
+      color: #c8b98a;
+      letter-spacing: 1px;
+      line-height: 1.5;
+    }
+
+    .interpret-card {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(212,175,55,0.10);
+      border: 1px solid rgba(212,175,55,0.25);
+      line-height: 1.8;
+    }
+
+    .element-icon {
+      font-size: 38px;
+      margin-bottom: 8px;
+    }
+
+    .element-row {
+      display: grid;
+      grid-template-columns: 50px 1fr 70px;
+      gap: 10px;
+      align-items: center;
+      margin: 14px 0;
+    }
+
+    .bar-bg {
+      background: #111;
+      border-radius: 999px;
+      height: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .bar {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .wood { background: #34c759; }
+    .fire { background: #ff3b30; }
+    .earth { background: #c09352; }
+    .metal { background: #d9d9d9; }
+    .water { background: #4da3ff; }
+
+    .summary {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(212,175,55,0.12);
+      color: #f4dc8a;
+      line-height: 1.7;
+    }
+
+    .report-text, .timeline {
+      white-space: pre-wrap;
+      line-height: 1.85;
+      font-size: 15px;
+    }
+
+    .lock {
+      color: #f4dc8a;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="hero">
+      <h1>프리미엄 사주 리포트</h1>
+      <p>원국 · 지장간 · 신강신약 · 오행 세력 · 대운 흐름 · 프리미엄 해석</p>
+    </div>
+
+    <div class="form-card">
+      <input id="name" placeholder="이름">
+
+      <div class="row">
+        <select id="year"></select>
+        <select id="month"></select>
+        <select id="day"></select>
+      </div>
+
+      <div class="row">
+        <select id="hour"></select>
+        <select id="minute"></select>
+      </div>
+
+      <select id="gender">
+        <option value="">성별 선택</option>
+        <option value="남자">남자</option>
+        <option value="여자">여자</option>
+      </select>
+
+      <button onclick="analyze()">사주 리포트 보기</button>
+      <button class="secondary" onclick="unlock()">결제하고 전체보기</button>
+      <button class="secondary" onclick="downloadPDF()">PDF 저장</button>
+    </div>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    let isPaid = false;
+    let lastFullResult = "";
+
+    const ganElement = {
+      "갑": "목", "을": "목",
+      "병": "화", "정": "화",
+      "무": "토", "기": "토",
+      "경": "금", "신": "금",
+      "임": "수", "계": "수"
+    };
+
+    const jiElement = {
+      "자": "수",
+      "축": "토",
+      "인": "목",
+      "묘": "목",
+      "진": "토",
+      "사": "화",
+      "오": "화",
+      "미": "토",
+      "신": "금",
+      "유": "금",
+      "술": "토",
+      "해": "수"
+    };
+
+    const hiddenGan = {
+      "자": "계",
+      "축": "기·계·신",
+      "인": "갑·병·무",
+      "묘": "을",
+      "진": "무·을·계",
+      "사": "병·무·경",
+      "오": "정·기",
+      "미": "기·정·을",
+      "신": "경·임·무",
+      "유": "신",
+      "술": "무·신·정",
+      "해": "임·갑"
+    };
+
+    const elementClass = {
+      "목": "wood",
+      "화": "fire",
+      "토": "earth",
+      "금": "metal",
+      "수": "water"
+    };
+
+    function pad(num) {
+      return String(num).padStart(2, "0");
+    }
+
+    function fillOptions() {
+      const yearSelect = document.getElementById("year");
+      const monthSelect = document.getElementById("month");
+      const daySelect = document.getElementById("day");
+      const hourSelect = document.getElementById("hour");
+      const minuteSelect = document.getElementById("minute");
+
+      yearSelect.innerHTML = `<option value="">출생연도</option>`;
+      for (let y = 1950; y <= 2026; y++) {
+        yearSelect.innerHTML += `<option value="${y}">${y}년</option>`;
+      }
+
+      monthSelect.innerHTML = `<option value="">월</option>`;
+      for (let m = 1; m <= 12; m++) {
+        monthSelect.innerHTML += `<option value="${pad(m)}">${m}월</option>`;
+      }
+
+      daySelect.innerHTML = `<option value="">일</option>`;
+      for (let d = 1; d <= 31; d++) {
+        daySelect.innerHTML += `<option value="${pad(d)}">${d}일</option>`;
+      }
+
+      hourSelect.innerHTML = `<option value="">시</option>`;
+      for (let h = 0; h <= 23; h++) {
+        hourSelect.innerHTML += `<option value="${pad(h)}">${h}시</option>`;
+      }
+
+      minuteSelect.innerHTML = `<option value="">분</option>`;
+      for (let m = 0; m < 60; m += 10) {
+        minuteSelect.innerHTML += `<option value="${pad(m)}">${m}분</option>`;
+      }
+    }
+
+    fillOptions();
+
+    function splitGanji(value) {
+      return {
+        gan: value ? value[0] : "",
+        ji: value ? value[1] : ""
+      };
+    }
+
+    function getElementScores(pillars) {
+      const scores = { 목: 0, 화: 0, 토: 0, 금: 0, 수: 0 };
+      const list = [pillars.year, pillars.month, pillars.day, pillars.hour];
+
+      list.forEach((ganji, index) => {
+        const { gan, ji } = splitGanji(ganji);
+
+        if (ganElement[gan]) scores[ganElement[gan]] += 1;
+        if (jiElement[ji]) scores[jiElement[ji]] += 1.5;
+
+        // 월지는 계절 세력이므로 추가 가중치
+        if (index === 1 && jiElement[ji]) {
+          scores[jiElement[ji]] += 1.5;
+        }
+      });
+
+      return scores;
+    }
+
+    function getDayMasterInfo(pillars, scores) {
+      const dayGan = pillars.day[0];
+      const dayElement = ganElement[dayGan];
+
+      const supportMap = {
+        "목": {
+          icon: "🌳",
+          name: "나무",
+          need: "물과 햇빛",
+          good: ["수", "화"],
+          weak: ["금"],
+          imageText: "나무는 물이 있어야 뿌리내리고, 햇빛이 있어야 자랍니다."
+        },
+        "화": {
+          icon: "🔥",
+          name: "불",
+          need: "나무와 적당한 공간",
+          good: ["목", "토"],
+          weak: ["수"],
+          imageText: "불은 나무가 있어야 살아나고, 지나친 물은 불을 꺼뜨립니다."
+        },
+        "토": {
+          icon: "⛰️",
+          name: "땅",
+          need: "불의 온기와 수분 조절",
+          good: ["화", "금"],
+          weak: ["목"],
+          imageText: "땅은 따뜻해야 생명을 품고, 너무 많은 나무는 땅을 파고듭니다."
+        },
+        "금": {
+          icon: "⚔️",
+          name: "금",
+          need: "흙의 기반과 불의 단련",
+          good: ["토", "화"],
+          weak: ["화"],
+          imageText: "금은 흙에서 나오고, 불로 단련될 때 쓸모가 생깁니다."
+        },
+        "수": {
+          icon: "💧",
+          name: "물",
+          need: "금의 생조와 흙의 제방",
+          good: ["금", "목"],
+          weak: ["토"],
+          imageText: "물은 금이 맑게 생해주고, 흙이 제방이 되어야 흐름이 잡힙니다."
+        }
+      };
+
+      const info = supportMap[dayElement];
+
+      const selfPower = scores[dayElement] || 0;
+      const supportPower = info.good.reduce((sum, el) => sum + (scores[el] || 0), 0);
+      const attackPower = info.weak.reduce((sum, el) => sum + (scores[el] || 0), 0);
+
+      let strength = "중화";
+      if (selfPower + supportPower >= attackPower + 4) strength = "신강";
+      if (attackPower >= selfPower + supportPower + 2) strength = "신약";
+
+      return {
+        dayGan,
+        dayElement,
+        icon: info.icon,
+        name: info.name,
+        need: info.need,
+        good: info.good.join(", "),
+        weak: info.weak.join(", "),
+        strength,
+        imageText: info.imageText
+      };
+    }
+
+    function renderPillars(pillars) {
+      const labels = ["년", "월", "일", "시"];
+      const values = [pillars.year, pillars.month, pillars.day, pillars.hour];
+
+      const stems = values.map(v => splitGanji(v).gan);
+      const branches = values.map(v => splitGanji(v).ji);
+      const hiddens = branches.map(b => hiddenGan[b] || "");
+
+      const scores = getElementScores(pillars);
+      const dm = getDayMasterInfo(pillars, scores);
+
+      return `
+        <div class="card">
+          <h3 class="section-title">1. 사주팔자 원국표</h3>
+
+          <table class="manse-table">
+            <tr>
+              <th class="manse-label"></th>
+              ${labels.map(label => `<th>${label}</th>`).join("")}
+            </tr>
+
+            <tr>
+              <td class="manse-label">천간</td>
+              ${stems.map(s => `<td class="gan">${s}</td>`).join("")}
+            </tr>
+
+            <tr>
+              <td class="manse-label">지지</td>
+              ${branches.map(b => `<td class="ji">${b}</td>`).join("")}
+            </tr>
+
+            <tr>
+              <td class="manse-label">지장간</td>
+              ${hiddens.map(h => `<td class="hidden">${h}</td>`).join("")}
+            </tr>
+          </table>
+
+          <div class="interpret-card">
+            <div class="element-icon">${dm.icon}</div>
+
+            <strong>일간: ${dm.dayGan} / ${dm.name}의 기운</strong><br><br>
+
+            이 사주는 <strong>${dm.dayGan}</strong> 일간으로 태어났습니다.<br>
+            쉽게 말하면 중심 기운은 <strong>${dm.name}</strong>입니다.<br><br>
+
+            ${dm.imageText}<br><br>
+
+            ${dm.name}가 잘 자라려면 필요한 기운은 <strong>${dm.need}</strong>입니다.<br>
+            보완에 도움 되는 오행: <strong>${dm.good}</strong><br>
+            지나치면 부담이 되는 오행: <strong>${dm.weak}</strong><br><br>
+
+            현재 원국 기준 신강/신약 판단: <strong>${dm.strength}</strong>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderElementChart(pillars) {
+      const scores = getElementScores(pillars);
+      const max = Math.max(...Object.values(scores));
+      const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+
+      const rows = ["목", "화", "토", "금", "수"].map(el => {
+        const percent = max === 0 ? 0 : Math.round((scores[el] / max) * 100);
+
+        return `
+          <div class="element-row">
+            <div>${el}</div>
+            <div class="bar-bg">
+              <div class="bar ${elementClass[el]}" style="width:${percent}%"></div>
+            </div>
+            <div>${scores[el]}점</div>
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="card">
+          <h3 class="section-title">2. 오행 세력 도표</h3>
+          ${rows}
+          <div class="summary">
+            가장 강한 오행은 <strong>${sorted[0][0]}</strong>입니다.<br>
+            두 번째 강한 오행은 <strong>${sorted[1][0]}</strong>입니다.<br>
+            이 사주는 ${sorted[0][0]} 기운이 중심 세력으로 작용하고,
+            ${sorted[1][0]} 기운이 그다음으로 삶의 흐름에 영향을 줍니다.
+          </div>
+        </div>
+      `;
+    }
+
+    function unlock() {
+      isPaid = true;
+      alert("결제 완료 테스트: 전체 리포트가 열렸습니다.");
+      if (lastFullResult) {
+        document.getElementById("result").innerHTML = lastFullResult;
+      }
+    }
+
+    async function analyze() {
+      const nameValue = document.getElementById("name").value;
+      const yearValue = document.getElementById("year").value;
+      const monthValue = document.getElementById("month").value;
+      const dayValue = document.getElementById("day").value;
+      const hourValue = document.getElementById("hour").value;
+      const minuteValue = document.getElementById("minute").value;
+      const genderValue = document.getElementById("gender").value;
+      const resultBox = document.getElementById("result");
+
+      if (!nameValue || !yearValue || !monthValue || !dayValue || !hourValue || !minuteValue || !genderValue) {
+        resultBox.innerHTML = `<div class="card">입력 정보를 모두 선택해주세요.</div>`;
+        return;
+      }
+
+      const birth = `${yearValue}-${monthValue}-${dayValue}`;
+      const time = `${hourValue}:${minuteValue}`;
+
+      resultBox.innerHTML = `<div class="card">리포트를 생성 중입니다...</div>`;
+
+      try {
+        const res = await fetch("http://localhost:3000/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: nameValue,
+            birth,
+            time,
+            gender: genderValue
+          })
+        });
+
+        const data = await res.json();
+
+        if (!data.pillars) {
+          resultBox.innerHTML = `<div class="card">${data.result || "결과 없음"}</div>`;
+          return;
+        }
+
+        let daewoonText = "";
+
+        if (data.daewoon && data.daewoon.list) {
+          daewoonText =
+            `[대운 시작]\n${data.daewoon.startInfo}\n\n[대운 목록]\n` +
+            data.daewoon.list
+              .map(d => `${d.startAge}세~${d.endAge}세: ${d.ganji}대운 (${d.startYear}년~${d.endYear}년)`)
+              .join("\n");
+        }
+
+        const previewLength = Math.floor(data.result.length * 0.48);
+        const preview = data.result.slice(0, previewLength);
+
+        const pillarsHTML = renderPillars(data.pillars);
+        const chartHTML = renderElementChart(data.pillars);
+
+        const daewoonHTML = `
+          <div class="card">
+            <h3 class="section-title">3. 대운 흐름</h3>
+            <div class="timeline">${daewoonText}</div>
+          </div>
+        `;
+
+        const fullHTML = `
+          ${pillarsHTML}
+          ${chartHTML}
+          ${daewoonHTML}
+          <div class="card">
+            <h3 class="section-title">4. 프리미엄 해석</h3>
+            <div class="report-text">${data.result}</div>
+          </div>
+        `;
+
+        const previewHTML = `
+          ${pillarsHTML}
+          ${chartHTML}
+          ${daewoonHTML}
+          <div class="card">
+            <h3 class="section-title">무료 미리보기</h3>
+            <div class="report-text">${preview}</div>
+          </div>
+          <div class="card lock">
+            🔒 여기서부터는 프리미엄 해석입니다.<br>
+            전체 리포트와 PDF 저장은 결제 후 확인 가능합니다.
+          </div>
+        `;
+
+        lastFullResult = fullHTML;
+        resultBox.innerHTML = isPaid ? fullHTML : previewHTML;
+
+      } catch (error) {
+        resultBox.innerHTML = `<div class="card">연결 오류 발생: ${error.message}</div>`;
+      }
+    }
+
+    function downloadPDF() {
+      if (!isPaid) {
+        alert("PDF 저장은 결제 후 가능합니다.");
+        return;
+      }
+      window.print();
+    }
+  </script>
+</body>
+</html>
