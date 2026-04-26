@@ -1,126 +1,442 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>프리미엄 사주 리포트</title>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background: #0b0b0b;
+      margin: 0;
+      background: radial-gradient(circle at top, #1b1b1b 0%, #070707 70%);
       color: #fff;
-      font-family: sans-serif;
+      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      border: 1px solid rgba(218, 165, 32, 0.65);
+      border-radius: 22px;
+      padding: 44px 24px;
       text-align: center;
-      padding: 40px;
+      background: linear-gradient(145deg, #181818, #101010);
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.08);
+      margin-bottom: 22px;
     }
-    input, select, button {
-      margin: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
+
+    h1 {
+      color: #e7bd32;
+      font-size: 36px;
+      margin: 0 0 22px;
+      letter-spacing: -1px;
     }
+
+    .subtitle {
+      color: #f5f0dc;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .card {
+      border: 1px solid rgba(218, 165, 32, 0.65);
+      border-radius: 22px;
+      padding: 26px;
+      background: #151515;
+      margin-bottom: 22px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 15px 16px;
+      background: #0d0d0d;
+      color: #fff;
+      border: 1px solid rgba(218, 165, 32, 0.55);
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #bfbfbf;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .full {
+      margin-top: 14px;
+    }
+
     button {
-      background: gold;
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(218, 165, 32, 0.75);
+      font-size: 16px;
+      font-weight: 800;
       cursor: pointer;
+      margin-top: 14px;
     }
-    #result {
-      margin-top: 20px;
+
+    .primary {
+      background: linear-gradient(90deg, #d6aa23, #ffe98a);
+      color: #090909;
+    }
+
+    .darkbtn {
+      background: #242424;
+      color: #e7bd32;
+    }
+
+    .loading {
+      display: none;
+      border: 1px solid rgba(218, 165, 32, 0.5);
+      border-radius: 18px;
+      padding: 22px;
+      background: #111;
+      margin-bottom: 22px;
+      color: #ffe48a;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255, 255, 255, 0.25);
+      border-top-color: #e7bd32;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .manse {
+      display: none;
+      border: 1px solid rgba(218, 165, 32, 0.6);
+      border-radius: 18px;
+      background: #101010;
+      padding: 20px;
+      margin-bottom: 22px;
+    }
+
+    .manse h2, .result h2 {
+      color: #e7bd32;
+      margin-top: 0;
+    }
+
+    .pillbox {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .pill {
+      border: 1px solid rgba(218, 165, 32, 0.45);
+      border-radius: 14px;
+      padding: 16px 8px;
+      background: #191919;
+      text-align: center;
+    }
+
+    .pill strong {
+      display: block;
+      color: #ffe48a;
+      margin-bottom: 8px;
+    }
+
+    .result {
+      display: none;
+      border: 1px solid rgba(218, 165, 32, 0.6);
+      border-radius: 22px;
+      padding: 28px;
+      background: #111;
+      line-height: 1.85;
       white-space: pre-wrap;
-      text-align: left;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      font-size: 16px;
+    }
+
+    .notice {
+      border: 1px solid rgba(218, 165, 32, 0.45);
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 18px;
+      background: #1a1a1a;
+      color: #f3e2a1;
+      font-size: 14px;
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+
+      .card, .loading, .btns, .notice {
+        display: none !important;
+      }
+
+      .hero, .manse, .result {
+        border: none;
+        background: white;
+        color: black;
+        box-shadow: none;
+      }
+
+      h1, .manse h2, .result h2 {
+        color: black;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .grid3, .grid2, .pillbox {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
     }
   </style>
 </head>
+
 <body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>프리미엄 사주 리포트</h1>
+      <div class="subtitle">
+        원국 · 지장간 · 신강신약 · 오행 세력 · 대운 흐름 · 프리미엄 해석
+      </div>
+    </section>
 
-<h1>프리미엄 사주 리포트</h1>
+    <section class="card">
+      <input id="name" placeholder="이름을 입력하세요" />
 
-<input id="name" placeholder="이름"><br>
+      <div class="grid3">
+        <select id="year"></select>
+        <select id="month"></select>
+        <select id="day"></select>
+      </div>
 
-<select id="year">
+      <div class="grid2">
+        <select id="hour"></select>
+        <select id="minute"></select>
+      </div>
+
+      <div class="full">
+        <select id="gender">
+          <option value="남자">남자</option>
+          <option value="여자">여자</option>
+        </select>
+      </div>
+
+      <div class="btns">
+        <button class="primary" onclick="getSaju()">사주 리포트 보기</button>
+        <button class="darkbtn" onclick="showPayNotice()">결제하고 전체보기</button>
+        <button class="darkbtn" onclick="savePDF()">PDF 저장</button>
+      </div>
+
+      <div class="notice">
+        현재는 테스트 버전입니다. 결제 기능은 추후 토스페이먼츠, 아임포트, 스마트스토어 결제 링크 등으로 연결할 수 있습니다.
+      </div>
+    </section>
+
+    <section id="loading" class="loading">
+      <div class="spinner"></div>
+      사주 리포트를 생성하는 중입니다. 잠시만 기다려주세요.
+    </section>
+
+    <section id="manse" class="manse">
+      <h2>만세력 요약</h2>
+      <div class="pillbox">
+        <div class="pill">
+          <strong>년주</strong>
+          <span id="yearPillar">분석 중</span>
+        </div>
+        <div class="pill">
+          <strong>월주</strong>
+          <span id="monthPillar">분석 중</span>
+        </div>
+        <div class="pill">
+          <strong>일주</strong>
+          <span id="dayPillar">분석 중</span>
+        </div>
+        <div class="pill">
+          <strong>시주</strong>
+          <span id="hourPillar">분석 중</span>
+        </div>
+      </div>
+
+      <div class="notice" id="manseText">
+        입력값을 기준으로 기본 만세력 요약을 표시합니다. 정확한 절기 기준 만세력은 서버 계산 로직을 강화하면 더 정밀하게 만들 수 있습니다.
+      </div>
+    </section>
+
+    <section id="resultBox" class="result">
+      <h2>사주 리포트</h2>
+      <div id="result"></div>
+    </section>
+  </div>
+
   <script>
-    for (let i = 1950; i <= 2025; i++) {
-      document.write(`<option>${i}</option>`);
+    const yearSelect = document.getElementById("year");
+    const monthSelect = document.getElementById("month");
+    const daySelect = document.getElementById("day");
+    const hourSelect = document.getElementById("hour");
+    const minuteSelect = document.getElementById("minute");
+
+    for (let y = 1950; y <= 2035; y++) {
+      yearSelect.innerHTML += `<option value="${y}">${y}년</option>`;
+    }
+
+    for (let m = 1; m <= 12; m++) {
+      monthSelect.innerHTML += `<option value="${m}">${m}월</option>`;
+    }
+
+    for (let d = 1; d <= 31; d++) {
+      daySelect.innerHTML += `<option value="${d}">${d}일</option>`;
+    }
+
+    for (let h = 0; h <= 23; h++) {
+      hourSelect.innerHTML += `<option value="${h}">${h}시</option>`;
+    }
+
+    for (let min = 0; min <= 50; min += 10) {
+      minuteSelect.innerHTML += `<option value="${min}">${min}분</option>`;
+    }
+
+    yearSelect.value = "1983";
+    monthSelect.value = "1";
+    daySelect.value = "4";
+    hourSelect.value = "15";
+    minuteSelect.value = "40";
+
+    function showPayNotice() {
+      alert("결제 기능은 다음 단계에서 연결할 수 있습니다. 현재는 테스트 버전입니다.");
+    }
+
+    function savePDF() {
+      window.print();
+    }
+
+    function showSimpleManse(year, month, day, hour, minute, gender) {
+      const stems = ["갑", "을", "병", "정", "무", "기", "경", "신", "임", "계"];
+      const branches = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"];
+
+      const y = Number(year);
+      const m = Number(month);
+      const d = Number(day);
+      const h = Number(hour);
+
+      const yearGan = stems[(y - 4) % 10];
+      const yearJi = branches[(y - 4) % 12];
+
+      const monthGan = stems[(y + m) % 10];
+      const monthJi = branches[(m + 1) % 12];
+
+      const dayGan = stems[(y + m + d) % 10];
+      const dayJi = branches[(y + m + d) % 12];
+
+      const hourGan = stems[(d + h) % 10];
+      const hourJi = branches[Math.floor((h + 1) / 2) % 12];
+
+      document.getElementById("yearPillar").innerText = `${yearGan}${yearJi}`;
+      document.getElementById("monthPillar").innerText = `${monthGan}${monthJi}`;
+      document.getElementById("dayPillar").innerText = `${dayGan}${dayJi}`;
+      document.getElementById("hourPillar").innerText = `${hourGan}${hourJi}`;
+
+      document.getElementById("manseText").innerText =
+        `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분, ${gender} 기준의 기본 만세력 요약입니다. ` +
+        `현재 표시는 프론트 임시 계산이며, 실제 절기 기준 정밀 만세력은 server.js에서 lunar-javascript 또는 manseryeok 로직을 연결하면 강화할 수 있습니다.`;
+
+      document.getElementById("manse").style.display = "block";
+    }
+
+    async function getSaju() {
+      const name = document.getElementById("name").value.trim();
+      const year = document.getElementById("year").value;
+      const month = document.getElementById("month").value;
+      const day = document.getElementById("day").value;
+      const hour = document.getElementById("hour").value;
+      const minute = document.getElementById("minute").value;
+      const gender = document.getElementById("gender").value;
+
+      if (!name) {
+        alert("이름을 입력해주세요.");
+        return;
+      }
+
+      const loading = document.getElementById("loading");
+      const resultBox = document.getElementById("resultBox");
+      const result = document.getElementById("result");
+
+      loading.style.display = "block";
+      resultBox.style.display = "none";
+      result.innerText = "";
+
+      showSimpleManse(year, month, day, hour, minute, gender);
+
+      try {
+        const res = await fetch("/api/saju", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name,
+            year,
+            month,
+            day,
+            hour,
+            minute,
+            gender
+          })
+        });
+
+        const data = await res.json();
+
+        loading.style.display = "none";
+        resultBox.style.display = "block";
+
+        if (!res.ok) {
+          result.innerText = data.result || "서버 오류가 발생했습니다.";
+          return;
+        }
+
+        result.innerText = data.result || "리포트 결과가 비어 있습니다.";
+      } catch (error) {
+        loading.style.display = "none";
+        resultBox.style.display = "block";
+        result.innerText = "연결 오류 발생: 서버 응답을 받지 못했습니다.";
+      }
     }
   </script>
-</select>
-
-<select id="month">
-  <script>
-    for (let i = 1; i <= 12; i++) {
-      document.write(`<option>${i}</option>`);
-    }
-  </script>
-</select>
-
-<select id="day">
-  <script>
-    for (let i = 1; i <= 31; i++) {
-      document.write(`<option>${i}</option>`);
-    }
-  </script>
-</select>
-
-<br>
-
-<select id="hour">
-  <script>
-    for (let i = 0; i < 24; i++) {
-      document.write(`<option>${i}</option>`);
-    }
-  </script>
-</select>
-
-<select id="minute">
-  <script>
-    for (let i = 0; i < 60; i+=10) {
-      document.write(`<option>${i}</option>`);
-    }
-  </script>
-</select>
-
-<br>
-
-<select id="gender">
-  <option>남자</option>
-  <option>여자</option>
-</select>
-
-<br>
-
-<button onclick="getSaju()">사주 리포트 보기</button>
-
-<div id="result"></div>
-
-<script>
-async function getSaju() {
-  const name = document.getElementById("name").value;
-  const year = document.getElementById("year").value;
-  const month = document.getElementById("month").value;
-  const day = document.getElementById("day").value;
-  const hour = document.getElementById("hour").value;
-  const minute = document.getElementById("minute").value;
-  const gender = document.getElementById("gender").value;
-
-  try {
-    const res = await fetch("/api/saju", {  // 🔥 여기 핵심 수정
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name, year, month, day, hour, minute, gender
-      })
-    });
-
-    const data = await res.json();
-    document.getElementById("result").innerText = data.result;
-
-  } catch (e) {
-    document.getElementById("result").innerText = "연결 오류 발생";
-  }
-}
-</script>
-
 </body>
 </html>
