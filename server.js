@@ -4,7 +4,7 @@ const path = require("path");
 require("dotenv").config();
 
 const OpenAI = require("openai");
-const { calculateFourPillars } = require("manseryeok");
+const { Solar } = require("lunar-javascript");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,80 +17,24 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-function safeValue(...values) {
-  return values.find(v => v !== undefined && v !== null && v !== "");
-}
-
-function normalizePillar(value) {
-  if (!value) return "";
-  if (typeof value === "string") return value;
-
-  if (typeof value === "object") {
-    const gan = safeValue(value.gan, value.stem, value.heavenlyStem, value.sky);
-    const ji = safeValue(value.ji, value.branch, value.earthlyBranch, value.ground);
-
-    if (gan && ji) return `${gan}${ji}`;
-
-    return safeValue(
-      value.ganji,
-      value.pillar,
-      value.name,
-      value.value,
-      value.korean,
-      ""
-    );
-  }
-
-  return String(value);
-}
-
-function makePillars(year, month, day, hour, minute) {
-  const raw = calculateFourPillars({
-    year: Number(year),
-    month: Number(month),
-    day: Number(day),
-    hour: Number(hour),
-    minute: Number(minute || 0),
-  });
-
-  console.log("MANSE_RAW:", JSON.stringify(raw, null, 2));
-
-  const yearPillar = normalizePillar(
-    raw.yearPillar,
-    raw.year,
-    raw.yearGanji,
-    raw.y
+function getSaju(year, month, day, hour, minute) {
+  const solar = Solar.fromYmdHms(
+    Number(year),
+    Number(month),
+    Number(day),
+    Number(hour),
+    Number(minute || 0),
+    0
   );
 
-  const monthPillar = normalizePillar(
-    raw.monthPillar,
-    raw.month,
-    raw.monthGanji,
-    raw.m
-  );
-
-  const dayPillar = normalizePillar(
-    raw.dayPillar,
-    raw.day,
-    raw.dayGanji,
-    raw.d
-  );
-
-  const hourPillar = normalizePillar(
-    raw.hourPillar,
-    raw.hour,
-    raw.hourGanji,
-    raw.h,
-    raw.timePillar,
-    raw.timeGanji
-  );
+  const lunar = solar.getLunar();
+  const eightChar = lunar.getEightChar();
 
   return {
-    year: yearPillar,
-    month: monthPillar,
-    day: dayPillar,
-    hour: hourPillar,
-    raw,
+    year: eightChar.getYear(),
+    month: eightChar.getMonth(),
+    day: eightChar.getDay(),
+    hour: eightChar.getTime(),
   };
 }
 
@@ -98,7 +42,7 @@ function makeDaewoon(year) {
   const y = Number(year);
 
   return {
-    startInfo: "대운 계산은 현재 테스트 버전입니다. 추후 성별·음양·절기 기준으로 정밀 계산 예정입니다.",
+    startInfo: "대운은 현재 테스트 버전입니다. 추후 성별·음양·절기 기준으로 정밀 계산 예정입니다.",
     list: [
       { startAge: 5, endAge: 14, ganji: "갑자", startYear: y + 5, endYear: y + 14 },
       { startAge: 15, endAge: 24, ganji: "을축", startYear: y + 15, endYear: y + 24 },
@@ -122,16 +66,7 @@ async function handleAnalyze(req, res) {
     const [year, month, day] = birth.split("-");
     const [hour, minute] = time.split(":");
 
-    const pillars = makePillars(year, month, day, hour, minute);
-
-    if (!pillars.year || !pillars.month || !pillars.day || !pillars.hour) {
-      return res.status(500).json({
-        result:
-          "만세력 계산 결과를 읽지 못했습니다. Render Logs의 MANSE_RAW 값을 확인해야 합니다.",
-        pillars,
-      });
-    }
-
+    const pillars = getSaju(year, month, day, hour, minute);
     const daewoon = makeDaewoon(year);
 
     const prompt = `
@@ -145,7 +80,7 @@ async function handleAnalyze(req, res) {
 일주: ${pillars.day}
 시주: ${pillars.hour}
 
-위 정보를 바탕으로 "사주 전쟁" 컨셉의 프리미엄 리포트를 작성해줘.
+위 정보를 바탕으로 "사주전쟁" 컨셉의 프리미엄 리포트를 작성해줘.
 
 반드시 아래 구조로 작성해줘.
 
@@ -202,8 +137,7 @@ async function handleAnalyze(req, res) {
   } catch (error) {
     console.error("분석 오류:", error);
     res.status(500).json({
-      result:
-        "서버 오류가 발생했습니다. Render Logs를 확인해주세요. manseryeok 함수 이름 또는 결과 구조가 다를 수 있습니다.",
+      result: "서버 오류가 발생했습니다. Render Logs를 확인해주세요.",
       error: error.message,
     });
   }
