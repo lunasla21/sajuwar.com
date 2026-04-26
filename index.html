@@ -1,82 +1,294 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>프리미엄 사주 리포트</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: sans-serif;
-      background: #0f0f0f;
+      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      background: radial-gradient(circle at top, #1b1b1b 0%, #070707 70%);
       color: #f7f1df;
       padding: 24px;
+      min-height: 100vh;
     }
 
     .app {
-      max-width: 760px;
+      max-width: 900px;
       margin: auto;
     }
 
-    .hero, .form-card, .card {
-      background: #1c1c1c;
-      border: 1px solid rgba(212,175,55,0.35);
-      border-radius: 18px;
-      padding: 20px;
-      margin-top: 16px;
+    .hero,
+    .form-card,
+    .card {
+      background: linear-gradient(145deg, #1c1c1c, #111);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 22px;
+      padding: 26px;
+      margin-top: 18px;
+      box-shadow: 0 0 28px rgba(212, 175, 55, 0.08);
     }
 
     .hero {
       text-align: center;
+      padding: 42px 24px;
     }
 
-    .hero h1, .section-title {
+    .hero h1 {
       color: #d4af37;
+      font-size: 38px;
+      margin: 0 0 14px;
+      letter-spacing: -1px;
     }
 
-    input, select, button {
+    .hero p {
+      font-weight: 700;
+      color: #f4dc8a;
+      margin: 0;
+    }
+
+    input,
+    select,
+    button {
       width: 100%;
-      padding: 13px;
+      padding: 15px;
       margin: 7px 0;
-      border-radius: 12px;
-      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 13px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
       box-sizing: border-box;
-      font-size: 15px;
+      font-size: 16px;
     }
 
-    input, select {
-      background: #111;
+    input,
+    select {
+      background: #0d0d0d;
       color: #f7f1df;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #b9ad8a;
     }
 
     button {
       background: linear-gradient(135deg, #d4af37, #f4dc8a);
       color: #111;
-      font-weight: 800;
+      font-weight: 900;
       cursor: pointer;
       border: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
     }
 
     button.secondary {
-      background: #2c2c2c;
+      background: #292929;
       color: #d4af37;
-      border: 1px solid rgba(212,175,55,0.45);
+      border: 1px solid rgba(212, 175, 55, 0.5);
     }
 
     .row {
       display: flex;
-      gap: 8px;
+      gap: 10px;
+    }
+
+    #result {
+      margin-top: 24px;
+    }
+
+    .section-title {
+      color: #d4af37;
+      font-size: 23px;
+      margin: 0 0 16px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      padding-bottom: 10px;
     }
 
     .report-text {
       white-space: pre-wrap;
-      line-height: 1.85;
+      line-height: 1.95;
+      font-size: 16px;
+      color: #f7f1df;
+    }
+
+    .loading {
+      text-align: center;
+      color: #f4dc8a;
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 4px solid rgba(255, 255, 255, 0.25);
+      border-top-color: #d4af37;
+      border-radius: 50%;
+      margin: 0 auto 14px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .manse-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      text-align: center;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+    }
+
+    .manse-table th,
+    .manse-table td {
+      border-right: 1px solid rgba(212, 175, 55, 0.25);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+      padding: 13px 6px;
+    }
+
+    .manse-table th:last-child,
+    .manse-table td:last-child {
+      border-right: none;
+    }
+
+    .manse-label {
+      width: 64px;
+      color: #b8aa80;
+      font-size: 12px;
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    .gan {
+      font-size: 34px;
+      font-weight: 900;
+      color: #f4dc8a;
+    }
+
+    .ji {
+      font-size: 31px;
+      font-weight: 900;
+      color: #e0c56a;
+    }
+
+    .hidden {
+      font-size: 13px;
+      color: #c8b98a;
+      letter-spacing: 1px;
+      line-height: 1.5;
+    }
+
+    .element-row {
+      display: grid;
+      grid-template-columns: 54px 1fr 72px;
+      gap: 12px;
+      align-items: center;
+      margin: 15px 0;
+    }
+
+    .bar-bg {
+      background: #0b0b0b;
+      border-radius: 999px;
+      height: 25px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .bar {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .wood { background: #34c759; }
+    .fire { background: #ff3b30; }
+    .earth { background: #c09352; }
+    .metal { background: #d9d9d9; }
+    .water { background: #4da3ff; }
+
+    .summary {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(212, 175, 55, 0.12);
+      color: #f4dc8a;
+      line-height: 1.8;
     }
 
     .lock {
-      color: #f4dc8a;
-      font-weight: bold;
       text-align: center;
+      color: #f4dc8a;
+      font-weight: 900;
+      line-height: 1.8;
+    }
+
+    .notice {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #cfc09a;
+      line-height: 1.7;
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+
+      .form-card,
+      .lock,
+      button {
+        display: none !important;
+      }
+
+      .hero,
+      .card {
+        background: white;
+        color: black;
+        border: none;
+        box-shadow: none;
+      }
+
+      .hero h1,
+      .section-title {
+        color: black;
+      }
+
+      .report-text {
+        color: black;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .row {
+        flex-direction: column;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .gan {
+        font-size: 28px;
+      }
+
+      .ji {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
@@ -89,7 +301,7 @@
     </div>
 
     <div class="form-card">
-      <input id="name" placeholder="이름">
+      <input id="name" placeholder="이름을 입력하세요" />
 
       <div class="row">
         <select id="year"></select>
@@ -111,6 +323,10 @@
       <button onclick="analyze()">사주 리포트 보기</button>
       <button class="secondary" onclick="unlock()">결제하고 전체보기</button>
       <button class="secondary" onclick="downloadPDF()">PDF 저장</button>
+
+      <div class="notice">
+        현재 결제 기능은 테스트 모드입니다. 추후 실제 결제 시스템과 연결할 수 있습니다.
+      </div>
     </div>
 
     <div id="result"></div>
@@ -119,6 +335,43 @@
   <script>
     let isPaid = false;
     let lastFullResult = "";
+
+    const ganElement = {
+      갑: "목", 을: "목",
+      병: "화", 정: "화",
+      무: "토", 기: "토",
+      경: "금", 신: "금",
+      임: "수", 계: "수"
+    };
+
+    const jiElement = {
+      자: "수", 축: "토", 인: "목", 묘: "목",
+      진: "토", 사: "화", 오: "화", 미: "토",
+      신: "금", 유: "금", 술: "토", 해: "수"
+    };
+
+    const hiddenGan = {
+      자: "계",
+      축: "기·계·신",
+      인: "갑·병·무",
+      묘: "을",
+      진: "무·을·계",
+      사: "병·무·경",
+      오: "정·기",
+      미: "기·정·을",
+      신: "경·임·무",
+      유: "신",
+      술: "무·신·정",
+      해: "임·갑"
+    };
+
+    const elementClass = {
+      목: "wood",
+      화: "fire",
+      토: "earth",
+      금: "metal",
+      수: "water"
+    };
 
     function pad(num) {
       return String(num).padStart(2, "0");
@@ -160,6 +413,125 @@
 
     fillOptions();
 
+    function splitGanji(value) {
+      return {
+        gan: value ? value[0] : "",
+        ji: value ? value[1] : ""
+      };
+    }
+
+    function getElementScores(pillars) {
+      const scores = { 목: 0, 화: 0, 토: 0, 금: 0, 수: 0 };
+      const list = [pillars.year, pillars.month, pillars.day, pillars.hour];
+
+      list.forEach((ganji, index) => {
+        const { gan, ji } = splitGanji(ganji);
+
+        if (ganElement[gan]) scores[ganElement[gan]] += 1;
+        if (jiElement[ji]) scores[jiElement[ji]] += 1.5;
+
+        if (index === 1 && jiElement[ji]) {
+          scores[jiElement[ji]] += 1.5;
+        }
+      });
+
+      return scores;
+    }
+
+    function renderPillars(pillars) {
+      const labels = ["년", "월", "일", "시"];
+      const values = [pillars.year, pillars.month, pillars.day, pillars.hour];
+
+      const stems = values.map(v => splitGanji(v).gan);
+      const branches = values.map(v => splitGanji(v).ji);
+      const hiddens = branches.map(b => hiddenGan[b] || "");
+
+      return `
+        <div class="card">
+          <h3 class="section-title">1. 사주팔자 원국표</h3>
+
+          <table class="manse-table">
+            <tr>
+              <th class="manse-label"></th>
+              ${labels.map(label => `<th>${label}</th>`).join("")}
+            </tr>
+            <tr>
+              <td class="manse-label">천간</td>
+              ${stems.map(s => `<td class="gan">${s}</td>`).join("")}
+            </tr>
+            <tr>
+              <td class="manse-label">지지</td>
+              ${branches.map(b => `<td class="ji">${b}</td>`).join("")}
+            </tr>
+            <tr>
+              <td class="manse-label">지장간</td>
+              ${hiddens.map(h => `<td class="hidden">${h}</td>`).join("")}
+            </tr>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderElementChart(pillars) {
+      const scores = getElementScores(pillars);
+      const max = Math.max(...Object.values(scores), 1);
+      const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+
+      const rows = ["목", "화", "토", "금", "수"].map(el => {
+        const percent = Math.round((scores[el] / max) * 100);
+
+        return `
+          <div class="element-row">
+            <div>${el}</div>
+            <div class="bar-bg">
+              <div class="bar ${elementClass[el]}" style="width:${percent}%"></div>
+            </div>
+            <div>${scores[el]}점</div>
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="card">
+          <h3 class="section-title">2. 오행 세력 도표</h3>
+          ${rows}
+          <div class="summary">
+            가장 강한 오행은 <strong>${sorted[0][0]}</strong>입니다.<br>
+            두 번째 강한 오행은 <strong>${sorted[1][0]}</strong>입니다.<br>
+            이 구조를 기준으로 신강신약과 용신 방향을 해석합니다.
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDaewoon(daewoon) {
+      if (!daewoon || !daewoon.list) return "";
+
+      const text =
+        `${daewoon.startInfo || ""}\n\n` +
+        daewoon.list.map(d =>
+          `${d.startAge}세~${d.endAge}세: ${d.ganji}대운 (${d.startYear}년~${d.endYear}년)`
+        ).join("\n");
+
+      return `
+        <div class="card">
+          <h3 class="section-title">3. 대운 흐름</h3>
+          <div class="report-text">${text}</div>
+        </div>
+      `;
+    }
+
+    function formatReport(text) {
+      if (!text) return "리포트 결과가 비어 있습니다.";
+
+      return text
+        .replace(/\*\*/g, "")
+        .replace(/###/g, "")
+        .replace(/(\d+\.\s)/g, "\n\n$1")
+        .replace(/([가-힣]+운)/g, "\n\n$1")
+        .trim();
+    }
+
     function unlock() {
       isPaid = true;
       alert("결제 완료 테스트: 전체 리포트가 열렸습니다.");
@@ -185,7 +557,12 @@
         return;
       }
 
-      resultBox.innerHTML = `<div class="card">리포트를 생성 중입니다...</div>`;
+      resultBox.innerHTML = `
+        <div class="card loading">
+          <div class="spinner"></div>
+          사주 리포트를 생성하는 중입니다. 잠시만 기다려주세요.
+        </div>
+      `;
 
       try {
         const res = await fetch("/analyze", {
@@ -208,43 +585,26 @@
           return;
         }
 
-        const report = data.result || "리포트 결과가 비어 있습니다.";
-        const preview = report.slice(0, 500);
+        const report = formatReport(data.result);
+        const preview = report.slice(0, 650);
 
-        const pillarsHTML = data.pillars ? `
-          <div class="card">
-            <h3 class="section-title">1. 사주팔자 원국표</h3>
-            <p>년주: ${data.pillars.year}</p>
-            <p>월주: ${data.pillars.month}</p>
-            <p>일주: ${data.pillars.day}</p>
-            <p>시주: ${data.pillars.hour}</p>
-          </div>
-        ` : "";
-
-        const daewoonHTML = data.daewoon ? `
-          <div class="card">
-            <h3 class="section-title">2. 대운 흐름</h3>
-            <div class="report-text">
-${data.daewoon.startInfo || ""}
-
-${data.daewoon.list ? data.daewoon.list.map(d =>
-`${d.startAge}세~${d.endAge}세: ${d.ganji}대운 (${d.startYear}년~${d.endYear}년)`
-).join("\n") : ""}
-            </div>
-          </div>
-        ` : "";
+        const pillarsHTML = data.pillars ? renderPillars(data.pillars) : "";
+        const chartHTML = data.pillars ? renderElementChart(data.pillars) : "";
+        const daewoonHTML = renderDaewoon(data.daewoon);
 
         const fullHTML = `
           ${pillarsHTML}
+          ${chartHTML}
           ${daewoonHTML}
           <div class="card">
-            <h3 class="section-title">프리미엄 해석</h3>
+            <h3 class="section-title">4. 프리미엄 해석</h3>
             <div class="report-text">${report}</div>
           </div>
         `;
 
         const previewHTML = `
           ${pillarsHTML}
+          ${chartHTML}
           ${daewoonHTML}
           <div class="card">
             <h3 class="section-title">무료 미리보기</h3>
@@ -260,7 +620,12 @@ ${data.daewoon.list ? data.daewoon.list.map(d =>
         resultBox.innerHTML = isPaid ? fullHTML : previewHTML;
 
       } catch (err) {
-        resultBox.innerHTML = `<div class="card">연결 오류 발생: ${err.message}</div>`;
+        resultBox.innerHTML = `
+          <div class="card">
+            연결 오류 발생: ${err.message}<br><br>
+            Render 서버가 재배포 중이거나, server.js의 /analyze 경로가 맞지 않을 수 있습니다.
+          </div>
+        `;
       }
     }
 
