@@ -81,6 +81,7 @@
 
     .dashboard{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin-top:18px}
     .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
     .card{
       border:1px solid rgba(212,175,55,.38);
       border-radius:18px;padding:18px;
@@ -117,7 +118,7 @@
       background:rgba(0,0,0,.35)
     }
     @media(max-width:950px){
-      .layout,.dashboard{grid-template-columns:1fr}
+      .layout,.dashboard,.grid2{grid-template-columns:1fr}
       .grid3{grid-template-columns:1fr}
       .row{flex-direction:column}
       .top{display:block}
@@ -237,7 +238,34 @@ const hiddenGan = {
 
 const elementMap = {
   "甲":"목","乙":"목","丙":"화","丁":"화","戊":"토","己":"토","庚":"금","辛":"금","壬":"수","癸":"수",
-  "갑":"목","을":"목","병":"화","정":"화","무":"토","기":"토","경":"금","신":"금","임":"수","계":"수"
+  "갑":"목","을":"목","병":"화","정":"화","무":"토","기":"토","경":"금","신":"금","임":"수","계":"수",
+
+  "寅":"목","卯":"목","巳":"화","午":"화","辰":"토","戌":"토","丑":"토","未":"토","申":"금","酉":"금","亥":"수","子":"수",
+  "인":"목","묘":"목","사":"화","오":"화","진":"토","술":"토","축":"토","미":"토","신":"금","유":"금","해":"수","자":"수"
+};
+
+const itemInfo = {
+  "甲": { element:"목", name:"성장 아이템", desc:"시작, 기획, 교육, 확장, 새 판을 여는 힘" },
+  "乙": { element:"목", name:"섬세한 성장 아이템", desc:"관계 조율, 감각, 브랜딩, 꾸준한 확장" },
+  "丙": { element:"화", name:"태양 아이템", desc:"노출, 인기, 표현, 무대, 사람을 끌어오는 힘" },
+  "丁": { element:"화", name:"불씨 아이템", desc:"콘텐츠, 감성, 집중력, 작지만 강한 영향력" },
+  "戊": { element:"토", name:"기반 아이템", desc:"신뢰, 관리, 부동산, 조직, 버티는 힘" },
+  "己": { element:"토", name:"현실화 아이템", desc:"실무, 돌봄, 설계, 정리, 생활형 수익" },
+  "庚": { element:"금", name:"결단 아이템", desc:"판단, 절단, 기술, 규칙, 구조를 세우는 힘" },
+  "辛": { element:"금", name:"정교함 아이템", desc:"디자인, 미감, 전문성, 브랜드 고급화" },
+  "壬": { element:"수", name:"흐름 아이템", desc:"정보, 유통, 이동, 네트워크, 큰 흐름을 타는 힘" },
+  "癸": { element:"수", name:"지혜 아이템", desc:"학습, 분석, 상담, 숨은 지식, 직관" },
+
+  "갑": { element:"목", name:"성장 아이템", desc:"시작, 기획, 교육, 확장, 새 판을 여는 힘" },
+  "을": { element:"목", name:"섬세한 성장 아이템", desc:"관계 조율, 감각, 브랜딩, 꾸준한 확장" },
+  "병": { element:"화", name:"태양 아이템", desc:"노출, 인기, 표현, 무대, 사람을 끌어오는 힘" },
+  "정": { element:"화", name:"불씨 아이템", desc:"콘텐츠, 감성, 집중력, 작지만 강한 영향력" },
+  "무": { element:"토", name:"기반 아이템", desc:"신뢰, 관리, 부동산, 조직, 버티는 힘" },
+  "기": { element:"토", name:"현실화 아이템", desc:"실무, 돌봄, 설계, 정리, 생활형 수익" },
+  "경": { element:"금", name:"결단 아이템", desc:"판단, 절단, 기술, 규칙, 구조를 세우는 힘" },
+  "신": { element:"금", name:"정교함 아이템", desc:"디자인, 미감, 전문성, 브랜드 고급화" },
+  "임": { element:"수", name:"흐름 아이템", desc:"정보, 유통, 이동, 네트워크, 큰 흐름을 타는 힘" },
+  "계": { element:"수", name:"지혜 아이템", desc:"학습, 분석, 상담, 숨은 지식, 직관" }
 };
 
 function splitPillar(p){
@@ -247,12 +275,56 @@ function splitPillar(p){
 function getElementStats(p){
   const keys=["year","month","day","hour"];
   const count={목:0,화:0,토:0,금:0,수:0};
+
   keys.forEach(k=>{
     const s=splitPillar(p[k]);
-    const e=elementMap[s.gan];
-    if(e) count[e]++;
+
+    const ganEl = elementMap[s.gan];
+    if(ganEl) count[ganEl] += 1;
+
+    const jiEl = elementMap[s.ji];
+    if(jiEl) count[jiEl] += 1;
+
+    const hidden = hiddenGan[s.ji];
+    if(hidden){
+      hidden.split("·").forEach(h=>{
+        const e = elementMap[h];
+        if(e) count[e] += 0.5;
+      });
+    }
   });
+
   return count;
+}
+
+function getHiddenItemsFromPillars(p){
+  const keys = ["year","month","day","hour"];
+  const items = [];
+
+  keys.forEach(k=>{
+    const ji = splitPillar(p[k]).ji;
+    const hidden = hiddenGan[ji];
+
+    if(hidden){
+      hidden.split("·").forEach(h=>{
+        const info = itemInfo[h];
+        if(info){
+          items.push({
+            pillar: k,
+            gan: h,
+            ji,
+            ...info
+          });
+        }
+      });
+    }
+  });
+
+  return items;
+}
+
+function getStrongestElement(stats){
+  return Object.entries(stats).sort((a,b)=>b[1]-a[1])[0];
 }
 
 function renderPillars(p){
@@ -268,6 +340,8 @@ function renderPillars(p){
   const dayGan = splitPillar(p.day).gan;
   const dayElement = elementMap[dayGan] || "-";
   const stats=getElementStats(p);
+  const strongest=getStrongestElement(stats);
+  const maxVal=Math.max(...Object.values(stats),1);
 
   return `
   <div class="dashboard">
@@ -304,12 +378,15 @@ function renderPillars(p){
         <p>중심 속성은 <strong>${dayElement}</strong> 기운입니다.</p>
         <span class="badge">주인공 ${dayGan}</span>
         <span class="badge">${dayElement} 전장</span>
+        <span class="badge">강세 ${strongest ? strongest[0] : "-"} 기운</span>
       </div>
+
       <div class="card" style="margin-top:12px">
         <h3>오행 병력</h3>
+        <p class="small">천간 1점 + 지지 1점 + 지장간 0.5점으로 계산합니다.</p>
         ${Object.entries(stats).map(([k,v])=>`
-          <div>${k} 기운 ${v}</div>
-          <div class="bar"><i style="width:${Math.min(v*25,100)}%"></i></div>
+          <div style="margin-top:10px">${k} 기운 ${v}</div>
+          <div class="bar"><i style="width:${Math.min((v/maxVal)*100,100)}%"></i></div>
         `).join("")}
       </div>
     </div>
@@ -318,32 +395,52 @@ function renderPillars(p){
 
 function renderItems(p){
   if(!p) return "";
-  const jis=["year","month","day","hour"].map(k=>splitPillar(p[k]).ji);
-  const hiddens=jis.map(ji=>hiddenGan[ji] || "-");
+
+  const items = getHiddenItemsFromPillars(p);
+  const pillarName = { year:"년주", month:"월주", day:"일주", hour:"시주" };
+
+  const grouped = {
+    목: items.filter(x=>x.element==="목"),
+    화: items.filter(x=>x.element==="화"),
+    토: items.filter(x=>x.element==="토"),
+    금: items.filter(x=>x.element==="금"),
+    수: items.filter(x=>x.element==="수")
+  };
+
+  const strongest = Object.entries(grouped).sort((a,b)=>b[1].length-a[1].length)[0];
 
   return `
   <div class="box" style="margin-top:18px">
     <h2 class="section-title">핵심 아이템, 지장간</h2>
-    <div class="grid3">
-      <div class="card">
-        <h3>💰 재성 아이템</h3>
-        <p>돈, 시장, 현실 자원, 외부 기회를 의미합니다.</p>
-        <span class="badge">돈 아이템</span>
-      </div>
-      <div class="card">
-        <h3>📝 식상 아이템</h3>
-        <p>말, 글, 콘텐츠, 표현, 생산 능력을 의미합니다.</p>
-        <span class="badge">콘텐츠 아이템</span>
-      </div>
-      <div class="card">
-        <h3>🛡️ 관성 아이템</h3>
-        <p>직업, 자리, 책임, 사회적 신뢰를 의미합니다.</p>
-        <span class="badge">직업 아이템</span>
-      </div>
-    </div>
-    <p class="small" style="margin-top:14px">
-      현재 원국 지장간: ${hiddens.join(" / ")}
+
+    <p class="small">
+      지장간은 겉으로 드러난 성격이 아니라 원국 안쪽에 숨어 있는 아이템입니다.
+      평소에는 잠들어 있다가 대운과 세운이 맞을 때 현실 능력으로 튀어나옵니다.
     </p>
+
+    <div class="grid3">
+      ${items.map(item=>`
+        <div class="card">
+          <h3>${item.gan} · ${item.name}</h3>
+          <p>${item.desc}</p>
+          <span class="badge">${item.element} 아이템</span>
+          <span class="badge">${pillarName[item.pillar]} ${item.ji} 속</span>
+        </div>
+      `).join("")}
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3>아이템 해석 요약</h3>
+      <p>
+        현재 원국 안에는 총 <strong>${items.length}</strong>개의 지장간 아이템이 숨어 있습니다.
+        가장 많이 반복되는 아이템 계열은
+        <strong>${strongest ? strongest[0] : "-"}</strong> 기운입니다.
+      </p>
+      <p>
+        이 기운은 단순한 오행 숫자가 아니라 인생에서 반복적으로 꺼내 쓰게 되는 숨은 무기입니다.
+        대운이 이 계열을 건드리면 평소에는 생각만 하던 일이 현실 행동으로 바뀌기 쉽습니다.
+      </p>
+    </div>
   </div>`;
 }
 
@@ -422,7 +519,7 @@ async function analyze(){
       <div class="box hero">
         <div>
           <h2>${name}님의 전쟁지도</h2>
-          <p>당신의 원국은 고정된 판결문이 아니라, 지금부터 읽어야 할 전략 지도입니다.</p>
+          <p>당신의 원국은 고정된 판결문이 아니라 지금부터 읽어야 할 전략 지도입니다.</p>
         </div>
       </div>
       ${renderPillars(data.pillars)}
