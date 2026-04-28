@@ -88,6 +88,51 @@ function makeDaewoon(eightChar, gender) {
   }
 }
 
+function makeSewoon(startYear = new Date().getFullYear()) {
+  const stems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
+  const branches = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+
+  const elementMap = {
+    "甲": "목", "乙": "목", "丙": "화", "丁": "화", "戊": "토", "己": "토", "庚": "금", "辛": "금", "壬": "수", "癸": "수",
+    "子": "수", "丑": "토", "寅": "목", "卯": "목", "辰": "토", "巳": "화", "午": "화", "未": "토", "申": "금", "酉": "금", "戌": "토", "亥": "수",
+  };
+
+  const themeMap = {
+    목: "성장, 시작, 확장, 공부, 기획",
+    화: "노출, 인기, 표현, 콘텐츠, 홍보",
+    토: "현실화, 정리, 기반, 부동산, 안정",
+    금: "결단, 정리, 기술, 계약, 구조화",
+    수: "정보, 이동, 유통, 지식, 흐름",
+  };
+
+  const list = [];
+
+  for (let i = 0; i < 10; i++) {
+    const year = Number(startYear) + i;
+    const stem = stems[(year - 4) % 10];
+    const branch = branches[(year - 4) % 12];
+    const ganji = stem + branch;
+
+    const stemElement = elementMap[stem];
+    const branchElement = elementMap[branch];
+
+    list.push({
+      year,
+      ganji,
+      stem,
+      branch,
+      stemElement,
+      branchElement,
+      theme: `${themeMap[stemElement]} / ${themeMap[branchElement]}`,
+    });
+  }
+
+  return {
+    startInfo: `${startYear}년부터 10년 세운 흐름입니다. 세운은 매년 들어오는 사건의 날씨이며, 실제 아이템을 꺼내 쓰는 타이밍입니다.`,
+    list,
+  };
+}
+
 async function handleAnalyze(req, res) {
   try {
     console.log("요청 데이터:", req.body);
@@ -106,6 +151,7 @@ async function handleAnalyze(req, res) {
 
     const pillarsRaw = getSaju(year, month, day, hour, minute, safeCalendar);
     const daewoon = makeDaewoon(pillarsRaw.eightChar, gender);
+    const sewoon = makeSewoon(new Date().getFullYear());
 
     const pillars = {
       year: pillarsRaw.year,
@@ -133,6 +179,10 @@ async function handleAnalyze(req, res) {
 대운 정보:
 ${daewoon.startInfo}
 ${daewoon.list.map(d => `${d.startAge}세~${d.endAge}세: ${d.ganji}대운 (${d.startYear}년~${d.endYear}년)`).join("\n")}
+
+세운 정보:
+${sewoon.startInfo}
+${sewoon.list.map(s => `${s.year}년 ${s.ganji}: 천간 ${s.stemElement}, 지지 ${s.branchElement} / ${s.theme}`).join("\n")}
 
 이 사람의 사주를 "사주전쟁" 세계관 + 명리전 이론 기반으로 프리미엄 리포트 형태로 작성하라.
 
@@ -190,6 +240,7 @@ ${daewoon.list.map(d => `${d.startAge}세~${d.endAge}세: ${d.ganji}대운 (${d.
       result: completion.choices[0].message.content,
       pillars,
       daewoon,
+      sewoon,
       calendarType: safeCalendar,
     });
   } catch (error) {
