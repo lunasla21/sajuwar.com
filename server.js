@@ -4,7 +4,7 @@ const path = require("path");
 require("dotenv").config();
 
 const OpenAI = require("openai");
-const { Solar } = require("lunar-javascript");
+const { Solar, Lunar } = require("lunar-javascript");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,15 +17,30 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-function getSaju(year, month, day, hour, minute) {
-  const solar = Solar.fromYmdHms(
-    Number(year),
-    Number(month),
-    Number(day),
-    Number(hour),
-    Number(minute || 0),
-    0
-  );
+function getSaju(year, month, day, hour, minute, calendarType) {
+  let solar;
+
+  if (calendarType === "lunar") {
+    const lunar = Lunar.fromYmdHms(
+      Number(year),
+      Number(month),
+      Number(day),
+      Number(hour),
+      Number(minute || 0),
+      0
+    );
+
+    solar = lunar.getSolar();
+  } else {
+    solar = Solar.fromYmdHms(
+      Number(year),
+      Number(month),
+      Number(day),
+      Number(hour),
+      Number(minute || 0),
+      0
+    );
+  }
 
   const lunar = solar.getLunar();
   const eightChar = lunar.getEightChar();
@@ -35,6 +50,7 @@ function getSaju(year, month, day, hour, minute) {
     month: eightChar.getMonth(),
     day: eightChar.getDay(),
     hour: eightChar.getTime(),
+    solarDate: `${solar.getYear()}-${String(solar.getMonth()).padStart(2, "0")}-${String(solar.getDay()).padStart(2, "0")}`,
   };
 }
 
@@ -56,9 +72,9 @@ function makeDaewoon(year) {
 
 async function handleAnalyze(req, res) {
   try {
-    const { name, birth, time, gender } = req.body;
+    const { name, birth, time, gender, calendarType } = req.body;
 
-    if (!name || !birth || !time || !gender) {
+    if (!name || !birth || !time || !gender || !calendarType) {
       return res.status(400).json({
         result: "입력값이 부족합니다.",
       });
@@ -67,13 +83,17 @@ async function handleAnalyze(req, res) {
     const [year, month, day] = birth.split("-");
     const [hour, minute] = time.split(":");
 
-    const pillars = getSaju(year, month, day, hour, minute);
-    const daewoon = makeDaewoon(year);
+    const pillars = getSaju(year, month, day, hour, minute, calendarType);
+    const daewoon = makeDaewoon(pillars.solarDate.slice(0, 4));
+
+    const calendarLabel = calendarType === "lunar" ? "음력" : "양력";
 
     const prompt = `
 이름: ${name}
 성별: ${gender}
-출생 정보: ${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분
+입력 기준: ${calendarLabel}
+입력 생년월일: ${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분
+양력 변환일: ${pillars.solarDate}
 
 사주팔자:
 년주: ${pillars.year}
@@ -118,47 +138,38 @@ async function handleAnalyze(req, res) {
 
 4. 숨겨진 아이템, 지장간 분석
 - 지장간이 왜 숨겨진 아이템인지 설명하라.
-- 이 사주의 지지 안에 숨어 있는 지장간을 중심으로 가능성을 설명하라.
 - 재성 아이템은 돈과 현실 자원으로, 관성 아이템은 직업과 자리로, 식상 아이템은 표현과 생산으로, 인성 아이템은 공부와 보호로 해석하라.
 - 지장간 아이템은 평소에는 잠들어 있다가 대운과 세운에서 켜질 수 있음을 설명하라.
-- 이 사람이 아직 쓰지 못한 능력, 돈이 되는 능력, 직업이 되는 능력을 구체적으로 설명하라.
 
 5. 대운 스위치
 - 대운을 인생의 10년 단위 스위치로 설명하라.
 - 현재 대운이 테스트 버전이라도, 주어진 대운 목록을 바탕으로 상징적 흐름을 설명하라.
 - 어떤 시기에 어떤 아이템이 켜질 수 있는지 설명하라.
-- 과거에 왜 막혔는지, 앞으로 어떤 흐름을 잡아야 하는지 설명하라.
 
 6. 세운 타이밍
 - 세운은 실제 사건이 들어오는 타이밍이라고 설명하라.
 - 돈, 직업, 관계, 이동, 도전의 타이밍을 상징적으로 설명하라.
-- 이 사람이 움직여야 하는 해와 조심해야 하는 해를 구분하라.
 - 단정적인 예언처럼 쓰지 말고, 가능성과 전략의 언어로 작성하라.
 
 7. 현실 번역
 - 이 사주 구조가 실제 삶에서 어떻게 나타나는지 설명하라.
 - 직업, 돈, 인간관계, 가족, 자존감, 도전 방식으로 나누어 설명하라.
-- 독자가 자기 이야기처럼 느낄 수 있도록 구체적으로 써라.
 
 8. 전투 전략, 행동 가이드
 - 지금 당장 해야 할 행동을 제시하라.
 - 피해야 할 선택을 제시하라.
-- 돈을 만들기 위한 행동, 직업을 바꾸기 위한 행동, 관계에서 지켜야 할 원칙을 제시하라.
 - 30일 전략, 90일 전략, 1년 전략으로 나누어 작성하라.
 
 9. 프리미엄 결론
 - 이 사람은 고정된 운명의 피해자가 아니라, 자기 아이템을 꺼내야 하는 플레이어라는 메시지로 마무리하라.
-- 마지막 문장은 강렬하고 기억에 남게 작성하라.
 
 작성 규칙:
 - 한국어로 작성하라.
 - 최소 4000자 이상 작성하라.
 - 절대 짧게 요약하지 말라.
 - 각 항목마다 최소 3문단 이상 작성하라.
-- 명리 이론 설명 → 사주전쟁 해석 → 개인 적용 → 현실 번역 → 행동 전략 순서가 느껴지게 작성하라.
 - 지나친 공포 마케팅은 금지한다.
 - 근거 없는 확정 예언은 금지한다.
-- 그러나 문장은 힘 있게 작성하라.
 - 판매용 프리미엄 리포트처럼 길고 깊게 작성하라.
 `;
 
@@ -183,6 +194,7 @@ async function handleAnalyze(req, res) {
       result: completion.choices[0].message.content,
       pillars,
       daewoon,
+      calendarType,
     });
   } catch (error) {
     console.error("분석 오류:", error);
