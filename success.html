@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>결제 완료</title>
+</head>
+<body>
+  <h2>결제가 완료되었습니다</h2>
+  <p>프리미엄 리포트를 열고 있습니다...</p>
+
+  <script>
+    localStorage.setItem("sajuwar_paid", "true");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
+  </script>
+</body>
+</html>

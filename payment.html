@@ -1,33 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>결제</title>
-<script src="https://js.tosspayments.com/v1/payment"></script>
+  <meta charset="UTF-8" />
+  <title>사주워 결제하기</title>
+  <script src="https://js.tosspayments.com/v1/payment"></script>
 </head>
+<body>
+  <h2>프리미엄 사주 리포트 결제</h2>
+  <button id="payButton">39,800원 결제하기</button>
 
-<body style="background:black;color:white;text-align:center;margin-top:100px;">
+  <script>
+    const clientKey = "여기에_토스_클라이언트키";
+    const tossPayments = TossPayments(clientKey);
 
-<h1>⚔️ 프리미엄 리포트 결제</h1>
-<p>₩19,800</p>
-
-<button onclick="pay()" style="padding:15px 30px;font-size:18px;">
-결제하기
-</button>
-
-<script>
-const clientKey = "여기에_토스_clientKey";
-
-function pay(){
-  TossPayments(clientKey).requestPayment("카드",{
-    amount:19800,
-    orderId:"order_"+Date.now(),
-    orderName:"사주전쟁 리포트",
-    successUrl: location.origin + "/?paid=true",
-    failUrl: location.origin + "/fail.html"
-  });
-}
-</script>
-
+    document.getElementById("payButton").addEventListener("click", function () {
+      tossPayments.requestPayment("카드", {
+        amount: 39800,
+        orderId: "SAJUWAR_" + new Date().getTime(),
+        orderName: "사주워 프리미엄 리포트",
+        customerName: "고객",
+        successUrl: window.location.origin + "/success.html",
+        failUrl: window.location.origin + "/fail.html"
+      });
+    });
+  </script>
 </body>
 </html>

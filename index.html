@@ -391,7 +391,7 @@ input::placeholder{
           <option value="여자">여자</option>
         </select>
         <button onclick="startBattleLoading(); analyze()">전투 분석 시작하기</button>
-        <button class="secondary" onclick="unlock()">결제하고 전체보기</button>
+        <button class="secondary" onclick="location.href='/payment.html'">결제하고 전체보기</button>
         <button class="secondary" onclick="downloadPDF()">PDF 저장</button>
 
         <div class="status">
@@ -458,6 +458,11 @@ input::placeholder{
 
 <script>
 let isPaid=false;
+
+if(localStorage.getItem("sajuwar_paid")==="true"){
+  isPaid=true;
+}
+
 let lastFullResult="";
 let loadingTimer=null;
 
