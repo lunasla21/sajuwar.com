@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>결제</title>
+<script src="https://js.tosspayments.com/v1/payment"></script>
+</head>
+
+<body style="background:black;color:white;text-align:center;margin-top:100px;">
+
+<h1>⚔️ 프리미엄 리포트 결제</h1>
+<p>₩19,800</p>
+
+<button onclick="pay()" style="padding:15px 30px;font-size:18px;">
+결제하기
+</button>
+
+<script>
+const clientKey = "여기에_토스_clientKey";
+
+function pay(){
+  TossPayments(clientKey).requestPayment("카드",{
+    amount:19800,
+    orderId:"order_"+Date.now(),
+    orderName:"사주전쟁 리포트",
+    successUrl: location.origin + "/?paid=true",
+    failUrl: location.origin + "/fail.html"
+  });
+}
+</script>
+
+</body>
+</html>

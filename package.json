@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "lunar-javascript": "^1.7.7",
+    "manseryeok": "^1.0.1",
+    "node-fetch": "^3.3.2",
+    "openai": "^6.34.0"
+  }
+}
