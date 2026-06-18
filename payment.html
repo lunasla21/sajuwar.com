@@ -1,27 +1,84 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>사주워 결제하기</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사주전쟁 | 프리미엄 리포트 결제</title>
   <script src="https://js.tosspayments.com/v1/payment"></script>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      color: #f6efdd;
+      background: radial-gradient(circle at top, #2a2112, #080807 58%);
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    }
+    .panel {
+      width: min(520px, calc(100% - 32px));
+      padding: 34px;
+      border: 1px solid rgba(242, 219, 141, 0.24);
+      background: rgba(18, 17, 14, 0.84);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+    }
+    h1 { margin: 0 0 14px; color: #f2db8d; }
+    p { color: #c8bfa9; line-height: 1.7; }
+    button, a {
+      width: 100%;
+      min-height: 50px;
+      display: grid;
+      place-items: center;
+      margin-top: 12px;
+      border: 0;
+      color: #17110a;
+      background: linear-gradient(135deg, #f2db8d, #d8ad4f);
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .secondary {
+      color: #f2db8d;
+      border: 1px solid rgba(242, 219, 141, 0.32);
+      background: rgba(8, 8, 7, 0.56);
+    }
+  </style>
 </head>
 <body>
-  <h2>프리미엄 사주 리포트 결제</h2>
-  <button id="payButton">39,800원 결제하기</button>
+  <main class="panel">
+    <p>프리미엄</p>
+    <h1>전체 전장 리포트 열기</h1>
+    <p>원국 8글자 심화 해석, 지장간 아이템, 대운 스위치, 세운 타이밍, 돈/일/관계 행동 전략까지 전체 리포트를 확인합니다.</p>
+    <h2>39,800원</h2>
+    <button id="payButton">토스 결제하기</button>
+    <button class="secondary" id="demoButton">테스트 결제 완료 처리</button>
+    <a class="secondary" href="/">메인으로 돌아가기</a>
+  </main>
 
   <script>
     const clientKey = "여기에_토스_클라이언트키";
-    const tossPayments = TossPayments(clientKey);
 
-    document.getElementById("payButton").addEventListener("click", function () {
+    document.getElementById("payButton").addEventListener("click", () => {
+      if (!clientKey || clientKey.includes("여기에")) {
+        alert("토스 클라이언트키가 아직 설정되지 않았습니다. 테스트 결제 완료 처리를 사용하세요.");
+        return;
+      }
+
+      const tossPayments = TossPayments(clientKey);
       tossPayments.requestPayment("카드", {
         amount: 39800,
-        orderId: "SAJUWAR_" + new Date().getTime(),
-        orderName: "사주워 프리미엄 리포트",
+        orderId: "SAJUWAR_" + Date.now(),
+        orderName: "사주전쟁 프리미엄 리포트",
         customerName: "고객",
         successUrl: window.location.origin + "/success.html",
         failUrl: window.location.origin + "/fail.html"
       });
+    });
+
+    document.getElementById("demoButton").addEventListener("click", () => {
+      localStorage.setItem("sajuwar_paid", "true");
+      window.location.href = "/success.html";
     });
   </script>
 </body>

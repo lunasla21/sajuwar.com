@@ -1,967 +1,1206 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>사주전쟁 | SAJUWAR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사주전쟁 | 지장간 아이템과 대운 스위치 리포트</title>
+  <meta name="description" content="원국의 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 분석하는 사주전쟁 리포트." />
   <style>
-    *{box-sizing:border-box}
-    body{
-      margin:0;
+    :root {
+      color-scheme: dark;
+      --ink: #080807;
+      --ink2: #11100d;
+      --panel: rgba(18, 17, 14, 0.78);
+      --paper: #f6efdd;
+      --muted: #c8bfa9;
+      --gold: #d8ad4f;
+      --gold2: #f2db8d;
+      --jade: #78b49a;
+      --red: #bc544e;
+      --line: rgba(246, 239, 221, 0.14);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--paper);
       background:
-        radial-gradient(circle at top,#2a2112,#070707 58%),
-        linear-gradient(180deg,#050505,#101010);
-      color:#f8f0d8;
-      font-family:Arial,"Noto Sans KR",sans-serif;
-      padding:24px;
+        radial-gradient(circle at 76% 14%, rgba(120, 180, 154, 0.16), transparent 32%),
+        radial-gradient(circle at 28% 0%, rgba(216, 173, 79, 0.18), transparent 34%),
+        linear-gradient(180deg, #080807, #14110d 45%, #080807);
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      line-height: 1.6;
     }
-    .app{max-width:1320px;margin:auto}
-    .top{
-      display:flex;justify-content:space-between;align-items:center;
-      border:1px solid rgba(212,175,55,.55);
-      border-radius:22px;padding:22px 28px;margin-bottom:20px;
-      background:linear-gradient(145deg,#151515,#080808);
-      box-shadow:0 0 38px rgba(212,175,55,.1)
-    }
-    .logo h1{margin:0;color:#d4af37;font-size:36px}
-    .logo p{margin:8px 0 0;color:#e9dca9}
-    .nav span{margin-left:20px;color:#e6d194;font-weight:800}
 
-    .box{
-      background:linear-gradient(145deg,#181818,#0c0c0c);
-      border:1px solid rgba(212,175,55,.45);
-      border-radius:20px;
-      padding:22px;
-      box-shadow:0 0 28px rgba(212,175,55,.06)
-    }
-    .layout{display:grid;grid-template-columns:330px 1fr;gap:20px}
-    .form input,.form select,.form button{
-      width:100%;padding:15px;margin:7px 0;border-radius:13px;
-      border:1px solid rgba(212,175,55,.45);font-size:16px
-    }
-    .form input,.form select{background:#090909;color:#fff}
-    button{
-      background:linear-gradient(135deg,#d4af37,#f6de8a);
-      color:#111;font-weight:900;cursor:pointer;border:none
-    }
-    button.secondary{
-      background:#242424;color:#d4af37;border:1px solid rgba(212,175,55,.55)
-    }
-    .row{display:flex;gap:10px}
-    .section-title{
-      color:#f3d36b;font-size:24px;margin:0 0 16px;
-      border-bottom:1px solid rgba(212,175,55,.25);padding-bottom:12px
-    }
-    .small{color:#cbbb87;font-size:14px;line-height:1.7}
-    .status{
-      display:flex;align-items:center;gap:14px;margin-top:16px;
-      border-top:1px solid rgba(212,175,55,.2);padding-top:18px
-    }
-    .circle{
-      width:70px;height:70px;border-radius:50%;
-      border:7px solid #d4af37;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;color:#ffe48a
-    }
-    .menu-card{
-      padding:16px;border-radius:15px;margin:10px 0;
-      border:1px solid rgba(212,175,55,.25);
-      background:rgba(212,175,55,.06)
-    }
-    .menu-card strong{color:#f5d46d}
+    button, input, select { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    p, h1, h2, h3 { margin-top: 0; }
 
-    .hero{
-      min-height:230px;
+    .app { min-height: 100vh; overflow: hidden; }
+    .topbar {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(242, 219, 141, 0.44);
+      color: var(--gold2);
+      background: rgba(0, 0, 0, 0.28);
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .hero {
+      position: relative;
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      min-height: 560px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 34px;
+      align-items: center;
+      padding: 44px 0 56px;
+    }
+
+    .hero-copy { position: relative; z-index: 2; }
+    .eyebrow {
+      margin-bottom: 12px;
+      color: var(--gold2);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin-bottom: 22px;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 660px;
+      color: #e2d8bf;
+      font-size: clamp(17px, 2vw, 21px);
+    }
+
+    .hero-map {
+      position: relative;
+      aspect-ratio: 1;
+      min-height: 420px;
+      border: 1px solid rgba(242, 219, 141, 0.2);
       background:
-        linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.25)),
-       radial-gradient(circle at right,#8a6118,#121212 62%);
-      display:flex;align-items:center;
+        radial-gradient(circle, rgba(242, 219, 141, 0.12) 0 2px, transparent 3px) 0 0 / 34px 34px,
+        conic-gradient(from 20deg, rgba(216, 173, 79, 0.18), rgba(120, 180, 154, 0.15), rgba(188, 84, 78, 0.12), rgba(216, 173, 79, 0.18)),
+        radial-gradient(circle, rgba(8, 8, 7, 0.08), rgba(8, 8, 7, 0.78) 70%);
+      box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.72), 0 0 80px rgba(216, 173, 79, 0.13);
+      overflow: hidden;
     }
-    .hero h2{font-size:36px;color:#f4d36b;margin:0 0 18px}
-    .hero p{line-height:1.9;font-size:17px;margin:0;color:#f3ead2}
 
-    .battle-loading{
-      min-height:520px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
+    .hero-map:before, .hero-map:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(246, 239, 221, 0.16);
+    }
+
+    .hero-map:before { inset: 11%; }
+    .hero-map:after { inset: 26%; border-color: rgba(120, 180, 154, 0.22); transform: rotate(24deg); }
+    .pillar, .item, .switch { position: absolute; }
+    .pillar {
+      width: 72px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(242, 219, 141, 0.36);
+      background: linear-gradient(180deg, rgba(246, 239, 221, 0.14), rgba(216, 173, 79, 0.08));
+      color: var(--gold2);
+      font-size: 26px;
+      font-weight: 900;
+    }
+
+    .p1 { left: 15%; top: 22%; transform: rotate(-12deg); }
+    .p2 { left: 42%; top: 13%; transform: rotate(8deg); }
+    .p3 { right: 15%; top: 32%; transform: rotate(-5deg); }
+    .p4 { left: 36%; bottom: 15%; transform: rotate(14deg); }
+    .core {
+      position: absolute;
+      left: 45%;
+      top: 52%;
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(242, 219, 141, 0.9), rgba(216, 173, 79, 0.2) 45%, transparent 70%);
+    }
+
+    .item {
+      width: 20px;
+      height: 20px;
+      transform: rotate(45deg);
+      box-shadow: 0 0 24px currentColor;
+    }
+
+    .i1 { left: 55%; top: 58%; color: var(--gold2); background: var(--gold2); }
+    .i2 { left: 38%; top: 64%; color: var(--jade); background: var(--jade); }
+    .i3 { left: 62%; top: 42%; color: var(--red); background: var(--red); }
+    .switch {
+      height: 2px;
+      width: 250px;
+      background: linear-gradient(90deg, transparent, rgba(242, 219, 141, 0.84), transparent);
+      transform-origin: left center;
+    }
+
+    .s1 { left: 36%; top: 56%; transform: rotate(-28deg); }
+    .s2 { left: 42%; top: 62%; transform: rotate(24deg); }
+
+    .input-band {
+      width: min(1180px, calc(100% - 40px));
+      margin: -22px auto 72px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .birth-panel { padding: 18px; }
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr 0.8fr 0.8fr;
+      gap: 12px;
+    }
+
+    .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .time-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    input, select {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid rgba(246, 239, 221, 0.16);
+      border-radius: 0;
+      padding: 0 12px;
+      color: var(--paper);
+      background: rgba(8, 8, 7, 0.74);
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: rgba(242, 219, 141, 0.68);
+      box-shadow: 0 0 0 3px rgba(216, 173, 79, 0.14);
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      min-height: 50px;
+      border: 0;
+      cursor: pointer;
+      color: #17110a;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+    }
+
+    .secondary {
+      padding: 0 18px;
+      color: var(--gold2);
+      border: 1px solid rgba(242, 219, 141, 0.34);
+      background: rgba(8, 8, 7, 0.58);
+    }
+
+    .content-band {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto 80px;
+    }
+
+    .section-head { max-width: 760px; margin-bottom: 28px; }
+    .section-head h2 { margin-bottom: 10px; font-size: clamp(30px, 4vw, 48px); line-height: 1.12; }
+    .section-head p { color: var(--muted); }
+    .report-stack { display: grid; gap: 18px; }
+
+    .box {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .section-title {
+      margin-bottom: 16px;
+      color: var(--gold2);
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .dashboard { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 18px; }
+    .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+
+    .card {
+      min-height: 160px;
+      padding: 18px;
+      border: 1px solid rgba(246, 239, 221, 0.12);
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .card h3 { margin-bottom: 10px; color: var(--gold2); font-size: 21px; }
+    .card p, .small { color: #d9cfb8; }
+    .small { font-size: 14px; }
+    .badge {
+      display: inline-block;
+      margin: 4px 4px 0 0;
+      padding: 5px 9px;
+      border: 1px solid rgba(242, 219, 141, 0.3);
+      color: var(--gold2);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .manse {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      text-align: center;
+      border: 1px solid rgba(242, 219, 141, 0.36);
+    }
+
+    .manse th, .manse td {
+      border: 1px solid rgba(242, 219, 141, 0.22);
+      padding: 13px 8px;
+    }
+
+    .label { width: 72px; color: var(--muted); background: rgba(216, 173, 79, 0.08); font-weight: 900; }
+    .gan, .ji { font-size: 34px; font-weight: 900; }
+    .gan { color: var(--gold2); }
+    .ji { color: #e5c765; }
+    .hidden-stems { color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+    .bar {
+      height: 9px;
+      margin-top: 6px;
+      background: rgba(246, 239, 221, 0.1);
+      overflow: hidden;
+    }
+
+    .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--jade), var(--gold2)); }
+    .report { white-space: pre-wrap; color: #f7efd9; font-size: 16px; line-height: 2.02; }
+
+    .free-tools {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .mini-form {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .fortune-result {
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px solid rgba(242, 219, 141, 0.18);
+      background: rgba(8, 8, 7, 0.48);
+      min-height: 170px;
+    }
+
+    .score-ring {
+      width: 104px;
+      height: 104px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      border: 2px solid rgba(242, 219, 141, 0.5);
+      color: var(--gold2);
+      font-size: 32px;
+      font-weight: 900;
+      background: radial-gradient(circle, rgba(216, 173, 79, 0.18), rgba(8, 8, 7, 0.4));
+    }
+
+    .fortune-list {
+      display: grid;
+      gap: 10px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fortune-list li {
+      position: relative;
+      padding-left: 18px;
+      color: #d9cfb8;
+    }
+
+    .fortune-list li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 7px;
+      height: 7px;
+      background: var(--jade);
+      transform: rotate(45deg);
+    }
+
+    .battle-loading {
+      min-height: 460px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
       background:
-        radial-gradient(circle at center,rgba(212,175,55,.18),rgba(0,0,0,.15) 35%,rgba(0,0,0,.82) 72%),
-        linear-gradient(145deg,#141414,#050505);
-      overflow:hidden;
-      position:relative;
-    }
-    .battle-loading:before{
-      content:"";
-      position:absolute;
-      width:420px;
-      height:420px;
-      border-radius:50%;
-      border:1px solid rgba(212,175,55,.25);
-      box-shadow:0 0 70px rgba(212,175,55,.12);
-      animation:pulseRing 2s infinite ease-in-out;
-    }
-    .battle-loading:after{
-      content:"⚔️";
-      position:absolute;
-      font-size:160px;
-      opacity:.055;
-      transform:rotate(-15deg);
-    }
-    .loading-content{position:relative;z-index:2}
-    .countdown{
-      margin-top:30px;
-      font-size:110px;
-      font-weight:900;
-      color:#f4d36b;
-      line-height:1;
-      text-shadow:0 0 32px rgba(212,175,55,.6);
-      letter-spacing:-4px;
-    }
-    .loading-line{
-      width:280px;
-      height:8px;
-      margin:26px auto 0;
-      border-radius:999px;
-      background:#242424;
-      overflow:hidden;
-      border:1px solid rgba(212,175,55,.25);
-    }
-    .loading-line i{
-      display:block;
-      height:100%;
-      width:0%;
-      background:linear-gradient(90deg,#d4af37,#ffe48a);
-      transition:width .8s ease;
-    }
-    .loading-message{
-      margin-top:22px;
-      color:#d8c48a;
-      font-size:18px;
-      line-height:1.8;
-    }
-    @keyframes pulseRing{
-      0%{transform:scale(.92);opacity:.35}
-      50%{transform:scale(1.04);opacity:.9}
-      100%{transform:scale(.92);opacity:.35}
+        radial-gradient(circle at center, rgba(216, 173, 79, 0.2), rgba(0, 0, 0, 0.1) 36%, rgba(0, 0, 0, 0.78) 76%),
+        #0d0c0a;
     }
 
-    .dashboard{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin-top:18px}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-    .card{
-      border:1px solid rgba(212,175,55,.38);
-      border-radius:18px;padding:18px;
-      background:rgba(255,255,255,.025)
-    }
-    .card h3{margin:0 0 12px;color:#f1cf64}
-    .badge{
-      display:inline-block;padding:7px 11px;margin:4px;
-      border-radius:999px;background:#2a2412;color:#ffe48a;
-      border:1px solid rgba(212,175,55,.4);font-size:13px
+    .battle-loading:before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      border: 1px solid rgba(242, 219, 141, 0.28);
+      animation: pulse 2s infinite ease-in-out;
     }
 
-    .manse{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;text-align:center;overflow:hidden;border-radius:16px;border:1px solid rgba(212,175,55,.55)}
-    .manse th,.manse td{border-right:1px solid rgba(212,175,55,.35);border-bottom:1px solid rgba(212,175,55,.25);padding:14px 8px}
-    .manse th:last-child,.manse td:last-child{border-right:none}
-    .manse tr:last-child td{border-bottom:none}
-    .label{width:78px;color:#c8b98a;background:rgba(212,175,55,.08);font-weight:800}
-    .gan{font-size:38px;font-weight:900;color:#ffe48a}
-    .ji{font-size:36px;font-weight:900;color:#e4c764}
-    .hidden{font-size:15px;line-height:1.6;color:#d8c48a;letter-spacing:1px}
+    .countdown {
+      margin: 26px 0 0;
+      color: var(--gold2);
+      font-size: 92px;
+      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 0 32px rgba(216, 173, 79, 0.5);
+    }
 
-    .bar{height:10px;background:#242424;border-radius:99px;overflow:hidden;margin-top:8px}
-    .bar i{display:block;height:100%;background:linear-gradient(90deg,#d4af37,#f5e29b)}
-    .report{
-      white-space:pre-wrap;line-height:2.05;font-size:16px;color:#f7efd9
+    .loading-line {
+      width: 280px;
+      height: 8px;
+      margin: 24px auto 0;
+      border: 1px solid rgba(242, 219, 141, 0.24);
+      background: rgba(246, 239, 221, 0.1);
+      overflow: hidden;
     }
-    .lock{
-      text-align:center;color:#f4dc8a;font-weight:900;line-height:1.9;
-      background:linear-gradient(135deg,rgba(212,175,55,.18),rgba(255,255,255,.03))
+
+    .loading-line i { display: block; width: 0%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); transition: width 0.35s ease; }
+    .lock {
+      text-align: center;
+      background:
+        repeating-linear-gradient(135deg, rgba(246, 239, 221, 0.06) 0 1px, transparent 1px 12px),
+        rgba(18, 17, 14, 0.82);
     }
-    @media(max-width:950px){
-      .layout,.dashboard,.grid2{grid-template-columns:1fr}
-      .grid3{grid-template-columns:1fr}
-      .row{flex-direction:column}
-      .top{display:block}
-      .nav{margin-top:15px}
-      .nav span{display:inline-block;margin:8px 12px 0 0}
-      .countdown{font-size:82px}
-      .battle-loading{min-height:430px}
+
+    .premium-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 22px 0; }
+    .premium-item {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      text-align: left;
+      align-items: start;
+      padding: 16px;
+      border: 1px solid rgba(242, 219, 141, 0.16);
+      background: rgba(255, 255, 255, 0.03);
     }
+
+    .premium-item span {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(242, 219, 141, 0.34);
+      color: var(--gold2);
+      font-weight: 900;
+    }
+
+    .premium-item strong { color: var(--paper); }
+    .premium-item p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
 
     .footer {
-  margin-top: 70px;
-  padding: 70px 20px;
-  border-top: 1px solid rgba(212,175,55,0.15);
-  background:
-    linear-gradient(180deg,#050505,#0d0d0d);
-}
+      margin-top: 80px;
+      padding: 54px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      background: #080807;
+    }
 
-.footer-inner {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
-}
+    .footer h3 { color: var(--gold2); }
+    .footer a { color: var(--gold2); font-weight: 800; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(120px);
+      max-width: min(540px, calc(100% - 32px));
+      padding: 14px 18px;
+      border: 1px solid rgba(242, 219, 141, 0.35);
+      background: rgba(18, 17, 14, 0.95);
+      color: var(--paper);
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease;
+      z-index: 20;
+    }
 
-.footer h3 {
-  color: #d4af37;
-  font-size: 26px;
-  margin-bottom: 35px;
-  letter-spacing: -1px;
-}
+    .toast.show { transform: translateX(-50%) translateY(0); }
 
-.footer p {
-  margin: 14px 0;
-  font-size: 15px;
-  color: #d7c79a;
-}
+    @keyframes pulse {
+      0%, 100% { transform: scale(0.92); opacity: 0.35; }
+      50% { transform: scale(1.04); opacity: 0.9; }
+    }
 
-.footer-links {
-  margin-top: 35px;
-}
+    @media (max-width: 960px) {
+      .hero, .dashboard { grid-template-columns: 1fr; }
+      .hero-map { min-height: 360px; }
+      .field-grid, .grid2, .grid3, .free-tools { grid-template-columns: 1fr; }
+      .button-row { grid-template-columns: 1fr; }
+      .nav { display: none; }
+    }
 
-.footer-links a {
-  color: #f1c84c;
-  margin: 0 14px;
-  text-decoration: none;
-  font-size: 17px;
-  font-weight: 700;
-  transition: 0.2s;
-}
-
-.footer-links a:hover {
-  opacity: 0.7;
-}
-
-.copyright {
-  margin-top: 40px;
-  font-size: 14px;
-  color: #777;
-}
-
-.premium-lock{
-  text-align:center;
-  padding:40px 20px;
-}
-
-.premium-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-  margin-top:25px;
-}
-
-.premium-item{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:20px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(212,175,55,0.18);
-  text-align:left;
-  backdrop-filter:blur(4px);
-}
-
-.hero-content{
-  width:100%;
-}
-
-.hero-badge{
-  display:inline-block;
-  padding:10px 18px;
-  border-radius:999px;
-  background:rgba(212,175,55,0.12);
-  border:1px solid rgba(212,175,55,0.3);
-  color:#ffe48a;
-  font-size:14px;
-  margin-bottom:25px;
-}
-
-.hero h2{
-  font-size:48px;
-  line-height:1.2;
-  margin-bottom:28px;
-  color:#f5d46d;
-  letter-spacing:-2px;
-}
-
-.hero p{
-  font-size:20px;
-  line-height:2;
-  color:#e6d8ae;
-}
-
-.hero-stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  margin-top:45px;
-}
-
-.hero-card{
-  padding:22px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(212,175,55,0.15);
-  backdrop-filter:blur(5px);
-   box-shadow:0 0 25px rgba(212,175,55,0.08);
-}
-
-.hero-card strong{
-  display:block;
-  color:#ffe48a;
-  margin-bottom:10px;
-  font-size:18px;
-}
-
-.hero-card span{
-  color:#cdbf92;
-  font-size:14px;
-  line-height:1.6;
-}
-
-@media(max-width:900px){
-
-  .hero h2{
-    font-size:38px;
-  }
-
-  .hero p{
-    font-size:17px;
-  }
-
-  .hero-stats{
-    grid-template-columns:1fr;
-  }
-
-}
-select {
-  color: #f5d46d !important;
-}
-
-select option {
-  background: #111 !important;
-  color: #f5d46d !important;
-}
-input::placeholder{
-  color:#8f7a3d;
-}
-</style>
- 
+    @media (max-width: 560px) {
+      .topbar, .hero, .input-band, .content-band { width: min(100% - 28px, 1180px); }
+      .hero { padding-top: 22px; min-height: auto; }
+      h1 { font-size: 42px; }
+      .hero-map { min-height: 310px; }
+      .box { padding: 18px; }
+      .manse th, .manse td { padding: 10px 4px; }
+      .gan, .ji { font-size: 27px; }
+      .premium-grid { grid-template-columns: 1fr; }
+      .mini-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-
 <body>
-<div class="app">
-  <div class="top">
-    <div class="logo">
-      <h1>⚔️ 사주전쟁 <span style="font-size:16px">SAJU WAR</span></h1>
-      <p>원국은 전쟁터, 지장간은 아이템, 대운은 스위치입니다.</p>
-    </div>
-    <div class="nav">
-      <span>전쟁지도</span>
-      <span>아이템 분석</span>
-      <span>대운 스위치</span>
-      <span>세운 타이밍</span>
-    </div>
-  </div>
+  <div class="app" id="top">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="사주전쟁 홈">
+        <span class="brand-mark">戰</span>
+        <span>사주전쟁 SAJU WAR</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="#report">전장 리포트</a>
+        <a href="#premium">유료 해석</a>
+        <a href="/payment.html">결제</a>
+      </nav>
+    </header>
 
-  <div class="layout">
-    <aside>
-      <div class="box form">
-        <h2 class="section-title">전투 정보 입력</h2>
-        <input id="name" placeholder="이름" />
-        <select id="calendarType">
-          <option value="solar">양력</option>
-          <option value="lunar">음력</option>
-        </select>
-        <div class="row">
-          <select id="year"></select>
-          <select id="month"></select>
-          <select id="day"></select>
-        </div>
-        <div class="row">
-          <select id="hour"></select>
-          <select id="minute"></select>
-        </div>
-        <select id="gender">
-          <option value="">성별 선택</option>
-          <option value="남자">남자</option>
-          <option value="여자">여자</option>
-        </select>
-        <button onclick="startBattleLoading(); analyze()">전투 분석 시작하기</button>
-        <button class="secondary" onclick="location.href='/payment.html'">결제하고 전체보기</button>
-        <button class="secondary" onclick="downloadPDF()">PDF 저장</button>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">원국은 판결문이 아니라 오해의 전쟁터입니다</p>
+        <h1 id="hero-title">나쁜 사주에도 꺼낼 아이템은 있습니다</h1>
+        <p class="lead">
+          강한 기운이 타고난 팔자의 주도권을 잡고 있어도, 지장간에는 내가 꿈꾸는 능력과 기회가 숨어 있습니다.
+          대운은 그 아이템의 스위치를 켜고, 세운은 현실에서 꺼내 쓸 타이밍을 줍니다.
+        </p>
+      </div>
 
-        <div class="status">
-          <div class="circle">85%</div>
-          <div>
-            <strong style="color:#f4d36b">분석 진행률</strong>
-            <div class="small">무료 결과는 핵심 전장만 공개됩니다.</div>
+      <div class="hero-map" aria-hidden="true">
+        <div class="pillar p1">年</div>
+        <div class="pillar p2">月</div>
+        <div class="pillar p3">日</div>
+        <div class="pillar p4">時</div>
+        <div class="core"></div>
+        <div class="item i1"></div>
+        <div class="item i2"></div>
+        <div class="item i3"></div>
+        <div class="switch s1"></div>
+        <div class="switch s2"></div>
+      </div>
+    </section>
+
+    <section class="input-band" aria-label="사주 입력">
+      <form class="panel birth-panel" id="sajuForm">
+        <div class="field-grid">
+          <label>
+            이름
+            <input id="name" autocomplete="name" placeholder="이름을 입력하세요" />
+          </label>
+          <label>
+            생년월일
+            <span class="row">
+              <select id="year"></select>
+              <select id="month"></select>
+              <select id="day"></select>
+            </span>
+          </label>
+          <label>
+            태어난 시간
+            <span class="time-row">
+              <select id="hour"></select>
+              <select id="minute"></select>
+            </span>
+          </label>
+          <label>
+            기준 / 성별
+            <span class="time-row">
+              <select id="calendarType">
+                <option value="solar">양력</option>
+                <option value="lunar">음력</option>
+              </select>
+              <select id="gender">
+                <option value="">성별</option>
+                <option value="female">여성</option>
+                <option value="male">남성</option>
+              </select>
+            </span>
+          </label>
+        </div>
+        <div class="button-row">
+          <button type="submit">무료 전장 리포트 보기</button>
+          <button class="secondary" type="button" onclick="location.href='/payment.html'">결제하고 전체보기</button>
+          <button class="secondary" type="button" onclick="downloadPDF()">PDF 저장</button>
+        </div>
+      </form>
+    </section>
+
+    <main class="content-band" id="report">
+      <div class="section-head">
+        <p class="eyebrow">사주전쟁 리포트</p>
+        <h2>원국의 전장과 숨겨진 아이템을 읽습니다</h2>
+        <p>무료 리포트는 핵심 전장과 지장간 아이템을 먼저 보여주고, 유료 리포트는 대운/세운 타이밍과 행동 전략까지 깊게 엽니다.</p>
+      </div>
+      <div id="result" class="report-stack">
+        <div class="box">
+          <h2 class="section-title">사주전쟁의 관점</h2>
+          <div class="grid3">
+            <article class="card">
+              <h3>원국 전장</h3>
+              <p>사주의 8글자는 서로 충돌하고 밀어내며 한 사람의 기본 전투 방식을 만듭니다.</p>
+            </article>
+            <article class="card">
+              <h3>지장간 아이템</h3>
+              <p>겉으로 보이지 않는 재능, 욕망, 돈의 씨앗은 지지 속 지장간에 숨어 있습니다.</p>
+            </article>
+            <article class="card">
+              <h3>대운 스위치</h3>
+              <p>대운은 없던 능력을 만드는 것이 아니라, 이미 안에 있던 아이템 회로를 켭니다.</p>
+            </article>
           </div>
         </div>
       </div>
+    </main>
 
-      <div class="box" style="margin-top:18px">
-        <h2 class="section-title">전쟁 요약</h2>
-        <div class="menu-card"><strong>⚔️ 원국</strong><br><span class="small">타고난 전장 구조</span></div>
-        <div class="menu-card"><strong>🎒 지장간</strong><br><span class="small">숨겨진 아이템</span></div>
-        <div class="menu-card"><strong>🔘 대운</strong><br><span class="small">인생 스위치</span></div>
-        <div class="menu-card"><strong>⏱️ 세운</strong><br><span class="small">사용 타이밍</span></div>
-      </div>
-    </aside>
-
-    <main>
-      <div id="result">
-       <div class="box hero">
-  <div class="hero-content">
-
-    <div class="hero-badge">
-      ⚔️ AI 운명 분석 시스템 활성화
-    </div>
-
-    <h2>
-      당신의 운명은 이미<br>
-      전쟁을 시작했다
-    </h2>
-
-    <p>
-      원국은 타고난 전장입니다.<br>
-      지장간은 숨겨진 아이템이며,<br>
-      대운은 인생의 스위치입니다.
-    </p>
-
-    <div class="hero-stats">
-
-      <div class="hero-card">
-        <strong>원국 분석</strong>
-        <span>사주 전장 구조 해석</span>
+    <section class="content-band" id="free-play">
+      <div class="section-head">
+        <p class="eyebrow">무료 콘텐츠</p>
+        <h2>오늘의 운세와 간단 궁합</h2>
+        <p>가볍게 눌러보는 무료 코너입니다. 깊은 해석은 프리미엄 리포트로 연결하고, 여기서는 오늘 바로 써먹을 한 줄 전략을 보여줍니다.</p>
       </div>
 
-      <div class="hero-card">
-        <strong>지장간 탐색</strong>
-        <span>숨겨진 재능 아이템 발견</span>
+      <div class="free-tools">
+        <article class="box">
+          <h2 class="section-title">오늘의 아이템 운세</h2>
+          <p class="small">이름과 생년월일만으로 오늘 켜지는 분위기를 가볍게 뽑아봅니다.</p>
+          <div class="mini-form">
+            <label>
+              이름
+              <input id="todayName" placeholder="이름" />
+            </label>
+            <label>
+              생년월일
+              <input id="todayBirth" type="date" />
+            </label>
+            <button type="button" onclick="makeTodayFortune()">오늘의 운세 보기</button>
+          </div>
+          <div class="fortune-result" id="todayResult">
+            <h3>오늘의 전장 대기 중</h3>
+            <p class="small">입력 후 버튼을 누르면 오늘 꺼내기 좋은 아이템이 열립니다.</p>
+          </div>
+        </article>
+
+        <article class="box">
+          <h2 class="section-title">간단 궁합 스파크</h2>
+          <p class="small">두 사람의 리듬을 재미로 보는 무료 궁합입니다. 관계의 정답보다 오늘의 사용법에 가깝습니다.</p>
+          <div class="mini-form">
+            <div class="mini-row">
+              <label>
+                나
+                <input id="matchNameA" placeholder="내 이름" />
+              </label>
+              <label>
+                상대
+                <input id="matchNameB" placeholder="상대 이름" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                내 생년월일
+                <input id="matchBirthA" type="date" />
+              </label>
+              <label>
+                상대 생년월일
+                <input id="matchBirthB" type="date" />
+              </label>
+            </div>
+            <button type="button" onclick="makeCompatibility()">궁합 스파크 보기</button>
+          </div>
+          <div class="fortune-result" id="matchResult">
+            <h3>궁합 전장 대기 중</h3>
+            <p class="small">두 사람의 정보를 넣으면 관계 점수와 오늘의 대화 전략이 나옵니다.</p>
+          </div>
+        </article>
       </div>
+    </section>
 
-      <div class="hero-card">
-        <strong>대운 스위치</strong>
-        <span>인생 흐름 활성화 시기</span>
-      </div>
-
-    </div>
-
+    <footer class="footer">
+      <h3>사주전쟁 SAJU WAR</h3>
+      <p>원국은 전쟁터, 지장간은 아이템, 대운은 스위치, 세운은 타이밍입니다.</p>
+      <p><a href="/payment.html">프리미엄 리포트 열기</a></p>
+      <p>© 2026 SAJU WAR. All rights reserved.</p>
+    </footer>
   </div>
-</div>
-</div>
-</main>
 
-<script>
-let isPaid=false;
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-if(localStorage.getItem("sajuwar_paid")==="true"){
-  isPaid=true;
-}
+  <script>
+    let isPaid = localStorage.getItem("sajuwar_paid") === "true";
+    let lastFullResult = "";
+    let loadingTimer = null;
 
-let lastFullResult="";
-let loadingTimer=null;
+    const hiddenGan = {
+      "子": ["癸"],
+      "丑": ["己", "癸", "辛"],
+      "寅": ["甲", "丙", "戊"],
+      "卯": ["乙"],
+      "辰": ["戊", "乙", "癸"],
+      "巳": ["丙", "戊", "庚"],
+      "午": ["丁", "己"],
+      "未": ["己", "丁", "乙"],
+      "申": ["庚", "壬", "戊"],
+      "酉": ["辛"],
+      "戌": ["戊", "辛", "丁"],
+      "亥": ["壬", "甲"]
+    };
 
-function pad(n){return String(n).padStart(2,"0")}
+    const elementMap = {
+      "甲": "목", "乙": "목", "寅": "목", "卯": "목",
+      "丙": "화", "丁": "화", "巳": "화", "午": "화",
+      "戊": "토", "己": "토", "辰": "토", "戌": "토", "丑": "토", "未": "토",
+      "庚": "금", "辛": "금", "申": "금", "酉": "금",
+      "壬": "수", "癸": "수", "亥": "수", "子": "수"
+    };
 
-function fillOptions(){
-  const year=document.getElementById("year");
-  const month=document.getElementById("month");
-  const day=document.getElementById("day");
-  const hour=document.getElementById("hour");
-  const minute=document.getElementById("minute");
+    const itemInfo = {
+      "甲": { name: "성장 아이템", desc: "시작, 기획, 교육, 확장, 새로운 길을 여는 힘" },
+      "乙": { name: "섬세한 성장 아이템", desc: "관계 조율, 감각, 브랜드, 유연한 생존력" },
+      "丙": { name: "태양 아이템", desc: "노출, 인기, 표현, 무대, 사람을 끌어오는 힘" },
+      "丁": { name: "불빛 아이템", desc: "콘텐츠 감성, 집중력, 작지만 깊게 남는 영향력" },
+      "戊": { name: "기반 아이템", desc: "신뢰, 관리, 부동산, 조직, 버티는 힘" },
+      "己": { name: "현실화 아이템", desc: "실무, 루틴, 설계, 정리, 생활형 수익" },
+      "庚": { name: "결단 아이템", desc: "판단, 실행, 기술, 규칙, 구조를 세우는 힘" },
+      "辛": { name: "정교함 아이템", desc: "디자인, 미감, 전문성, 고급화, 날카로운 분석" },
+      "壬": { name: "흐름 아이템", desc: "정보, 유통, 이동, 네트워크, 큰 흐름을 읽는 힘" },
+      "癸": { name: "지혜 아이템", desc: "학습, 분석, 상담, 숨은 지식, 조용한 통찰" }
+    };
 
-  year.innerHTML='<option value="">출생연도</option>';
-  month.innerHTML='<option value="">월</option>';
-  day.innerHTML='<option value="">일</option>';
-  hour.innerHTML='<option value="">시</option>';
-  minute.innerHTML='<option value="">분</option>';
+    const pillarLabel = { year: "년주", month: "월주", day: "일주", hour: "시주" };
+    const elementCopy = {
+      "목": "새롭게 시작하고 키우는 힘",
+      "화": "드러내고 표현하고 사람을 모으는 힘",
+      "토": "버티고 축적하고 현실화하는 힘",
+      "금": "판단하고 정리하고 결과를 만드는 힘",
+      "수": "배우고 연결하고 흐름을 읽는 힘"
+    };
 
-  for(let y=1950;y<=2026;y++) year.innerHTML+=`<option value="${y}">${y}년</option>`;
-  for(let m=1;m<=12;m++) month.innerHTML+=`<option value="${pad(m)}">${m}월</option>`;
-  for(let d=1;d<=31;d++) day.innerHTML+=`<option value="${pad(d)}">${d}일</option>`;
-  for(let h=0;h<=23;h++) hour.innerHTML+=`<option value="${pad(h)}">${h}시</option>`;
-  for(let m=0;m<60;m+=5) minute.innerHTML+=`<option value="${pad(m)}">${m}분</option>`;
-}
-fillOptions();
+    function pad(n) { return String(n).padStart(2, "0"); }
 
-function startBattleLoading(){
-  if(loadingTimer) clearInterval(loadingTimer);
+    function fillOptions() {
+      const year = document.getElementById("year");
+      const month = document.getElementById("month");
+      const day = document.getElementById("day");
+      const hour = document.getElementById("hour");
+      const minute = document.getElementById("minute");
 
-  const result=document.getElementById("result");
-  let count=10;
+      year.innerHTML = '<option value="">년도</option>';
+      month.innerHTML = '<option value="">월</option>';
+      day.innerHTML = '<option value="">일</option>';
+      hour.innerHTML = '<option value="">시</option>';
+      minute.innerHTML = '<option value="">분</option>';
 
-  const messages=[
-    "원국의 병력을 소집하고 있습니다.",
-    "지장간 아이템을 탐색하고 있습니다.",
-    "오행 세력의 균형을 계산하고 있습니다.",
-    "대운 스위치를 확인하고 있습니다.",
-    "세운 타이밍의 문을 열고 있습니다.",
-    "전략 리포트의 첫 장을 펼치고 있습니다."
-  ];
-
-  result.innerHTML=`
-    <div class="box battle-loading">
-      <div class="loading-content">
-        <h2>⚔️ 전쟁지도 해금 중...</h2>
-        <p>지금, 당신의 원국 안쪽에 숨어 있던 아이템을 불러옵니다.</p>
-        <div id="countdown" class="countdown">10</div>
-        <div class="loading-line"><i id="loadingBar"></i></div>
-        <div id="loadingText" class="loading-message">전장의 문이 열리고 있습니다.</div>
-      </div>
-    </div>
-  `;
-
-  loadingTimer=setInterval(()=>{
-    count--;
-    const countdown=document.getElementById("countdown");
-    const loadingText=document.getElementById("loadingText");
-    const loadingBar=document.getElementById("loadingBar");
-
-    if(countdown) countdown.textContent=count > 0 ? count : "開";
-    if(loadingText) loadingText.textContent=messages[Math.abs(count)%messages.length];
-    if(loadingBar) loadingBar.style.width=`${Math.min((10-count)*10,100)}%`;
-
-    if(count<=0){
-      clearInterval(loadingTimer);
-      loadingTimer=null;
-      if(loadingText) loadingText.textContent="분석 결과를 정리하고 있습니다.";
+      for (let y = 1950; y <= 2026; y++) year.innerHTML += `<option value="${y}">${y}년</option>`;
+      for (let m = 1; m <= 12; m++) month.innerHTML += `<option value="${pad(m)}">${m}월</option>`;
+      for (let d = 1; d <= 31; d++) day.innerHTML += `<option value="${pad(d)}">${d}일</option>`;
+      for (let h = 0; h <= 23; h++) hour.innerHTML += `<option value="${pad(h)}">${h}시</option>`;
+      for (let m = 0; m < 60; m += 5) minute.innerHTML += `<option value="${pad(m)}">${m}분</option>`;
     }
-  },1000);
-}
 
-function stopBattleLoading(){
-  if(loadingTimer){
-    clearInterval(loadingTimer);
-    loadingTimer=null;
-  }
-}
+    fillOptions();
 
-const hiddenGan = {
-  "子":"癸", "丑":"己·癸·辛", "寅":"甲·丙·戊", "卯":"乙",
-  "辰":"戊·乙·癸", "巳":"丙·戊·庚", "午":"丁·己", "未":"己·丁·乙",
-  "申":"庚·壬·戊", "酉":"辛", "戌":"戊·辛·丁", "亥":"壬·甲",
-  "자":"계", "축":"기·계·신", "인":"갑·병·무", "묘":"을",
-  "진":"무·을·계", "사":"병·무·경", "오":"정·기", "미":"기·정·을",
-  "신":"경·임·무", "유":"신", "술":"무·신·정", "해":"임·갑"
-};
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 3200);
+    }
 
-const elementMap = {
-  "甲":"목","乙":"목","丙":"화","丁":"화","戊":"토","己":"토","庚":"금","辛":"금","壬":"수","癸":"수",
-  "갑":"목","을":"목","병":"화","정":"화","무":"토","기":"토","경":"금","신":"금","임":"수","계":"수",
-  "寅":"목","卯":"목","巳":"화","午":"화","辰":"토","戌":"토","丑":"토","未":"토","申":"금","酉":"금","亥":"수","子":"수",
-  "인":"목","묘":"목","사":"화","오":"화","진":"토","술":"토","축":"토","미":"토","신":"금","유":"금","해":"수","자":"수"
-};
+    function splitPillar(value) {
+      return { gan: value ? value[0] : "-", ji: value ? value[1] : "-" };
+    }
 
-const itemInfo = {
-  "甲": { element:"목", name:"성장 아이템", desc:"시작, 기획, 교육, 확장, 새 판을 여는 힘" },
-  "乙": { element:"목", name:"섬세한 성장 아이템", desc:"관계 조율, 감각, 브랜딩, 꾸준한 확장" },
-  "丙": { element:"화", name:"태양 아이템", desc:"노출, 인기, 표현, 무대, 사람을 끌어오는 힘" },
-  "丁": { element:"화", name:"불씨 아이템", desc:"콘텐츠, 감성, 집중력, 작지만 강한 영향력" },
-  "戊": { element:"토", name:"기반 아이템", desc:"신뢰, 관리, 부동산, 조직, 버티는 힘" },
-  "己": { element:"토", name:"현실화 아이템", desc:"실무, 돌봄, 설계, 정리, 생활형 수익" },
-  "庚": { element:"금", name:"결단 아이템", desc:"판단, 절단, 기술, 규칙, 구조를 세우는 힘" },
-  "辛": { element:"금", name:"정교함 아이템", desc:"디자인, 미감, 전문성, 브랜드 고급화" },
-  "壬": { element:"수", name:"흐름 아이템", desc:"정보, 유통, 이동, 네트워크, 큰 흐름을 타는 힘" },
-  "癸": { element:"수", name:"지혜 아이템", desc:"학습, 분석, 상담, 숨은 지식, 직관" },
-  "갑": { element:"목", name:"성장 아이템", desc:"시작, 기획, 교육, 확장, 새 판을 여는 힘" },
-  "을": { element:"목", name:"섬세한 성장 아이템", desc:"관계 조율, 감각, 브랜딩, 꾸준한 확장" },
-  "병": { element:"화", name:"태양 아이템", desc:"노출, 인기, 표현, 무대, 사람을 끌어오는 힘" },
-  "정": { element:"화", name:"불씨 아이템", desc:"콘텐츠, 감성, 집중력, 작지만 강한 영향력" },
-  "무": { element:"토", name:"기반 아이템", desc:"신뢰, 관리, 부동산, 조직, 버티는 힘" },
-  "기": { element:"토", name:"현실화 아이템", desc:"실무, 돌봄, 설계, 정리, 생활형 수익" },
-  "경": { element:"금", name:"결단 아이템", desc:"판단, 절단, 기술, 규칙, 구조를 세우는 힘" },
-  "신": { element:"금", name:"정교함 아이템", desc:"디자인, 미감, 전문성, 브랜드 고급화" },
-  "임": { element:"수", name:"흐름 아이템", desc:"정보, 유통, 이동, 네트워크, 큰 흐름을 타는 힘" },
-  "계": { element:"수", name:"지혜 아이템", desc:"학습, 분석, 상담, 숨은 지식, 직관" }
-};
-
-function splitPillar(p){
-  return { gan:p ? p[0] : "-", ji:p ? p[1] : "-" };
-}
-
-function getElementStats(p){
-  const keys=["year","month","day","hour"];
-  const count={목:0,화:0,토:0,금:0,수:0};
-
-  keys.forEach(k=>{
-    const s=splitPillar(p[k]);
-
-    const ganEl = elementMap[s.gan];
-    if(ganEl) count[ganEl] += 1;
-
-    const jiEl = elementMap[s.ji];
-    if(jiEl) count[jiEl] += 1;
-
-    const hidden = hiddenGan[s.ji];
-    if(hidden){
-      hidden.split("·").forEach(h=>{
-        const e = elementMap[h];
-        if(e) count[e] += 0.5;
+    function getElementStats(pillars) {
+      const stats = { "목": 0, "화": 0, "토": 0, "금": 0, "수": 0 };
+      ["year", "month", "day", "hour"].forEach((key) => {
+        const { gan, ji } = splitPillar(pillars[key]);
+        if (elementMap[gan]) stats[elementMap[gan]] += 1;
+        if (elementMap[ji]) stats[elementMap[ji]] += 1;
+        (hiddenGan[ji] || []).forEach((stem) => {
+          if (elementMap[stem]) stats[elementMap[stem]] += 0.5;
+        });
       });
+      return stats;
     }
-  });
 
-  return count;
-}
-
-function getHiddenItemsFromPillars(p){
-  const keys = ["year","month","day","hour"];
-  const items = [];
-
-  keys.forEach(k=>{
-    const ji = splitPillar(p[k]).ji;
-    const hidden = hiddenGan[ji];
-
-    if(hidden){
-      hidden.split("·").forEach(h=>{
-        const info = itemInfo[h];
-        if(info){
+    function getHiddenItems(pillars) {
+      const items = [];
+      ["year", "month", "day", "hour"].forEach((key) => {
+        const ji = splitPillar(pillars[key]).ji;
+        (hiddenGan[ji] || []).forEach((stem) => {
+          const info = itemInfo[stem];
+          if (!info) return;
           items.push({
-            pillar: k,
-            gan: h,
+            pillar: key,
             ji,
+            stem,
+            element: elementMap[stem],
             ...info
           });
-        }
+        });
       });
+      return items;
     }
-  });
 
-  return items;
-}
+    function getStrongest(stats) {
+      return Object.entries(stats).sort((a, b) => b[1] - a[1])[0] || ["-", 0];
+    }
 
-function getStrongestElement(stats){
-  return Object.entries(stats).sort((a,b)=>b[1]-a[1])[0];
-}
+    function renderPillars(pillars) {
+      const cols = [
+        { key: "year", value: pillars.year },
+        { key: "month", value: pillars.month },
+        { key: "day", value: pillars.day },
+        { key: "hour", value: pillars.hour }
+      ];
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const dayGan = splitPillar(pillars.day).gan;
+      const dayElement = elementMap[dayGan] || "-";
+      const maxVal = Math.max(...Object.values(stats), 1);
 
-function renderPillars(p){
-  if(!p) return "";
+      return `
+        <div class="dashboard">
+          <section class="box">
+            <h2 class="section-title">원국 전장 구성</h2>
+            <table class="manse">
+              <tr>
+                <th class="label"></th>
+                ${cols.map((col) => `<th>${pillarLabel[col.key]}</th>`).join("")}
+              </tr>
+              <tr>
+                <td class="label">천간</td>
+                ${cols.map((col) => `<td class="gan">${splitPillar(col.value).gan}</td>`).join("")}
+              </tr>
+              <tr>
+                <td class="label">지지</td>
+                ${cols.map((col) => `<td class="ji">${splitPillar(col.value).ji}</td>`).join("")}
+              </tr>
+              <tr>
+                <td class="label">지장간</td>
+                ${cols.map((col) => {
+                  const ji = splitPillar(col.value).ji;
+                  return `<td class="hidden-stems">${(hiddenGan[ji] || ["-"]).join(" · ")}</td>`;
+                }).join("")}
+              </tr>
+            </table>
+          </section>
 
-  const cols = [
-    {label:"년주", value:p.year},
-    {label:"월주", value:p.month},
-    {label:"일주(나)", value:p.day},
-    {label:"시주", value:p.hour}
-  ];
-
-  const dayGan = splitPillar(p.day).gan;
-  const dayElement = elementMap[dayGan] || "-";
-  const stats=getElementStats(p);
-  const strongest=getStrongestElement(stats);
-  const maxVal=Math.max(...Object.values(stats),1);
-
-  return `
-  <div class="dashboard">
-    <div class="box">
-      <h2 class="section-title">사주 원국 구성</h2>
-      <table class="manse">
-        <tr>
-          <th class="label"></th>
-          ${cols.map(c=>`<th>${c.label}</th>`).join("")}
-        </tr>
-        <tr>
-          <td class="label">천간</td>
-          ${cols.map(c=>`<td class="gan">${splitPillar(c.value).gan}</td>`).join("")}
-        </tr>
-        <tr>
-          <td class="label">지지</td>
-          ${cols.map(c=>`<td class="ji">${splitPillar(c.value).ji}</td>`).join("")}
-        </tr>
-        <tr>
-          <td class="label">지장간</td>
-          ${cols.map(c=>{
-            const ji=splitPillar(c.value).ji;
-            return `<td class="hidden">${hiddenGan[ji] || "-"}</td>`;
-          }).join("")}
-        </tr>
-      </table>
-    </div>
-
-    <div class="box">
-      <h2 class="section-title">전장 상태 분석</h2>
-      <div class="card">
-        <h3>일간 캐릭터</h3>
-        <p>이 사주의 주인공은 <strong>${dayGan}</strong> 일간입니다.</p>
-        <p>중심 속성은 <strong>${dayElement}</strong> 기운입니다.</p>
-        <span class="badge">주인공 ${dayGan}</span>
-        <span class="badge">${dayElement} 전장</span>
-        <span class="badge">강세 ${strongest ? strongest[0] : "-"} 기운</span>
-      </div>
-
-      <div class="card" style="margin-top:12px">
-        <h3>오행 병력</h3>
-        <p class="small">천간 1점 + 지지 1점 + 지장간 0.5점으로 계산합니다.</p>
-        ${Object.entries(stats).map(([k,v])=>`
-          <div style="margin-top:10px">${k} 기운 ${v}</div>
-          <div class="bar"><i style="width:${Math.min((v/maxVal)*100,100)}%"></i></div>
-        `).join("")}
-      </div>
-    </div>
-  </div>`;
-}
-
-function renderItems(p){
-  if(!p) return "";
-
-  const items = getHiddenItemsFromPillars(p);
-  const pillarName = { year:"년주", month:"월주", day:"일주", hour:"시주" };
-
-  const grouped = {
-    목: items.filter(x=>x.element==="목"),
-    화: items.filter(x=>x.element==="화"),
-    토: items.filter(x=>x.element==="토"),
-    금: items.filter(x=>x.element==="금"),
-    수: items.filter(x=>x.element==="수")
-  };
-
-  const strongest = Object.entries(grouped).sort((a,b)=>b[1].length-a[1].length)[0];
-
-  return `
-  <div class="box" style="margin-top:18px">
-    <h2 class="section-title">핵심 아이템, 지장간</h2>
-    <p class="small">
-      지장간은 겉으로 드러난 성격이 아니라 원국 안쪽에 숨어 있는 아이템입니다.
-      평소에는 잠들어 있다가 대운과 세운이 맞을 때 현실 능력으로 튀어나옵니다.
-    </p>
-
-    <div class="grid3">
-      ${items.map(item=>`
-        <div class="card">
-          <h3>${item.gan} · ${item.name}</h3>
-          <p>${item.desc}</p>
-          <span class="badge">${item.element} 아이템</span>
-          <span class="badge">${pillarName[item.pillar]} ${item.ji} 속</span>
+          <section class="box">
+            <h2 class="section-title">전장 상태</h2>
+            <article class="card">
+              <h3>일간 캐릭터</h3>
+              <p>이 사주의 주인공은 <strong>${dayGan}</strong> 일간입니다. 중심 속성은 <strong>${dayElement}</strong> 기운이며, 현재 원국에서 가장 크게 반복되는 세력은 <strong>${strongElement}</strong>입니다.</p>
+              <span class="badge">주인공 ${dayGan}</span>
+              <span class="badge">${dayElement} 일간</span>
+              <span class="badge">${strongElement} 세력 우세</span>
+            </article>
+            <article class="card" style="margin-top:12px">
+              <h3>오행 병력</h3>
+              <p class="small">천간과 지지, 지장간을 합쳐 원국의 세력 분포를 가볍게 시각화했습니다.</p>
+              ${Object.entries(stats).map(([key, value]) => `
+                <div style="margin-top:10px">${key} 기운 ${value} · ${elementCopy[key]}</div>
+                <div class="bar"><i style="width:${Math.min((value / maxVal) * 100, 100)}%"></i></div>
+              `).join("")}
+            </article>
+          </section>
         </div>
-      `).join("")}
-    </div>
+      `;
+    }
 
-    <div class="card" style="margin-top:14px">
-      <h3>아이템 해석 요약</h3>
-      <p>
-        현재 원국 안에는 총 <strong>${items.length}</strong>개의 지장간 아이템이 숨어 있습니다.
-        가장 많이 반복되는 아이템 계열은
-        <strong>${strongest ? strongest[0] : "-"}</strong> 기운입니다.
-      </p>
-      <p>
-        이 기운은 단순한 오행 숫자가 아니라 인생에서 반복적으로 꺼내 쓰게 되는 숨은 무기입니다.
-        대운이 이 계열을 건드리면 평소에는 생각만 하던 일이 현실 행동으로 바뀌기 쉽습니다.
-      </p>
-    </div>
-  </div>`;
-}
+    function renderItems(pillars) {
+      const items = getHiddenItems(pillars);
+      const [strongElement] = getStrongest(items.reduce((acc, item) => {
+        acc[item.element] = (acc[item.element] || 0) + 1;
+        return acc;
+      }, { "목": 0, "화": 0, "토": 0, "금": 0, "수": 0 }));
 
-function renderDaewoon(d){
-  if(!d || !d.list) return "";
-  return `
-  <div class="box" style="margin-top:18px">
-    <h2 class="section-title">대운 스위치</h2>
-    <p class="small">${d.startInfo || ""}</p>
-    <div class="grid3">
-      ${d.list.map(x=>`
-        <div class="card">
-          <h3>${x.startAge}세~${x.endAge}세</h3>
-          <p style="font-size:24px;color:#ffe48a;font-weight:900">${x.ganji}</p>
-          <p class="small">${x.startYear}년~${x.endYear}년</p>
+      return `
+        <section class="box">
+          <h2 class="section-title">지장간 아이템</h2>
+          <p class="small">지장간은 겉으로 드러난 팔자 뒤에 숨어 있는 아이템 창고입니다. 원국이 불리해 보여도, 이 안에 있는 아이템이 대운과 세운을 만날 때 현실의 무기가 됩니다.</p>
+          <div class="grid3" style="margin-top:18px">
+            ${items.map((item) => `
+              <article class="card">
+                <h3>${item.stem} · ${item.name}</h3>
+                <p>${item.desc}</p>
+                <span class="badge">${item.element} 아이템</span>
+                <span class="badge">${pillarLabel[item.pillar]} ${item.ji} 속</span>
+              </article>
+            `).join("")}
+          </div>
+          <article class="card" style="margin-top:14px">
+            <h3>아이템 해석 요약</h3>
+            <p>현재 원국 안에는 총 <strong>${items.length}</strong>개의 지장간 아이템이 확인됩니다. 가장 많이 반복되는 아이템 계열은 <strong>${strongElement}</strong>입니다. 이 계열은 평소에는 잠복해 있다가, 관련 대운과 세운이 들어올 때 갑자기 현실적인 선택지로 떠오르기 쉽습니다.</p>
+          </article>
+        </section>
+      `;
+    }
+
+    function renderDaewoon(daewoon) {
+      if (!daewoon || !daewoon.list || !daewoon.list.length) return "";
+      return `
+        <section class="box">
+          <h2 class="section-title">대운 스위치</h2>
+          <p class="small">${daewoon.startInfo || ""}</p>
+          <div class="grid3" style="margin-top:18px">
+            ${daewoon.list.map((item) => `
+              <article class="card">
+                <h3>${item.startAge}세 - ${item.endAge}세</h3>
+                <p style="font-size:26px;color:var(--gold2);font-weight:900">${item.ganji}</p>
+                <p class="small">${item.startYear}년 - ${item.endYear}년</p>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderSewoon(sewoon) {
+      if (!sewoon || !sewoon.list || !sewoon.list.length) return "";
+      return `
+        <section class="box">
+          <h2 class="section-title">세운 타이밍</h2>
+          <p class="small">${sewoon.startInfo || ""}</p>
+          <div class="grid3" style="margin-top:18px">
+            ${sewoon.list.map((item) => `
+              <article class="card">
+                <h3>${item.year}년</h3>
+                <p style="font-size:26px;color:var(--gold2);font-weight:900">${item.ganji}</p>
+                <p class="small">천간 ${item.stemElement} / 지지 ${item.branchElement}</p>
+                <p class="small">${item.theme}</p>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function cleanText(text) {
+      return (text || "결과가 비어 있습니다.")
+        .replace(/\*\*/g, "")
+        .replace(/###/g, "")
+        .replace(/(\n\s*){3,}/g, "\n\n")
+        .trim();
+    }
+
+    function startBattleLoading() {
+      if (loadingTimer) clearInterval(loadingTimer);
+      const result = document.getElementById("result");
+      const messages = [
+        "원국의 병력을 배치하고 있습니다.",
+        "지장간 아이템을 찾고 있습니다.",
+        "대운 스위치가 켜지는 구간을 확인하고 있습니다.",
+        "세운 타이밍과 행동 카드를 맞추고 있습니다.",
+        "무료 리포트와 잠금 영역을 구성하고 있습니다."
+      ];
+      let count = 10;
+
+      result.innerHTML = `
+        <div class="box battle-loading">
+          <div style="position:relative;z-index:2">
+            <h2 class="section-title">전장 지도를 여는 중</h2>
+            <p>당신의 원국 안에 숨어 있는 아이템을 불러오고 있습니다.</p>
+            <div id="countdown" class="countdown">10</div>
+            <div class="loading-line"><i id="loadingBar"></i></div>
+            <p id="loadingText" class="small" style="margin-top:20px">전장의 문이 열리고 있습니다.</p>
+          </div>
         </div>
-      `).join("")}
-    </div>
-  </div>`;
-}
+      `;
 
-function renderSewoon(s){
-  if(!s || !s.list) return "";
-  return `
-  <div class="box" style="margin-top:18px">
-    <h2 class="section-title">세운 타이밍</h2>
-    <p class="small">${s.startInfo || ""}</p>
-    <div class="grid3">
-      ${s.list.map(x=>`
-        <div class="card">
-          <h3>${x.year}년</h3>
-          <p style="font-size:24px;color:#ffe48a;font-weight:900">${x.ganji}</p>
-          <p class="small">천간: ${x.stemElement} / 지지: ${x.branchElement}</p>
-          <p class="small">${x.theme}</p>
-        </div>
-      `).join("")}
-    </div>
-  </div>`;
-}
+      loadingTimer = setInterval(() => {
+        count -= 1;
+        const countdown = document.getElementById("countdown");
+        const loadingText = document.getElementById("loadingText");
+        const loadingBar = document.getElementById("loadingBar");
+        if (countdown) countdown.textContent = count > 0 ? count : "열림";
+        if (loadingText) loadingText.textContent = messages[Math.abs(count) % messages.length];
+        if (loadingBar) loadingBar.style.width = `${Math.min((10 - count) * 10, 100)}%`;
+        if (count <= 0) {
+          clearInterval(loadingTimer);
+          loadingTimer = null;
+        }
+      }, 700);
+    }
 
-function cleanText(t){
-  return (t || "결과가 비어 있습니다.")
-    .replace(/\*\*/g,"")
-    .replace(/###/g,"")
-    .replace(/(\d+\.\s)/g,"\n\n$1")
-    .trim();
-}
+    function stopBattleLoading() {
+      if (loadingTimer) clearInterval(loadingTimer);
+      loadingTimer = null;
+    }
 
-function unlock(){
-  isPaid=true;
-  alert("결제 완료 테스트: 전체 리포트가 열렸습니다.");
-  if(lastFullResult) document.getElementById("result").innerHTML=lastFullResult;
-}
+    async function analyze() {
+      const name = document.getElementById("name").value.trim();
+      const calendarType = document.getElementById("calendarType").value;
+      const year = document.getElementById("year").value;
+      const month = document.getElementById("month").value;
+      const day = document.getElementById("day").value;
+      const hour = document.getElementById("hour").value;
+      const minute = document.getElementById("minute").value;
+      const gender = document.getElementById("gender").value;
+      const result = document.getElementById("result");
 
-async function analyze(){
-  const name=document.getElementById("name").value.trim();
-  const calendarType=document.getElementById("calendarType").value;
-  const year=document.getElementById("year").value;
-  const month=document.getElementById("month").value;
-  const day=document.getElementById("day").value;
-  const hour=document.getElementById("hour").value;
-  const minute=document.getElementById("minute").value;
-  const gender=document.getElementById("gender").value;
-  const result=document.getElementById("result");
+      if (!name || !calendarType || !year || !month || !day || !hour || !minute || !gender) {
+        showToast("이름, 생년월일, 시간, 성별을 모두 입력해주세요.");
+        return;
+      }
 
-  if(!name || !calendarType || !year || !month || !day || !hour || !minute || !gender){
-    result.innerHTML='<div class="box">입력 정보를 모두 선택해주세요.</div>';
-    return;
-  }
+      startBattleLoading();
 
-  startBattleLoading();
+      try {
+        const response = await fetch("/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            calendarType,
+            birth: `${year}-${month}-${day}`,
+            time: `${hour}:${minute}`,
+            gender
+          })
+        });
 
-  try{
-    const res=await fetch("/analyze",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        name,
-        calendarType,
-        birth:`${year}-${month}-${day}`,
-        time:`${hour}:${minute}`,
-        gender
-      })
+        const data = await response.json();
+        stopBattleLoading();
+
+        if (!response.ok) {
+          result.innerHTML = `<div class="box">서버 오류: ${data.result || data.error || "응답 오류"}</div>`;
+          return;
+        }
+
+        const report = cleanText(data.result);
+        const preview = report.slice(0, 1100);
+
+        const fullHTML = `
+          <section class="box">
+            <h2 class="section-title">${name}님의 전체 전장 리포트</h2>
+            <p>원국은 고정된 판결문이 아니라 지금부터 읽고 써야 할 전략 지도입니다.</p>
+          </section>
+          ${renderPillars(data.pillars)}
+          ${renderItems(data.pillars)}
+          ${renderDaewoon(data.daewoon)}
+          ${renderSewoon(data.sewoon)}
+          <section class="box">
+            <h2 class="section-title">프리미엄 심화 해석</h2>
+            <div class="report">${report}</div>
+          </section>
+        `;
+
+        const previewHTML = `
+          <section class="box">
+            <h2 class="section-title">${name}님의 무료 전장 리포트</h2>
+            <p>무료 결과에서는 원국 구성, 지장간 아이템, 대운과 세운의 큰 흐름을 먼저 공개합니다.</p>
+          </section>
+          ${renderPillars(data.pillars)}
+          ${renderItems(data.pillars)}
+          ${renderDaewoon(data.daewoon)}
+          ${renderSewoon(data.sewoon)}
+          <section class="box">
+            <h2 class="section-title">무료 미리보기</h2>
+            <div class="report">${preview}...</div>
+          </section>
+          <section class="box lock" id="premium">
+            <p class="eyebrow">유료 심화 리포트</p>
+            <h2 class="section-title">잠긴 전장을 열면 보이는 것들</h2>
+            <div class="premium-grid">
+              <div class="premium-item"><span>財</span><div><strong>돈의 아이템</strong><p>재물운이 약해 보여도 실제 돈으로 바뀌는 숨은 회로</p></div></div>
+              <div class="premium-item"><span>官</span><div><strong>일과 명예</strong><p>직장, 사업, 브랜드에서 권한이 생기는 구간</p></div></div>
+              <div class="premium-item"><span>運</span><div><strong>대운 스위치</strong><p>10년 단위로 어떤 아이템이 켜지는지</p></div></div>
+              <div class="premium-item"><span>年</span><div><strong>세운 타이밍</strong><p>올해부터 3년간 실제로 움직여야 할 행동 카드</p></div></div>
+            </div>
+            <button onclick="location.href='/payment.html'">39,800원으로 전체 전장 리포트 열기</button>
+          </section>
+        `;
+
+        lastFullResult = fullHTML;
+        result.innerHTML = isPaid ? fullHTML : previewHTML;
+        document.getElementById("report").scrollIntoView({ behavior: "smooth", block: "start" });
+        showToast(isPaid ? "전체 리포트가 열렸습니다." : "무료 전장 리포트가 열렸습니다.");
+      } catch (error) {
+        stopBattleLoading();
+        result.innerHTML = `<div class="box">연결 오류가 발생했습니다: ${error.message}</div>`;
+      }
+    }
+
+    function downloadPDF() {
+      if (!isPaid) {
+        showToast("PDF 저장은 결제 후 사용할 수 있습니다.");
+        return;
+      }
+      window.print();
+    }
+
+    function simpleHash(value) {
+      return [...String(value || "")].reduce((sum, char, index) => {
+        return sum + char.charCodeAt(0) * (index + 7);
+      }, 0);
+    }
+
+    function pick(list, seed) {
+      return list[Math.abs(seed) % list.length];
+    }
+
+    function makeTodayFortune() {
+      const name = document.getElementById("todayName").value.trim();
+      const birth = document.getElementById("todayBirth").value;
+      const result = document.getElementById("todayResult");
+
+      if (!name || !birth) {
+        showToast("오늘의 운세는 이름과 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const today = new Date();
+      const dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+      const seed = simpleHash(name + birth + dateKey);
+      const score = 58 + (seed % 39);
+      const item = pick([
+        ["말의 아이템", "오늘은 길게 설득하기보다 짧고 선명하게 말할수록 운이 붙습니다."],
+        ["돈의 아이템", "작은 제안, 견적, 판매글처럼 돈과 연결되는 행동을 하나 꺼내기 좋습니다."],
+        ["정리의 아이템", "흩어진 일을 정리하면 막힌 흐름이 풀립니다. 버릴 것 하나를 정하세요."],
+        ["관계의 아이템", "먼저 안부를 건네면 의외의 기회가 돌아옵니다. 가볍게 연락하세요."],
+        ["공부의 아이템", "배운 것을 저장만 하지 말고 한 문장으로 공개하면 운이 움직입니다."]
+      ], seed);
+      const caution = pick([
+        "오늘은 감정적으로 바로 답하지 말고 10분 뒤에 답하는 편이 좋습니다.",
+        "너무 크게 시작하면 지치기 쉽습니다. 작게 끝내는 승리가 필요합니다.",
+        "남의 속도에 맞추다 내 리듬을 잃지 않도록 기준을 먼저 정하세요.",
+        "돈 이야기는 애매하게 넘기지 말고 숫자로 정리하는 것이 좋습니다.",
+        "혼자 끌어안기보다 하나는 부탁해야 전장이 가벼워집니다."
+      ], seed + 13);
+
+      result.innerHTML = `
+        <div class="score-ring">${score}</div>
+        <h3>${name}님의 오늘 아이템: ${item[0]}</h3>
+        <p>${item[1]}</p>
+        <ul class="fortune-list">
+          <li>오늘의 행동 카드: ${pick(["먼저 제안하기", "정리하고 버리기", "짧게 공개하기", "연락 한 번 하기", "가격을 적어보기"], seed + 3)}</li>
+          <li>주의할 전장: ${caution}</li>
+          <li>행운 시간대: ${pick(["오전 9-11시", "점심 직후", "오후 3-5시", "저녁 7-9시", "밤 10시 이후"], seed + 5)}</li>
+        </ul>
+      `;
+      showToast("오늘의 무료 운세가 열렸습니다.");
+    }
+
+    function makeCompatibility() {
+      const nameA = document.getElementById("matchNameA").value.trim();
+      const nameB = document.getElementById("matchNameB").value.trim();
+      const birthA = document.getElementById("matchBirthA").value;
+      const birthB = document.getElementById("matchBirthB").value;
+      const result = document.getElementById("matchResult");
+
+      if (!nameA || !nameB || !birthA || !birthB) {
+        showToast("궁합은 두 사람의 이름과 생년월일을 모두 입력해주세요.");
+        return;
+      }
+
+      const seedA = simpleHash(nameA + birthA);
+      const seedB = simpleHash(nameB + birthB);
+      const gap = Math.abs(seedA - seedB);
+      const score = 52 + (gap % 45);
+      const chemistry = pick([
+        ["불꽃형", "서로 자극을 주며 빨리 가까워지는 조합입니다. 다만 말의 속도가 빨라지면 감정이 앞설 수 있습니다."],
+        ["동맹형", "같은 목표를 잡으면 강해지는 조합입니다. 함께 계획을 세울수록 관계가 안정됩니다."],
+        ["거울형", "비슷한 약점을 비춰주는 관계입니다. 불편함을 성장 신호로 쓰면 깊어집니다."],
+        ["보완형", "한쪽이 놓친 부분을 다른 쪽이 채워주는 조합입니다. 역할을 나누면 운이 좋아집니다."],
+        ["느린 발효형", "처음보다 시간이 갈수록 맛이 나는 관계입니다. 서두르지 않을수록 오래 갑니다."]
+      ], gap);
+      const strategy = pick([
+        "오늘은 결론보다 마음을 먼저 확인하세요.",
+        "돈이나 일정 이야기는 숫자로 정하면 다툼이 줄어듭니다.",
+        "상대의 방식을 고치려 하기보다 내 기준을 부드럽게 말하세요.",
+        "짧은 칭찬 하나가 관계의 스위치를 켭니다.",
+        "같이 할 작은 목표를 하나 정하면 분위기가 살아납니다."
+      ], gap + 9);
+
+      result.innerHTML = `
+        <div class="score-ring">${score}</div>
+        <h3>${nameA} × ${nameB}: ${chemistry[0]} 궁합</h3>
+        <p>${chemistry[1]}</p>
+        <ul class="fortune-list">
+          <li>관계 온도: ${pick(["따뜻하지만 속도 조절 필요", "친구처럼 편한 흐름", "강한 끌림과 작은 긴장", "천천히 깊어지는 흐름", "현실적인 동맹 기운"], gap + 2)}</li>
+          <li>오늘의 대화 전략: ${strategy}</li>
+          <li>프리미엄에서 볼 내용: 인연 패턴, 결혼운, 충돌 지점, 관계 회복 타이밍</li>
+        </ul>
+      `;
+      showToast("간단 궁합이 열렸습니다.");
+    }
+
+    document.getElementById("sajuForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      analyze();
     });
-
-    const data=await res.json();
-    stopBattleLoading();
-
-    if(!res.ok){
-      result.innerHTML=`<div class="box">서버 오류: ${data.result || data.error || "응답 오류"}</div>`;
-      return;
-    }
-
-    const report=cleanText(data.result);
-    const preview=report.slice(0,950);
-
-    const fullHTML=`
-      <div class="box hero">
-        <div>
-          <h2>${name}님의 전쟁지도</h2>
-          <p>당신의 원국은 고정된 판결문이 아니라 지금부터 읽어야 할 전략 지도입니다.</p>
-        </div>
-      </div>
-      ${renderPillars(data.pillars)}
-      ${renderItems(data.pillars)}
-      ${renderDaewoon(data.daewoon)}
-      ${renderSewoon(data.sewoon)}
-      <div class="box" style="margin-top:18px">
-        <h2 class="section-title">프리미엄 전투 해석</h2>
-        <div class="report">${report}</div>
-      </div>`;
-
-    const previewHTML=`
-      <div class="box hero">
-        <div>
-          <h2>${name}님의 무료 전쟁지도</h2>
-          <p>무료 결과에서는 원국 구성과 일부 전투 해석만 공개됩니다.</p>
-        </div>
-      </div>
-      ${renderPillars(data.pillars)}
-      ${renderItems(data.pillars)}
-      ${renderDaewoon(data.daewoon)}
-      ${renderSewoon(data.sewoon)}
-      <div class="box" style="margin-top:18px">
-        <h2 class="section-title">무료 미리보기</h2>
-        <div class="report">${preview}...</div>
-      </div>
-      <div class="box lock premium-lock" style="margin-top:18px">
-  <h2 style="color:#ffe48a;font-size:30px;margin-bottom:25px">
-    🔒 프리미엄 전쟁지도 잠금 상태
-  </h2>
-
-  <div class="premium-grid">
-
-    <div class="premium-item">
-      <span>💰</span>
-      <div>
-        <strong>2028년 재물 폭발 시기</strong>
-        <p>돈의 흐름이 열리는 결정적 타이밍</p>
-      </div>
-    </div>
-
-    <div class="premium-item">
-      <span>❤️</span>
-      <div>
-        <strong>배우자 인연 흐름</strong>
-        <p>인연 충돌 및 결혼운 집중 분석</p>
-      </div>
-    </div>
-
-    <div class="premium-item">
-      <span>⚔️</span>
-      <div>
-        <strong>대운 스위치 ON 시점</strong>
-        <p>인생 판이 바뀌는 시기 분석</p>
-      </div>
-    </div>
-
-    <div class="premium-item">
-      <span>🎯</span>
-      <div>
-        <strong>숨겨진 재능 아이템</strong>
-        <p>원국 안에 숨어 있는 핵심 능력</p>
-      </div>
-    </div>
-
-  </div>
-
-  <button class="premium-button" onclick="location.href='/payment.html'">
-  🔓 39,800원으로 전체 전쟁지도 열기
-</button>
-</div>`;
-
-    lastFullResult=fullHTML;
-    result.innerHTML=isPaid ? fullHTML : previewHTML;
-
-  }catch(e){
-    stopBattleLoading();
-    result.innerHTML=`<div class="box">연결 오류 발생: ${e.message}</div>`;
-  }
-}
-
-function downloadPDF(){
-  if(!isPaid){
-    alert("PDF 저장은 결제 후 가능합니다.");
-    return;
-  }
-  window.print();
-}
-</script>
-
-<footer class="footer">
-  <div class="footer-inner">
-    <h3>사주전쟁 SAJU WAR</h3>
-
-    <p>상호명 : 제이 컴퍼니</p>
-    <p>사업자등록번호 : 472-01-04135</p>
-    <p>주소 : 인천광역시 제물량로24번길 51</p>
-
-    <div class="footer-links">
-     <a href="privacy.html">개인정보처리방침</a>
-&nbsp; | &nbsp;
-<a href="terms.html">이용약관</a>
-    </div>
-
-    <p class="copyright">
-      © 2026 SAJU WAR. All rights reserved.
-    </p>
-  </div>
-</footer>
-
+  </script>
 </body>
 </html>
