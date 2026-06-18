@@ -8,16 +8,16 @@
   <style>
     :root {
       color-scheme: dark;
-      --ink: #080807;
-      --ink2: #11100d;
-      --panel: rgba(18, 17, 14, 0.78);
-      --paper: #f6efdd;
-      --muted: #c8bfa9;
-      --gold: #d8ad4f;
-      --gold2: #f2db8d;
-      --jade: #78b49a;
-      --red: #bc544e;
-      --line: rgba(246, 239, 221, 0.14);
+      --ink: #140f0d;
+      --ink2: #221913;
+      --panel: rgba(42, 31, 23, 0.78);
+      --paper: #fff7e8;
+      --muted: #e1d1b2;
+      --gold: #e7b84f;
+      --gold2: #ffe39a;
+      --jade: #8bd6b2;
+      --red: #df746c;
+      --line: rgba(255, 247, 232, 0.16);
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
     }
 
@@ -27,9 +27,10 @@
       margin: 0;
       color: var(--paper);
       background:
-        radial-gradient(circle at 76% 14%, rgba(120, 180, 154, 0.16), transparent 32%),
-        radial-gradient(circle at 28% 0%, rgba(216, 173, 79, 0.18), transparent 34%),
-        linear-gradient(180deg, #080807, #14110d 45%, #080807);
+        radial-gradient(circle at 78% 8%, rgba(255, 199, 114, 0.28), transparent 32%),
+        radial-gradient(circle at 18% 12%, rgba(223, 116, 108, 0.22), transparent 30%),
+        radial-gradient(circle at 84% 62%, rgba(139, 214, 178, 0.18), transparent 34%),
+        linear-gradient(180deg, #241711 0%, #34251b 42%, #14231f 78%, #100d0b 100%);
       font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
       line-height: 1.6;
     }
@@ -63,7 +64,7 @@
       place-items: center;
       border: 1px solid rgba(242, 219, 141, 0.44);
       color: var(--gold2);
-      background: rgba(0, 0, 0, 0.28);
+      background: rgba(74, 45, 26, 0.34);
     }
 
     .nav {
@@ -103,7 +104,7 @@
 
     .lead {
       max-width: 660px;
-      color: #e2d8bf;
+      color: #f4e7c9;
       font-size: clamp(17px, 2vw, 21px);
     }
 
@@ -113,9 +114,9 @@
       min-height: 420px;
       border: 1px solid rgba(242, 219, 141, 0.2);
       background:
-        radial-gradient(circle, rgba(242, 219, 141, 0.12) 0 2px, transparent 3px) 0 0 / 34px 34px,
-        conic-gradient(from 20deg, rgba(216, 173, 79, 0.18), rgba(120, 180, 154, 0.15), rgba(188, 84, 78, 0.12), rgba(216, 173, 79, 0.18)),
-        radial-gradient(circle, rgba(8, 8, 7, 0.08), rgba(8, 8, 7, 0.78) 70%);
+        radial-gradient(circle, rgba(255, 227, 154, 0.16) 0 2px, transparent 3px) 0 0 / 34px 34px,
+        conic-gradient(from 20deg, rgba(231, 184, 79, 0.24), rgba(139, 214, 178, 0.18), rgba(223, 116, 108, 0.16), rgba(231, 184, 79, 0.24)),
+        radial-gradient(circle, rgba(255, 247, 232, 0.08), rgba(20, 15, 13, 0.72) 70%);
       box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.72), 0 0 80px rgba(216, 173, 79, 0.13);
       overflow: hidden;
     }
@@ -213,7 +214,7 @@
       border-radius: 0;
       padding: 0 12px;
       color: var(--paper);
-      background: rgba(8, 8, 7, 0.74);
+      background: rgba(24, 18, 14, 0.72);
       outline: none;
     }
 
@@ -242,7 +243,7 @@
       padding: 0 18px;
       color: var(--gold2);
       border: 1px solid rgba(242, 219, 141, 0.34);
-      background: rgba(8, 8, 7, 0.58);
+      background: rgba(35, 24, 18, 0.62);
     }
 
     .content-band {
@@ -277,11 +278,11 @@
       min-height: 160px;
       padding: 18px;
       border: 1px solid rgba(246, 239, 221, 0.12);
-      background: rgba(255, 255, 255, 0.025);
+      background: rgba(255, 247, 232, 0.045);
     }
 
     .card h3 { margin-bottom: 10px; color: var(--gold2); font-size: 21px; }
-    .card p, .small { color: #d9cfb8; }
+    .card p, .small { color: #eadbbd; }
     .small { font-size: 14px; }
     .badge {
       display: inline-block;
@@ -315,7 +316,7 @@
     .bar {
       height: 9px;
       margin-top: 6px;
-      background: rgba(246, 239, 221, 0.1);
+      background: rgba(255, 247, 232, 0.12);
       overflow: hidden;
     }
 
@@ -345,7 +346,7 @@
       margin-top: 16px;
       padding: 18px;
       border: 1px solid rgba(242, 219, 141, 0.18);
-      background: rgba(8, 8, 7, 0.48);
+      background: rgba(36, 24, 18, 0.5);
       min-height: 170px;
     }
 
@@ -359,7 +360,7 @@
       color: var(--gold2);
       font-size: 32px;
       font-weight: 900;
-      background: radial-gradient(circle, rgba(216, 173, 79, 0.18), rgba(8, 8, 7, 0.4));
+      background: radial-gradient(circle, rgba(231, 184, 79, 0.24), rgba(36, 24, 18, 0.42));
     }
 
     .fortune-list {
@@ -373,7 +374,7 @@
     .fortune-list li {
       position: relative;
       padding-left: 18px;
-      color: #d9cfb8;
+      color: #eadbbd;
     }
 
     .fortune-list li:before {
@@ -396,7 +397,7 @@
       position: relative;
       background:
         radial-gradient(circle at center, rgba(216, 173, 79, 0.2), rgba(0, 0, 0, 0.1) 36%, rgba(0, 0, 0, 0.78) 76%),
-        #0d0c0a;
+        #1d1510;
     }
 
     .battle-loading:before {
@@ -423,7 +424,7 @@
       height: 8px;
       margin: 24px auto 0;
       border: 1px solid rgba(242, 219, 141, 0.24);
-      background: rgba(246, 239, 221, 0.1);
+      background: rgba(255, 247, 232, 0.12);
       overflow: hidden;
     }
 
@@ -432,7 +433,7 @@
       text-align: center;
       background:
         repeating-linear-gradient(135deg, rgba(246, 239, 221, 0.06) 0 1px, transparent 1px 12px),
-        rgba(18, 17, 14, 0.82);
+        rgba(42, 31, 23, 0.84);
     }
 
     .premium-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 22px 0; }
@@ -444,7 +445,7 @@
       align-items: start;
       padding: 16px;
       border: 1px solid rgba(242, 219, 141, 0.16);
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 247, 232, 0.045);
     }
 
     .premium-item span {
@@ -466,7 +467,7 @@
       border-top: 1px solid var(--line);
       color: var(--muted);
       text-align: center;
-      background: #080807;
+      background: #100d0b;
     }
 
     .footer h3 { color: var(--gold2); }
@@ -479,7 +480,7 @@
       max-width: min(540px, calc(100% - 32px));
       padding: 14px 18px;
       border: 1px solid rgba(242, 219, 141, 0.35);
-      background: rgba(18, 17, 14, 0.95);
+      background: rgba(42, 31, 23, 0.96);
       color: var(--paper);
       box-shadow: var(--shadow);
       transition: transform 0.25s ease;
