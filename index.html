@@ -416,6 +416,85 @@
     .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--jade), var(--gold2)); }
     .report { white-space: pre-wrap; color: #352216; font-size: 16px; line-height: 2.02; }
 
+    .report-guide {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .report-visual {
+      position: relative;
+      min-height: 310px;
+      overflow: hidden;
+      border: 1px solid rgba(201, 141, 35, 0.2);
+      background:
+        linear-gradient(135deg, rgba(255, 248, 222, 0.94), rgba(255, 210, 148, 0.62)),
+        radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.88), transparent 34%);
+    }
+
+    .report-visual::before {
+      content: "";
+      position: absolute;
+      inset: 30px;
+      border: 1px solid rgba(123, 61, 45, 0.16);
+      transform: rotate(-7deg);
+    }
+
+    .report-visual::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -74px;
+      bottom: -74px;
+      border-radius: 50%;
+      background: rgba(116, 190, 155, 0.28);
+      box-shadow: 0 0 0 1px rgba(116, 190, 155, 0.26);
+    }
+
+    .battle-board {
+      position: absolute;
+      inset: 34px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      z-index: 1;
+    }
+
+    .battle-tile {
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(123, 61, 45, 0.14);
+      color: #7b3d2d;
+      font-size: 34px;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.48);
+      box-shadow: 0 14px 30px rgba(126, 82, 35, 0.1);
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .guide-card {
+      padding: 16px;
+      border: 1px solid rgba(201, 141, 35, 0.16);
+      background: rgba(255, 252, 244, 0.72);
+    }
+
+    .guide-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold2);
+      font-size: 17px;
+    }
+
+    .guide-card p { color: #6d523d; font-size: 14px; }
+
     .free-tools {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -665,7 +744,8 @@
     @media (max-width: 960px) {
       .hero, .dashboard { grid-template-columns: 1fr; }
       .hero-map { min-height: 360px; }
-      .field-grid, .grid2, .grid3, .free-tools { grid-template-columns: 1fr; }
+      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid { grid-template-columns: 1fr; }
+      .report-visual { min-height: 260px; }
       .button-row { grid-template-columns: 1fr; }
       .nav { display: none; }
     }
@@ -842,25 +922,40 @@
         <p>무료 리포트는 핵심 전장과 지장간 아이템을 먼저 보여주고, 유료 리포트는 대운/세운 타이밍과 행동 전략까지 깊게 엽니다.</p>
       </div>
       <div id="result" class="report-stack">
-        <div class="box">
-          <h2 class="section-title">사주전쟁의 관점</h2>
-          <div class="grid3">
-            <article class="card">
-              <h3>원국 전장</h3>
-              <p>사주의 8글자는 서로 충돌하고 밀어내며 한 사람의 기본 전투 방식을 만듭니다.</p>
-            </article>
-            <article class="card">
-              <h3>지장간 아이템</h3>
-              <p>겉으로 보이지 않는 재능, 욕망, 돈의 씨앗은 지지 속 지장간에 숨어 있습니다.</p>
-            </article>
-            <article class="card">
-              <h3>대운 스위치</h3>
-              <p>대운은 없던 능력을 만드는 것이 아니라, 이미 안에 있던 아이템 회로를 켭니다.</p>
-            </article>
+        <div class="box report-guide">
+          <div class="report-visual" aria-hidden="true">
+            <div class="battle-board">
+              <span class="battle-tile">原</span>
+              <span class="battle-tile">藏</span>
+              <span class="battle-tile">運</span>
+              <span class="battle-tile">戰</span>
+            </div>
+          </div>
+          <div>
+            <p class="eyebrow">무료 리포트 안내</p>
+            <h2 class="section-title">원국 전장과 숨은 아이템을 먼저 엽니다</h2>
+            <p class="small">무료 리포트는 결론만 던지지 않고, 내 사주가 어떤 전장으로 짜였는지와 어떤 지장간 아이템을 꺼낼 수 있는지 먼저 보여줍니다.</p>
+            <div class="guide-grid" style="margin-top:18px">
+              <article class="guide-card">
+                <strong>1. 원국 전장</strong>
+                <p>연월일시 네 기둥이 어떤 힘으로 부딪히는지 먼저 봅니다.</p>
+              </article>
+              <article class="guide-card">
+                <strong>2. 지장간 아이템</strong>
+                <p>겉으로 약해 보여도 안쪽에 숨어 있는 재능과 돈맥을 찾습니다.</p>
+              </article>
+              <article class="guide-card">
+                <strong>3. 대운 스위치</strong>
+                <p>운이 켜질 때 어떤 아이템이 밖으로 나올 수 있는지 연결합니다.</p>
+              </article>
+              <article class="guide-card">
+                <strong>4. 세운 타이밍</strong>
+                <p>올해 어떤 행동을 하면 전장이 움직이는지 미리 봅니다.</p>
+              </article>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </div>    </main>
 
     <section class="content-band" id="free-play">
       <div class="section-head">
@@ -947,8 +1042,8 @@
 
         <article class="box">
           <div class="free-card-art free-art-manse" aria-hidden="true"><i>盤</i></div>
-          <h2 class="section-title">무료 만세력 보기</h2>
-          <p class="small">생년월일과 시간을 넣으면 오늘 바로 볼 수 있는 네 기둥과 지장간 키워드를 간단히 펼칩니다.</p>
+          <h2 class="section-title">정확 만세력 보기</h2>
+          <p class="small">생년월일, 시간, 양력/음력 기준을 넣으면 서버의 실제 만세력 계산기로 네 기둥을 확인합니다.</p>
           <div class="mini-form">
             <label>
               이름
@@ -980,7 +1075,7 @@
                 </select>
               </label>
             </div>
-            <button type="button" onclick="showFreeManse()">만세력 간단 보기</button>
+            <button type="button" onclick="showFreeManse()">실제 만세력 계산하기</button>
           </div>
           <div class="fortune-result" id="freeManseResult">
             <h3>만세력 전장 대기 중</h3>
@@ -1593,21 +1688,6 @@
     function getTodayKey() {
       const today = new Date();
       return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    }
-
-    function getSimplePillars(seed, birth, time) {
-      const gan = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
-      const ji = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
-      const hour = Number((time || "12:00").split(":")[0] || 12);
-      const birthDate = new Date(`${birth}T00:00:00`);
-      const month = Number.isNaN(birthDate.getTime()) ? 1 : birthDate.getMonth() + 1;
-      const day = Number.isNaN(birthDate.getTime()) ? 1 : birthDate.getDate();
-      return {
-        year: gan[Math.abs(seed + month) % 10] + ji[Math.abs(seed + month) % 12],
-        month: gan[Math.abs(seed + day + 2) % 10] + ji[Math.abs(month + 1) % 12],
-        day: gan[Math.abs(seed + day + 4) % 10] + ji[Math.abs(seed + day) % 12],
-        hour: gan[Math.abs(seed + hour + 6) % 10] + ji[Math.abs(Math.floor((hour + 1) / 2)) % 12]
-      };
     }
 
     async function showFreeManse() {
