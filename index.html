@@ -553,6 +553,38 @@
     .reading-art.branch { background: linear-gradient(135deg, #eefbe9, #9dd7c1); }
     .reading-art.hidden { background: linear-gradient(135deg, #fff0f4, #f49ab0); }
     .reading-art.yearluck { background: linear-gradient(135deg, #f3f0ff, #c9b8ff); }
+    .reading-art.origin { background: linear-gradient(135deg, #fff8df, #f2db8d); }
+    .reading-art.switch { background: linear-gradient(135deg, #edf8ff, #94cde8); }
+
+    .paid-lock-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .paid-lock-card {
+      padding: 16px;
+      border: 1px solid rgba(242, 219, 141, 0.18);
+      background: rgba(255, 255, 255, 0.44);
+    }
+
+    .paid-lock-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold2);
+    }
+
+    .price-badge {
+      display: inline-grid;
+      place-items: center;
+      min-height: 42px;
+      margin: 14px 0;
+      padding: 0 16px;
+      color: #fffaf0;
+      background: linear-gradient(135deg, #9d5630, #d8ad4f);
+      font-weight: 900;
+    }
 
     .upgrade-callout {
       position: relative;
@@ -840,7 +872,7 @@
     @media (max-width: 960px) {
       .hero, .dashboard { grid-template-columns: 1fr; }
       .hero-map { min-height: 360px; }
-      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid, .upgrade-points { grid-template-columns: 1fr; }
+      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid, .upgrade-points, .paid-lock-grid { grid-template-columns: 1fr; }
       .report-visual { min-height: 260px; }
       .button-row { grid-template-columns: 1fr; }
       .nav { display: none; }
@@ -1630,6 +1662,82 @@
       `;
     }
 
+    function renderFreeIntroCards(name, pillars) {
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const dayGan = splitPillar(pillars.day).gan;
+      const monthJi = splitPillar(pillars.month).ji;
+      const dayInfo = itemInfo[dayGan] || { name: "중심 무기", desc: "내가 전장에서 쓰는 기본 반응 방식입니다." };
+
+      return `
+        <section class="box">
+          <p class="eyebrow">무료 공개 범위</p>
+          <h2 class="section-title">${name}님의 원국 입구 해석</h2>
+          <p class="small">무료 리포트에서는 원국의 뼈대와 일간 캐릭터, 가장 강하게 반복되는 기운까지만 먼저 보여드립니다. 지장간 아이템부터는 유료 리포트에서 열립니다.</p>
+          <div class="reading-grid">
+            <article class="reading-card">
+              <div class="reading-art origin" aria-hidden="true"><i>原</i></div>
+              <div>
+                <strong>원국 전장</strong>
+                <p>네 기둥이 어떤 배열로 서 있는지 확인합니다. 이 표가 모든 해석의 지도입니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art stem" aria-hidden="true"><i>干</i></div>
+              <div>
+                <strong>일간 무기: ${dayGan}</strong>
+                <p>${dayInfo.name}. 겉으로 드러나는 선택 방식과 첫 반응을 가볍게 봅니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art branch" aria-hidden="true"><i>支</i></div>
+              <div>
+                <strong>월지 전장: ${monthJi}</strong>
+                <p>월지는 내가 놓인 계절과 환경입니다. 강해지는 판과 지치기 쉬운 판을 봅니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art switch" aria-hidden="true"><i>勢</i></div>
+              <div>
+                <strong>강한 세력: ${strongElement}</strong>
+                <p>반복되는 기운은 장점이면서 오해의 전장이 됩니다. 실제 쓰임은 지장간부터 깊게 봅니다.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderPaidLockFromJijanggan(name) {
+      return `
+        <section class="box upgrade-callout" id="premium">
+          <p class="eyebrow">유료 구간 시작</p>
+          <h2 class="section-title">지장간 아이템 분석부터 유료 리포트에서 열립니다</h2>
+          <p>${name}님의 원국 입구는 무료로 확인했습니다. 이제부터는 숨은 무기창고인 지장간, 대운 스위치, 세운 타이밍, 돈·일·관계 행동전략까지 연결되는 심화 구간입니다.</p>
+          <span class="price-badge">전체 심화 리포트 9,900원</span>
+          <div class="paid-lock-grid">
+            <article class="paid-lock-card">
+              <strong>藏 지장간 아이템</strong>
+              <p class="small">겉으로 보이지 않는 재능, 돈맥, 직업 힌트, 관계 패턴을 구체적으로 풉니다.</p>
+            </article>
+            <article class="paid-lock-card">
+              <strong>運 대운 스위치</strong>
+              <p class="small">어느 10년 운에서 숨은 아이템이 켜지는지 흐름으로 연결합니다.</p>
+            </article>
+            <article class="paid-lock-card">
+              <strong>歲 세운 타이밍</strong>
+              <p class="small">올해와 앞으로의 해에 실제로 움직여야 할 행동 카드를 정리합니다.</p>
+            </article>
+            <article class="paid-lock-card">
+              <strong>財官 관계 전략</strong>
+              <p class="small">돈, 일, 명예, 관계에서 어떤 방식으로 아이템을 써야 하는지 봅니다.</p>
+            </article>
+          </div>
+          <button type="button" onclick="location.href='/payment.html'">9,900원으로 유료 리포트 보기</button>
+        </section>
+      `;
+    }
+
     function renderUpgradePrompt(name, mode = "middle") {
       const headline = mode === "final"
         ? "여기서부터는 유료 리포트에서 깊게 열립니다"
@@ -1765,30 +1873,11 @@
         const previewHTML = `
           <section class="box">
             <h2 class="section-title">${name}님의 무료 전장 리포트</h2>
-            <p>무료 결과에서는 원국 구성, 지장간 아이템, 대운과 세운의 큰 흐름을 먼저 공개합니다.</p>
+            <p>무료 결과에서는 원국 구성과 일간 캐릭터까지만 먼저 공개합니다. 지장간 아이템 분석부터는 유료 리포트에서 깊게 열립니다.</p>
           </section>
           ${renderPillars(data.pillars)}
-          ${renderItems(data.pillars)}
-          ${renderFreeReadingCards(name, data.pillars, data.sewoon)}
-          ${renderUpgradePrompt(name, "middle")}
-          ${renderDaewoon(data.daewoon)}
-          ${renderSewoon(data.sewoon)}
-          <section class="box">
-            <h2 class="section-title">무료 미리보기</h2>
-            <div class="report">${preview}...</div>
-          </section>
-          ${renderUpgradePrompt(name, "final")}
-          <section class="box lock" id="premium">
-            <p class="eyebrow">유료 심화 리포트</p>
-            <h2 class="section-title">잠긴 전장을 열면 보이는 것들</h2>
-            <div class="premium-grid">
-              <div class="premium-item"><span>財</span><div><strong>돈의 아이템</strong><p>재물운이 약해 보여도 실제 돈으로 바뀌는 숨은 회로</p></div></div>
-              <div class="premium-item"><span>官</span><div><strong>일과 명예</strong><p>직장, 사업, 브랜드에서 권한이 생기는 구간</p></div></div>
-              <div class="premium-item"><span>運</span><div><strong>대운 스위치</strong><p>10년 단위로 어떤 아이템이 켜지는지</p></div></div>
-              <div class="premium-item"><span>年</span><div><strong>세운 타이밍</strong><p>올해부터 3년간 실제로 움직여야 할 행동 카드</p></div></div>
-            </div>
-            <button onclick="location.href='/payment.html'">39,800원으로 전체 전장 리포트 열기</button>
-          </section>
+          ${renderFreeIntroCards(name, data.pillars)}
+          ${renderPaidLockFromJijanggan(name)}
         `;
 
         lastFullResult = fullHTML;
