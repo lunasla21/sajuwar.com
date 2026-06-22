@@ -7,18 +7,18 @@
   <meta name="description" content="원국의 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 분석하는 사주전쟁 리포트." />
   <style>
     :root {
-      color-scheme: dark;
-      --ink: #140f0d;
-      --ink2: #221913;
-      --panel: rgba(42, 31, 23, 0.78);
-      --paper: #fff7e8;
-      --muted: #e1d1b2;
-      --gold: #e7b84f;
-      --gold2: #ffe39a;
-      --jade: #8bd6b2;
-      --red: #df746c;
-      --line: rgba(255, 247, 232, 0.16);
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+      color-scheme: light;
+      --ink: #2b1b12;
+      --ink2: #5b3a21;
+      --panel: rgba(255, 250, 239, 0.78);
+      --paper: #2b1b12;
+      --muted: #705642;
+      --gold: #c98d23;
+      --gold2: #8a5b12;
+      --jade: #2f8e72;
+      --red: #bd5b52;
+      --line: rgba(113, 80, 44, 0.18);
+      --shadow: 0 24px 80px rgba(126, 82, 35, 0.16);
     }
 
     * { box-sizing: border-box; }
@@ -27,10 +27,10 @@
       margin: 0;
       color: var(--paper);
       background:
-        radial-gradient(circle at 78% 8%, rgba(255, 199, 114, 0.28), transparent 32%),
-        radial-gradient(circle at 18% 12%, rgba(223, 116, 108, 0.22), transparent 30%),
-        radial-gradient(circle at 84% 62%, rgba(139, 214, 178, 0.18), transparent 34%),
-        linear-gradient(180deg, #241711 0%, #34251b 42%, #14231f 78%, #100d0b 100%);
+        radial-gradient(circle at 76% 4%, rgba(255, 214, 128, 0.55), transparent 30%),
+        radial-gradient(circle at 18% 10%, rgba(255, 151, 136, 0.28), transparent 28%),
+        radial-gradient(circle at 84% 60%, rgba(132, 218, 183, 0.28), transparent 34%),
+        linear-gradient(180deg, #fff1cc 0%, #fff8e9 42%, #ecfff6 76%, #fff7e8 100%);
       font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
       line-height: 1.6;
     }
@@ -64,7 +64,7 @@
       place-items: center;
       border: 1px solid rgba(242, 219, 141, 0.44);
       color: var(--gold2);
-      background: rgba(74, 45, 26, 0.34);
+      background: rgba(255, 250, 239, 0.72);
     }
 
     .nav {
@@ -104,7 +104,7 @@
 
     .lead {
       max-width: 660px;
-      color: #f4e7c9;
+      color: #5c4432;
       font-size: clamp(17px, 2vw, 21px);
     }
 
@@ -117,7 +117,7 @@
         radial-gradient(circle, rgba(255, 227, 154, 0.16) 0 2px, transparent 3px) 0 0 / 34px 34px,
         conic-gradient(from 20deg, rgba(231, 184, 79, 0.24), rgba(139, 214, 178, 0.18), rgba(223, 116, 108, 0.16), rgba(231, 184, 79, 0.24)),
         radial-gradient(circle, rgba(255, 247, 232, 0.08), rgba(20, 15, 13, 0.72) 70%);
-      box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.72), 0 0 80px rgba(216, 173, 79, 0.13);
+      box-shadow: inset 0 0 90px rgba(43, 27, 18, 0.38), 0 0 80px rgba(216, 173, 79, 0.16);
       overflow: hidden;
     }
 
@@ -214,7 +214,7 @@
       border-radius: 0;
       padding: 0 12px;
       color: var(--paper);
-      background: rgba(24, 18, 14, 0.72);
+      background: rgba(255, 252, 244, 0.78);
       outline: none;
     }
 
@@ -234,16 +234,18 @@
       min-height: 50px;
       border: 0;
       cursor: pointer;
-      color: #17110a;
+      color: #2b1b12;
       font-weight: 900;
-      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      background: linear-gradient(135deg, #ffe6a3, #d99b2e);
+      box-shadow: 0 12px 28px rgba(150, 96, 28, 0.18);
     }
 
     .secondary {
       padding: 0 18px;
-      color: var(--gold2);
-      border: 1px solid rgba(242, 219, 141, 0.34);
-      background: rgba(35, 24, 18, 0.62);
+      color: #6d4310;
+      border: 1px solid rgba(137, 91, 31, 0.28);
+      background: rgba(255, 252, 244, 0.82);
+      box-shadow: none;
     }
 
     .content-band {
@@ -278,11 +280,11 @@
       min-height: 160px;
       padding: 18px;
       border: 1px solid rgba(246, 239, 221, 0.12);
-      background: rgba(255, 247, 232, 0.045);
+      background: rgba(255, 252, 244, 0.62);
     }
 
     .card h3 { margin-bottom: 10px; color: var(--gold2); font-size: 21px; }
-    .card p, .small { color: #eadbbd; }
+    .card p, .small { color: #6d523d; }
     .small { font-size: 14px; }
     .badge {
       display: inline-block;
@@ -321,7 +323,7 @@
     }
 
     .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--jade), var(--gold2)); }
-    .report { white-space: pre-wrap; color: #f7efd9; font-size: 16px; line-height: 2.02; }
+    .report { white-space: pre-wrap; color: #352216; font-size: 16px; line-height: 2.02; }
 
     .free-tools {
       display: grid;
@@ -346,7 +348,7 @@
       margin-top: 16px;
       padding: 18px;
       border: 1px solid rgba(242, 219, 141, 0.18);
-      background: rgba(36, 24, 18, 0.5);
+      background: rgba(255, 252, 244, 0.66);
       min-height: 170px;
     }
 
@@ -360,7 +362,7 @@
       color: var(--gold2);
       font-size: 32px;
       font-weight: 900;
-      background: radial-gradient(circle, rgba(231, 184, 79, 0.24), rgba(36, 24, 18, 0.42));
+      background: radial-gradient(circle, rgba(255, 226, 146, 0.72), rgba(255, 252, 244, 0.5));
     }
 
     .fortune-list {
@@ -374,7 +376,7 @@
     .fortune-list li {
       position: relative;
       padding-left: 18px;
-      color: #eadbbd;
+      color: #6d523d;
     }
 
     .fortune-list li:before {
@@ -396,8 +398,8 @@
       overflow: hidden;
       position: relative;
       background:
-        radial-gradient(circle at center, rgba(216, 173, 79, 0.2), rgba(0, 0, 0, 0.1) 36%, rgba(0, 0, 0, 0.78) 76%),
-        #1d1510;
+        radial-gradient(circle at center, rgba(255, 211, 112, 0.44), rgba(255, 250, 239, 0.34) 36%, rgba(255, 250, 239, 0.84) 76%),
+        #fff7e8;
     }
 
     .battle-loading:before {
@@ -433,7 +435,7 @@
       text-align: center;
       background:
         repeating-linear-gradient(135deg, rgba(246, 239, 221, 0.06) 0 1px, transparent 1px 12px),
-        rgba(42, 31, 23, 0.84);
+        rgba(255, 250, 239, 0.86);
     }
 
     .premium-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 22px 0; }
@@ -445,7 +447,7 @@
       align-items: start;
       padding: 16px;
       border: 1px solid rgba(242, 219, 141, 0.16);
-      background: rgba(255, 247, 232, 0.045);
+      background: rgba(255, 252, 244, 0.62);
     }
 
     .premium-item span {
@@ -467,7 +469,7 @@
       border-top: 1px solid var(--line);
       color: var(--muted);
       text-align: center;
-      background: #100d0b;
+      background: #fff4db;
     }
 
     .footer h3 { color: var(--gold2); }
@@ -480,7 +482,7 @@
       max-width: min(540px, calc(100% - 32px));
       padding: 14px 18px;
       border: 1px solid rgba(242, 219, 141, 0.35);
-      background: rgba(42, 31, 23, 0.96);
+      background: rgba(255, 250, 239, 0.96);
       color: var(--paper);
       box-shadow: var(--shadow);
       transition: transform 0.25s ease;
