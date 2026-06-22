@@ -423,6 +423,81 @@
       align-items: start;
     }
 
+
+    .free-card-art {
+      position: relative;
+      height: 104px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(201, 141, 35, 0.18);
+      background: linear-gradient(135deg, #fff7e8, #ffe1aa);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    }
+
+    .free-card-art::before,
+    .free-card-art::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.36);
+      box-shadow: 0 0 0 1px rgba(201, 141, 35, 0.14);
+    }
+
+    .free-card-art::before {
+      width: 150px;
+      height: 150px;
+      right: -42px;
+      top: -62px;
+    }
+
+    .free-card-art::after {
+      width: 64px;
+      height: 64px;
+      left: 18px;
+      bottom: -28px;
+    }
+
+    .free-card-art i {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      color: #7b3d2d;
+      font-size: 27px;
+      font-style: normal;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.76);
+      transform: translate(-50%, -50%);
+      box-shadow: 0 14px 30px rgba(126, 82, 35, 0.15);
+    }
+
+    .free-art-item { background: linear-gradient(135deg, #fff3d8, #ffd19a 52%, #f7a65e); }
+    .free-art-love { background: linear-gradient(135deg, #fff0f5, #ffc0cf 52%, #ef86a0); }
+    .free-art-match { background: linear-gradient(135deg, #f3f0ff, #d8c8ff 52%, #9dc6ff); }
+    .free-art-manse { background: linear-gradient(135deg, #fff9df, #d9efb1 52%, #9dd7c1); }
+    .free-art-daily { background: linear-gradient(135deg, #fff6e7, #ffd48f 50%, #ffaf78); }
+    .free-art-color { background: linear-gradient(135deg, #f7efff, #ffd0e8 42%, #aee7ff); }
+
+    .color-oracle {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 14px 0;
+    }
+
+    .color-chip {
+      width: 76px;
+      height: 76px;
+      flex: 0 0 76px;
+      border: 4px solid rgba(255, 255, 255, 0.82);
+      box-shadow: 0 14px 28px rgba(126, 82, 35, 0.16);
+    }
+
     .mini-form {
       display: grid;
       gap: 10px;
@@ -796,6 +871,7 @@
 
       <div class="free-tools">
         <article class="box">
+          <div class="free-card-art free-art-item" aria-hidden="true"><i>兵</i></div>
           <h2 class="section-title">오늘의 아이템 운세</h2>
           <p class="small">이름과 생년월일만으로 오늘 켜지는 분위기를 가볍게 뽑아봅니다.</p>
           <div class="mini-form">
@@ -816,6 +892,7 @@
         </article>
 
         <article class="box">
+          <div class="free-card-art free-art-love" aria-hidden="true"><i>心</i></div>
           <h2 class="section-title">오늘의 연애 무기</h2>
           <p class="small">오늘 관계에서 어떤 태도와 말투를 꺼내면 좋은지 가볍게 뽑아봅니다.</p>
           <div class="mini-form">
@@ -836,6 +913,7 @@
         </article>
 
         <article class="box">
+          <div class="free-card-art free-art-match" aria-hidden="true"><i>合</i></div>
           <h2 class="section-title">간단 궁합 스파크</h2>
           <p class="small">두 사람의 리듬을 재미로 보는 무료 궁합입니다. 관계의 정답보다 오늘의 사용법에 가깝습니다.</p>
           <div class="mini-form">
@@ -866,7 +944,75 @@
             <p class="small">두 사람의 정보를 넣으면 관계 점수와 오늘의 대화 전략이 나옵니다.</p>
           </div>
         </article>
-      </div>
+
+        <article class="box">
+          <div class="free-card-art free-art-manse" aria-hidden="true"><i>盤</i></div>
+          <h2 class="section-title">무료 만세력 보기</h2>
+          <p class="small">생년월일과 시간을 넣으면 오늘 바로 볼 수 있는 네 기둥과 지장간 키워드를 간단히 펼칩니다.</p>
+          <div class="mini-form">
+            <label>
+              이름
+              <input id="manseName" placeholder="이름" />
+            </label>
+            <div class="mini-row">
+              <label>
+                생년월일
+                <input id="manseBirth" type="date" />
+              </label>
+              <label>
+                태어난 시간
+                <input id="manseTime" type="time" />
+              </label>
+            </div>
+            <button type="button" onclick="showFreeManse()">만세력 간단 보기</button>
+          </div>
+          <div class="fortune-result" id="freeManseResult">
+            <h3>만세력 전장 대기 중</h3>
+            <p class="small">입력 후 버튼을 누르면 원국의 큰 그림과 숨은 아이템 힌트가 나옵니다.</p>
+          </div>
+        </article>
+
+        <article class="box">
+          <div class="free-card-art free-art-daily" aria-hidden="true"><i>曆</i></div>
+          <h2 class="section-title">일일 운세 전장</h2>
+          <p class="small">오늘 해야 할 일, 피해야 할 말, 꺼내기 좋은 지장간 아이템을 한 번 더 자세히 봅니다.</p>
+          <div class="mini-form">
+            <label>
+              이름
+              <input id="dailyName" placeholder="이름" />
+            </label>
+            <label>
+              생년월일
+              <input id="dailyBirth" type="date" />
+            </label>
+            <button type="button" onclick="makeDailyFortune()">일일 운세 열기</button>
+          </div>
+          <div class="fortune-result" id="dailyResult">
+            <h3>일일 작전 대기 중</h3>
+            <p class="small">오늘의 공격, 방어, 회복 포인트를 짧게 정리합니다.</p>
+          </div>
+        </article>
+
+        <article class="box">
+          <div class="free-card-art free-art-color" aria-hidden="true"><i>色</i></div>
+          <h2 class="section-title">오늘의 행운 색상</h2>
+          <p class="small">오늘 나에게 힘을 보태는 색상과 피하면 좋은 색상을 재미로 뽑아봅니다.</p>
+          <div class="mini-form">
+            <label>
+              이름
+              <input id="colorName" placeholder="이름" />
+            </label>
+            <label>
+              생년월일
+              <input id="colorBirth" type="date" />
+            </label>
+            <button type="button" onclick="makeLuckyColor()">행운 색상 보기</button>
+          </div>
+          <div class="fortune-result" id="colorResult">
+            <h3>행운 색상 대기 중</h3>
+            <p class="small">오늘 입기 좋은 색, 소품 색, 피하면 좋은 색을 알려드립니다.</p>
+          </div>
+        </article>      </div>
     </section>
 
     <section class="content-band" id="naming">
@@ -1425,6 +1571,139 @@
         </ul>
       `;
       showToast("오늘의 무료 운세가 열렸습니다.");
+    }
+
+
+    function getTodayKey() {
+      const today = new Date();
+      return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    }
+
+    function getSimplePillars(seed, birth, time) {
+      const gan = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
+      const ji = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+      const hour = Number((time || "12:00").split(":")[0] || 12);
+      const birthDate = new Date(`${birth}T00:00:00`);
+      const month = Number.isNaN(birthDate.getTime()) ? 1 : birthDate.getMonth() + 1;
+      const day = Number.isNaN(birthDate.getTime()) ? 1 : birthDate.getDate();
+      return {
+        year: gan[Math.abs(seed + month) % 10] + ji[Math.abs(seed + month) % 12],
+        month: gan[Math.abs(seed + day + 2) % 10] + ji[Math.abs(month + 1) % 12],
+        day: gan[Math.abs(seed + day + 4) % 10] + ji[Math.abs(seed + day) % 12],
+        hour: gan[Math.abs(seed + hour + 6) % 10] + ji[Math.abs(Math.floor((hour + 1) / 2)) % 12]
+      };
+    }
+
+    function showFreeManse() {
+      const name = document.getElementById("manseName").value.trim();
+      const birth = document.getElementById("manseBirth").value;
+      const time = document.getElementById("manseTime").value || "12:00";
+      const result = document.getElementById("freeManseResult");
+
+      if (!name || !birth) {
+        showToast("만세력 보기는 이름과 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const seed = simpleHash("manse" + name + birth + time);
+      const pillars = getSimplePillars(seed, birth, time);
+      const hidden = pick([
+        "식상 아이템: 말, 표현, 콘텐츠, 판매력",
+        "재성 아이템: 돈의 흐름, 거래, 고객, 실리 감각",
+        "관성 아이템: 직업, 책임, 공식 무대, 신뢰",
+        "인성 아이템: 공부, 자격, 문서, 보호막",
+        "비겁 아이템: 동료, 팬덤, 독립심, 추진력"
+      ], seed);
+      const switchHint = pick([
+        "오늘은 작은 실행이 대운 스위치를 두드리는 날입니다.",
+        "정리된 문장 하나가 숨어 있던 아이템을 꺼냅니다.",
+        "사람을 만나거나 연락을 열면 전장이 움직입니다.",
+        "돈보다 먼저 구조를 잡으면 재물 아이템이 살아납니다.",
+        "새로운 시도보다 마무리가 운을 끌어올립니다."
+      ], seed + 9);
+
+      result.innerHTML = `
+        <h3>${name}님의 간단 만세력</h3>
+        <table class="manse" style="margin-top:12px">
+          <tr><th class="label">연</th><th>월</th><th>일</th><th>시</th></tr>
+          <tr><td class="ji">${pillars.year}</td><td class="ji">${pillars.month}</td><td class="ji">${pillars.day}</td><td class="ji">${pillars.hour}</td></tr>
+        </table>
+        <ul class="fortune-list">
+          <li>오늘의 지장간 힌트: ${hidden}</li>
+          <li>스위치 힌트: ${switchHint}</li>
+          <li>정밀 만세력과 대운/세운 연결은 전장 리포트에서 더 깊게 봅니다.</li>
+        </ul>
+      `;
+      showToast("무료 만세력이 열렸습니다.");
+    }
+
+    function makeDailyFortune() {
+      const name = document.getElementById("dailyName").value.trim();
+      const birth = document.getElementById("dailyBirth").value;
+      const result = document.getElementById("dailyResult");
+
+      if (!name || !birth) {
+        showToast("일일 운세는 이름과 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const seed = simpleHash("daily" + name + birth + getTodayKey());
+      const attack = pick(["먼저 연락하기", "제안서 한 줄 쓰기", "가격을 말해보기", "내 생각을 공개하기", "미뤄둔 약속 잡기"], seed);
+      const defense = pick(["감정적으로 바로 답하지 않기", "계약과 돈 이야기는 숫자로 확인하기", "남의 속도에 끌려가지 않기", "완벽주의로 시작을 미루지 않기", "과한 설명을 줄이기"], seed + 3);
+      const recovery = pick(["따뜻한 물과 짧은 산책", "책상 위 세 가지 정리", "좋아하는 음악 한 곡", "휴대폰 알림 30분 끄기", "오늘 할 일 하나만 남기기"], seed + 6);
+      const score = 57 + (seed % 41);
+
+      result.innerHTML = `
+        <div class="score-ring">${score}</div>
+        <h3>${name}님의 오늘 작전</h3>
+        <ul class="fortune-list">
+          <li>공격 카드: ${attack}</li>
+          <li>방어 카드: ${defense}</li>
+          <li>회복 카드: ${recovery}</li>
+          <li>오늘의 결론: 움직이는 사람이 아이템을 꺼냅니다. 아주 작게라도 시작하세요.</li>
+        </ul>
+      `;
+      showToast("일일 운세가 열렸습니다.");
+    }
+
+    function makeLuckyColor() {
+      const name = document.getElementById("colorName").value.trim();
+      const birth = document.getElementById("colorBirth").value;
+      const result = document.getElementById("colorResult");
+
+      if (!name || !birth) {
+        showToast("행운 색상은 이름과 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const colors = [
+        { name: "햇살 골드", hex: "#f6c453", power: "자신감과 돈의 흐름" },
+        { name: "복숭아 핑크", hex: "#f49ab0", power: "연애운과 부드러운 말투" },
+        { name: "비취 그린", hex: "#72c5a0", power: "회복력과 좋은 인연" },
+        { name: "하늘 블루", hex: "#76b7e8", power: "대화운과 정리력" },
+        { name: "석류 레드", hex: "#df5b56", power: "결단력과 존재감" },
+        { name: "라벤더 퍼플", hex: "#a98be8", power: "직감과 콘텐츠 감각" }
+      ];
+      const seed = simpleHash("color" + name + birth + getTodayKey());
+      const color = pick(colors, seed);
+      const avoid = pick(colors.filter((item) => item.name !== color.name), seed + 5);
+      const item = pick(["상의", "핸드폰 배경", "노트", "립/악세서리", "가방 속 작은 소품", "프로필 포인트 색"], seed + 8);
+
+      result.innerHTML = `
+        <div class="color-oracle">
+          <span class="color-chip" style="background:${color.hex}"></span>
+          <div>
+            <h3>${color.name}</h3>
+            <p class="small">오늘 보태는 기운: ${color.power}</p>
+          </div>
+        </div>
+        <ul class="fortune-list">
+          <li>추천 사용처: ${item}</li>
+          <li>피하면 좋은 색: ${avoid.name}</li>
+          <li>한 줄 팁: 오늘은 색을 크게 입기보다 작은 포인트로 쓰면 운이 자연스럽게 켜집니다.</li>
+        </ul>
+      `;
+      showToast("오늘의 행운 색상이 열렸습니다.");
     }
 
     function makeLoveWeapon() {
