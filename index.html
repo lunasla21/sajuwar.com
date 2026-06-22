@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>사주전쟁 | 지장간 아이템과 대운 스위치 리포트</title>
-  <meta name="description" content="원국의 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 분석하는 사주전쟁 리포트." />
+  <title>쭈샘의 사주전쟁 | 지장간 아이템과 대운 스위치 리포트</title>
+  <meta name="description" content="쭈샘이 원국의 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 분석하는 사주전쟁 리포트." />
   <style>
     :root {
       color-scheme: light;
@@ -286,6 +286,30 @@
     .card h3 { margin-bottom: 10px; color: var(--gold2); font-size: 21px; }
     .card p, .small { color: #6d523d; }
     .small { font-size: 14px; }
+    .menu-link {
+      display: block;
+      color: inherit;
+      min-height: 190px;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .menu-link:hover {
+      transform: translateY(-3px);
+      border-color: rgba(201, 141, 35, 0.42);
+      box-shadow: 0 18px 44px rgba(126, 82, 35, 0.18);
+    }
+
+    .menu-kicker {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 5px 9px;
+      border: 1px solid rgba(201, 141, 35, 0.28);
+      color: var(--gold2);
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(255, 246, 222, 0.62);
+    }
+
     .badge {
       display: inline-block;
       margin: 4px 4px 0 0;
@@ -522,9 +546,10 @@
     <header class="topbar">
       <a class="brand" href="#top" aria-label="사주전쟁 홈">
         <span class="brand-mark">戰</span>
-        <span>사주전쟁 SAJU WAR</span>
+        <span>쭈샘의 사주전쟁</span>
       </a>
       <nav class="nav" aria-label="주요 메뉴">
+        <a href="#content-map">콘텐츠 지도</a>
         <a href="#report">전장 리포트</a>
         <a href="#naming">이름 점수</a>
         <a href="#naming-apply">작명 신청</a>
@@ -535,11 +560,12 @@
 
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">원국은 판결문이 아니라 오해의 전쟁터입니다</p>
-        <h1 id="hero-title">나쁜 사주에도 꺼낼 아이템은 있습니다</h1>
+        <p class="eyebrow">쭈샘이 읽어주는 원국 전장과 지장간 아이템</p>
+        <h1 id="hero-title">쭈샘의 사주전쟁</h1>
         <p class="lead">
-          강한 기운이 타고난 팔자의 주도권을 잡고 있어도, 지장간에는 내가 꿈꾸는 능력과 기회가 숨어 있습니다.
-          대운은 그 아이템의 스위치를 켜고, 세운은 현실에서 꺼내 쓸 타이밍을 줍니다.
+          원국은 판결문이 아니라 오해의 전쟁터입니다. 강한 기운이 주도권을 잡고 있어도,
+          지장간에는 내가 꿈꾸는 능력과 기회가 숨어 있습니다. 대운은 그 아이템의 스위치를 켜고,
+          세운은 현실에서 꺼내 쓸 타이밍을 줍니다.
         </p>
       </div>
 
@@ -600,6 +626,62 @@
           <button class="secondary" type="button" onclick="downloadPDF()">PDF 저장</button>
         </div>
       </form>
+    </section>
+
+    <section class="content-band" id="content-map">
+      <div class="section-head">
+        <p class="eyebrow">콘텐츠 지도</p>
+        <h2>오늘 뭐 볼지 고르는 사주전쟁 메뉴판</h2>
+        <p>무료로 가볍게 눌러보는 코너부터 깊게 보는 프리미엄 리포트, 작명 신청까지 한 화면에서 바로 이동할 수 있게 정리했습니다.</p>
+      </div>
+
+      <div class="grid3">
+        <a class="card menu-link" href="#report">
+          <span class="menu-kicker">핵심</span>
+          <h3>무료 전장 리포트</h3>
+          <p>원국의 기본 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 먼저 확인합니다.</p>
+        </a>
+        <a class="card menu-link" href="#free-play">
+          <span class="menu-kicker">오늘</span>
+          <h3>오늘의 운세</h3>
+          <p>오늘 꺼내면 좋은 아이템, 조심할 전장, 바로 실행할 행동 카드를 가볍게 봅니다.</p>
+        </a>
+        <a class="card menu-link" href="#free-play">
+          <span class="menu-kicker">연애</span>
+          <h3>오늘의 연애 무기</h3>
+          <p>오늘 써야 할 말투, 매력 포인트, 피해야 할 관계 패턴을 짧고 재미있게 확인합니다.</p>
+        </a>
+        <a class="card menu-link" href="#free-play">
+          <span class="menu-kicker">궁합</span>
+          <h3>간단 궁합 스파크</h3>
+          <p>두 사람의 관계 온도와 오늘의 대화 전략을 무료로 빠르게 뽑아봅니다.</p>
+        </a>
+        <a class="card menu-link" href="#naming">
+          <span class="menu-kicker">이름</span>
+          <h3>내 이름 전투력 점수</h3>
+          <p>이름의 소리, 의미, 브랜드감, 실행력을 점수로 보고 이름의 무기를 확인합니다.</p>
+        </a>
+        <a class="card menu-link" href="#naming-apply">
+          <span class="menu-kicker">작명</span>
+          <h3>쭈샘 작명 신청</h3>
+          <p>아기 이름, 개명, 예명, 브랜드명까지 사주전쟁 세계관으로 신청서를 만듭니다.</p>
+        </a>
+        <a class="card menu-link" href="#premium">
+          <span class="menu-kicker">돈</span>
+          <h3>재물 아이템 해석</h3>
+          <p>돈이 약해 보여도 지장간과 운의 스위치가 맞을 때 꺼낼 수 있는 재물 회로를 봅니다.</p>
+        </a>
+        <a class="card menu-link" href="#premium">
+          <span class="menu-kicker">일</span>
+          <h3>직업·사업 전장</h3>
+          <p>나에게 맞는 일 방식, 브랜드 방향, 사업으로 꺼낼 수 있는 아이템을 심화 리포트로 연결합니다.</p>
+        </a>
+        <a class="card menu-link" href="#premium">
+          <span class="menu-kicker">타이밍</span>
+          <h3>대운·세운 스위치</h3>
+          <p>언제 움직여야 운이 열리는지, 올해와 앞으로의 타이밍을 전장 지도처럼 확인합니다.</p>
+        </a>
+      </div>
     </section>
 
     <main class="content-band" id="report">
@@ -803,7 +885,7 @@
     </section>
 
     <footer class="footer">
-      <h3>사주전쟁 SAJU WAR</h3>
+      <h3>쭈샘의 사주전쟁</h3>
       <p>원국은 전쟁터, 지장간은 아이템, 대운은 스위치, 세운은 타이밍입니다.</p>
       <p><a href="/payment.html">프리미엄 리포트 열기</a></p>
       <p>© 2026 SAJU WAR. All rights reserved.</p>
