@@ -554,6 +554,43 @@
     .reading-art.hidden { background: linear-gradient(135deg, #fff0f4, #f49ab0); }
     .reading-art.yearluck { background: linear-gradient(135deg, #f3f0ff, #c9b8ff); }
 
+    .upgrade-callout {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(201, 141, 35, 0.24);
+      background:
+        linear-gradient(135deg, rgba(255, 248, 226, 0.94), rgba(255, 225, 165, 0.72)),
+        radial-gradient(circle at 84% 12%, rgba(255, 255, 255, 0.78), transparent 34%);
+    }
+
+    .upgrade-callout::after {
+      content: "運";
+      position: absolute;
+      right: 22px;
+      top: 18px;
+      color: rgba(123, 61, 45, 0.08);
+      font-size: 120px;
+      font-weight: 900;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .upgrade-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .upgrade-point {
+      padding: 14px;
+      border: 1px solid rgba(201, 141, 35, 0.18);
+      background: rgba(255, 255, 255, 0.42);
+      color: #6d523d;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
     .free-tools {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -803,7 +840,7 @@
     @media (max-width: 960px) {
       .hero, .dashboard { grid-template-columns: 1fr; }
       .hero-map { min-height: 360px; }
-      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid { grid-template-columns: 1fr; }
+      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid, .upgrade-points { grid-template-columns: 1fr; }
       .report-visual { min-height: 260px; }
       .button-row { grid-template-columns: 1fr; }
       .nav { display: none; }
@@ -1593,6 +1630,29 @@
       `;
     }
 
+    function renderUpgradePrompt(name, mode = "middle") {
+      const headline = mode === "final"
+        ? "여기서부터는 유료 리포트에서 깊게 열립니다"
+        : "무료 리포트는 입구입니다. 깊은 작전은 유료에서 이어집니다";
+      const note = mode === "final"
+        ? `${name}님의 원국과 지장간은 확인했습니다. 이제 중요한 것은 어느 대운에서 어떤 아이템이 켜지고, 올해 어떤 행동으로 결과를 만들지입니다.`
+        : "무료 리포트는 원국의 큰 전장과 숨은 아이템을 먼저 보여줍니다. 유료 리포트에서는 돈, 일, 관계, 대운, 세운을 실제 행동 전략으로 더 깊게 풀어냅니다.";
+
+      return `
+        <section class="box upgrade-callout">
+          <p class="eyebrow">심화 해석 안내</p>
+          <h2 class="section-title">${headline}</h2>
+          <p>${note}</p>
+          <div class="upgrade-points">
+            <div class="upgrade-point">대운 스위치가 켜지는 시기</div>
+            <div class="upgrade-point">재물·직업·관계별 아이템 사용법</div>
+            <div class="upgrade-point">올해 세운에 맞는 행동 카드</div>
+          </div>
+          <button type="button" onclick="location.href='/payment.html'">유료 리포트로 깊게 보기</button>
+        </section>
+      `;
+    }
+
     function cleanText(text) {
       return (text || "결과가 비어 있습니다.")
         .replace(/\*\*/g, "")
@@ -1710,12 +1770,14 @@
           ${renderPillars(data.pillars)}
           ${renderItems(data.pillars)}
           ${renderFreeReadingCards(name, data.pillars, data.sewoon)}
+          ${renderUpgradePrompt(name, "middle")}
           ${renderDaewoon(data.daewoon)}
           ${renderSewoon(data.sewoon)}
           <section class="box">
             <h2 class="section-title">무료 미리보기</h2>
             <div class="report">${preview}...</div>
           </section>
+          ${renderUpgradePrompt(name, "final")}
           <section class="box lock" id="premium">
             <p class="eyebrow">유료 심화 리포트</p>
             <h2 class="section-title">잠긴 전장을 열면 보이는 것들</h2>
