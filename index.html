@@ -495,6 +495,65 @@
 
     .guide-card p { color: #6d523d; font-size: 14px; }
 
+    .reading-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .reading-card {
+      overflow: hidden;
+      border: 1px solid rgba(201, 141, 35, 0.16);
+      background: rgba(255, 252, 244, 0.76);
+    }
+
+    .reading-art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 92px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fff1d2, #ffd9a8);
+    }
+
+    .reading-art::before {
+      content: "";
+      position: absolute;
+      width: 132px;
+      height: 132px;
+      right: -40px;
+      top: -54px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.34);
+      box-shadow: 0 0 0 1px rgba(123, 61, 45, 0.12);
+    }
+
+    .reading-art i {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      color: #7b3d2d;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: 0 12px 26px rgba(126, 82, 35, 0.14);
+    }
+
+    .reading-card div:last-child { padding: 0 16px 16px; }
+    .reading-card strong { display: block; margin-bottom: 8px; color: var(--gold2); }
+    .reading-card p { color: #6d523d; font-size: 14px; }
+    .reading-art.stem { background: linear-gradient(135deg, #fff4d8, #ffc887); }
+    .reading-art.branch { background: linear-gradient(135deg, #eefbe9, #9dd7c1); }
+    .reading-art.hidden { background: linear-gradient(135deg, #fff0f4, #f49ab0); }
+    .reading-art.yearluck { background: linear-gradient(135deg, #f3f0ff, #c9b8ff); }
+
     .free-tools {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -744,7 +803,7 @@
     @media (max-width: 960px) {
       .hero, .dashboard { grid-template-columns: 1fr; }
       .hero-map { min-height: 360px; }
-      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid { grid-template-columns: 1fr; }
+      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid { grid-template-columns: 1fr; }
       .report-visual { min-height: 260px; }
       .button-row { grid-template-columns: 1fr; }
       .nav { display: none; }
@@ -1479,6 +1538,61 @@
       `;
     }
 
+    function renderFreeReadingCards(name, pillars, sewoon) {
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const dayGan = splitPillar(pillars.day).gan;
+      const monthJi = splitPillar(pillars.month).ji;
+      const hiddenItems = getHiddenItems(pillars);
+      const firstYearLuck = sewoon && sewoon.list && sewoon.list[0] ? sewoon.list[0] : null;
+      const dayInfo = itemInfo[dayGan] || { name: "중심 아이템", desc: "일간은 내가 전장에서 쓰는 기본 무기입니다." };
+      const hiddenText = hiddenItems.length
+        ? hiddenItems.slice(0, 3).map((item) => `${pillarLabel[item.pillar]} ${item.stem}`).join(", ")
+        : "아직 드러나지 않은 보조 아이템";
+
+      return `
+        <section class="box">
+          <p class="eyebrow">책 구조 참고 무료 해석</p>
+          <h2 class="section-title">${name}님의 무료 핵심 독해 카드</h2>
+          <p class="small">명리전의 천간·지지·조합·계절 분석 축과 생활명리식 세운 관점을 참고해, 무료 리포트에서도 원국을 여러 각도로 볼 수 있게 정리했습니다. 원문을 옮긴 것이 아니라 사주전쟁 세계관에 맞게 새로 풀어낸 안내입니다.</p>
+          <div class="reading-grid">
+            <article class="reading-card">
+              <div class="reading-art stem" aria-hidden="true"><i>干</i></div>
+              <div>
+                <strong>천간 무기: ${dayGan}</strong>
+                <p>${dayInfo.name}. 겉으로 드러나는 선택 방식과 말투, 일 처리의 첫 인상이 여기서 시작됩니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art branch" aria-hidden="true"><i>支</i></div>
+              <div>
+                <strong>지지 전장: ${monthJi}</strong>
+                <p>월지는 계절과 환경입니다. 내가 강해지는 판, 지치기 쉬운 판, 사람을 만나는 방식이 이 전장에 깔립니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art hidden" aria-hidden="true"><i>藏</i></div>
+              <div>
+                <strong>숨은 아이템</strong>
+                <p>${hiddenText} 쪽에 숨어 있는 재능과 가능성을 먼저 봅니다. 움직일 때 이 카드들이 밖으로 나옵니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art yearluck" aria-hidden="true"><i>歲</i></div>
+              <div>
+                <strong>세운 스위치${firstYearLuck ? `: ${firstYearLuck.year}` : ""}</strong>
+                <p>${firstYearLuck ? `${firstYearLuck.ganji}의 흐름은 ${firstYearLuck.theme} 쪽으로 올해의 사건을 움직입니다.` : "세운은 올해 실제로 어떤 아이템을 꺼내 쓸지 알려주는 타이밍입니다."}</p>
+              </div>
+            </article>
+          </div>
+          <article class="guide-card" style="margin-top:14px">
+            <strong>무료 리포트에서 먼저 보는 핵심</strong>
+            <p>${strongElement} 기운이 현재 원국에서 가장 크게 반복됩니다. 강한 기운은 장점이면서 오해의 전장이 되기도 하므로, 지장간 아이템과 세운 타이밍을 함께 봐야 실제 쓰임이 보입니다.</p>
+          </article>
+        </section>
+      `;
+    }
+
     function cleanText(text) {
       return (text || "결과가 비어 있습니다.")
         .replace(/\*\*/g, "")
@@ -1595,6 +1709,7 @@
           </section>
           ${renderPillars(data.pillars)}
           ${renderItems(data.pillars)}
+          ${renderFreeReadingCards(name, data.pillars, data.sewoon)}
           ${renderDaewoon(data.daewoon)}
           ${renderSewoon(data.sewoon)}
           <section class="box">
