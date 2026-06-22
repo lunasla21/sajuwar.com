@@ -323,12 +323,50 @@ ${sewoon.list.map((s) => `${s.year}년 ${s.ganji}: 천간 ${s.stemElement}, 지�
   }
 }
 
+function handleManse(req, res) {
+  try {
+    const { name, birth, time, calendarType } = req.body;
+
+    if (!name || !birth || !time) {
+      return res.status(400).json({
+        result: "이름, 생년월일, 시간을 모두 입력해주세요.",
+      });
+    }
+
+    const safeCalendar = calendarType || "solar";
+    const [year, month, day] = birth.split("-");
+    const [hour, minute] = time.split(":");
+    const pillarsRaw = getSaju(year, month, day, hour, minute || "0", safeCalendar);
+    const pillars = {
+      year: pillarsRaw.year,
+      month: pillarsRaw.month,
+      day: pillarsRaw.day,
+      hour: pillarsRaw.hour,
+      solarDate: pillarsRaw.solarDate,
+    };
+
+    res.json({
+      name,
+      pillars,
+      hiddenSummary: makeHiddenItemSummary(pillars),
+      calendarType: safeCalendar,
+    });
+  } catch (error) {
+    console.error("만세력 계산 오류:", error);
+    res.status(500).json({
+      result: "만세력 계산 중 오류가 발생했습니다. 입력값을 다시 확인해주세요.",
+      error: error.message,
+    });
+  }
+}
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.post("/analyze", handleAnalyze);
 app.post("/api/saju", handleAnalyze);
+app.post("/api/manse", handleManse);
 
 app.listen(PORT, () => {
   console.log(`사주전쟁 서버 실행 중: http://localhost:${PORT}`);

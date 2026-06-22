@@ -964,6 +964,22 @@
                 <input id="manseTime" type="time" />
               </label>
             </div>
+            <div class="mini-row">
+              <label>
+                기준
+                <select id="manseCalendar">
+                  <option value="solar">양력</option>
+                  <option value="lunar">음력</option>
+                </select>
+              </label>
+              <label>
+                성별
+                <select id="manseGender">
+                  <option value="female">여성</option>
+                  <option value="male">남성</option>
+                </select>
+              </label>
+            </div>
             <button type="button" onclick="showFreeManse()">만세력 간단 보기</button>
           </div>
           <div class="fortune-result" id="freeManseResult">
@@ -1594,10 +1610,11 @@
       };
     }
 
-    function showFreeManse() {
+    async function showFreeManse() {
       const name = document.getElementById("manseName").value.trim();
       const birth = document.getElementById("manseBirth").value;
       const time = document.getElementById("manseTime").value || "12:00";
+      const calendarType = document.getElementById("manseCalendar").value;
       const result = document.getElementById("freeManseResult");
 
       if (!name || !birth) {
@@ -1605,36 +1622,44 @@
         return;
       }
 
-      const seed = simpleHash("manse" + name + birth + time);
-      const pillars = getSimplePillars(seed, birth, time);
-      const hidden = pick([
-        "식상 아이템: 말, 표현, 콘텐츠, 판매력",
-        "재성 아이템: 돈의 흐름, 거래, 고객, 실리 감각",
-        "관성 아이템: 직업, 책임, 공식 무대, 신뢰",
-        "인성 아이템: 공부, 자격, 문서, 보호막",
-        "비겁 아이템: 동료, 팬덤, 독립심, 추진력"
-      ], seed);
-      const switchHint = pick([
-        "오늘은 작은 실행이 대운 스위치를 두드리는 날입니다.",
-        "정리된 문장 하나가 숨어 있던 아이템을 꺼냅니다.",
-        "사람을 만나거나 연락을 열면 전장이 움직입니다.",
-        "돈보다 먼저 구조를 잡으면 재물 아이템이 살아납니다.",
-        "새로운 시도보다 마무리가 운을 끌어올립니다."
-      ], seed + 9);
-
       result.innerHTML = `
-        <h3>${name}님의 간단 만세력</h3>
-        <table class="manse" style="margin-top:12px">
-          <tr><th class="label">연</th><th>월</th><th>일</th><th>시</th></tr>
-          <tr><td class="ji">${pillars.year}</td><td class="ji">${pillars.month}</td><td class="ji">${pillars.day}</td><td class="ji">${pillars.hour}</td></tr>
-        </table>
-        <ul class="fortune-list">
-          <li>오늘의 지장간 힌트: ${hidden}</li>
-          <li>스위치 힌트: ${switchHint}</li>
-          <li>정밀 만세력과 대운/세운 연결은 전장 리포트에서 더 깊게 봅니다.</li>
-        </ul>
+        <h3>만세력 계산 중</h3>
+        <p class="small">서버의 실제 만세력 계산기로 네 기둥을 확인하고 있습니다.</p>
       `;
-      showToast("무료 만세력이 열렸습니다.");
+
+      try {
+        const response = await fetch("/api/manse", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, birth, time, calendarType }),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.result || data.error || "만세력 계산에 실패했습니다.");
+        }
+
+        const pillars = data.pillars;
+        result.innerHTML = `
+          <h3>${name}님의 실제 만세력</h3>
+          <p class="small">입력 기준: ${calendarType === "lunar" ? "음력" : "양력"} / 양력 변환일: ${pillars.solarDate}</p>
+          <table class="manse" style="margin-top:12px">
+            <tr><th class="label">연</th><th>월</th><th>일</th><th>시</th></tr>
+            <tr><td class="ji">${pillars.year}</td><td class="ji">${pillars.month}</td><td class="ji">${pillars.day}</td><td class="ji">${pillars.hour}</td></tr>
+          </table>
+          <ul class="fortune-list">
+            <li>지장간 힌트는 아래 무료 전장 리포트에서 같은 원국 기준으로 이어서 확인할 수 있습니다.</li>
+            <li>대운과 세운 스위치까지 보려면 전장 리포트에서 같은 정보를 입력해 주세요.</li>
+          </ul>
+        `;
+        showToast("실제 만세력이 열렸습니다.");
+      } catch (error) {
+        result.innerHTML = `
+          <h3>만세력 계산 오류</h3>
+          <p class="small">${error.message}</p>
+        `;
+        showToast("만세력 계산을 다시 확인해주세요.");
+      }
     }
 
     function makeDailyFortune() {
