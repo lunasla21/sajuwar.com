@@ -972,7 +972,7 @@
         </div>
         <div class="button-row">
           <button type="submit">무료 전장 리포트 보기</button>
-          <button class="secondary" type="button" onclick="location.href='/payment.html'">결제하고 전체보기</button>
+          <button class="secondary" type="button" onclick="openPaidReport()">결제하고 전체보기</button>
           <button class="secondary" type="button" onclick="downloadPDF()">PDF 저장</button>
         </div>
       </form>
@@ -1813,7 +1813,15 @@
       loadingTimer = null;
     }
 
-    async function analyze() {
+    function openPaidReport() {
+      if (isPaid) {
+        analyze(true);
+        return;
+      }
+      location.href = "/payment.html";
+    }
+
+    async function analyze(forcePaid = false) {
       const name = document.getElementById("name").value.trim();
       const calendarType = document.getElementById("calendarType").value;
       const year = document.getElementById("year").value;
@@ -1881,9 +1889,9 @@
         `;
 
         lastFullResult = fullHTML;
-        result.innerHTML = isPaid ? fullHTML : previewHTML;
+        result.innerHTML = forcePaid ? fullHTML : previewHTML;
         document.getElementById("report").scrollIntoView({ behavior: "smooth", block: "start" });
-        showToast(isPaid ? "전체 리포트가 열렸습니다." : "무료 전장 리포트가 열렸습니다.");
+        showToast(forcePaid ? "전체 리포트가 열렸습니다." : "무료 전장 리포트가 열렸습니다.");
       } catch (error) {
         stopBattleLoading();
         result.innerHTML = `<div class="box">연결 오류가 발생했습니다: ${error.message}</div>`;
