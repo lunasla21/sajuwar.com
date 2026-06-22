@@ -289,7 +289,7 @@
     .menu-link {
       display: block;
       color: inherit;
-      min-height: 190px;
+      min-height: 320px;
       transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
@@ -309,6 +309,73 @@
       font-weight: 900;
       background: rgba(255, 246, 222, 0.62);
     }
+
+    .menu-art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 112px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(201, 141, 35, 0.2);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 240, 204, 0.4)),
+        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.9), transparent 34%),
+        linear-gradient(120deg, rgba(248, 169, 96, 0.2), rgba(255, 215, 119, 0.18));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .menu-art::before,
+    .menu-art::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+
+    .menu-art::before {
+      width: 168px;
+      height: 168px;
+      right: -52px;
+      top: -62px;
+      border: 1px solid rgba(201, 141, 35, 0.22);
+      background: rgba(255, 255, 255, 0.26);
+    }
+
+    .menu-art::after {
+      width: 74px;
+      height: 74px;
+      left: 16px;
+      bottom: -34px;
+      background: rgba(255, 255, 255, 0.36);
+      box-shadow: 0 0 0 1px rgba(201, 141, 35, 0.14);
+    }
+
+    .menu-art i {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      color: #7b3d2d;
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 16px 34px rgba(126, 82, 35, 0.16);
+    }
+
+    .art-war { background: linear-gradient(135deg, #fff4d9, #ffd1a8 52%, #f7a65e); }
+    .art-today { background: linear-gradient(135deg, #fff8d8, #c9f1d7 54%, #82d3c3); }
+    .art-love { background: linear-gradient(135deg, #fff0f2, #ffc1c8 52%, #f48a9b); }
+    .art-match { background: linear-gradient(135deg, #f4f0ff, #d7c7ff 52%, #9dc6ff); }
+    .art-name { background: linear-gradient(135deg, #fff7e7, #f2ddab 52%, #d6ad58); }
+    .art-apply { background: linear-gradient(135deg, #fff9f1, #ffcda7 50%, #e5a15d); }
+    .art-money { background: linear-gradient(135deg, #f7ffe8, #d5ef9d 52%, #8fc96b); }
+    .art-career { background: linear-gradient(135deg, #f0fbff, #b9e4ef 52%, #7db5d6); }
+    .art-time { background: linear-gradient(135deg, #fff5df, #ffd78e 52%, #c6a3ff); }
 
     .badge {
       display: inline-block;
@@ -637,46 +704,55 @@
 
       <div class="grid3">
         <a class="card menu-link" href="#report">
+          <span class="menu-art art-war" aria-hidden="true"><i>戰</i></span>
           <span class="menu-kicker">핵심</span>
           <h3>무료 전장 리포트</h3>
           <p>원국의 기본 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 먼저 확인합니다.</p>
         </a>
         <a class="card menu-link" href="#free-play">
+          <span class="menu-art art-today" aria-hidden="true"><i>日</i></span>
           <span class="menu-kicker">오늘</span>
           <h3>오늘의 운세</h3>
           <p>오늘 꺼내면 좋은 아이템, 조심할 전장, 바로 실행할 행동 카드를 가볍게 봅니다.</p>
         </a>
         <a class="card menu-link" href="#free-play">
+          <span class="menu-art art-love" aria-hidden="true"><i>心</i></span>
           <span class="menu-kicker">연애</span>
           <h3>오늘의 연애 무기</h3>
           <p>오늘 써야 할 말투, 매력 포인트, 피해야 할 관계 패턴을 짧고 재미있게 확인합니다.</p>
         </a>
         <a class="card menu-link" href="#free-play">
+          <span class="menu-art art-match" aria-hidden="true"><i>合</i></span>
           <span class="menu-kicker">궁합</span>
           <h3>간단 궁합 스파크</h3>
           <p>두 사람의 관계 온도와 오늘의 대화 전략을 무료로 빠르게 뽑아봅니다.</p>
         </a>
         <a class="card menu-link" href="#naming">
+          <span class="menu-art art-name" aria-hidden="true"><i>名</i></span>
           <span class="menu-kicker">이름</span>
           <h3>내 이름 전투력 점수</h3>
           <p>이름의 소리, 의미, 브랜드감, 실행력을 점수로 보고 이름의 무기를 확인합니다.</p>
         </a>
         <a class="card menu-link" href="#naming-apply">
+          <span class="menu-art art-apply" aria-hidden="true"><i>字</i></span>
           <span class="menu-kicker">작명</span>
           <h3>쭈샘 작명 신청</h3>
           <p>아기 이름, 개명, 예명, 브랜드명까지 사주전쟁 세계관으로 신청서를 만듭니다.</p>
         </a>
         <a class="card menu-link" href="#premium">
+          <span class="menu-art art-money" aria-hidden="true"><i>財</i></span>
           <span class="menu-kicker">돈</span>
           <h3>재물 아이템 해석</h3>
           <p>돈이 약해 보여도 지장간과 운의 스위치가 맞을 때 꺼낼 수 있는 재물 회로를 봅니다.</p>
         </a>
         <a class="card menu-link" href="#premium">
+          <span class="menu-art art-career" aria-hidden="true"><i>官</i></span>
           <span class="menu-kicker">일</span>
           <h3>직업·사업 전장</h3>
           <p>나에게 맞는 일 방식, 브랜드 방향, 사업으로 꺼낼 수 있는 아이템을 심화 리포트로 연결합니다.</p>
         </a>
         <a class="card menu-link" href="#premium">
+          <span class="menu-art art-time" aria-hidden="true"><i>運</i></span>
           <span class="menu-kicker">타이밍</span>
           <h3>대운·세운 스위치</h3>
           <p>언제 움직여야 운이 열리는지, 올해와 앞으로의 타이밍을 전장 지도처럼 확인합니다.</p>
