@@ -65,6 +65,8 @@
       border: 1px solid rgba(242, 219, 141, 0.44);
       color: var(--gold2);
       background: rgba(255, 250, 239, 0.72);
+      font-size: 13px;
+      letter-spacing: 0;
     }
 
     .nav {
@@ -136,11 +138,13 @@
       height: 112px;
       display: grid;
       place-items: center;
+      text-align: center;
       border: 1px solid rgba(242, 219, 141, 0.36);
       background: linear-gradient(180deg, rgba(246, 239, 221, 0.14), rgba(216, 173, 79, 0.08));
       color: var(--gold2);
-      font-size: 26px;
+      font-size: 17px;
       font-weight: 900;
+      line-height: 1.24;
     }
 
     .p1 { left: 15%; top: 22%; transform: rotate(-12deg); }
@@ -356,13 +360,15 @@
       z-index: 1;
       display: grid;
       place-items: center;
-      width: 62px;
-      height: 62px;
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
       color: #7b3d2d;
-      font-size: 30px;
+      font-size: 18px;
       font-style: normal;
       font-weight: 900;
+      line-height: 1.15;
+      text-align: center;
       background: rgba(255, 255, 255, 0.72);
       box-shadow: 0 16px 34px rgba(126, 82, 35, 0.16);
     }
@@ -466,10 +472,13 @@
     .battle-tile {
       display: grid;
       place-items: center;
+      padding: 8px;
+      text-align: center;
       border: 1px solid rgba(123, 61, 45, 0.14);
       color: #7b3d2d;
-      font-size: 34px;
+      font-size: 18px;
       font-weight: 900;
+      line-height: 1.18;
       background: rgba(255, 255, 255, 0.48);
       box-shadow: 0 14px 30px rgba(126, 82, 35, 0.1);
     }
@@ -535,13 +544,15 @@
       z-index: 1;
       display: grid;
       place-items: center;
-      width: 52px;
-      height: 52px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       color: #7b3d2d;
-      font-size: 24px;
+      font-size: 17px;
       font-style: normal;
       font-weight: 900;
+      line-height: 1.15;
+      text-align: center;
       background: rgba(255, 255, 255, 0.76);
       box-shadow: 0 12px 26px rgba(126, 82, 35, 0.14);
     }
@@ -573,6 +584,7 @@
       display: block;
       margin-bottom: 8px;
       color: var(--gold2);
+      line-height: 1.32;
     }
 
     .price-badge {
@@ -596,7 +608,7 @@
     }
 
     .upgrade-callout::after {
-      content: "運";
+      content: "운";
       position: absolute;
       right: 22px;
       top: 18px;
@@ -671,13 +683,15 @@
       z-index: 1;
       display: grid;
       place-items: center;
-      width: 58px;
-      height: 58px;
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
       color: #7b3d2d;
-      font-size: 27px;
+      font-size: 17px;
       font-style: normal;
       font-weight: 900;
+      line-height: 1.15;
+      text-align: center;
       background: rgba(255, 255, 255, 0.76);
       transform: translate(-50%, -50%);
       box-shadow: 0 14px 30px rgba(126, 82, 35, 0.15);
@@ -830,7 +844,10 @@
       place-items: center;
       border: 1px solid rgba(242, 219, 141, 0.34);
       color: var(--gold2);
+      font-size: 13px;
       font-weight: 900;
+      text-align: center;
+      line-height: 1.1;
     }
 
     .premium-item strong { color: var(--paper); }
@@ -895,7 +912,7 @@
   <div class="app" id="top">
     <header class="topbar">
       <a class="brand" href="#top" aria-label="사주전쟁 홈">
-        <span class="brand-mark">戰</span>
+        <span class="brand-mark">SW</span>
         <span>쭈샘의 사주전쟁</span>
       </a>
       <nav class="nav" aria-label="주요 메뉴">
@@ -920,10 +937,10 @@
       </div>
 
       <div class="hero-map" aria-hidden="true">
-        <div class="pillar p1">年</div>
-        <div class="pillar p2">月</div>
-        <div class="pillar p3">日</div>
-        <div class="pillar p4">時</div>
+        <div class="pillar p1">기본</div>
+        <div class="pillar p2">환경</div>
+        <div class="pillar p3">나</div>
+        <div class="pillar p4">미래</div>
         <div class="core"></div>
         <div class="item i1"></div>
         <div class="item i2"></div>
@@ -987,55 +1004,55 @@
 
       <div class="grid3">
         <a class="card menu-link" href="#report">
-          <span class="menu-art art-war" aria-hidden="true"><i>戰</i></span>
+          <span class="menu-art art-war" aria-hidden="true"><i>전장</i></span>
           <span class="menu-kicker">핵심</span>
           <h3>무료 전장 리포트</h3>
           <p>원국의 기본 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 먼저 확인합니다.</p>
         </a>
         <a class="card menu-link" href="#free-play">
-          <span class="menu-art art-today" aria-hidden="true"><i>日</i></span>
+          <span class="menu-art art-today" aria-hidden="true"><i>오늘</i></span>
           <span class="menu-kicker">오늘</span>
           <h3>오늘의 운세</h3>
           <p>오늘 꺼내면 좋은 아이템, 조심할 전장, 바로 실행할 행동 카드를 가볍게 봅니다.</p>
         </a>
         <a class="card menu-link" href="#free-play">
-          <span class="menu-art art-love" aria-hidden="true"><i>心</i></span>
+          <span class="menu-art art-love" aria-hidden="true"><i>연애</i></span>
           <span class="menu-kicker">연애</span>
           <h3>오늘의 연애 무기</h3>
           <p>오늘 써야 할 말투, 매력 포인트, 피해야 할 관계 패턴을 짧고 재미있게 확인합니다.</p>
         </a>
         <a class="card menu-link" href="#free-play">
-          <span class="menu-art art-match" aria-hidden="true"><i>合</i></span>
+          <span class="menu-art art-match" aria-hidden="true"><i>궁합</i></span>
           <span class="menu-kicker">궁합</span>
           <h3>간단 궁합 스파크</h3>
           <p>두 사람의 관계 온도와 오늘의 대화 전략을 무료로 빠르게 뽑아봅니다.</p>
         </a>
         <a class="card menu-link" href="#naming">
-          <span class="menu-art art-name" aria-hidden="true"><i>名</i></span>
+          <span class="menu-art art-name" aria-hidden="true"><i>이름</i></span>
           <span class="menu-kicker">이름</span>
           <h3>내 이름 전투력 점수</h3>
           <p>이름의 소리, 의미, 브랜드감, 실행력을 점수로 보고 이름의 무기를 확인합니다.</p>
         </a>
         <a class="card menu-link" href="#naming-apply">
-          <span class="menu-art art-apply" aria-hidden="true"><i>字</i></span>
+          <span class="menu-art art-apply" aria-hidden="true"><i>작명</i></span>
           <span class="menu-kicker">작명</span>
           <h3>쭈샘 작명 신청</h3>
           <p>아기 이름, 개명, 예명, 브랜드명까지 사주전쟁 세계관으로 신청서를 만듭니다.</p>
         </a>
         <a class="card menu-link" href="#premium">
-          <span class="menu-art art-money" aria-hidden="true"><i>財</i></span>
+          <span class="menu-art art-money" aria-hidden="true"><i>돈</i></span>
           <span class="menu-kicker">돈</span>
           <h3>재물 아이템 해석</h3>
           <p>돈이 약해 보여도 지장간과 운의 스위치가 맞을 때 꺼낼 수 있는 재물 회로를 봅니다.</p>
         </a>
         <a class="card menu-link" href="#premium">
-          <span class="menu-art art-career" aria-hidden="true"><i>官</i></span>
+          <span class="menu-art art-career" aria-hidden="true"><i>일</i></span>
           <span class="menu-kicker">일</span>
           <h3>직업·사업 전장</h3>
           <p>나에게 맞는 일 방식, 브랜드 방향, 사업으로 꺼낼 수 있는 아이템을 심화 리포트로 연결합니다.</p>
         </a>
         <a class="card menu-link" href="#premium">
-          <span class="menu-art art-time" aria-hidden="true"><i>運</i></span>
+          <span class="menu-art art-time" aria-hidden="true"><i>운</i></span>
           <span class="menu-kicker">타이밍</span>
           <h3>대운·세운 스위치</h3>
           <p>언제 움직여야 운이 열리는지, 올해와 앞으로의 타이밍을 전장 지도처럼 확인합니다.</p>
@@ -1053,10 +1070,10 @@
         <div class="box report-guide">
           <div class="report-visual" aria-hidden="true">
             <div class="battle-board">
-              <span class="battle-tile">原</span>
-              <span class="battle-tile">藏</span>
-              <span class="battle-tile">運</span>
-              <span class="battle-tile">戰</span>
+              <span class="battle-tile">원국</span>
+              <span class="battle-tile">아이템</span>
+              <span class="battle-tile">운</span>
+              <span class="battle-tile">전략</span>
             </div>
           </div>
           <div>
@@ -1094,7 +1111,7 @@
 
       <div class="free-tools">
         <article class="box">
-          <div class="free-card-art free-art-item" aria-hidden="true"><i>兵</i></div>
+          <div class="free-card-art free-art-item" aria-hidden="true"><i>아이템</i></div>
           <h2 class="section-title">오늘의 아이템 운세</h2>
           <p class="small">이름과 생년월일만으로 오늘 켜지는 분위기를 가볍게 뽑아봅니다.</p>
           <div class="mini-form">
@@ -1115,7 +1132,7 @@
         </article>
 
         <article class="box">
-          <div class="free-card-art free-art-love" aria-hidden="true"><i>心</i></div>
+          <div class="free-card-art free-art-love" aria-hidden="true"><i>연애</i></div>
           <h2 class="section-title">오늘의 연애 무기</h2>
           <p class="small">오늘 관계에서 어떤 태도와 말투를 꺼내면 좋은지 가볍게 뽑아봅니다.</p>
           <div class="mini-form">
@@ -1136,7 +1153,7 @@
         </article>
 
         <article class="box">
-          <div class="free-card-art free-art-match" aria-hidden="true"><i>合</i></div>
+          <div class="free-card-art free-art-match" aria-hidden="true"><i>궁합</i></div>
           <h2 class="section-title">간단 궁합 스파크</h2>
           <p class="small">두 사람의 리듬을 재미로 보는 무료 궁합입니다. 관계의 정답보다 오늘의 사용법에 가깝습니다.</p>
           <div class="mini-form">
@@ -1169,7 +1186,7 @@
         </article>
 
         <article class="box">
-          <div class="free-card-art free-art-manse" aria-hidden="true"><i>盤</i></div>
+          <div class="free-card-art free-art-manse" aria-hidden="true"><i>만세력</i></div>
           <h2 class="section-title">정확 만세력 보기</h2>
           <p class="small">생년월일, 시간, 양력/음력 기준을 넣으면 서버의 실제 만세력 계산기로 네 기둥을 확인합니다.</p>
           <div class="mini-form">
@@ -1212,7 +1229,7 @@
         </article>
 
         <article class="box">
-          <div class="free-card-art free-art-daily" aria-hidden="true"><i>曆</i></div>
+          <div class="free-card-art free-art-daily" aria-hidden="true"><i>일일</i></div>
           <h2 class="section-title">일일 운세 전장</h2>
           <p class="small">오늘 해야 할 일, 피해야 할 말, 꺼내기 좋은 지장간 아이템을 한 번 더 자세히 봅니다.</p>
           <div class="mini-form">
@@ -1233,7 +1250,7 @@
         </article>
 
         <article class="box">
-          <div class="free-card-art free-art-color" aria-hidden="true"><i>色</i></div>
+          <div class="free-card-art free-art-color" aria-hidden="true"><i>색상</i></div>
           <h2 class="section-title">오늘의 행운 색상</h2>
           <p class="small">오늘 나에게 힘을 보태는 색상과 피하면 좋은 색상을 재미로 뽑아봅니다.</p>
           <div class="mini-form">
@@ -1626,28 +1643,28 @@
           <p class="small">명리전의 천간·지지·조합·계절 분석 축과 생활명리식 세운 관점을 참고해, 무료 리포트에서도 원국을 여러 각도로 볼 수 있게 정리했습니다. 원문을 옮긴 것이 아니라 사주전쟁 세계관에 맞게 새로 풀어낸 안내입니다.</p>
           <div class="reading-grid">
             <article class="reading-card">
-              <div class="reading-art stem" aria-hidden="true"><i>干</i></div>
+              <div class="reading-art stem" aria-hidden="true"><i>겉</i></div>
               <div>
                 <strong>천간 무기: ${dayGan}</strong>
                 <p>${dayInfo.name}. 겉으로 드러나는 선택 방식과 말투, 일 처리의 첫 인상이 여기서 시작됩니다.</p>
               </div>
             </article>
             <article class="reading-card">
-              <div class="reading-art branch" aria-hidden="true"><i>支</i></div>
+              <div class="reading-art branch" aria-hidden="true"><i>환경</i></div>
               <div>
                 <strong>지지 전장: ${monthJi}</strong>
                 <p>월지는 계절과 환경입니다. 내가 강해지는 판, 지치기 쉬운 판, 사람을 만나는 방식이 이 전장에 깔립니다.</p>
               </div>
             </article>
             <article class="reading-card">
-              <div class="reading-art hidden" aria-hidden="true"><i>藏</i></div>
+              <div class="reading-art hidden" aria-hidden="true"><i>숨은 힘</i></div>
               <div>
                 <strong>숨은 아이템</strong>
                 <p>${hiddenText} 쪽에 숨어 있는 재능과 가능성을 먼저 봅니다. 움직일 때 이 카드들이 밖으로 나옵니다.</p>
               </div>
             </article>
             <article class="reading-card">
-              <div class="reading-art yearluck" aria-hidden="true"><i>歲</i></div>
+              <div class="reading-art yearluck" aria-hidden="true"><i>올해</i></div>
               <div>
                 <strong>세운 스위치${firstYearLuck ? `: ${firstYearLuck.year}` : ""}</strong>
                 <p>${firstYearLuck ? `${firstYearLuck.ganji}의 흐름은 ${firstYearLuck.theme} 쪽으로 올해의 사건을 움직입니다.` : "세운은 올해 실제로 어떤 아이템을 꺼내 쓸지 알려주는 타이밍입니다."}</p>
@@ -1676,28 +1693,28 @@
           <p class="small">무료 리포트에서는 원국의 뼈대와 일간 캐릭터, 가장 강하게 반복되는 기운까지만 먼저 보여드립니다. 지장간 아이템부터는 유료 리포트에서 열립니다.</p>
           <div class="reading-grid">
             <article class="reading-card">
-              <div class="reading-art origin" aria-hidden="true"><i>原</i></div>
+              <div class="reading-art origin" aria-hidden="true"><i>원국</i></div>
               <div>
                 <strong>원국 전장</strong>
                 <p>네 기둥이 어떤 배열로 서 있는지 확인합니다. 이 표가 모든 해석의 지도입니다.</p>
               </div>
             </article>
             <article class="reading-card">
-              <div class="reading-art stem" aria-hidden="true"><i>干</i></div>
+              <div class="reading-art stem" aria-hidden="true"><i>나</i></div>
               <div>
                 <strong>일간 무기: ${dayGan}</strong>
                 <p>${dayInfo.name}. 겉으로 드러나는 선택 방식과 첫 반응을 가볍게 봅니다.</p>
               </div>
             </article>
             <article class="reading-card">
-              <div class="reading-art branch" aria-hidden="true"><i>支</i></div>
+              <div class="reading-art branch" aria-hidden="true"><i>환경</i></div>
               <div>
                 <strong>월지 전장: ${monthJi}</strong>
                 <p>월지는 내가 놓인 계절과 환경입니다. 강해지는 판과 지치기 쉬운 판을 봅니다.</p>
               </div>
             </article>
             <article class="reading-card">
-              <div class="reading-art switch" aria-hidden="true"><i>勢</i></div>
+              <div class="reading-art switch" aria-hidden="true"><i>세력</i></div>
               <div>
                 <strong>강한 세력: ${strongElement}</strong>
                 <p>반복되는 기운은 장점이면서 오해의 전장이 됩니다. 실제 쓰임은 지장간부터 깊게 봅니다.</p>
@@ -1717,19 +1734,19 @@
           <span class="price-badge">전체 심화 리포트 9,900원</span>
           <div class="paid-lock-grid">
             <article class="paid-lock-card">
-              <strong>藏 지장간 아이템</strong>
+              <strong>숨은 아이템</strong>
               <p class="small">겉으로 보이지 않는 재능, 돈맥, 직업 힌트, 관계 패턴을 구체적으로 풉니다.</p>
             </article>
             <article class="paid-lock-card">
-              <strong>運 대운 스위치</strong>
+              <strong>대운 스위치</strong>
               <p class="small">어느 10년 운에서 숨은 아이템이 켜지는지 흐름으로 연결합니다.</p>
             </article>
             <article class="paid-lock-card">
-              <strong>歲 세운 타이밍</strong>
+              <strong>세운 타이밍</strong>
               <p class="small">올해와 앞으로의 해에 실제로 움직여야 할 행동 카드를 정리합니다.</p>
             </article>
             <article class="paid-lock-card">
-              <strong>財官 관계 전략</strong>
+              <strong>돈·일·관계 전략</strong>
               <p class="small">돈, 일, 명예, 관계에서 어떤 방식으로 아이템을 써야 하는지 봅니다.</p>
             </article>
           </div>
