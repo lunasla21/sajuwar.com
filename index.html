@@ -110,6 +110,56 @@
       font-size: clamp(17px, 2vw, 21px);
     }
 
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .hero-actions a {
+      min-height: 46px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0 18px;
+      border: 1px solid rgba(137, 91, 31, 0.22);
+      color: #2b1b12;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffe6a3, #d99b2e);
+      box-shadow: 0 12px 28px rgba(150, 96, 28, 0.16);
+    }
+
+    .hero-actions a.secondary-link {
+      color: #6d4310;
+      background: rgba(255, 252, 244, 0.78);
+      box-shadow: none;
+    }
+
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 22px;
+      max-width: 760px;
+    }
+
+    .proof-card {
+      padding: 13px;
+      border: 1px solid rgba(201, 141, 35, 0.18);
+      background: rgba(255, 252, 244, 0.62);
+      color: #6d523d;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .proof-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--gold2);
+      font-size: 15px;
+    }
+
     .hero-map {
       position: relative;
       aspect-ratio: 1;
@@ -972,7 +1022,7 @@
     @media (max-width: 960px) {
       .hero, .dashboard { grid-template-columns: 1fr; }
       .hero-map { min-height: 360px; }
-      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid, .upgrade-points, .paid-lock-grid { grid-template-columns: 1fr; }
+      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid, .upgrade-points, .paid-lock-grid, .proof-strip { grid-template-columns: 1fr; }
       .report-visual { min-height: 260px; }
       .button-row { grid-template-columns: 1fr; }
       .nav { display: none; }
@@ -1001,6 +1051,7 @@
       <nav class="nav" aria-label="주요 메뉴">
         <a href="#content-map">콘텐츠 지도</a>
         <a href="#report">전장 리포트</a>
+        <a href="#consulting">상담 신청</a>
         <a href="#naming">이름 점수</a>
         <a href="#naming-apply">작명 신청</a>
         <a href="#premium">유료 해석</a>
@@ -1010,13 +1061,35 @@
 
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">쭈샘이 읽어주는 원국 전장과 지장간 아이템</p>
+        <p class="eyebrow">검증된 쭈샘 해석으로 받는 나만의 사주 지침서</p>
         <h1 id="hero-title">쭈샘의 사주전쟁</h1>
         <p class="lead">
-          원국은 판결문이 아니라 오해의 전쟁터입니다. 강한 기운이 주도권을 잡고 있어도,
-          지장간에는 내가 꿈꾸는 능력과 기회가 숨어 있습니다. 대운은 그 아이템의 스위치를 켜고,
-          세운은 현실에서 꺼내 쓸 타이밍을 줍니다.
+          기존 AI 운세처럼 좋은 말만 던지는 곳이 아닙니다. 쭈샘의 사주 해석으로 원국의 오해를 풀고,
+          내 사주만의 무기와 지장간 아이템, 그 아이템을 꺼낼 세운·월운 타이밍까지 읽어드립니다.
+          더 깊은 내용은 상담, 강의, 궁합, 작명으로 바로 이어집니다.
         </p>
+        <div class="hero-actions" aria-label="주요 행동">
+          <a href="#report">무료 리포트 보기</a>
+          <a class="secondary-link" href="#consulting">상담 신청하기</a>
+        </div>
+        <div class="proof-strip" aria-label="사주전쟁 차별점">
+          <article class="proof-card">
+            <strong>쭈샘 해석</strong>
+            검증된 관점으로 원국을 읽어 AI보다 믿을 수 있는 지침서로 정리합니다.
+          </article>
+          <article class="proof-card">
+            <strong>내 무기 찾기</strong>
+            사주 안의 지장간 아이템과 부족한 기운을 채우는 방법을 봅니다.
+          </article>
+          <article class="proof-card">
+            <strong>시기 제시</strong>
+            다른 운세가 놓치는 세운과 월운의 사용 타이밍까지 안내합니다.
+          </article>
+          <article class="proof-card">
+            <strong>실행 연결</strong>
+            상담, 강의, 궁합, 작명으로 실제 선택과 행동까지 이어갑니다.
+          </article>
+        </div>
       </div>
 
       <div class="hero-map" aria-hidden="true">
@@ -1125,7 +1198,7 @@
       <div class="section-head">
         <p class="eyebrow">콘텐츠 지도</p>
         <h2>오늘 뭐 볼지 고르는 사주전쟁 메뉴판</h2>
-        <p>무료로 가볍게 눌러보는 코너부터 깊게 보는 프리미엄 리포트, 작명 신청까지 한 화면에서 바로 이동할 수 있게 정리했습니다.</p>
+        <p>무료로 가볍게 눌러보는 코너부터 프리미엄 리포트, 사주 상담, 강의, 궁합, 작명 신청까지 한 화면에서 바로 이동할 수 있게 정리했습니다.</p>
       </div>
 
       <div class="grid3">
@@ -1182,6 +1255,12 @@
           <span class="menu-kicker">타이밍</span>
           <h3>대운·세운 스위치</h3>
           <p>언제 움직여야 운이 열리는지, 올해와 앞으로의 타이밍을 전장 지도처럼 확인합니다.</p>
+        </a>
+        <a class="card menu-link" href="#consulting">
+          <span class="menu-art art-career" aria-hidden="true"><i>상담</i></span>
+          <span class="menu-kicker">신청</span>
+          <h3>쭈샘 사주 상담 신청</h3>
+          <p>세운·월운, 직업, 돈, 관계, 궁합, 작명까지 궁금한 주제를 상담 신청서로 정리합니다.</p>
         </a>
       </div>
     </section>
@@ -1353,6 +1432,105 @@
             <p class="small">오늘 입기 좋은 색, 소품 색, 피하면 좋은 색을 알려드립니다.</p>
           </div>
         </article>      </div>
+    </section>
+
+    <section class="content-band" id="consulting">
+      <div class="section-head">
+        <p class="eyebrow">상담 신청</p>
+        <h2>세운·월운까지 묻는 쭈샘 사주 상담</h2>
+        <p>프리미엄 리포트보다 더 자세한 내용이 필요하면 상담 신청서를 먼저 정리해보세요. 직업, 재물, 관계, 궁합, 작명, 강의 문의까지 한 번에 적을 수 있습니다.</p>
+      </div>
+
+      <div class="grid2">
+        <article class="box">
+          <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>상담</i></div>
+          <h2 class="section-title">사주 상담 신청서</h2>
+          <p class="small">내 사주만의 무기와 아이템, 그 아이템을 꺼낼 세운·월운 타이밍을 중심으로 상담 주제를 정리합니다.</p>
+          <div class="mini-form">
+            <div class="mini-row">
+              <label>
+                신청자
+                <input id="consultName" placeholder="신청자 이름" />
+              </label>
+              <label>
+                연락처
+                <input id="consultContact" placeholder="휴대폰 또는 이메일" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                생년월일
+                <input id="consultBirth" type="date" />
+              </label>
+              <label>
+                태어난 시간
+                <input id="consultTime" type="time" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                상담 주제
+                <select id="consultTopic">
+                  <option value="세운·월운 타이밍">세운·월운 타이밍</option>
+                  <option value="직업·사업 방향">직업·사업 방향</option>
+                  <option value="재물·돈 흐름">재물·돈 흐름</option>
+                  <option value="연애·궁합">연애·궁합</option>
+                  <option value="작명·개명">작명·개명</option>
+                  <option value="사주강의·교육">사주강의·교육</option>
+                </select>
+              </label>
+              <label>
+                보고 싶은 시기
+                <input id="consultPeriod" placeholder="예: 2026년 7월, 하반기, 올해" />
+              </label>
+            </div>
+            <label>
+              상담 메모
+              <input id="consultMemo" placeholder="궁금한 상황, 고민, 원하는 상담 방향" />
+            </label>
+            <button type="button" onclick="makeConsultApplication()">상담 신청서 만들기</button>
+          </div>
+        </article>
+
+        <article class="box">
+          <h2 class="section-title">상담에서 깊게 보는 것</h2>
+          <p class="small">무료 운세는 입구이고, 상담은 실제 선택을 위한 지도입니다. 어떤 달에 움직일지, 어떤 무기를 써야 하는지까지 구체적으로 봅니다.</p>
+          <div class="premium-grid">
+            <article class="premium-item">
+              <span>세운</span>
+              <div>
+                <strong>올해의 큰 흐름</strong>
+                <p>올해 어떤 사건과 기회가 열리는지 봅니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>월운</span>
+              <div>
+                <strong>움직일 달</strong>
+                <p>어느 월에 시작, 계약, 관계, 돈 흐름이 유리한지 봅니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>무기</span>
+              <div>
+                <strong>내 사주의 아이템</strong>
+                <p>부족한 사주를 채우는 행동과 선택을 찾습니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>연결</span>
+              <div>
+                <strong>강의·궁합·작명</strong>
+                <p>필요한 경우 교육, 궁합, 작명 방향까지 이어갑니다.</p>
+              </div>
+            </article>
+          </div>
+          <div class="fortune-result" id="consultResult">
+            <h3>상담 신청 대기 중</h3>
+            <p class="small">신청서를 만들면 상담에 필요한 핵심 정보가 정리됩니다.</p>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="content-band" id="naming">
@@ -2395,6 +2573,64 @@
       try {
         await navigator.clipboard.writeText(text);
         showToast("작명 신청 내용이 복사되었습니다.");
+      } catch (error) {
+        showToast("복사가 막혔습니다. 화면의 내용을 직접 선택해 복사해주세요.");
+      }
+    }
+
+    function makeConsultApplication() {
+      const name = document.getElementById("consultName").value.trim();
+      const contact = document.getElementById("consultContact").value.trim();
+      const birth = document.getElementById("consultBirth").value;
+      const time = document.getElementById("consultTime").value || "모름";
+      const topic = document.getElementById("consultTopic").value;
+      const period = document.getElementById("consultPeriod").value.trim() || "상담 때 함께 확인";
+      const memo = document.getElementById("consultMemo").value.trim() || "없음";
+      const result = document.getElementById("consultResult");
+
+      if (!name || !contact || !birth) {
+        showToast("상담 신청은 이름, 연락처, 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const applicationText = [
+        "[쭈샘 사주전쟁 상담 신청]",
+        `신청자: ${name}`,
+        `연락처: ${contact}`,
+        `생년월일: ${birth}`,
+        `태어난 시간: ${time}`,
+        `상담 주제: ${topic}`,
+        `보고 싶은 시기: ${period}`,
+        `상담 메모: ${memo}`,
+        "상담 요청: 원국의 무기와 지장간 아이템, 세운·월운 타이밍까지 구체적으로 알고 싶습니다."
+      ].join("\n");
+
+      result.dataset.application = applicationText;
+      result.innerHTML = `
+        <h3>${name}님의 상담 신청서가 준비되었습니다</h3>
+        <p><strong>${topic}</strong>을 중심으로, <strong>${period}</strong>의 세운·월운 타이밍과 실제 행동 전략을 상담에서 확인할 수 있습니다.</p>
+        <ul class="fortune-list">
+          <li>확인할 핵심: 원국의 무기와 지장간 아이템</li>
+          <li>상담 포인트: 언제, 어떤 달에, 무엇을 꺼내 쓸지</li>
+          <li>연결 가능: 사주강의, 궁합, 작명, 개명, 브랜드명 상담</li>
+        </ul>
+        <button type="button" style="margin-top:16px" onclick="copyConsultApplication()">상담 내용 복사하기</button>
+      `;
+      showToast("상담 신청서가 만들어졌습니다.");
+    }
+
+    async function copyConsultApplication() {
+      const result = document.getElementById("consultResult");
+      const text = result.dataset.application;
+
+      if (!text) {
+        showToast("먼저 상담 신청서를 만들어주세요.");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("상담 신청 내용이 복사되었습니다.");
       } catch (error) {
         showToast("복사가 막혔습니다. 화면의 내용을 직접 선택해 복사해주세요.");
       }
