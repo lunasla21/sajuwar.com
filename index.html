@@ -856,6 +856,13 @@
       background-position: center 50%;
     }
 
+    .free-art-compat-paid.photo-art {
+      background-image:
+        linear-gradient(135deg, rgba(255, 250, 239, 0.12), rgba(255, 228, 168, 0.18)),
+        url("assets/card-compatibility-paid.jpg");
+      background-position: center 50%;
+    }
+
     .color-oracle {
       display: flex;
       gap: 10px;
@@ -1072,6 +1079,7 @@
         <a href="#content-map">콘텐츠 지도</a>
         <a href="#report">전장 리포트</a>
         <a href="#consulting">상담 신청</a>
+        <a href="#compatibility-paid">유료 궁합</a>
         <a href="#naming">이름 점수</a>
         <a href="#naming-apply">작명 신청</a>
         <a href="#premium">유료 해석</a>
@@ -1285,6 +1293,12 @@
           <h3>쭈샘 사주 상담 신청</h3>
           <p>세운·월운, 직업, 돈, 관계, 궁합, 작명까지 궁금한 주제를 상담 신청서로 정리합니다.</p>
         </a>
+        <a class="card menu-link" href="#compatibility-paid">
+          <span class="menu-art art-match" aria-hidden="true"><i>심화</i></span>
+          <span class="menu-kicker">유료 궁합</span>
+          <h3>자세한 궁합 신청</h3>
+          <p>두 사람의 원국, 지장간 아이템, 충돌 지점, 세운·월운 관계 타이밍을 깊게 봅니다.</p>
+        </a>
       </div>
     </section>
 
@@ -1455,6 +1469,115 @@
             <p class="small">오늘 입기 좋은 색, 소품 색, 피하면 좋은 색을 알려드립니다.</p>
           </div>
         </article>      </div>
+    </section>
+
+    <section class="content-band" id="compatibility-paid">
+      <div class="section-head">
+        <p class="eyebrow">유료 궁합 신청</p>
+        <h2>두 사람의 전장과 관계 아이템을 깊게 봅니다</h2>
+        <p>무료 궁합은 오늘의 관계 온도만 가볍게 봅니다. 자세한 유료 궁합은 두 사람의 원국, 지장간 아이템, 충돌 지점, 관계가 풀리는 세운·월운까지 신청서로 정리합니다.</p>
+      </div>
+
+      <div class="grid2">
+        <article class="box">
+          <div class="free-card-art free-art-compat-paid photo-art" aria-hidden="true"><i>궁합</i></div>
+          <h2 class="section-title">자세한 유료 궁합 신청서</h2>
+          <p class="small">좋고 나쁜 궁합만 보는 것이 아니라, 서로의 사주에서 어떤 무기와 아이템을 써야 관계가 살아나는지 봅니다.</p>
+          <div class="mini-form">
+            <div class="mini-row">
+              <label>
+                내 이름
+                <input id="paidMatchNameA" placeholder="내 이름" />
+              </label>
+              <label>
+                상대 이름
+                <input id="paidMatchNameB" placeholder="상대 이름" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                내 생년월일
+                <input id="paidMatchBirthA" type="date" />
+              </label>
+              <label>
+                상대 생년월일
+                <input id="paidMatchBirthB" type="date" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                내 태어난 시간
+                <input id="paidMatchTimeA" type="time" />
+              </label>
+              <label>
+                상대 태어난 시간
+                <input id="paidMatchTimeB" type="time" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                관계 유형
+                <select id="paidMatchType">
+                  <option value="연애 궁합">연애 궁합</option>
+                  <option value="결혼 궁합">결혼 궁합</option>
+                  <option value="재회·이별 고민">재회·이별 고민</option>
+                  <option value="부부 관계">부부 관계</option>
+                  <option value="사업 파트너 궁합">사업 파트너 궁합</option>
+                  <option value="가족 관계 궁합">가족 관계 궁합</option>
+                </select>
+              </label>
+              <label>
+                보고 싶은 시기
+                <input id="paidMatchPeriod" placeholder="예: 2026년 하반기, 올해 8월" />
+              </label>
+            </div>
+            <label>
+              궁금한 내용
+              <input id="paidMatchMemo" placeholder="갈등, 결혼, 재회, 연락 시기, 관계 흐름 등" />
+            </label>
+            <button type="button" onclick="makePaidCompatibilityApplication()">유료 궁합 신청서 만들기</button>
+          </div>
+        </article>
+
+        <article class="box">
+          <h2 class="section-title">유료 궁합에서 보는 것</h2>
+          <p class="small">두 사람이 왜 끌리고 왜 부딪히는지, 그리고 어느 시기에 관계의 아이템을 꺼내야 하는지를 봅니다.</p>
+          <div class="premium-grid">
+            <article class="premium-item">
+              <span>원국</span>
+              <div>
+                <strong>두 사람의 기본 전장</strong>
+                <p>성향, 끌림, 충돌 지점을 원국 기준으로 봅니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>아이템</span>
+              <div>
+                <strong>관계 지장간</strong>
+                <p>서로에게 켜지는 숨은 무기와 보완점을 찾습니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>세운</span>
+              <div>
+                <strong>올해의 관계 사건</strong>
+                <p>올해 관계가 움직이는 사건과 선택 포인트를 봅니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>월운</span>
+              <div>
+                <strong>연락·결정 타이밍</strong>
+                <p>어느 달에 말하고, 만나고, 결정하면 좋은지 봅니다.</p>
+              </div>
+            </article>
+          </div>
+          <div class="fortune-result" id="paidMatchResult">
+            <h3>유료 궁합 신청 대기 중</h3>
+            <p class="small">신청서를 만들면 상담/결제 연결에 필요한 핵심 정보가 정리됩니다.</p>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="content-band" id="consulting">
@@ -2656,6 +2779,70 @@
       try {
         await navigator.clipboard.writeText(text);
         showToast("상담 신청 내용이 복사되었습니다.");
+      } catch (error) {
+        showToast("복사가 막혔습니다. 화면의 내용을 직접 선택해 복사해주세요.");
+      }
+    }
+
+    function makePaidCompatibilityApplication() {
+      const nameA = document.getElementById("paidMatchNameA").value.trim();
+      const nameB = document.getElementById("paidMatchNameB").value.trim();
+      const birthA = document.getElementById("paidMatchBirthA").value;
+      const birthB = document.getElementById("paidMatchBirthB").value;
+      const timeA = document.getElementById("paidMatchTimeA").value || "모름";
+      const timeB = document.getElementById("paidMatchTimeB").value || "모름";
+      const type = document.getElementById("paidMatchType").value;
+      const period = document.getElementById("paidMatchPeriod").value.trim() || "상담 때 함께 확인";
+      const memo = document.getElementById("paidMatchMemo").value.trim() || "없음";
+      const result = document.getElementById("paidMatchResult");
+
+      if (!nameA || !nameB || !birthA || !birthB) {
+        showToast("유료 궁합은 두 사람의 이름과 생년월일을 모두 입력해주세요.");
+        return;
+      }
+
+      const applicationText = [
+        "[쭈샘 사주전쟁 유료 궁합 신청]",
+        `내 이름: ${nameA}`,
+        `내 생년월일: ${birthA}`,
+        `내 태어난 시간: ${timeA}`,
+        `상대 이름: ${nameB}`,
+        `상대 생년월일: ${birthB}`,
+        `상대 태어난 시간: ${timeB}`,
+        `관계 유형: ${type}`,
+        `보고 싶은 시기: ${period}`,
+        `궁금한 내용: ${memo}`,
+        "요청 내용: 두 사람의 원국 전장, 지장간 관계 아이템, 충돌 지점, 세운·월운 타이밍까지 자세히 보고 싶습니다."
+      ].join("\n");
+
+      result.dataset.application = applicationText;
+      result.innerHTML = `
+        <h3>${nameA} × ${nameB} 유료 궁합 신청서가 준비되었습니다</h3>
+        <p><strong>${type}</strong>을 중심으로, <strong>${period}</strong>의 관계 세운·월운과 서로가 꺼내야 할 관계 아이템을 깊게 확인할 수 있습니다.</p>
+        <ul class="fortune-list">
+          <li>확인할 핵심: 두 사람의 원국 전장과 끌림/충돌 지점</li>
+          <li>관계 아이템: 서로에게 필요한 말투, 거리감, 행동 방식</li>
+          <li>타이밍: 연락, 만남, 결정, 재회, 결혼을 움직일 세운·월운</li>
+          <li>다음 단계: 결제 또는 상담 신청으로 자세한 궁합 리포트 연결</li>
+        </ul>
+        <button type="button" style="margin-top:16px" onclick="copyPaidCompatibilityApplication()">궁합 신청 내용 복사하기</button>
+        <button type="button" class="secondary" style="margin-top:10px" onclick="location.href='/payment.html'">결제하고 자세한 궁합 보기</button>
+      `;
+      showToast("유료 궁합 신청서가 만들어졌습니다.");
+    }
+
+    async function copyPaidCompatibilityApplication() {
+      const result = document.getElementById("paidMatchResult");
+      const text = result.dataset.application;
+
+      if (!text) {
+        showToast("먼저 유료 궁합 신청서를 만들어주세요.");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("유료 궁합 신청 내용이 복사되었습니다.");
       } catch (error) {
         showToast("복사가 막혔습니다. 화면의 내용을 직접 선택해 복사해주세요.");
       }
