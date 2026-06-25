@@ -58,6 +58,32 @@
 
   <script>
     const clientKey = "여기에_토스_클라이언트키";
+    let developerAdminKey = localStorage.getItem("sajuwar_admin_key") || "";
+
+    async function redirectDeveloperPreviewIfAllowed() {
+      const params = new URLSearchParams(window.location.search);
+      const urlAdminKey = params.get("adminKey") || params.get("devKey");
+      if (urlAdminKey) {
+        developerAdminKey = urlAdminKey;
+        localStorage.setItem("sajuwar_admin_key", urlAdminKey);
+      }
+      if (!developerAdminKey) return;
+
+      try {
+        const response = await fetch("/api/developer-preview-config", {
+          headers: { "x-sajuwar-admin-key": developerAdminKey }
+        });
+        const data = await response.json();
+        if (data.available) {
+          localStorage.setItem("sajuwar_developer_mode", "true");
+          window.location.href = "/?developer=1";
+        }
+      } catch (error) {
+        // 일반 결제 흐름을 유지한다.
+      }
+    }
+
+    redirectDeveloperPreviewIfAllowed();
 
     document.getElementById("payButton").addEventListener("click", () => {
       if (!clientKey || clientKey.includes("여기에")) {

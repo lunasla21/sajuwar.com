@@ -8,6 +8,10 @@ const { Solar, Lunar } = require("lunar-javascript");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const developerModeEnabled =
+  process.env.SAJUWAR_ENABLE_DEVELOPER_MODE === "true" &&
+  process.env.SAJUWAR_ENV !== "production";
+const adminKey = process.env.SAJUWAR_ADMIN_KEY || "";
 
 app.use(cors());
 app.use(express.json());
@@ -16,6 +20,38 @@ app.use(express.static(__dirname));
 const client = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
   : null;
+
+function isDeveloperPreviewRequest(req) {
+  if (!developerModeEnabled || !adminKey) return false;
+  const providedKey =
+    req.get("x-sajuwar-admin-key") ||
+    req.body?.adminKey ||
+    req.query?.adminKey ||
+    "";
+  return providedKey === adminKey;
+}
+
+function scoreReport(report) {
+  const lengthScore = report && report.length > 4500 ? 100 : report && report.length > 2500 ? 88 : 72;
+  return {
+    quality_score: lengthScore,
+    retrieval_score: 0,
+    interpretation_score: report && report.length > 3000 ? 92 : 78,
+    personalization_score: report && report.includes("님") ? 88 : 72,
+  };
+}
+
+function buildDeveloperDebugPayload({ report, prompt, ragContext, sources, gptResponse, finalMarkdown }) {
+  return {
+    full_paid_report: report,
+    prompt,
+    rag_context: ragContext,
+    sources,
+    gpt_response: gptResponse,
+    final_markdown: finalMarkdown,
+    ...scoreReport(report),
+  };
+}
 
 const stemElement = {
   "甲": "목", "乙": "목",
@@ -221,14 +257,45 @@ async function handleAnalyze(req, res) {
 
     const calendarLabel = safeCalendar === "lunar" ? "음력" : "양력";
     const genderLabel = gender === "male" ? "남성" : "여성";
+    const developerPreview = isDeveloperPreviewRequest(req);
+    const ragContext = [
+      "현재 홈페이지 버전은 외부 RAG 검색이 아니라 local 만세력 계산, 대운/세운 계산, GPT 프롬프트를 기반으로 리포트를 생성합니다.",
+      `원국: ${pillars.year}, ${pillars.month}, ${pillars.day}, ${pillars.hour}`,
+      `대운: ${daewoon.startInfo}`,
+      `세운: ${sewoon.startInfo}`,
+    ].join("\n");
+    const sources = [
+      {
+        source_title: "SAJUWAR local saju calculator",
+        source_type: "calculation",
+        page: null,
+        chunk_id: "local-pillars-daewoon-sewoon",
+        relevance_score: 1,
+        boosted_score: 1,
+      },
+    ];
 
     if (!client) {
-      return res.json({
-        result: fallbackReport({ name, pillars, daewoon, sewoon }),
+      const report = fallbackReport({ name, pillars, daewoon, sewoon });
+      const response = {
+        result: report,
         pillars,
         daewoon,
         sewoon,
         calendarType: safeCalendar,
+      };
+      if (developerPreview) {
+        response.developer_debug = buildDeveloperDebugPayload({
+          report,
+          prompt: "local fallback: OpenAI API key is not configured",
+          ragContext,
+          sources,
+          gptResponse: "local fallback report",
+          finalMarkdown: report,
+        });
+      }
+      return res.json({
+        ...response,
       });
     }
 
@@ -307,13 +374,25 @@ ${sewoon.list.map((s) => `${s.year}년 ${s.ganji}: 천간 ${s.stemElement}, 지�
       temperature: 0.75,
     });
 
-    res.json({
-      result: completion.choices[0].message.content,
+    const report = completion.choices[0].message.content;
+    const response = {
+      result: report,
       pillars,
       daewoon,
       sewoon,
       calendarType: safeCalendar,
-    });
+    };
+    if (developerPreview) {
+      response.developer_debug = buildDeveloperDebugPayload({
+        report,
+        prompt,
+        ragContext,
+        sources,
+        gptResponse: report,
+        finalMarkdown: report,
+      });
+    }
+    res.json(response);
   } catch (error) {
     console.error("분석 오류:", error);
     res.status(500).json({
@@ -362,6 +441,13 @@ function handleManse(req, res) {
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.get("/api/developer-preview-config", (req, res) => {
+  res.json({
+    available: isDeveloperPreviewRequest(req),
+    environment: process.env.SAJUWAR_ENV || "development",
+  });
 });
 
 app.post("/analyze", handleAnalyze);
