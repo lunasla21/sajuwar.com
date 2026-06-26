@@ -1126,6 +1126,112 @@
       background: rgba(241, 255, 249, 0.86);
     }
 
+    .developer-debug-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .developer-debug-head p {
+      margin: 0;
+    }
+
+    .developer-section {
+      border: 1px solid rgba(47, 142, 114, 0.22);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.62);
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .developer-section summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      color: #165846;
+      font-weight: 900;
+      list-style: none;
+    }
+
+    .developer-section summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .developer-section summary span::before {
+      content: "펼치기";
+      display: inline-flex;
+      margin-right: 8px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(47, 142, 114, 0.12);
+      color: #2f8e72;
+      font-size: 11px;
+    }
+
+    .developer-section[open] summary span::before {
+      content: "접기";
+    }
+
+    .developer-section-body {
+      border-top: 1px solid rgba(47, 142, 114, 0.16);
+      padding: 14px;
+    }
+
+    .developer-copy {
+      border: 1px solid rgba(47, 142, 114, 0.35);
+      background: #fff;
+      color: #165846;
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .developer-copy:hover {
+      background: rgba(226, 249, 237, 0.86);
+    }
+
+    .developer-report-preview {
+      max-height: 520px;
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid rgba(201, 141, 35, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.86);
+    }
+
+    .developer-score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .developer-score-card {
+      padding: 12px;
+      border: 1px solid rgba(47, 142, 114, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .developer-score-card strong {
+      display: block;
+      color: #165846;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .developer-score-card b {
+      color: #8a6500;
+      font-size: 22px;
+    }
+
     .developer-debug pre {
       max-height: 360px;
       overflow: auto;
@@ -2055,6 +2161,8 @@
     let developerModeAvailable = false;
     let developerModeOn = localStorage.getItem("sajuwar_developer_mode") === "true";
     let developerAdminKey = localStorage.getItem("sajuwar_admin_key") || "";
+    let developerCopyCounter = 0;
+    const developerCopyPayloads = {};
     let lastFullResult = "";
     let loadingTimer = null;
 
@@ -2182,19 +2290,124 @@
       return isPaid || hasDeveloperAccess();
     }
 
-    function renderDeveloperDebugPanel(debug) {
-      if (!hasDeveloperAccess() || !debug) return "";
-      const safeJson = JSON.stringify(debug, null, 2)
+    function escapeHtml(value) {
+      return String(value ?? "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function stringifyDebugValue(value) {
+      if (value === null || value === undefined) return "";
+      return typeof value === "string" ? value : JSON.stringify(value, null, 2);
+    }
+
+    function registerDeveloperCopyPayload(value) {
+      const id = `developer-copy-${++developerCopyCounter}`;
+      developerCopyPayloads[id] = stringifyDebugValue(value);
+      return id;
+    }
+
+    function renderDeveloperCopyButton(copyId) {
+      return `<button class="developer-copy" type="button" onclick="copyDeveloperSection('${copyId}', event)">복사</button>`;
+    }
+
+    function renderDeveloperPre(value) {
+      return `<pre>${escapeHtml(stringifyDebugValue(value))}</pre>`;
+    }
+
+    function renderDeveloperReport(value) {
+      return `<div class="report developer-report-preview">${escapeHtml(stringifyDebugValue(value))}</div>`;
+    }
+
+    function renderDeveloperScores(debug) {
+      const scores = [
+        ["Quality", debug.quality_score],
+        ["Retrieval", debug.retrieval_score],
+        ["Interpretation", debug.interpretation_score],
+        ["Personalization", debug.personalization_score]
+      ];
+      return `
+        <div class="developer-score-grid">
+          ${scores.map(([label, value]) => `
+            <div class="developer-score-card">
+              <strong>${label}</strong>
+              <b>${escapeHtml(value ?? "-")}</b>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderDeveloperSection(title, value, options = {}) {
+      const copyId = registerDeveloperCopyPayload(value);
+      const body = options.type === "report" ? renderDeveloperReport(value)
+        : options.type === "scores" ? renderDeveloperScores(value)
+        : renderDeveloperPre(value);
+      return `
+        <details class="developer-section" ${options.open ? "open" : ""}>
+          <summary>
+            <span>${escapeHtml(title)}</span>
+            ${renderDeveloperCopyButton(copyId)}
+          </summary>
+          <div class="developer-section-body">
+            ${body}
+          </div>
+        </details>
+      `;
+    }
+
+    function renderDeveloperDebugPanel(debug) {
+      if (!hasDeveloperAccess() || !debug) return "";
+      const qualityScores = {
+        quality_score: debug.quality_score,
+        retrieval_score: debug.retrieval_score,
+        interpretation_score: debug.interpretation_score,
+        personalization_score: debug.personalization_score
+      };
       return `
         <section class="box developer-debug">
-          <p class="eyebrow">Developer Preview</p>
-          <h2 class="section-title">관리자 검수 데이터</h2>
-          <pre>${safeJson}</pre>
+          <div class="developer-debug-head">
+            <div>
+              <p class="eyebrow">Developer Preview</p>
+              <h2 class="section-title">관리자 검수 데이터</h2>
+              <p class="small">각 항목을 펼쳐서 확인하고 필요한 내용만 복사할 수 있습니다. Developer Mode OFF 상태에서는 이 영역이 렌더링되지 않습니다.</p>
+            </div>
+          </div>
+          ${renderDeveloperSection("전체 유료 리포트", debug.full_paid_report, { type: "report", open: true })}
+          ${renderDeveloperSection("Prompt", debug.prompt)}
+          ${renderDeveloperSection("RAG Context", debug.rag_context)}
+          ${renderDeveloperSection("검색 Source", debug.sources)}
+          ${renderDeveloperSection("GPT 응답", debug.gpt_response)}
+          ${renderDeveloperSection("최종 Markdown", debug.final_markdown)}
+          ${renderDeveloperSection("품질 점수", qualityScores, { type: "scores", open: true })}
         </section>
       `;
+    }
+
+    async function copyDeveloperSection(copyId, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const text = developerCopyPayloads[copyId] || "";
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("검수 데이터가 복사되었습니다.");
+      } catch (error) {
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.style.position = "fixed";
+        area.style.left = "-9999px";
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+        showToast("검수 데이터가 복사되었습니다.");
+      }
     }
 
     function showToast(message) {
