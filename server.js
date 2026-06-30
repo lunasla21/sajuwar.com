@@ -130,7 +130,7 @@ function readGoldenDataset() {
       const sectionPath = path.join(goldenDatasetPath, entry.name);
       return fs
         .readdirSync(sectionPath, { withFileTypes: true })
-        .filter((file) => file.isFile() && /^golden_\d+\.md$/i.test(file.name))
+        .filter((file) => file.isFile() && /^(golden_\d+\.md|case_\d+\.ya?ml)$/i.test(file.name))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((file) => ({
           section: entry.name,
