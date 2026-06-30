@@ -1,0 +1,33 @@
+type: "신강신약"
+count: 2
+rules:
+  - rule_id: "MR-SB-0001"
+    if: "IF 일간의 뿌리가 강하고 식상이 함께 살아난다."
+    then: "THEN 주체성은 강하지만 조직 순응성은 낮아질 수 있다."
+    because: "BECAUSE 강한 일간은 외부 틀보다 자기 방식을 우선하기 쉽다."
+    exceptions:
+      - "반대 신호가 더 강하면 결론을 보류한다."
+      - "실제 상담에서는 원국, 대운, 세운을 함께 확인한다."
+    priority: 2
+    related_cases:
+      - "case_0001"
+      - "case_0002"
+      - "case_0003"
+      - "case_0004"
+      - "case_0005"
+    confidence: 0.93
+  - rule_id: "MR-SB-0002"
+    if: "IF 일간의 뿌리가 충을 받아 약해진다."
+    then: "THEN 능력보다 버틸 체력, 환경, 관계 안정성을 먼저 본다."
+    because: "BECAUSE 신약해진 구조에서는 좋은 기회도 감당력이 부족하면 손실이 된다."
+    exceptions:
+      - "반대 신호가 더 강하면 결론을 보류한다."
+      - "실제 상담에서는 원국, 대운, 세운을 함께 확인한다."
+    priority: 2
+    related_cases:
+      - "case_0001"
+      - "case_0002"
+      - "case_0003"
+      - "case_0004"
+      - "case_0005"
+    confidence: 0.93
