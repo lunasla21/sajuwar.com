@@ -19,6 +19,13 @@ const goldenDatasetPath =
 
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => {
+  const requestPath = req.path.replace(/\\/g, "/");
+  if (requestPath === "/review_dataset.jsonl" || requestPath.startsWith("/golden_dataset/")) {
+    return res.status(404).send("Not found");
+  }
+  return next();
+});
 app.use(express.static(__dirname));
 
 const client = process.env.OPENAI_API_KEY
