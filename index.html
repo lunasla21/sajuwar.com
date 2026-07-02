@@ -496,6 +496,7 @@
       --element-color: #f9d77e;
       --element-glow: rgba(249, 215, 126, 0.24);
       color: var(--element-color);
+      -webkit-text-fill-color: var(--element-color);
       font-family: Georgia, "Times New Roman", "Malgun Gothic", serif;
       font-weight: 950;
       text-shadow: 0 0 18px var(--element-glow);
@@ -508,6 +509,12 @@
     .element-metal { --element-color: #e5e7eb; --element-glow: rgba(229, 231, 235, 0.32); }
     .element-water { --element-color: #38bdf8; --element-glow: rgba(56, 189, 248, 0.38); }
     .element-neutral { --element-color: #f9d77e; --element-glow: rgba(249, 215, 126, 0.22); }
+
+    .element-glyph.element-wood { color: #31c978 !important; -webkit-text-fill-color: #31c978 !important; }
+    .element-glyph.element-fire { color: #ef4444 !important; -webkit-text-fill-color: #ef4444 !important; }
+    .element-glyph.element-earth { color: #d4af37 !important; -webkit-text-fill-color: #d4af37 !important; }
+    .element-glyph.element-metal { color: #e5e7eb !important; -webkit-text-fill-color: #e5e7eb !important; }
+    .element-glyph.element-water { color: #38bdf8 !important; -webkit-text-fill-color: #38bdf8 !important; }
 
     .hidden-stems .element-glyph {
       font-size: 15px;
@@ -2163,6 +2170,7 @@
     .ganji-colored .element-glyph,
     .war-time-card strong.ganji-colored .element-glyph {
       color: var(--element-color);
+      -webkit-text-fill-color: var(--element-color);
       background: none;
       -webkit-background-clip: initial;
       background-clip: initial;
@@ -3506,6 +3514,10 @@
       return `<span class="element-glyph element-${getElementClass(glyph)}" title="${escapeHtml(element)}">${escapeHtml(glyph)}</span>`;
     }
 
+    function renderElementCell(char, typeClass) {
+      return `<td class="${typeClass} element-${getElementClass(char)}">${renderElementGlyph(char)}</td>`;
+    }
+
     function renderGanji(value) {
       const chars = String(value || "-").split("");
       return `<span class="ganji-colored">${chars.map((char) => renderElementGlyph(char)).join("")}</span>`;
@@ -3575,11 +3587,11 @@
               </tr>
               <tr>
                 <td class="label">천간</td>
-                ${cols.map((col) => `<td class="gan">${renderElementGlyph(splitPillar(col.value).gan)}</td>`).join("")}
+                ${cols.map((col) => renderElementCell(splitPillar(col.value).gan, "gan")).join("")}
               </tr>
               <tr>
                 <td class="label">지지</td>
-                ${cols.map((col) => `<td class="ji">${renderElementGlyph(splitPillar(col.value).ji)}</td>`).join("")}
+                ${cols.map((col) => renderElementCell(splitPillar(col.value).ji, "ji")).join("")}
               </tr>
               <tr>
                 <td class="label">지장간</td>
