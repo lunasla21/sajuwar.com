@@ -773,6 +773,9 @@ ${sewoon.list.map((s) => `${s.year}년 ${s.ganji}: 천간 ${s.stemElement}, 지�
       "[Authoritative Dataset Order Reminder]",
       "The paid report must use this final order: Master Rule -> Decision Priority -> Golden Brain Case -> Consultation Strategy -> Action Strategy -> Language Style -> Evidence -> Review Dataset -> Customer Information.",
       "Developer Mode and paid customer generation both use this same prompt and AI Brain dataset context.",
+      "Make the paid report feel materially richer than a free reading: every chapter must include at least two concrete real-life scenes and at least two practical next actions.",
+      "Avoid a wall of text. Write with clear chapter rhythm: core judgment, why it happens, how it appears in daily life, what the customer should do next, and one counselor-style closing line.",
+      "Use more practical detail for work, money, relationships, health management, yearly timing, and immediate action. Do not add new product features; only improve the report content quality.",
       "Output style must be counseling-first: why -> real-life manifestation -> next action in every chapter, at least three '맞아.' recognition sentences, restrained metaphor use, one counselor advice line per chapter, and a final practical action instruction.",
     ].join("\n");
 

@@ -574,6 +574,129 @@
       border-radius: 8px;
     }
 
+    .war-report-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 270px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .war-report-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .war-report-card {
+      position: relative;
+      overflow: hidden;
+      padding: 18px;
+      border: 1px solid rgba(249, 215, 126, 0.18);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+        rgba(9, 16, 29, 0.86);
+    }
+
+    .war-report-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: linear-gradient(180deg, #d4af37, #6b46c1, #38bdf8);
+      opacity: 0.9;
+    }
+
+    .war-report-card h4 {
+      margin: 0 0 12px;
+      color: #fff1c2;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .war-report-card p {
+      margin: 0;
+      color: rgba(247, 234, 210, 0.84);
+      font-size: 15.5px;
+      line-height: 1.95;
+    }
+
+    .war-report-card p + p {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(249, 215, 126, 0.1);
+    }
+
+    .war-report-number {
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      aspect-ratio: 1;
+      margin-right: 8px;
+      border: 1px solid rgba(249, 215, 126, 0.34);
+      border-radius: 50%;
+      color: #f9d77e;
+      font-size: 12px;
+      font-weight: 950;
+      background: rgba(212, 175, 55, 0.12);
+    }
+
+    .war-report-side {
+      position: sticky;
+      top: 84px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .war-visual-card {
+      min-height: 180px;
+      padding: 16px;
+      border: 1px solid rgba(249, 215, 126, 0.22);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(7, 17, 31, 0.3), rgba(7, 17, 31, 0.88)),
+        url("assets/hero-saju-war.jpg") center/cover;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    .war-visual-card strong {
+      display: block;
+      color: #fff1c2;
+      font-size: 19px;
+      line-height: 1.35;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7);
+    }
+
+    .war-visual-card span {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 5px 8px;
+      border: 1px solid rgba(249, 215, 126, 0.34);
+      color: #f9d77e;
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(5, 9, 19, 0.72);
+    }
+
+    .war-action-card {
+      padding: 14px;
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.09), rgba(49, 201, 120, 0.04));
+    }
+
+    .war-action-card b {
+      display: block;
+      color: #bdefff;
+      margin-bottom: 8px;
+    }
+
+    .war-action-card p {
+      margin: 0;
+      color: rgba(247, 234, 210, 0.78);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
     .war-hero {
       position: relative;
       overflow: hidden;
@@ -2245,7 +2368,9 @@
       .hero, .dashboard { grid-template-columns: 1fr; }
       .war-hero,
       .war-grid,
+      .war-report-layout,
       .war-final-card { grid-template-columns: 1fr; }
+      .war-report-side { position: static; }
       .war-kpi-grid,
       .war-item-grid { grid-template-columns: 1fr; }
       .premium-war-shell { padding: 12px; }
@@ -3693,6 +3818,75 @@
       `;
     }
 
+    function parseReportSections(report) {
+      const lines = String(report || "")
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+      const sections = [];
+      let current = null;
+
+      lines.forEach((line) => {
+        const headingMatch = line.match(/^(\d{1,2})[\.\)]\s*(.+)$/);
+        if (headingMatch) {
+          current = {
+            number: headingMatch[1],
+            title: headingMatch[2],
+            body: []
+          };
+          sections.push(current);
+          return;
+        }
+
+        if (!current) {
+          current = { number: String(sections.length + 1), title: "핵심 상담", body: [] };
+          sections.push(current);
+        }
+        current.body.push(line);
+      });
+
+      return sections.length ? sections : [{ number: "1", title: "프리미엄 심화 해석", body: [report] }];
+    }
+
+    function renderPremiumReportCards(report, context) {
+      const sections = parseReportSections(report);
+      const { name, strongElement, dayGan, hiddenItems, sewoonList } = context;
+      const firstHidden = hiddenItems[0];
+      const firstSewoon = sewoonList[0];
+      const actionText = firstSewoon
+        ? `${firstSewoon.year}년에는 ${escapeHtml(firstSewoon.theme || "가장 현실적인 선택")}을 기준으로 계획을 짧게 쪼개세요.`
+        : "오늘 할 일 하나, 멈출 일 하나, 미룰 일 하나를 먼저 정리하세요.";
+
+      return `
+        <div class="war-report-layout">
+          <div class="war-report-stack">
+            ${sections.map((section, index) => `
+              <article class="war-report-card">
+                <h4><span class="war-report-number">${escapeHtml(section.number || String(index + 1))}</span>${escapeHtml(section.title || "상담 해석")}</h4>
+                ${section.body.length
+                  ? section.body.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")
+                  : `<p>${escapeHtml(report)}</p>`}
+              </article>
+            `).join("")}
+          </div>
+          <aside class="war-report-side">
+            <div class="war-visual-card">
+              <strong>${escapeHtml(name)}님의 원국을 읽는 핵심 장면</strong>
+              <span>${renderElementGlyph(dayGan)} 일간 · ${escapeHtml(strongElement)} 기운 중심</span>
+            </div>
+            <div class="war-action-card">
+              <b>오늘의 적용 포인트</b>
+              <p>${actionText}</p>
+            </div>
+            <div class="war-action-card">
+              <b>숨은 카드</b>
+              <p>${firstHidden ? `${renderElementGlyph(firstHidden.stem)} ${escapeHtml(firstHidden.name)}은(는) ${escapeHtml(firstHidden.desc)}` : "지장간에서 반복되는 기운을 현실 선택의 보조 기준으로 보세요."}</p>
+            </div>
+          </aside>
+        </div>
+      `;
+    }
+
     function renderPremiumWarDashboard(name, data, report) {
       const pillars = data.pillars || {};
       const stats = getElementStats(pillars);
@@ -3807,7 +4001,7 @@
               <h3>프리미엄 심화 해석</h3>
               <span class="badge">full report</span>
             </div>
-            <div class="report">${escapeHtml(report)}</div>
+            ${renderPremiumReportCards(report, { name, strongElement, dayGan, hiddenItems, sewoonList })}
           </section>
 
           <section class="war-final-card">
