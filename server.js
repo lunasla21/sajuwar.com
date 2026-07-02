@@ -776,6 +776,7 @@ ${sewoon.list.map((s) => `${s.year}년 ${s.ganji}: 천간 ${s.stemElement}, 지�
       "Make the paid report feel materially richer than a free reading: every chapter must include at least two concrete real-life scenes and at least two practical next actions.",
       "Avoid a wall of text. Write with clear chapter rhythm: core judgment, why it happens, how it appears in daily life, what the customer should do next, and one counselor-style closing line.",
       "Use more practical detail for work, money, relationships, health management, yearly timing, and immediate action. Do not add new product features; only improve the report content quality.",
+      "The final message must land like a decisive closing: name the year to start, the year by which the customer can secure the desired result, and the exact personal weapon/strength to use at that time.",
       "Output style must be counseling-first: why -> real-life manifestation -> next action in every chapter, at least three '맞아.' recognition sentences, restrained metaphor use, one counselor advice line per chapter, and a final practical action instruction.",
     ].join("\n");
 

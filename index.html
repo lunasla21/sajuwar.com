@@ -648,17 +648,44 @@
     }
 
     .war-visual-card {
+      position: relative;
+      overflow: hidden;
       min-height: 180px;
       padding: 16px;
       border: 1px solid rgba(249, 215, 126, 0.22);
       border-radius: 8px;
       background:
-        linear-gradient(180deg, rgba(7, 17, 31, 0.3), rgba(7, 17, 31, 0.88)),
+        linear-gradient(180deg, rgba(7, 17, 31, 0.14), rgba(7, 17, 31, 0.9)),
         url("assets/hero-saju-war.jpg") center/cover;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 16px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .war-visual-card::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(249, 215, 126, 0.18);
+      background:
+        linear-gradient(90deg, transparent 49%, rgba(249, 215, 126, 0.16) 50%, transparent 51%),
+        linear-gradient(0deg, transparent 49%, rgba(56, 189, 248, 0.12) 50%, transparent 51%);
+      opacity: 0.86;
+    }
+
+    .war-visual-card::after {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      right: -54px;
+      bottom: -54px;
+      border: 1px solid rgba(249, 215, 126, 0.28);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.16), transparent 62%);
     }
 
     .war-visual-card strong {
+      position: relative;
+      z-index: 1;
       display: block;
       color: #fff1c2;
       font-size: 19px;
@@ -667,6 +694,8 @@
     }
 
     .war-visual-card span {
+      position: relative;
+      z-index: 1;
       display: inline-block;
       margin-top: 12px;
       padding: 5px 8px;
@@ -676,6 +705,47 @@
       font-weight: 900;
       background: rgba(5, 9, 19, 0.72);
     }
+
+    .war-battle-track {
+      position: relative;
+      z-index: 1;
+      height: 72px;
+      margin-top: 18px;
+    }
+
+    .war-battle-track i {
+      position: absolute;
+      left: 10%;
+      right: 8%;
+      top: 34px;
+      height: 2px;
+      background: linear-gradient(90deg, #38bdf8, #f9d77e, #ef4444);
+      box-shadow: 0 0 16px rgba(249, 215, 126, 0.36);
+    }
+
+    .war-battle-node {
+      position: absolute;
+      top: 18px;
+      display: grid;
+      place-items: center;
+      width: 34px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(249, 215, 126, 0.52);
+      color: #fff1c2;
+      font-size: 12px;
+      font-weight: 950;
+      background: rgba(6, 13, 25, 0.82);
+      transform: rotate(45deg);
+      box-shadow: 0 0 18px rgba(212, 175, 55, 0.25);
+    }
+
+    .war-battle-node b {
+      transform: rotate(-45deg);
+    }
+
+    .war-battle-node:nth-child(2) { left: 6%; }
+    .war-battle-node:nth-child(3) { left: 45%; }
+    .war-battle-node:nth-child(4) { right: 4%; }
 
     .war-action-card {
       padding: 14px;
@@ -892,12 +962,12 @@
 
     .war-final-card {
       display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
+      grid-template-columns: 0.74fr 1.26fr;
       gap: 18px;
       align-items: stretch;
       border: 1px solid rgba(212, 175, 55, 0.32);
       background:
-        linear-gradient(90deg, rgba(6, 13, 25, 0.2), rgba(6, 13, 25, 0.9)),
+        linear-gradient(90deg, rgba(6, 13, 25, 0.08), rgba(6, 13, 25, 0.94)),
         url("assets/hero-saju-war.jpg") center/cover;
       border-radius: 8px;
       padding: 18px;
@@ -905,14 +975,82 @@
 
     .war-final-emblem {
       min-height: 220px;
-      display: grid;
-      place-items: center;
+      position: relative;
+      overflow: hidden;
       color: #f9d77e;
       font-size: 78px;
       font-weight: 900;
       border: 1px solid rgba(249, 215, 126, 0.22);
-      background: rgba(6, 13, 25, 0.54);
+      background:
+        radial-gradient(circle at 50% 42%, rgba(249, 215, 126, 0.22), transparent 24%),
+        linear-gradient(145deg, rgba(6, 13, 25, 0.3), rgba(6, 13, 25, 0.86));
       border-radius: 8px;
+    }
+
+    .war-final-emblem::before,
+    .war-final-emblem::after {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 1px solid rgba(249, 215, 126, 0.2);
+      transform: rotate(12deg);
+    }
+
+    .war-final-emblem::after {
+      inset: 56px;
+      border-color: rgba(56, 189, 248, 0.18);
+      transform: rotate(-18deg);
+    }
+
+    .war-final-mark {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 74px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      color: #fff1c2;
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.92), rgba(107, 70, 193, 0.72));
+      transform: translate(-50%, -50%) rotate(45deg);
+      box-shadow: 0 0 28px rgba(249, 215, 126, 0.38);
+    }
+
+    .war-final-mark b {
+      transform: rotate(-45deg);
+      font-size: 32px;
+    }
+
+    .war-final-content {
+      display: grid;
+      gap: 12px;
+      align-content: center;
+    }
+
+    .war-final-content p {
+      margin: 0;
+      color: rgba(247, 234, 210, 0.84);
+      line-height: 1.85;
+    }
+
+    .war-final-content .final-strike {
+      color: #fff1c2;
+      font-size: 17px;
+      font-weight: 850;
+    }
+
+    .war-final-steps {
+      display: grid;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .war-final-steps span {
+      display: block;
+      padding: 8px 10px;
+      border-left: 3px solid #d4af37;
+      color: rgba(247, 234, 210, 0.86);
+      background: rgba(6, 13, 25, 0.56);
     }
 
     .report-guide {
@@ -3873,6 +4011,12 @@
             <div class="war-visual-card">
               <strong>${escapeHtml(name)}님의 원국을 읽는 핵심 장면</strong>
               <span>${renderElementGlyph(dayGan)} 일간 · ${escapeHtml(strongElement)} 기운 중심</span>
+              <div class="war-battle-track" aria-hidden="true">
+                <i></i>
+                <em class="war-battle-node"><b>시작</b></em>
+                <em class="war-battle-node"><b>돌파</b></em>
+                <em class="war-battle-node"><b>확보</b></em>
+              </div>
             </div>
             <div class="war-action-card">
               <b>오늘의 적용 포인트</b>
@@ -3885,6 +4029,37 @@
           </aside>
         </div>
       `;
+    }
+
+    function buildFinalActionMessage(name, context) {
+      const { report, dayGan, strongElement, hiddenItems, daewoonList, sewoonList } = context;
+      const firstYear = sewoonList[0] || null;
+      const targetYear = sewoonList[2] || sewoonList[1] || firstYear;
+      const anchorYear = Number(firstYear?.year) || new Date().getFullYear();
+      const resultYear = Number(targetYear?.year) || anchorYear + 2;
+      const currentTurn = daewoonList.find((item) => {
+        const start = Number(item.startYear);
+        const end = Number(item.endYear);
+        return start <= anchorYear && anchorYear <= end;
+      }) || daewoonList[0] || {};
+      const weapon = itemInfo[dayGan]?.name || `${dayGan} 일간`;
+      const hiddenWeapon = hiddenItems[0] ? `${hiddenItems[0].name}` : `${strongElement} 기운`;
+      const reportLastLine = String(report || "")
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .slice(-1)[0] || "오늘 바로 한 가지를 정하고 실행하세요.";
+
+      return {
+        lead: `${name}님은 ${anchorYear}년에 준비를 더 늘리는 사람이 아니라, ${firstYear ? firstYear.theme : "현실에서 바로 움직일 선택"}을 기준으로 첫 깃발을 꽂아야 합니다. 이때 ${weapon}을 숨기지 말고 꺼내 쓰면, ${resultYear}년에는 지금 흩어져 있는 기회가 눈에 보이는 성과로 모이기 시작합니다.`,
+        timing: `${currentTurn.startYear ? `${currentTurn.startYear}년부터 ${currentTurn.endYear}년까지의 대운 구간` : "현재 대운 구간"}은 방향을 자주 바꾸는 시기가 아니라, 한 가지 전장을 정하고 반복해서 점령하는 흐름입니다. ${hiddenWeapon}은 보조 무기처럼 쓰세요. 감으로 밀어붙이기보다 기록, 일정, 돈의 흐름을 같이 잡을수록 원하는 바가 빨리 현실화됩니다.`,
+        close: `최종 조언: ${reportLastLine}`,
+        steps: [
+          `${anchorYear}년: 새 계획을 늘리지 말고 바로 팔거나 보여줄 수 있는 결과물 하나를 정하세요.`,
+          `${resultYear}년: 같은 무기를 반복해서 꺼내 성과, 매출, 관계 중 하나의 지표를 확보하세요.`,
+          `오늘: 해야 할 일 1개, 버릴 일 1개, 미룰 일 1개를 적고 첫 행동을 끝내세요.`
+        ]
+      };
     }
 
     function renderPremiumWarDashboard(name, data, report) {
@@ -3903,11 +4078,14 @@
         ["현실 돌파력", 78 + (Math.abs(scoreSeed + 13) % 15)],
         ["성장 회복력", 80 + (Math.abs(scoreSeed + 19) % 14)]
       ];
-      const finalLine = report
-        .split(/\n+/)
-        .map((line) => line.trim())
-        .filter(Boolean)
-        .slice(-1)[0] || "오늘 할 일 하나를 정하고 바로 실행하세요.";
+      const finalAction = buildFinalActionMessage(name, {
+        report,
+        dayGan,
+        strongElement,
+        hiddenItems,
+        daewoonList,
+        sewoonList
+      });
 
       return `
         <div class="premium-war-shell">
@@ -4005,11 +4183,18 @@
           </section>
 
           <section class="war-final-card">
-            <div class="war-final-emblem">✦</div>
-            <div>
+            <div class="war-final-emblem" aria-hidden="true">
+              <div class="war-final-mark"><b>決</b></div>
+            </div>
+            <div class="war-final-content">
               <p class="eyebrow">Final Action Card</p>
               <h3>최종 메시지</h3>
-              <p>${escapeHtml(finalLine)}</p>
+              <p class="final-strike">${escapeHtml(finalAction.lead)}</p>
+              <p>${escapeHtml(finalAction.timing)}</p>
+              <div class="war-final-steps">
+                ${finalAction.steps.map((step) => `<span>${escapeHtml(step)}</span>`).join("")}
+              </div>
+              <p>${escapeHtml(finalAction.close)}</p>
             </div>
           </section>
         </div>
