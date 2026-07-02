@@ -491,6 +491,262 @@
     .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--jade), var(--gold2)); }
     .report { white-space: pre-wrap; color: #352216; font-size: 16px; line-height: 2.02; }
 
+    .premium-war-shell {
+      display: grid;
+      gap: 16px;
+      color: #f7ead2;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(107, 70, 193, 0.28), transparent 32%),
+        radial-gradient(circle at 85% 12%, rgba(212, 175, 55, 0.18), transparent 28%),
+        linear-gradient(180deg, #07111f 0%, #0a1020 52%, #050913 100%);
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      box-shadow: 0 24px 80px rgba(5, 9, 19, 0.38);
+      padding: 18px;
+      border-radius: 8px;
+    }
+
+    .premium-war-shell .box,
+    .premium-war-shell .card {
+      color: #f7ead2;
+      background:
+        linear-gradient(180deg, rgba(19, 31, 51, 0.92), rgba(9, 16, 29, 0.94)),
+        rgba(9, 16, 29, 0.9);
+      border-color: rgba(212, 175, 55, 0.2);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 14px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    .premium-war-shell .section-title,
+    .premium-war-shell h3 { color: #f9d77e; }
+
+    .premium-war-shell p,
+    .premium-war-shell .small { color: rgba(247, 234, 210, 0.78); }
+
+    .premium-war-shell .report {
+      color: #f7ead2;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      padding: 18px;
+      border-radius: 8px;
+    }
+
+    .war-hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 300px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      align-items: stretch;
+      background:
+        linear-gradient(90deg, rgba(5, 9, 19, 0.42), rgba(5, 9, 19, 0.74)),
+        url("assets/hero-saju-war.jpg") center/cover;
+      border: 1px solid rgba(212, 175, 55, 0.32);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .war-hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      max-width: 660px;
+      z-index: 1;
+    }
+
+    .war-hero-copy h2 {
+      margin: 0;
+      color: #fff6de;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .war-hero-copy .eyebrow { color: #f9d77e; }
+
+    .war-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .war-kpi {
+      min-height: 94px;
+      padding: 14px;
+      border: 1px solid rgba(212, 175, 55, 0.24);
+      background: rgba(6, 13, 25, 0.72);
+      border-radius: 8px;
+    }
+
+    .war-kpi span {
+      display: block;
+      color: rgba(247, 234, 210, 0.64);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .war-kpi strong {
+      display: block;
+      margin-top: 8px;
+      color: #f9d77e;
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .war-score-panel {
+      display: grid;
+      gap: 14px;
+      align-content: center;
+      padding: 18px;
+      background: rgba(6, 13, 25, 0.72);
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      border-radius: 8px;
+      z-index: 1;
+    }
+
+    .war-score-medal {
+      display: grid;
+      place-items: center;
+      width: 132px;
+      aspect-ratio: 1;
+      margin: 0 auto;
+      border-radius: 50%;
+      color: #f9d77e;
+      font-size: 38px;
+      font-weight: 900;
+      background:
+        radial-gradient(circle, rgba(212, 175, 55, 0.26), rgba(212, 175, 55, 0.06) 64%, transparent 65%),
+        linear-gradient(145deg, rgba(249, 215, 126, 0.14), rgba(107, 70, 193, 0.18));
+      border: 1px solid rgba(249, 215, 126, 0.38);
+    }
+
+    .war-grid {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.92fr) minmax(0, 1.35fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .war-panel {
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(9, 16, 29, 0.82);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .war-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .war-panel-head h3 { margin: 0; }
+
+    .war-item-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .war-item-card {
+      min-height: 142px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+      border-radius: 8px;
+    }
+
+    .war-item-card strong {
+      color: #f9d77e;
+      font-size: 18px;
+    }
+
+    .war-timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(108px, 1fr));
+      gap: 10px;
+    }
+
+    .war-time-card {
+      min-height: 154px;
+      padding: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: linear-gradient(180deg, rgba(23, 33, 50, 0.96), rgba(10, 17, 30, 0.96));
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .war-time-card b {
+      display: block;
+      color: #fff6de;
+      font-size: 12px;
+    }
+
+    .war-time-card strong {
+      display: block;
+      margin: 8px 0;
+      color: #f9d77e;
+      font-size: 24px;
+    }
+
+    .war-mini-bars {
+      display: grid;
+      gap: 10px;
+    }
+
+    .war-mini-row {
+      display: grid;
+      grid-template-columns: 92px 1fr 44px;
+      gap: 10px;
+      align-items: center;
+      color: rgba(247, 234, 210, 0.82);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .war-mini-row i {
+      display: block;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .war-mini-row i::before {
+      content: "";
+      display: block;
+      width: var(--value);
+      height: 100%;
+      background: linear-gradient(90deg, #f9d77e, #6b46c1);
+    }
+
+    .war-final-card {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 18px;
+      align-items: stretch;
+      border: 1px solid rgba(212, 175, 55, 0.32);
+      background:
+        linear-gradient(90deg, rgba(6, 13, 25, 0.2), rgba(6, 13, 25, 0.9)),
+        url("assets/hero-saju-war.jpg") center/cover;
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .war-final-emblem {
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      color: #f9d77e;
+      font-size: 78px;
+      font-weight: 900;
+      border: 1px solid rgba(249, 215, 126, 0.22);
+      background: rgba(6, 13, 25, 0.54);
+      border-radius: 8px;
+    }
+
     .report-guide {
       display: grid;
       grid-template-columns: 0.92fr 1.08fr;
@@ -1507,6 +1763,14 @@
 
     @media (max-width: 960px) {
       .hero, .dashboard { grid-template-columns: 1fr; }
+      .war-hero,
+      .war-grid,
+      .war-final-card { grid-template-columns: 1fr; }
+      .war-kpi-grid,
+      .war-item-grid { grid-template-columns: 1fr; }
+      .premium-war-shell { padding: 12px; }
+      .war-hero { min-height: auto; padding: 16px; }
+      .war-mini-row { grid-template-columns: 78px 1fr 38px; }
       .hero-map { min-height: 360px; }
       .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid, .upgrade-points, .paid-lock-grid, .proof-strip { grid-template-columns: 1fr; }
       .report-visual { min-height: 260px; }
@@ -2569,6 +2833,10 @@
           </div>
           ${renderDeveloperSection("전체 유료 리포트", debug.full_paid_report, { type: "report", open: true })}
           ${renderDeveloperSection("Prompt", debug.prompt)}
+          ${renderDeveloperSection("Dataset Order", debug.dataset_order, { open: true })}
+          ${renderDeveloperSection("Used Datasets", debug.used_datasets, { open: true })}
+          ${renderDeveloperSection("Dataset Sections", debug.dataset_sections)}
+          ${renderDeveloperSection("Review Dataset Application", debug.review_dataset_application, { open: true })}
           ${renderDeveloperSection("RAG Context", debug.rag_context)}
           ${renderDeveloperSection("Review Dataset Guidance", debug.review_dataset_guidance)}
           ${renderDeveloperSection("검색 Source", debug.sources)}
@@ -2914,6 +3182,135 @@
       `;
     }
 
+    function renderPremiumWarDashboard(name, data, report) {
+      const pillars = data.pillars || {};
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const dayGan = splitPillar(pillars.day).gan || "-";
+      const hiddenItems = getHiddenItems(pillars).slice(0, 6);
+      const daewoonList = (data.daewoon?.list || []).slice(0, 8);
+      const sewoonList = (data.sewoon?.list || []).slice(0, 10);
+      const scoreSeed = simpleHash(`${name}${pillars.year}${pillars.month}${pillars.day}${pillars.hour}`);
+      const totalScore = 86 + (Math.abs(scoreSeed) % 10);
+      const bars = [
+        ["전략 실행력", 82 + (Math.abs(scoreSeed) % 12)],
+        ["관계 조율력", 74 + (Math.abs(scoreSeed + 7) % 16)],
+        ["현실 돌파력", 78 + (Math.abs(scoreSeed + 13) % 15)],
+        ["성장 회복력", 80 + (Math.abs(scoreSeed + 19) % 14)]
+      ];
+      const finalLine = report
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .slice(-1)[0] || "오늘 할 일 하나를 정하고 바로 실행하세요.";
+
+      return `
+        <div class="premium-war-shell">
+          <section class="war-hero">
+            <div class="war-hero-copy">
+              <div>
+                <p class="eyebrow">SAJU WAR Premium Report</p>
+                <h2>${escapeHtml(name)}님의 전략 리포트</h2>
+                <p>원국, 지장간, 대운, 세운을 한 화면에서 훑고 바로 행동으로 옮길 수 있게 정리했습니다.</p>
+              </div>
+              <div class="war-kpi-grid">
+                <div class="war-kpi"><span>중심 일간</span><strong>${dayGan}</strong></div>
+                <div class="war-kpi"><span>주요 기운</span><strong>${strongElement}</strong></div>
+                <div class="war-kpi"><span>숨은 카드</span><strong>${hiddenItems.length}</strong></div>
+              </div>
+            </div>
+            <aside class="war-score-panel">
+              <div class="war-score-medal">${totalScore}%</div>
+              <div>
+                <h3>종합 전투력</h3>
+                <p class="small">현재 리포트의 핵심 판단을 실행력 중심으로 요약한 지표입니다.</p>
+              </div>
+              <div class="war-mini-bars">
+                ${bars.map(([label, value]) => `
+                  <div class="war-mini-row">
+                    <span>${label}</span>
+                    <i style="--value:${value}%"></i>
+                    <b>${value}%</b>
+                  </div>
+                `).join("")}
+              </div>
+            </aside>
+          </section>
+
+          ${renderPillars(pillars)}
+
+          <div class="war-grid">
+            <section class="war-panel">
+              <div class="war-panel-head">
+                <h3>지장간 아이템 카드</h3>
+                <span class="badge">${hiddenItems.length} cards</span>
+              </div>
+              <div class="war-item-grid">
+                ${hiddenItems.map((item) => `
+                  <article class="war-item-card">
+                    <strong>${item.stem} · ${escapeHtml(item.name)}</strong>
+                    <p>${escapeHtml(item.desc)}</p>
+                    <span class="badge">${item.element}</span>
+                    <span class="badge">${pillarLabel[item.pillar]} ${item.ji}</span>
+                  </article>
+                `).join("")}
+              </div>
+            </section>
+
+            <section class="war-panel">
+              <div class="war-panel-head">
+                <h3>대운 스위치 타임라인</h3>
+                <span class="badge">${daewoonList.length} turns</span>
+              </div>
+              <div class="war-timeline">
+                ${daewoonList.map((item) => `
+                  <article class="war-time-card">
+                    <b>${item.startAge}세 - ${item.endAge}세</b>
+                    <strong>${item.ganji}</strong>
+                    <p class="small">${item.startYear} - ${item.endYear}</p>
+                  </article>
+                `).join("")}
+              </div>
+            </section>
+          </div>
+
+          <section class="war-panel">
+            <div class="war-panel-head">
+              <h3>세운 타이밍 타임라인</h3>
+              <span class="badge">${sewoonList.length} years</span>
+            </div>
+            <div class="war-timeline">
+              ${sewoonList.map((item) => `
+                <article class="war-time-card">
+                  <b>${item.year}년</b>
+                  <strong>${item.ganji}</strong>
+                  <p class="small">${item.stemElement} / ${item.branchElement}</p>
+                  <p class="small">${escapeHtml(item.theme || "")}</p>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+
+          <section class="war-panel">
+            <div class="war-panel-head">
+              <h3>프리미엄 심화 해석</h3>
+              <span class="badge">full report</span>
+            </div>
+            <div class="report">${escapeHtml(report)}</div>
+          </section>
+
+          <section class="war-final-card">
+            <div class="war-final-emblem">✦</div>
+            <div>
+              <p class="eyebrow">Final Action Card</p>
+              <h3>최종 메시지</h3>
+              <p>${escapeHtml(finalLine)}</p>
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
     function renderFreeReadingCards(name, pillars, sewoon) {
       const stats = getElementStats(pillars);
       const [strongElement] = getStrongest(stats);
@@ -3177,18 +3574,7 @@
         const preview = report.slice(0, 1100);
 
         const fullHTML = `
-          <section class="box">
-            <h2 class="section-title">${name}님의 전체 전장 리포트</h2>
-            <p>원국은 고정된 판결문이 아니라 지금부터 읽고 써야 할 전략 지도입니다.</p>
-          </section>
-          ${renderPillars(data.pillars)}
-          ${renderItems(data.pillars)}
-          ${renderDaewoon(data.daewoon)}
-          ${renderSewoon(data.sewoon)}
-          <section class="box">
-            <h2 class="section-title">프리미엄 심화 해석</h2>
-            <div class="report">${report}</div>
-          </section>
+          ${renderPremiumWarDashboard(name, data, report)}
           ${renderDeveloperDebugPanel(data.developer_debug)}
         `;
 
