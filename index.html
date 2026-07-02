@@ -476,10 +476,48 @@
     }
 
     .label { width: 72px; color: var(--muted); background: rgba(216, 173, 79, 0.08); font-weight: 900; }
-    .gan, .ji { font-size: 34px; font-weight: 900; }
-    .gan { color: var(--gold2); }
-    .ji { color: #e5c765; }
+    .gan, .ji { font-size: 34px; font-weight: 900; color: inherit; }
     .hidden-stems { color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+    .ganji-colored {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 3px;
+      color: inherit;
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      text-shadow: none;
+      filter: none;
+    }
+
+    .element-glyph {
+      --element-color: #f9d77e;
+      --element-glow: rgba(249, 215, 126, 0.24);
+      color: var(--element-color);
+      font-family: Georgia, "Times New Roman", "Malgun Gothic", serif;
+      font-weight: 950;
+      text-shadow: 0 0 18px var(--element-glow);
+      filter: drop-shadow(0 0 10px var(--element-glow));
+    }
+
+    .element-wood { --element-color: #31c978; --element-glow: rgba(49, 201, 120, 0.36); }
+    .element-fire { --element-color: #ef4444; --element-glow: rgba(239, 68, 68, 0.38); }
+    .element-earth { --element-color: #d4af37; --element-glow: rgba(212, 175, 55, 0.36); }
+    .element-metal { --element-color: #e5e7eb; --element-glow: rgba(229, 231, 235, 0.32); }
+    .element-water { --element-color: #38bdf8; --element-glow: rgba(56, 189, 248, 0.38); }
+    .element-neutral { --element-color: #f9d77e; --element-glow: rgba(249, 215, 126, 0.22); }
+
+    .hidden-stems .element-glyph {
+      font-size: 15px;
+    }
+
+    .ganji-large {
+      margin: 8px 0;
+      font-size: 26px;
+      font-weight: 900;
+    }
 
     .bar {
       height: 9px;
@@ -2108,6 +2146,30 @@
       filter: drop-shadow(0 0 14px rgba(212, 175, 55, 0.22));
     }
 
+    .gan,
+    .ji,
+    .ganji-colored,
+    .war-time-card strong.ganji-colored {
+      color: inherit;
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      text-shadow: none;
+      filter: none;
+    }
+
+    .gan .element-glyph,
+    .ji .element-glyph,
+    .ganji-colored .element-glyph,
+    .war-time-card strong.ganji-colored .element-glyph {
+      color: var(--element-color);
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      text-shadow: 0 0 18px var(--element-glow);
+      filter: drop-shadow(0 0 10px var(--element-glow));
+    }
+
     .hero-actions a,
     button {
       letter-spacing: 0;
@@ -3426,6 +3488,33 @@
       return { gan: value ? value[0] : "-", ji: value ? value[1] : "-" };
     }
 
+    const elementClassMap = {
+      "목": "wood",
+      "화": "fire",
+      "토": "earth",
+      "금": "metal",
+      "수": "water"
+    };
+
+    function getElementClass(char) {
+      return elementClassMap[elementMap[char]] || "neutral";
+    }
+
+    function renderElementGlyph(char) {
+      const glyph = char || "-";
+      const element = elementMap[glyph] || "";
+      return `<span class="element-glyph element-${getElementClass(glyph)}" title="${escapeHtml(element)}">${escapeHtml(glyph)}</span>`;
+    }
+
+    function renderGanji(value) {
+      const chars = String(value || "-").split("");
+      return `<span class="ganji-colored">${chars.map((char) => renderElementGlyph(char)).join("")}</span>`;
+    }
+
+    function renderHiddenStems(stems) {
+      return (stems && stems.length ? stems : ["-"]).map((stem) => renderElementGlyph(stem)).join(" · ");
+    }
+
     function getElementStats(pillars) {
       const stats = { "목": 0, "화": 0, "토": 0, "금": 0, "수": 0 };
       ["year", "month", "day", "hour"].forEach((key) => {
@@ -3486,17 +3575,17 @@
               </tr>
               <tr>
                 <td class="label">천간</td>
-                ${cols.map((col) => `<td class="gan">${splitPillar(col.value).gan}</td>`).join("")}
+                ${cols.map((col) => `<td class="gan">${renderElementGlyph(splitPillar(col.value).gan)}</td>`).join("")}
               </tr>
               <tr>
                 <td class="label">지지</td>
-                ${cols.map((col) => `<td class="ji">${splitPillar(col.value).ji}</td>`).join("")}
+                ${cols.map((col) => `<td class="ji">${renderElementGlyph(splitPillar(col.value).ji)}</td>`).join("")}
               </tr>
               <tr>
                 <td class="label">지장간</td>
                 ${cols.map((col) => {
                   const ji = splitPillar(col.value).ji;
-                  return `<td class="hidden-stems">${(hiddenGan[ji] || ["-"]).join(" · ")}</td>`;
+                  return `<td class="hidden-stems">${renderHiddenStems(hiddenGan[ji])}</td>`;
                 }).join("")}
               </tr>
             </table>
@@ -3506,8 +3595,8 @@
             <h2 class="section-title">전장 상태</h2>
             <article class="card">
               <h3>일간 캐릭터</h3>
-              <p>이 사주의 주인공은 <strong>${dayGan}</strong> 일간입니다. 중심 속성은 <strong>${dayElement}</strong> 기운이며, 현재 원국에서 가장 크게 반복되는 세력은 <strong>${strongElement}</strong>입니다.</p>
-              <span class="badge">주인공 ${dayGan}</span>
+              <p>이 사주의 주인공은 <strong>${renderElementGlyph(dayGan)}</strong> 일간입니다. 중심 속성은 <strong>${dayElement}</strong> 기운이며, 현재 원국에서 가장 크게 반복되는 세력은 <strong>${strongElement}</strong>입니다.</p>
+              <span class="badge">주인공 ${renderElementGlyph(dayGan)}</span>
               <span class="badge">${dayElement} 일간</span>
               <span class="badge">${strongElement} 세력 우세</span>
             </article>
@@ -3538,10 +3627,10 @@
           <div class="grid3" style="margin-top:18px">
             ${items.map((item) => `
               <article class="card">
-                <h3>${item.stem} · ${item.name}</h3>
+                <h3>${renderElementGlyph(item.stem)} · ${item.name}</h3>
                 <p>${item.desc}</p>
                 <span class="badge">${item.element} 아이템</span>
-                <span class="badge">${pillarLabel[item.pillar]} ${item.ji} 속</span>
+                <span class="badge">${pillarLabel[item.pillar]} ${renderElementGlyph(item.ji)} 속</span>
               </article>
             `).join("")}
           </div>
@@ -3563,7 +3652,7 @@
             ${daewoon.list.map((item) => `
               <article class="card">
                 <h3>${item.startAge}세 - ${item.endAge}세</h3>
-                <p style="font-size:26px;color:var(--gold2);font-weight:900">${item.ganji}</p>
+                <p class="ganji-large">${renderGanji(item.ganji)}</p>
                 <p class="small">${item.startYear}년 - ${item.endYear}년</p>
               </article>
             `).join("")}
@@ -3582,7 +3671,7 @@
             ${sewoon.list.map((item) => `
               <article class="card">
                 <h3>${item.year}년</h3>
-                <p style="font-size:26px;color:var(--gold2);font-weight:900">${item.ganji}</p>
+                <p class="ganji-large">${renderGanji(item.ganji)}</p>
                 <p class="small">천간 ${item.stemElement} / 지지 ${item.branchElement}</p>
                 <p class="small">${item.theme}</p>
               </article>
@@ -3624,7 +3713,7 @@
                 <p>원국, 지장간, 대운, 세운을 한 화면에서 훑고 바로 행동으로 옮길 수 있게 정리했습니다.</p>
               </div>
               <div class="war-kpi-grid">
-                <div class="war-kpi"><span>중심 일간</span><strong>${dayGan}</strong></div>
+                <div class="war-kpi"><span>중심 일간</span><strong>${renderElementGlyph(dayGan)}</strong></div>
                 <div class="war-kpi"><span>주요 기운</span><strong>${strongElement}</strong></div>
                 <div class="war-kpi"><span>숨은 카드</span><strong>${hiddenItems.length}</strong></div>
               </div>
@@ -3658,10 +3747,10 @@
               <div class="war-item-grid">
                 ${hiddenItems.map((item) => `
                   <article class="war-item-card">
-                    <strong>${item.stem} · ${escapeHtml(item.name)}</strong>
+                    <strong>${renderElementGlyph(item.stem)} · ${escapeHtml(item.name)}</strong>
                     <p>${escapeHtml(item.desc)}</p>
                     <span class="badge">${item.element}</span>
-                    <span class="badge">${pillarLabel[item.pillar]} ${item.ji}</span>
+                    <span class="badge">${pillarLabel[item.pillar]} ${renderElementGlyph(item.ji)}</span>
                   </article>
                 `).join("")}
               </div>
@@ -3676,7 +3765,7 @@
                 ${daewoonList.map((item) => `
                   <article class="war-time-card">
                     <b>${item.startAge}세 - ${item.endAge}세</b>
-                    <strong>${item.ganji}</strong>
+                    <strong class="ganji-colored">${renderGanji(item.ganji)}</strong>
                     <p class="small">${item.startYear} - ${item.endYear}</p>
                   </article>
                 `).join("")}
@@ -3693,7 +3782,7 @@
               ${sewoonList.map((item) => `
                 <article class="war-time-card">
                   <b>${item.year}년</b>
-                  <strong>${item.ganji}</strong>
+                  <strong class="ganji-colored">${renderGanji(item.ganji)}</strong>
                   <p class="small">${item.stemElement} / ${item.branchElement}</p>
                   <p class="small">${escapeHtml(item.theme || "")}</p>
                 </article>
@@ -3730,7 +3819,7 @@
       const firstYearLuck = sewoon && sewoon.list && sewoon.list[0] ? sewoon.list[0] : null;
       const dayInfo = itemInfo[dayGan] || { name: "중심 아이템", desc: "일간은 내가 전장에서 쓰는 기본 무기입니다." };
       const hiddenText = hiddenItems.length
-        ? hiddenItems.slice(0, 3).map((item) => `${pillarLabel[item.pillar]} ${item.stem}`).join(", ")
+        ? hiddenItems.slice(0, 3).map((item) => `${pillarLabel[item.pillar]} ${renderElementGlyph(item.stem)}`).join(", ")
         : "아직 드러나지 않은 보조 아이템";
 
       return `
@@ -3742,14 +3831,14 @@
             <article class="reading-card">
               <div class="reading-art stem" aria-hidden="true"><i>겉</i></div>
               <div>
-                <strong>천간 무기: ${dayGan}</strong>
+                <strong>천간 무기: ${renderElementGlyph(dayGan)}</strong>
                 <p>${dayInfo.name}. 겉으로 드러나는 선택 방식과 말투, 일 처리의 첫 인상이 여기서 시작됩니다.</p>
               </div>
             </article>
             <article class="reading-card">
               <div class="reading-art branch" aria-hidden="true"><i>환경</i></div>
               <div>
-                <strong>지지 전장: ${monthJi}</strong>
+                <strong>지지 전장: ${renderElementGlyph(monthJi)}</strong>
                 <p>월지는 계절과 환경입니다. 내가 강해지는 판, 지치기 쉬운 판, 사람을 만나는 방식이 이 전장에 깔립니다.</p>
               </div>
             </article>
@@ -3764,7 +3853,7 @@
               <div class="reading-art yearluck" aria-hidden="true"><i>올해</i></div>
               <div>
                 <strong>세운 스위치${firstYearLuck ? `: ${firstYearLuck.year}` : ""}</strong>
-                <p>${firstYearLuck ? `${firstYearLuck.ganji}의 흐름은 ${firstYearLuck.theme} 쪽으로 올해의 사건을 움직입니다.` : "세운은 올해 실제로 어떤 아이템을 꺼내 쓸지 알려주는 타이밍입니다."}</p>
+                <p>${firstYearLuck ? `${renderGanji(firstYearLuck.ganji)}의 흐름은 ${firstYearLuck.theme} 쪽으로 올해의 사건을 움직입니다.` : "세운은 올해 실제로 어떤 아이템을 꺼내 쓸지 알려주는 타이밍입니다."}</p>
               </div>
             </article>
           </div>
@@ -3799,14 +3888,14 @@
             <article class="reading-card">
               <div class="reading-art stem" aria-hidden="true"><i>나</i></div>
               <div>
-                <strong>일간 무기: ${dayGan}</strong>
+                <strong>일간 무기: ${renderElementGlyph(dayGan)}</strong>
                 <p>${dayInfo.name}. 겉으로 드러나는 선택 방식과 첫 반응을 가볍게 봅니다.</p>
               </div>
             </article>
             <article class="reading-card">
               <div class="reading-art branch" aria-hidden="true"><i>환경</i></div>
               <div>
-                <strong>월지 전장: ${monthJi}</strong>
+                <strong>월지 전장: ${renderElementGlyph(monthJi)}</strong>
                 <p>월지는 내가 놓인 계절과 환경입니다. 강해지는 판과 지치기 쉬운 판을 봅니다.</p>
               </div>
             </article>
@@ -4112,7 +4201,7 @@
           <p class="small">입력 기준: ${calendarType === "lunar" ? "음력" : "양력"} / 양력 변환일: ${pillars.solarDate}</p>
           <table class="manse" style="margin-top:12px">
             <tr><th class="label">연</th><th>월</th><th>일</th><th>시</th></tr>
-            <tr><td class="ji">${pillars.year}</td><td class="ji">${pillars.month}</td><td class="ji">${pillars.day}</td><td class="ji">${pillars.hour}</td></tr>
+            <tr><td class="ji">${renderGanji(pillars.year)}</td><td class="ji">${renderGanji(pillars.month)}</td><td class="ji">${renderGanji(pillars.day)}</td><td class="ji">${renderGanji(pillars.hour)}</td></tr>
           </table>
           <ul class="fortune-list">
             <li>지장간 힌트는 아래 무료 전장 리포트에서 같은 원국 기준으로 이어서 확인할 수 있습니다.</li>
