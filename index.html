@@ -2122,6 +2122,50 @@
       letter-spacing: 0;
     }
 
+    /* Korean heading wrapping fix */
+    h1,
+    h2,
+    h3,
+    .hero-manifesto,
+    .section-head h2,
+    .section-title,
+    .card h3,
+    .guide-card strong,
+    .reading-card strong,
+    .premium-item strong,
+    .fortune-result h3 {
+      word-break: keep-all;
+      overflow-wrap: normal;
+      line-break: strict;
+    }
+
+    .section-head {
+      max-width: min(100%, 980px);
+    }
+
+    .section-head h2 {
+      max-width: 100%;
+      font-size: clamp(28px, 3.1vw, 42px);
+      line-height: 1.18;
+    }
+
+    .section-head p {
+      max-width: min(100%, 980px);
+      line-height: 1.75;
+    }
+
+    .section-title {
+      max-width: 100%;
+      white-space: normal;
+      line-height: 1.25;
+    }
+
+    .card h3,
+    .fortune-result h3,
+    .premium-item strong {
+      line-height: 1.28;
+    }
+
     @keyframes pulse {
       0%, 100% { transform: scale(0.92); opacity: 0.35; }
       50% { transform: scale(1.04); opacity: 0.9; }
