@@ -43,18 +43,55 @@
       border: 1px solid rgba(242, 219, 141, 0.32);
       background: rgba(8, 8, 7, 0.56);
     }
+    .legal-footer {
+      width: min(520px, calc(100% - 32px));
+      margin: 18px auto 0;
+      color: rgba(246, 239, 221, 0.7);
+      font-size: 13px;
+      line-height: 1.7;
+      text-align: center;
+    }
+    .legal-footer nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 12px;
+      margin-bottom: 8px;
+    }
+    .legal-footer a {
+      width: auto;
+      min-height: auto;
+      display: inline;
+      margin: 0;
+      color: #f2db8d;
+      background: transparent;
+      box-shadow: none;
+    }
   </style>
+  <script src="/site-config.js"></script>
 </head>
 <body>
-  <main class="panel">
-    <p>프리미엄</p>
-    <h1>전체 전장 리포트 열기</h1>
-    <p>원국 8글자 심화 해석, 지장간 아이템, 대운 스위치, 세운 타이밍, 돈/일/관계 행동 전략까지 전체 리포트를 확인합니다.</p>
-    <h2>9,900원</h2>
-    <button id="payButton">토스 결제하기</button>
-    <button class="secondary" id="demoButton">테스트 결제 완료 처리</button>
-    <a class="secondary" href="/">메인으로 돌아가기</a>
-  </main>
+  <div>
+    <main class="panel">
+      <p>프리미엄</p>
+      <h1>전체 전장 리포트 열기</h1>
+      <p>원국 8글자 심화 해석, 지장간 아이템, 대운 스위치, 세운 타이밍, 돈/일/관계 행동 전략까지 전체 리포트를 확인합니다.</p>
+      <h2>9,900원</h2>
+      <button id="payButton">토스 결제하기</button>
+      <button class="secondary" id="demoButton">테스트 결제 완료 처리</button>
+      <a class="secondary" href="/">메인으로 돌아가기</a>
+    </main>
+    <footer class="legal-footer">
+      <nav aria-label="정책 링크">
+        <a href="/terms">이용약관</a>
+        <a href="/privacy">개인정보처리방침</a>
+        <a href="/refund">환불정책</a>
+        <a href="/payment">결제안내</a>
+        <a data-config-href="contactEmail" href="mailto:support@sajuwar.com">문의하기</a>
+      </nav>
+      <div>운영사: <span data-config="companyName">J Company</span> · 사업자등록번호: <span data-config="businessRegistrationNumber">472-01-04135</span></div>
+    </footer>
+  </div>
 
   <script>
     const clientKey = "여기에_토스_클라이언트키";
@@ -107,5 +144,6 @@
       window.location.href = "/success.html";
     });
   </script>
+  <script src="/policy.js"></script>
 </body>
 </html>

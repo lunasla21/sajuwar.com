@@ -23,18 +23,47 @@
     }
     h1 { color: #f2db8d; }
     p { color: #c8bfa9; }
+    .legal-footer {
+      width: min(480px, calc(100% - 32px));
+      margin: 18px auto 0;
+      color: rgba(246, 239, 221, 0.7);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .legal-footer nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 12px;
+      margin-bottom: 8px;
+    }
+    .legal-footer a { color: #f2db8d; font-weight: 900; text-decoration: none; }
   </style>
+  <script src="/site-config.js"></script>
 </head>
 <body>
-  <main class="panel">
-    <h1>결제가 완료되었습니다</h1>
-    <p>프리미엄 리포트를 열 수 있도록 이동합니다.</p>
-  </main>
+  <div>
+    <main class="panel">
+      <h1>결제가 완료되었습니다</h1>
+      <p>프리미엄 리포트를 열 수 있도록 이동합니다.</p>
+    </main>
+    <footer class="legal-footer">
+      <nav aria-label="정책 링크">
+        <a href="/terms">이용약관</a>
+        <a href="/privacy">개인정보처리방침</a>
+        <a href="/refund">환불정책</a>
+        <a href="/payment">결제안내</a>
+        <a data-config-href="contactEmail" href="mailto:support@sajuwar.com">문의하기</a>
+      </nav>
+      <div>운영사: <span data-config="companyName">J Company</span> · 사업자등록번호: <span data-config="businessRegistrationNumber">472-01-04135</span></div>
+    </footer>
+  </div>
   <script>
     localStorage.setItem("sajuwar_paid", "true");
     setTimeout(() => {
       window.location.href = "/";
     }, 1000);
   </script>
+  <script src="/policy.js"></script>
 </body>
 </html>

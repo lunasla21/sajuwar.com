@@ -1,0 +1,220 @@
+:root {
+  color-scheme: dark;
+  --bg: #050913;
+  --panel: rgba(12, 19, 32, 0.88);
+  --panel2: rgba(19, 31, 51, 0.86);
+  --text: #f7ead2;
+  --muted: rgba(247, 234, 210, 0.72);
+  --line: rgba(212, 175, 55, 0.2);
+  --gold: #f9d77e;
+  --gold2: #d4af37;
+  --blue: #38bdf8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 16% 0%, rgba(212, 175, 55, 0.18), transparent 30%),
+    radial-gradient(circle at 85% 14%, rgba(56, 189, 248, 0.12), transparent 28%),
+    linear-gradient(180deg, #07111f 0%, var(--bg) 58%, #030712 100%);
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.policy-shell {
+  width: min(1060px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: 28px 0 56px;
+}
+
+.policy-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 0 28px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 950;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(249, 215, 126, 0.34);
+  color: #09101d;
+  background: linear-gradient(135deg, #fff7d7, var(--gold2));
+  font-size: 13px;
+}
+
+.policy-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.policy-nav a:hover,
+.policy-footer a:hover { color: var(--gold); }
+
+.policy-hero {
+  padding: 56px 0 32px;
+  border-top: 1px solid var(--line);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 950;
+}
+
+h1 {
+  margin: 0 0 16px;
+  font-size: clamp(40px, 7vw, 76px);
+  line-height: 1.04;
+  letter-spacing: 0;
+}
+
+.lead {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.policy-grid {
+  display: grid;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.policy-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--panel2), var(--panel));
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
+}
+
+.policy-card h2 {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font-size: clamp(23px, 3vw, 32px);
+  line-height: 1.25;
+}
+
+.policy-card h3 {
+  margin: 20px 0 8px;
+  color: #fff1c2;
+  font-size: 19px;
+}
+
+.policy-card p,
+.policy-card li,
+.policy-card td,
+.policy-card th {
+  color: rgba(247, 234, 210, 0.82);
+}
+
+.policy-card ul,
+.policy-card ol { padding-left: 22px; }
+
+.policy-card li + li { margin-top: 7px; }
+
+.notice {
+  border-color: rgba(249, 215, 126, 0.34);
+  background:
+    linear-gradient(135deg, rgba(249, 215, 126, 0.12), rgba(56, 189, 248, 0.06)),
+    var(--panel);
+}
+
+.process {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.process span {
+  min-height: 74px;
+  display: grid;
+  place-items: center;
+  padding: 14px;
+  border: 1px solid rgba(249, 215, 126, 0.22);
+  border-radius: 8px;
+  color: var(--gold);
+  text-align: center;
+  font-weight: 950;
+  background: rgba(5, 9, 19, 0.44);
+}
+
+.policy-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+.policy-table th,
+.policy-table td {
+  padding: 13px;
+  border: 1px solid rgba(249, 215, 126, 0.16);
+  text-align: left;
+  vertical-align: top;
+}
+
+.policy-table th {
+  width: 28%;
+  color: var(--gold);
+  background: rgba(249, 215, 126, 0.08);
+}
+
+.policy-footer {
+  margin-top: 44px;
+  padding: 28px 0 0;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.footer-links,
+.company-lines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 12px 0;
+}
+
+.footer-links a {
+  color: var(--gold);
+  font-weight: 900;
+}
+
+.company-lines span { color: rgba(247, 234, 210, 0.62); }
+
+@media (max-width: 760px) {
+  .policy-shell { width: min(100% - 28px, 1060px); padding-top: 16px; }
+  .policy-topbar { align-items: flex-start; flex-direction: column; }
+  .policy-nav { justify-content: flex-start; }
+  .policy-hero { padding-top: 36px; }
+  .policy-card { padding: 20px; }
+  .process { grid-template-columns: 1fr; }
+  .policy-table, .policy-table tbody, .policy-table tr, .policy-table th, .policy-table td {
+    display: block;
+    width: 100%;
+  }
+}

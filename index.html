@@ -1585,6 +1585,22 @@
 
     .footer h3 { color: var(--gold2); }
     .footer a { color: var(--gold2); font-weight: 800; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 16px;
+      margin: 16px auto;
+    }
+    .footer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 14px;
+      max-width: 980px;
+      margin: 12px auto;
+      font-size: 14px;
+    }
     .toast {
       position: fixed;
       left: 50%;
@@ -3261,15 +3277,31 @@
     <footer class="footer">
       <h3>쭈쌤의 사주전쟁</h3>
       <p>원국은 전쟁터, 지장간은 아이템, 대운은 스위치, 세운은 타이밍입니다.</p>
+      <div class="footer-links" aria-label="정책 링크">
+        <a href="/terms">이용약관</a>
+        <a href="/privacy">개인정보처리방침</a>
+        <a href="/refund">환불정책</a>
+        <a href="/payment">결제안내</a>
+        <a data-config-href="contactEmail" href="mailto:support@sajuwar.com">문의하기</a>
+      </div>
       <p><a href="/payment.html">프리미엄 리포트 열기</a></p>
-      <p>사업자 번호: 제이컴퍼니 472-01-04135</p>
-      <p>고객센터: 010-8708-0544</p>
+      <div class="footer-meta">
+        <span>운영사: <span data-config="companyName">J Company</span></span>
+        <span>대표자: <span data-config="representativeName">추후 입력</span></span>
+        <span>사업자등록번호: <span data-config="businessRegistrationNumber">472-01-04135</span></span>
+        <span>통신판매업번호: <span data-config="ecommerceRegistrationNumber">추후 입력</span></span>
+        <span>주소: <span data-config="address">추후 입력</span></span>
+        <span>고객센터: <span data-config="contactPhone">010-8708-0544</span></span>
+        <span>이메일: <span data-config="contactEmail">support@sajuwar.com</span></span>
+      </div>
       <p>© 2026 SAJU WAR. All rights reserved.</p>
     </footer>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="/site-config.js"></script>
+  <script src="/policy.js"></script>
   <script>
     let isPaid = localStorage.getItem("sajuwar_paid") === "true";
     let developerModeAvailable = false;
