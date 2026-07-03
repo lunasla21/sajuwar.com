@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" role="img" aria-label="Compatibility battle map">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111d35"/>
+      <stop offset=".54" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#1c1735"/>
+    </linearGradient>
+    <radialGradient id="flare" cx=".5" cy=".48" r=".45">
+      <stop offset="0" stop-color="#9dc6ff" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#9dc6ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="260" fill="url(#bg)"/>
+  <rect width="640" height="260" fill="url(#flare)"/>
+  <g stroke="#f9d77e" stroke-opacity=".15" stroke-width="2">
+    <path d="M54 56h532M54 130h532M54 204h532M122 32v196M232 32v196M342 32v196M452 32v196"/>
+  </g>
+  <path d="M158 172c80-98 191-104 324-16" fill="none" stroke="#2f8e72" stroke-width="12" stroke-linecap="round"/>
+  <path d="M174 58c86 18 182 72 292 156" fill="none" stroke="#7c5cff" stroke-width="12" stroke-linecap="round"/>
+  <g fill="#07111f" stroke="#f9d77e" stroke-width="8">
+    <circle cx="168" cy="174" r="38"/>
+    <circle cx="472" cy="154" r="38"/>
+  </g>
+  <path d="m292 82 50 42-50 42-50-42z" fill="#f9d77e" opacity=".94"/>
+  <path d="M292 82v84M242 124h100" stroke="#07111f" stroke-width="9" stroke-linecap="round"/>
+</svg>

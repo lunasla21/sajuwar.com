@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" role="img" aria-label="Daily battle route">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1d1a28"/>
+      <stop offset=".5" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#2d2313"/>
+    </linearGradient>
+    <radialGradient id="sun" cx=".82" cy=".22" r=".36">
+      <stop offset="0" stop-color="#f9d77e" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#f9d77e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="260" fill="url(#bg)"/>
+  <rect width="640" height="260" fill="url(#sun)"/>
+  <path d="M58 190c82-44 122-122 216-94 76 22 78 94 162 84 54-6 82-46 142-98" fill="none" stroke="#f9d77e" stroke-opacity=".32" stroke-width="18" stroke-linecap="round"/>
+  <path d="M80 190c74-34 128-98 196-68 70 30 92 76 160 54 48-16 84-52 124-88" fill="none" stroke="#2f8e72" stroke-width="9" stroke-linecap="round"/>
+  <g fill="#07111f" stroke="#f9d77e" stroke-width="7">
+    <circle cx="94" cy="186" r="24"/>
+    <circle cx="292" cy="124" r="24"/>
+    <circle cx="546" cy="92" r="24"/>
+  </g>
+  <path d="M402 58h72l-14 38h-72z" fill="#7c5cff"/>
+  <path d="M388 58v116" stroke="#f9d77e" stroke-width="8" stroke-linecap="round"/>
+</svg>

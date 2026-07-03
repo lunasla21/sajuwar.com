@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" role="img" aria-label="Saju command board">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#172234"/>
+      <stop offset=".5" stop-color="#08111e"/>
+      <stop offset="1" stop-color="#10281f"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="260" fill="url(#bg)"/>
+  <g opacity=".42">
+    <path d="M76 52h488v156H76z" fill="#07111f" stroke="#f9d77e" stroke-width="5"/>
+    <path d="M76 104h488M76 156h488M198 52v156M320 52v156M442 52v156" stroke="#f9d77e" stroke-opacity=".42" stroke-width="3"/>
+  </g>
+  <g fill="#f9d77e">
+    <circle cx="138" cy="82" r="8"/>
+    <circle cx="260" cy="134" r="8"/>
+    <circle cx="382" cy="186" r="8"/>
+    <circle cx="504" cy="82" r="8"/>
+  </g>
+  <path d="M138 82 260 134 382 186 504 82" fill="none" stroke="#2f8e72" stroke-width="8" stroke-linecap="round"/>
+  <path d="M238 196 402 64" fill="none" stroke="#7c5cff" stroke-width="14" stroke-linecap="round"/>
+  <path d="m402 64 56-12-24 52z" fill="#7c5cff"/>
+</svg>
