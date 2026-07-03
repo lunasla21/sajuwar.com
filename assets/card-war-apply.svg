@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" role="img" aria-label="Naming request battlefield scroll">
+  <rect width="640" height="260" fill="#07111f"/>
+  <radialGradient id="g" cx=".65" cy=".24" r=".5"><stop offset="0" stop-color="#f9d77e" stop-opacity=".34"/><stop offset="1" stop-color="#f9d77e" stop-opacity="0"/></radialGradient>
+  <rect width="640" height="260" fill="url(#g)"/>
+  <path d="M128 54h330c36 0 58 22 58 52v100H176c-30 0-48-18-48-48z" fill="#0d1828" stroke="#f9d77e" stroke-width="8"/>
+  <path d="M184 100h236M184 136h204M184 172h264" stroke="#f9d77e" stroke-opacity=".56" stroke-width="9" stroke-linecap="round"/>
+  <path d="M438 196 558 78" stroke="#7c5cff" stroke-width="18" stroke-linecap="round"/>
+  <path d="m558 78 48-10-20 46z" fill="#7c5cff"/>
+  <circle cx="106" cy="70" r="28" fill="#2f8e72" opacity=".82"/>
+</svg>

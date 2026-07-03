@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" role="img" aria-label="Name weapon engraving">
+  <rect width="640" height="260" fill="#07111f"/>
+  <path d="M0 0h640v260H0z" fill="#07111f"/>
+  <g stroke="#f9d77e" stroke-opacity=".16" stroke-width="2">
+    <path d="M42 58h556M42 128h556M42 198h556M120 28v204M246 28v204M372 28v204M498 28v204"/>
+  </g>
+  <path d="M150 176h340" stroke="#f9d77e" stroke-width="18" stroke-linecap="round"/>
+  <path d="M224 176 346 66l122 110" fill="none" stroke="#7c5cff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M246 140h200" stroke="#2f8e72" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="154" cy="88" r="34" fill="#2f8e72" opacity=".76"/>
+  <path d="m502 72 58 34-58 34-58-34z" fill="#f9d77e" opacity=".9"/>
+</svg>

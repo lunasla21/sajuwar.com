@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" role="img" aria-label="Consulting battle briefing">
+  <rect width="640" height="260" fill="#07111f"/>
+  <g stroke="#f9d77e" stroke-opacity=".14" stroke-width="2">
+    <path d="M52 50h536M52 112h536M52 174h536M52 236h536M118 24v212M244 24v212M370 24v212M496 24v212"/>
+  </g>
+  <path d="M104 194c78-82 158-126 246-92 78 30 94 86 188 36" fill="none" stroke="#2f8e72" stroke-width="12" stroke-linecap="round"/>
+  <g fill="#0d1828" stroke="#f9d77e" stroke-width="8">
+    <rect x="112" y="78" width="118" height="82" rx="12"/>
+    <rect x="380" y="64" width="138" height="98" rx="12"/>
+  </g>
+  <path d="M170 102v36M146 120h48M450 88v48M422 112h58" stroke="#7c5cff" stroke-width="10" stroke-linecap="round"/>
+  <path d="M282 194 470 48" stroke="#f9d77e" stroke-width="16" stroke-linecap="round"/>
+  <path d="m470 48 58-12-24 54z" fill="#f9d77e"/>
+</svg>

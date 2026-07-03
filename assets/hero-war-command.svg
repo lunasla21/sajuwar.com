@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 720" role="img" aria-label="SAJU WAR battlefield command table">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#172238"/>
+      <stop offset=".5" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#120b1f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".45" cy=".38" r=".54">
+      <stop offset="0" stop-color="#f9d77e" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#f9d77e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="900" height="720" rx="32" fill="url(#bg)"/>
+  <rect width="900" height="720" rx="32" fill="url(#glow)"/>
+  <g stroke="#f9d77e" stroke-opacity=".16" stroke-width="3">
+    <path d="M84 112h732M84 224h732M84 336h732M84 448h732M84 560h732"/>
+    <path d="M164 72v572M292 72v572M420 72v572M548 72v572M676 72v572"/>
+  </g>
+  <path d="M106 544c130-102 220-226 380-164 120 48 152 142 270 64" fill="none" stroke="#2f8e72" stroke-width="18" stroke-linecap="round"/>
+  <path d="M174 196c154 74 236 178 344 258 106 78 178 92 288 48" fill="none" stroke="#6b46c1" stroke-width="18" stroke-linecap="round"/>
+  <g fill="#07111f" stroke="#f9d77e" stroke-width="10">
+    <circle cx="172" cy="530" r="44"/>
+    <circle cx="488" cy="380" r="44"/>
+    <circle cx="756" cy="446" r="44"/>
+  </g>
+  <path d="M336 500 616 202" stroke="#f9d77e" stroke-width="24" stroke-linecap="round"/>
+  <path d="m616 202 96-22-42 88z" fill="#f9d77e" stroke="#ffe9a8" stroke-width="10"/>
+  <path d="M272 560h122M348 504l78 78" stroke="#7c5cff" stroke-width="18" stroke-linecap="round"/>
+  <g opacity=".9">
+    <path d="M628 104h120l-24 72H604z" fill="#7c5cff"/>
+    <path d="M596 104v216" stroke="#f9d77e" stroke-width="14" stroke-linecap="round"/>
+  </g>
+</svg>
