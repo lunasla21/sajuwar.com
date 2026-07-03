@@ -2283,6 +2283,132 @@
       background: rgba(5, 9, 19, 0.72);
       border-color: rgba(249, 215, 126, 0.28);
     }
+
+    #content-map .grid3 {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 10px;
+    }
+
+    #content-map .section-head {
+      margin-bottom: 18px;
+    }
+
+    #content-map .section-head p:last-child {
+      max-width: 720px;
+      font-size: 14px;
+    }
+
+    #content-map .menu-link {
+      min-height: 128px;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      grid-template-areas:
+        "icon tag"
+        "icon title"
+        "icon desc";
+      gap: 2px 12px;
+      align-items: start;
+      padding: 12px;
+      border-radius: 8px;
+      border-color: rgba(249, 215, 126, 0.16);
+      background:
+        linear-gradient(180deg, rgba(10, 20, 35, 0.92), rgba(5, 11, 22, 0.96));
+      box-shadow: none;
+    }
+
+    #content-map .menu-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(249, 215, 126, 0.42);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+    }
+
+    #content-map .menu-link::after {
+      grid-column: 2;
+      width: 34px;
+      height: 2px;
+      margin-top: 7px;
+    }
+
+    #content-map .menu-art {
+      grid-area: icon;
+      width: 44px;
+      height: 44px;
+      margin: 2px 0 0;
+      border-radius: 999px;
+      background: rgba(5, 9, 19, 0.76);
+      overflow: hidden;
+    }
+
+    #content-map .menu-art::before,
+    #content-map .menu-art::after {
+      display: none;
+    }
+
+    #content-map .menu-art i {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      font-size: 12px;
+      box-shadow: none;
+      background: rgba(5, 9, 19, 0.72);
+    }
+
+    #content-map .menu-kicker {
+      grid-area: tag;
+      width: fit-content;
+      margin: 0;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    #content-map .menu-link h3 {
+      grid-area: title;
+      margin: 3px 0 2px;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    #content-map .menu-link p {
+      grid-area: desc;
+      margin: 0;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    #content-map .menu-free {
+      border-color: rgba(47, 142, 114, 0.54);
+      background:
+        linear-gradient(135deg, rgba(47, 142, 114, 0.18), rgba(249, 215, 126, 0.08)),
+        linear-gradient(180deg, rgba(12, 28, 35, 0.96), rgba(5, 13, 22, 0.98));
+    }
+
+    #content-map .menu-free .menu-kicker {
+      color: #07111f;
+      background: linear-gradient(135deg, #dbffe9, #f9d77e);
+      border-color: transparent;
+    }
+
+    #content-map .menu-free .menu-art i {
+      color: #07111f;
+      background: linear-gradient(135deg, #a7f3d0, #f9d77e);
+    }
+
+    #content-map .menu-paid {
+      opacity: 0.82;
+    }
+
+    #content-map .menu-paid .menu-kicker {
+      color: rgba(247, 234, 210, 0.7);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(249, 215, 126, 0.16);
+    }
+
+    #content-map .menu-action {
+      border-style: dashed;
+      border-color: rgba(249, 215, 126, 0.34);
+    }
     .free-card-art.photo-art {
       background-blend-mode: overlay, normal;
       box-shadow: inset 0 -90px 110px rgba(5, 9, 19, 0.62);
@@ -2735,69 +2861,69 @@
       </div>
 
       <div class="grid3">
-        <a class="card menu-link" href="#report">
+        <a class="card menu-link menu-free" href="#report">
           <span class="menu-art art-war" aria-hidden="true"><i>전장</i></span>
-          <span class="menu-kicker">핵심</span>
+          <span class="menu-kicker">무료</span>
           <h3>무료 전장 리포트</h3>
           <p>원국의 기본 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 먼저 확인합니다.</p>
         </a>
-        <a class="card menu-link" href="#free-play">
+        <a class="card menu-link menu-free" href="#free-play">
           <span class="menu-art art-today" aria-hidden="true"><i>오늘</i></span>
-          <span class="menu-kicker">오늘</span>
+          <span class="menu-kicker">무료</span>
           <h3>오늘의 운세</h3>
           <p>오늘 꺼내면 좋은 아이템, 조심할 전장, 바로 실행할 행동 카드를 가볍게 봅니다.</p>
         </a>
-        <a class="card menu-link" href="#free-play">
+        <a class="card menu-link menu-free" href="#free-play">
           <span class="menu-art art-love" aria-hidden="true"><i>연애</i></span>
-          <span class="menu-kicker">연애</span>
+          <span class="menu-kicker">무료</span>
           <h3>오늘의 연애 무기</h3>
           <p>오늘 써야 할 말투, 매력 포인트, 피해야 할 관계 패턴을 짧고 재미있게 확인합니다.</p>
         </a>
-        <a class="card menu-link" href="#free-play">
+        <a class="card menu-link menu-free" href="#free-play">
           <span class="menu-art art-match" aria-hidden="true"><i>궁합</i></span>
-          <span class="menu-kicker">궁합</span>
+          <span class="menu-kicker">무료</span>
           <h3>간단 궁합 스파크</h3>
           <p>두 사람의 관계 온도와 오늘의 대화 전략을 무료로 빠르게 뽑아봅니다.</p>
         </a>
-        <a class="card menu-link" href="#naming">
+        <a class="card menu-link menu-free" href="#naming">
           <span class="menu-art art-name" aria-hidden="true"><i>이름</i></span>
-          <span class="menu-kicker">이름</span>
+          <span class="menu-kicker">무료</span>
           <h3>내 이름 전투력 점수</h3>
           <p>이름의 소리, 의미, 브랜드감, 실행력을 점수로 보고 이름의 무기를 확인합니다.</p>
         </a>
-        <a class="card menu-link" href="#naming-apply">
+        <a class="card menu-link menu-action" href="#naming-apply">
           <span class="menu-art art-apply" aria-hidden="true"><i>작명</i></span>
-          <span class="menu-kicker">작명</span>
+          <span class="menu-kicker">신청</span>
           <h3>쭈쌤 작명 신청</h3>
           <p>아기 이름, 개명, 예명, 브랜드명까지 사주전쟁 세계관으로 신청서를 만듭니다.</p>
         </a>
-        <a class="card menu-link" href="#premium">
+        <a class="card menu-link menu-paid" href="#premium">
           <span class="menu-art art-money" aria-hidden="true"><i>돈</i></span>
-          <span class="menu-kicker">돈</span>
+          <span class="menu-kicker">유료</span>
           <h3>재물 아이템 해석</h3>
           <p>돈이 약해 보여도 지장간과 운의 스위치가 맞을 때 꺼낼 수 있는 재물 회로를 봅니다.</p>
         </a>
-        <a class="card menu-link" href="#premium">
+        <a class="card menu-link menu-paid" href="#premium">
           <span class="menu-art art-career" aria-hidden="true"><i>일</i></span>
-          <span class="menu-kicker">일</span>
+          <span class="menu-kicker">유료</span>
           <h3>직업·사업 전장</h3>
           <p>나에게 맞는 일 방식, 브랜드 방향, 사업으로 꺼낼 수 있는 아이템을 심화 리포트로 연결합니다.</p>
         </a>
-        <a class="card menu-link" href="#premium">
+        <a class="card menu-link menu-paid" href="#premium">
           <span class="menu-art art-time" aria-hidden="true"><i>운</i></span>
-          <span class="menu-kicker">타이밍</span>
+          <span class="menu-kicker">유료</span>
           <h3>대운·세운 스위치</h3>
           <p>언제 움직여야 운이 열리는지, 올해와 앞으로의 타이밍을 전장 지도처럼 확인합니다.</p>
         </a>
-        <a class="card menu-link" href="#consulting">
+        <a class="card menu-link menu-action" href="#consulting">
           <span class="menu-art art-career" aria-hidden="true"><i>상담</i></span>
           <span class="menu-kicker">신청</span>
           <h3>쭈쌤 사주 상담 신청</h3>
           <p>세운·월운, 직업, 돈, 관계, 궁합, 작명까지 궁금한 주제를 상담 신청서로 정리합니다.</p>
         </a>
-        <a class="card menu-link" href="#compatibility-paid">
+        <a class="card menu-link menu-paid" href="#compatibility-paid">
           <span class="menu-art art-match" aria-hidden="true"><i>심화</i></span>
-          <span class="menu-kicker">유료 궁합</span>
+          <span class="menu-kicker">유료</span>
           <h3>자세한 궁합 신청</h3>
           <p>두 사람의 원국, 지장간 아이템, 충돌 지점, 세운·월운 관계 타이밍을 깊게 봅니다.</p>
         </a>
