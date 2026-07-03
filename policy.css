@@ -137,6 +137,104 @@ h1 {
 
 .policy-card li + li { margin-top: 7px; }
 
+.support-form {
+  display: grid;
+  gap: 16px;
+}
+
+.support-form label {
+  display: grid;
+  gap: 7px;
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.support-form input,
+.support-form select,
+.support-form textarea {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(249, 215, 126, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--text);
+  background: rgba(5, 9, 19, 0.48);
+  font: inherit;
+  outline: none;
+}
+
+.support-form textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.support-form input:focus,
+.support-form select:focus,
+.support-form textarea:focus {
+  border-color: rgba(249, 215, 126, 0.58);
+  box-shadow: 0 0 0 3px rgba(249, 215, 126, 0.1);
+}
+
+.support-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.support-check {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.support-check input {
+  width: 18px;
+  height: 18px;
+  margin-top: 5px;
+  accent-color: var(--gold2);
+}
+
+.support-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.support-button {
+  min-height: 50px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 18px;
+  color: #07111f;
+  background: linear-gradient(135deg, #fff1c2, var(--gold2));
+  font: inherit;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.support-button.secondary {
+  color: var(--gold);
+  border: 1px solid rgba(249, 215, 126, 0.28);
+  background: rgba(5, 9, 19, 0.48);
+}
+
+.support-result {
+  display: none;
+  margin-top: 8px;
+  padding: 16px;
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  border-radius: 8px;
+  color: rgba(247, 234, 210, 0.84);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.support-result.show { display: block; }
+
 .notice {
   border-color: rgba(249, 215, 126, 0.34);
   background:
@@ -213,6 +311,7 @@ h1 {
   .policy-hero { padding-top: 36px; }
   .policy-card { padding: 20px; }
   .process { grid-template-columns: 1fr; }
+  .support-row { grid-template-columns: 1fr; }
   .policy-table, .policy-table tbody, .policy-table tr, .policy-table th, .policy-table td {
     display: block;
     width: 100%;
