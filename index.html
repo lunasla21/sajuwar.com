@@ -4266,6 +4266,10 @@
       return Object.entries(stats).sort((a, b) => b[1] - a[1])[0] || ["-", 0];
     }
 
+    function getWeakest(stats) {
+      return Object.entries(stats).sort((a, b) => a[1] - b[1])[0] || ["-", 0];
+    }
+
     function renderPillars(pillars) {
       const cols = [
         { key: "year", value: pillars.year },
@@ -4750,6 +4754,55 @@
       `;
     }
 
+    function renderFreePreviewGuide(name, pillars, sewoon) {
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const [weakElement] = getWeakest(stats);
+      const dayGan = splitPillar(pillars.day).gan;
+      const monthJi = splitPillar(pillars.month).ji;
+      const yearGan = splitPillar(pillars.year).gan;
+      const hourJi = splitPillar(pillars.hour).ji;
+      const hiddenItems = getHiddenItems(pillars);
+      const hiddenHint = hiddenItems.length
+        ? hiddenItems.slice(0, 4).map((item) => `${pillarLabel[item.pillar]} ${renderElementGlyph(item.stem)}`).join(" · ")
+        : "지장간은 유료 리포트에서 세밀하게 확인";
+      const firstYearLuck = sewoon && sewoon.list && sewoon.list[0] ? sewoon.list[0] : null;
+
+      return `
+        <section class="box">
+          <p class="eyebrow">무료 맛보기 확장</p>
+          <h2 class="section-title">${name}님의 사주 구조 미리보기</h2>
+          <p class="small">무료 리포트에서는 현명역학원식 판단 순서에 맞춰 원국의 겉 구조, 계절감, 강약의 방향, 올해 기운의 첫 인상까지 넓게 보여드립니다. 다만 실제 핵심인 지장간의 작용, 십성 관계, 대운·세운의 구체적 사건화, 돈·일·관계 전략은 유료 리포트에서만 깊게 열립니다.</p>
+          <div class="reading-grid">
+            <article class="reading-card">
+              <div class="free-card-art free-art-manse photo-art" aria-hidden="true"><i>원국</i></div>
+              <strong>겉으로 드러난 네 기둥</strong>
+              <p>연간 ${renderElementGlyph(yearGan)}, 일간 ${renderElementGlyph(dayGan)}, 월지 ${renderElementGlyph(monthJi)}, 시지 ${renderElementGlyph(hourJi)}의 배치를 먼저 봅니다. 무료에서는 이 배열이 어떤 분위기를 만들고, 내가 어떤 자리에서 힘을 쓰기 쉬운지 입구를 잡아드립니다.</p>
+            </article>
+            <article class="reading-card">
+              <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>계절</i></div>
+              <strong>월지로 보는 계절감</strong>
+              <p>월지는 사주의 온도와 배경입니다. ${renderElementGlyph(monthJi)} 기운이 깔린 환경에서는 내가 빠르게 반응하는 지점과 에너지가 소모되는 지점이 함께 생깁니다. 무료에서는 큰 방향만 보고, 유료에서는 이 계절이 십성과 지장간을 통해 어떻게 현실 문제로 이어지는지 풉니다.</p>
+            </article>
+            <article class="reading-card">
+              <div class="free-card-art free-art-color photo-art" aria-hidden="true"><i>균형</i></div>
+              <strong>오행 균형 힌트</strong>
+              <p>현재 원국에서 가장 두드러지는 기운은 ${strongElement}, 상대적으로 보강이 필요한 기운은 ${weakElement} 쪽입니다. 강한 기운은 장점이지만 과하면 고집, 피로, 관계의 오해로도 나타납니다. 무료에서는 균형의 방향을 보여주고, 유료에서는 무엇을 언제 보완해야 하는지 구체화합니다.</p>
+            </article>
+            <article class="reading-card">
+              <div class="free-card-art free-art-item photo-art" aria-hidden="true"><i>숨은</i></div>
+              <strong>지장간은 힌트만 공개</strong>
+              <p>${hiddenHint}. 숨은 기운은 겉으로 바로 보이지 않지만 실제 선택, 돈의 흐름, 관계 반응, 직업적 쓰임을 결정하는 중요한 층입니다. 이 부분은 무료에서 결론을 단정하지 않고, 유료 리포트에서 사주 근거와 함께 자세히 해석합니다.</p>
+            </article>
+          </div>
+          <article class="guide-card" style="margin-top:14px">
+            <strong>올해 흐름 맛보기</strong>
+            <p>${firstYearLuck ? `${firstYearLuck.year}년 ${renderGanji(firstYearLuck.ganji)}의 흐름은 ${firstYearLuck.theme} 쪽으로 먼저 움직입니다. 무료에서는 올해의 분위기만 보여드리고, 실제로 어떤 달과 상황에서 움직이면 좋은지는 유료 리포트에서 대운·세운과 연결해 정리합니다.` : "올해 흐름은 원국의 강약과 지장간이 만날 때 실제 사건으로 드러납니다. 무료에서는 큰 분위기를 보고, 유료에서는 행동 타이밍까지 확인합니다."}</p>
+          </article>
+        </section>
+      `;
+    }
+
     function renderPaidLockFromJijanggan(name) {
       return `
         <section class="box upgrade-callout" id="premium">
@@ -4918,8 +4971,6 @@
         }
 
         const report = cleanText(data.result);
-        const preview = report.slice(0, 1100);
-
         const fullHTML = `
           ${renderPremiumWarDashboard(name, data, report)}
           ${renderDeveloperDebugPanel(data.developer_debug)}
@@ -4932,6 +4983,8 @@
           </section>
           ${renderPillars(data.pillars)}
           ${renderFreeIntroCards(name, data.pillars)}
+          ${renderFreePreviewGuide(name, data.pillars, data.sewoon)}
+          ${renderFreeReadingCards(name, data.pillars, data.sewoon)}
           ${renderPaidLockFromJijanggan(name)}
         `;
 
