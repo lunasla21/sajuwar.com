@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>구매내역 | 사주전쟁</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: #2b1b12;
+      background: linear-gradient(180deg, #fff1cc, #fff8e9 46%, #ecfff6);
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    main { width: min(960px, calc(100% - 32px)); margin: 0 auto; padding: 42px 0; }
+    .panel {
+      padding: 24px;
+      border: 1px solid rgba(113,80,44,.18);
+      background: rgba(255,250,239,.82);
+      box-shadow: 0 24px 80px rgba(126,82,35,.16);
+    }
+    h1, h2 { margin-top: 0; }
+    .lookup { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; align-items: center; }
+    input {
+      min-height: 46px;
+      border: 1px solid rgba(113,80,44,.22);
+      padding: 0 12px;
+      font: inherit;
+      background: #fff;
+    }
+    button, a.button {
+      min-height: 46px;
+      display: inline-grid;
+      place-items: center;
+      border: 0;
+      padding: 0 16px;
+      color: #2b1b12;
+      background: linear-gradient(135deg, #ffe6a3, #d99b2e);
+      font: inherit;
+      font-weight: 900;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .secondary { border: 1px solid rgba(137,91,31,.28); color: #6d4310; background: #fffaf0; }
+    table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,.64); }
+    th, td { padding: 12px; border-bottom: 1px solid rgba(113,80,44,.12); text-align: left; }
+    th { color: #8a5b12; background: #fff1cc; }
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 999px; font-weight: 900; font-size: 13px; }
+    .waiting { color: #7a5200; background: #fff0ad; }
+    .confirmed { color: #12613f; background: #c9f3df; }
+    .empty { padding: 22px; color: #705642; }
+    @media (max-width: 720px) {
+      .lookup { grid-template-columns: 1fr; }
+      table, thead, tbody, tr, th, td { display: block; }
+      thead { display: none; }
+      td { border-bottom: 0; }
+      tr { border-bottom: 1px solid rgba(113,80,44,.16); padding: 10px 0; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panel">
+      <p>마이페이지</p>
+      <h1>구매내역</h1>
+      <div class="lookup">
+        <strong id="userLabel">로그인 확인 중</strong>
+        <button type="button" onclick="loadOrders()">새로고침</button>
+        <button type="button" class="secondary" onclick="logout()">로그아웃</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>상품명</th>
+            <th>주문번호</th>
+            <th>결제방식</th>
+            <th>상태</th>
+            <th>이용</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+      <div class="empty" id="empty">구매내역을 불러오고 있습니다.</div>
+      <div style="margin-top:18px">
+        <a class="button secondary" href="/payment.html">상품 신청하기</a>
+        <a class="button secondary" href="/">메인으로</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const authToken = localStorage.getItem("sajuwar_auth_token") || "";
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      }[char]));
+    }
+    function statusClass(status) { return status === "확인완료" ? "confirmed" : "waiting"; }
+    function paymentMethodLabel(method) { return method === "bank_transfer" ? "무통장입금" : method; }
+    function accessUrl(order) {
+      if (order.product_type === "lecture") return `/lecture.html?token=${encodeURIComponent(authToken)}`;
+      return `/?paid=1&token=${encodeURIComponent(authToken)}`;
+    }
+    function accessLabel(order) { return order.product_type === "lecture" ? "강의보기" : "리포트 보기"; }
+    async function loadOrders() {
+      if (!authToken) {
+        location.href = "/login.html";
+        return;
+      }
+      const response = await fetch("/api/my/orders", {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        localStorage.removeItem("sajuwar_auth_token");
+        location.href = "/login.html";
+        return;
+      }
+      renderOrders(data.orders || []);
+    }
+    async function loadMe() {
+      if (!authToken) {
+        location.href = "/login.html";
+        return;
+      }
+      const response = await fetch("/api/auth/me", {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        localStorage.removeItem("sajuwar_auth_token");
+        location.href = "/login.html";
+        return;
+      }
+      document.getElementById("userLabel").textContent = `${data.user.name} (${data.user.email})`;
+    }
+    async function logout() {
+      await fetch("/api/auth/logout", { method: "POST", headers: { Authorization: `Bearer ${authToken}` } });
+      localStorage.removeItem("sajuwar_auth_token");
+      localStorage.removeItem("sajuwar_user");
+      location.href = "/login.html";
+    }
+    function renderOrders(orders) {
+      document.getElementById("empty").style.display = orders.length ? "none" : "block";
+      document.getElementById("ordersBody").innerHTML = orders.map((order) => `
+        <tr>
+          <td>${escapeHtml(order.product_name)}</td>
+          <td>${escapeHtml(order.id)}</td>
+          <td>${paymentMethodLabel(order.payment_method)}</td>
+          <td><span class="badge ${statusClass(order.status)}">${escapeHtml(order.status)}</span></td>
+          <td>
+            ${order.status === "확인완료"
+              ? `<a class="button" href="${accessUrl(order)}">${accessLabel(order)}</a>`
+              : `<span>관리자 확인 후 이용 가능합니다.</span>`}
+          </td>
+        </tr>
+      `).join("");
+    }
+    loadMe().then(loadOrders);
+  </script>
+</body>
+</html>

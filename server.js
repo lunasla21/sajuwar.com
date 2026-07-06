@@ -1,4 +1,4 @@
-const express = require("express");
+﻿const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
@@ -7,6 +7,8 @@ require("dotenv").config();
 const OpenAI = require("openai");
 const { Solar, Lunar } = require("lunar-javascript");
 const { buildAiBrainContext } = require("./dataset_loader");
+const { PRODUCTS, createOrderStore } = require("./order_store");
+const { createUserStore } = require("./user_store");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,9 +23,44 @@ const masterRulesPath =
   process.env.SAJUWAR_MASTER_RULES_PATH || path.join(__dirname, "master_rules");
 const decisionPriorityPath =
   process.env.SAJUWAR_DECISION_PRIORITY_PATH || path.join(__dirname, "decision_priority");
+const bankAccount = {
+  bankName: process.env.SAJUWAR_BANK_NAME || "은행명을 입력하세요",
+  accountNumber: process.env.SAJUWAR_BANK_ACCOUNT || "계좌번호를 입력하세요",
+  accountHolder: process.env.SAJUWAR_BANK_HOLDER || "예금주를 입력하세요",
+};
+const orderStore = createOrderStore(__dirname);
+const userStore = createUserStore(__dirname);
+const PURCHASE_REQUIRED_MESSAGE = "구매가 완료되지 않았습니다.\n관리자 확인 후 이용 가능합니다.";
 
 app.use(cors());
 app.use(express.json());
+function getAuthToken(req) {
+  const header = req.get("authorization") || "";
+  if (header.toLowerCase().startsWith("bearer ")) return header.slice(7).trim();
+  return req.query?.token || req.body?.token || "";
+}
+
+function getAuthUser(req) {
+  return userStore.findByToken(getAuthToken(req));
+}
+
+function requireLogin(req, res) {
+  const user = getAuthUser(req);
+  if (user) return user;
+  res.status(401).json({ error: "로그인이 필요합니다." });
+  return null;
+}
+
+function canAccessProduct(req, productId) {
+  const user = getAuthUser(req);
+  if (!user) return false;
+  return orderStore.hasPurchase({ user_id: user.id, product_id: productId });
+}
+
+function sendPurchaseRequired(res) {
+  res.status(403).type("text/plain; charset=utf-8").send(PURCHASE_REQUIRED_MESSAGE);
+}
+
 app.use((req, res, next) => {
   const requestPath = req.path.replace(/\\/g, "/");
   if (
@@ -33,6 +70,13 @@ app.use((req, res, next) => {
     requestPath.startsWith("/decision_priority/")
   ) {
     return res.status(404).send("Not found");
+  }
+  if (requestPath === "/admin-bank.html" && !isAdminRequest(req)) {
+    return res.status(403).type("text/plain; charset=utf-8").send("Admin access required");
+  }
+  if (["/lecture.html", "/report", "/report.html", "/pdf"].includes(requestPath)) {
+    const productId = requestPath === "/lecture.html" ? "saju_lecture" : "premium_report";
+    if (!canAccessProduct(req, productId)) return sendPurchaseRequired(res);
   }
   return next();
 });
@@ -50,6 +94,22 @@ function isDeveloperPreviewRequest(req) {
     req.query?.adminKey ||
     "";
   return providedKey === adminKey;
+}
+
+function isAdminRequest(req) {
+  if (!adminKey) return false;
+  const providedKey =
+    req.get("x-sajuwar-admin-key") ||
+    req.body?.adminKey ||
+    req.query?.adminKey ||
+    "";
+  return providedKey === adminKey;
+}
+
+function requireAdmin(req, res) {
+  if (isAdminRequest(req)) return true;
+  res.status(403).json({ error: "Admin access required" });
+  return false;
 }
 
 function ensureReviewDatasetFile() {
@@ -917,6 +977,113 @@ app.get("/api/review-dataset/export", (req, res) => {
   res.setHeader("Content-Type", "application/jsonl; charset=utf-8");
   res.setHeader("Content-Disposition", "attachment; filename=\"review_dataset.jsonl\"");
   res.send(fs.readFileSync(reviewDatasetPath, "utf8"));
+});
+
+app.post("/api/auth/signup", (req, res) => {
+  try {
+    res.json(userStore.signup(req.body));
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+});
+
+app.post("/api/auth/login", (req, res) => {
+  try {
+    res.json(userStore.login(req.body));
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+});
+
+app.post("/api/auth/logout", (req, res) => {
+  userStore.logout(getAuthToken(req));
+  res.json({ ok: true });
+});
+
+app.get("/api/auth/me", (req, res) => {
+  const user = getAuthUser(req);
+  if (!user) return res.status(401).json({ error: "로그인이 필요합니다." });
+  res.json({ user });
+});
+
+app.get("/api/products", (req, res) => {
+  res.json({ products: Object.values(PRODUCTS), bankAccount });
+});
+
+app.post("/api/orders/bank-transfer", (req, res) => {
+  try {
+    const user = requireLogin(req, res);
+    if (!user) return;
+    const order = orderStore.createBankTransferOrder({
+      ...req.body,
+      user_id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+    });
+    res.json({ order, bankAccount });
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message, order: error.order });
+  }
+});
+
+app.post("/api/orders/:id/deposit-complete", (req, res) => {
+  try {
+    const user = requireLogin(req, res);
+    if (!user) return;
+    const order = orderStore.markDepositWaiting(req.params.id, req.body?.depositor_name, user.id);
+    if (!order) return res.status(404).json({ error: "order not found" });
+    res.json({ order });
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+});
+
+app.get("/api/my/orders", (req, res) => {
+  const user = requireLogin(req, res);
+  if (!user) return;
+  res.json({ orders: orderStore.findUserOrders({ user_id: user.id }) });
+});
+
+app.get("/api/purchases/check", (req, res) => {
+  const productId = req.query.product_id || "premium_report";
+  const user = getAuthUser(req);
+  res.json({
+    product_id: productId,
+    active: Boolean(user && orderStore.hasPurchase({ user_id: user.id, product_id: productId })),
+  });
+});
+
+app.get("/api/report", (req, res) => {
+  if (!canAccessProduct(req, "premium_report")) return sendPurchaseRequired(res);
+  res.json({ ok: true, message: "report access granted" });
+});
+
+app.get("/api/admin/orders", (req, res) => {
+  if (!requireAdmin(req, res)) return;
+  res.json({ orders: orderStore.listOrders() });
+});
+
+app.post("/api/admin/orders/:id/confirm", (req, res) => {
+  try {
+    if (!requireAdmin(req, res)) return;
+    const order = orderStore.findOrder(req.params.id);
+    if (!order) return res.status(404).json({ error: "order not found" });
+    res.json(orderStore.activatePurchase(order));
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+});
+
+app.post("/api/admin/orders/:id/cancel", (req, res) => {
+  try {
+    if (!requireAdmin(req, res)) return;
+    const order = orderStore.cancelOrder(req.params.id);
+    if (!order) return res.status(404).json({ error: "order not found" });
+    res.json({ order });
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
 });
 
 app.post("/analyze", handleAnalyze);

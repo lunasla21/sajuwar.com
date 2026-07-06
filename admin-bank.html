@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>입금확인 관리 | 사주전쟁</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: #2b1b12;
+      background: #fff8e9;
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      line-height: 1.55;
+    }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
+    h1 { margin: 0; }
+    input {
+      min-height: 42px;
+      border: 1px solid rgba(113,80,44,.22);
+      padding: 0 10px;
+      font: inherit;
+      background: #fff;
+    }
+    button, a {
+      min-height: 40px;
+      display: inline-grid;
+      place-items: center;
+      border: 0;
+      padding: 0 12px;
+      color: #2b1b12;
+      background: linear-gradient(135deg, #ffe6a3, #d99b2e);
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .secondary { border: 1px solid rgba(137,91,31,.28); color: #6d4310; background: #fffaf0; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+    .table-wrap { overflow: auto; border: 1px solid rgba(113,80,44,.18); background: rgba(255,255,255,.78); }
+    table { width: 100%; border-collapse: collapse; min-width: 1040px; }
+    th, td { padding: 12px; border-bottom: 1px solid rgba(113,80,44,.12); text-align: left; vertical-align: top; }
+    th { color: #8a5b12; background: #fff1cc; white-space: nowrap; }
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 999px; font-weight: 900; font-size: 13px; }
+    .waiting { color: #7a5200; background: #fff0ad; }
+    .confirmed { color: #12613f; background: #c9f3df; }
+    .canceled { color: #8a1d1d; background: #ffd6d6; }
+    .empty { padding: 30px; color: #705642; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <p>관리자</p>
+        <h1>입금확인 관리</h1>
+      </div>
+      <a class="secondary" href="/">메인</a>
+    </header>
+    <div class="toolbar">
+      <input id="adminKey" placeholder="관리자 키" />
+      <button type="button" onclick="saveKeyAndLoad()">조회</button>
+      <button type="button" class="secondary" onclick="loadOrders()">새로고침</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>주문번호</th>
+            <th>신청자</th>
+            <th>이메일</th>
+            <th>연락처</th>
+            <th>상품명</th>
+            <th>금액</th>
+            <th>입금자명</th>
+            <th>신청일</th>
+            <th>상태</th>
+            <th>처리</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+      <div class="empty" id="empty">관리자 키를 입력하고 조회해주세요.</div>
+    </div>
+  </main>
+
+  <script>
+    let adminKey = localStorage.getItem("sajuwar_admin_key") || "";
+    document.getElementById("adminKey").value = new URLSearchParams(location.search).get("adminKey") || adminKey;
+
+    function formatMoney(value) { return `${Number(value || 0).toLocaleString("ko-KR")}원`; }
+    function formatDate(value) { return value ? new Date(value).toLocaleString("ko-KR") : "-"; }
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      }[char]));
+    }
+    function statusClass(status) {
+      if (status === "확인완료") return "confirmed";
+      if (status === "취소") return "canceled";
+      return "waiting";
+    }
+    function statusLabel(status) {
+      if (status === "확인완료") return "🟢 확인완료";
+      if (status === "취소") return "🔴 취소";
+      return "🟡 입금대기";
+    }
+    function saveKeyAndLoad() {
+      adminKey = document.getElementById("adminKey").value.trim();
+      localStorage.setItem("sajuwar_admin_key", adminKey);
+      loadOrders();
+    }
+    async function loadOrders() {
+      if (!adminKey) return;
+      const response = await fetch("/api/admin/orders", {
+        headers: { "x-sajuwar-admin-key": adminKey }
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.error || "관리자 인증에 실패했습니다.");
+        return;
+      }
+      renderOrders(data.orders || []);
+    }
+    function renderOrders(orders) {
+      const body = document.getElementById("ordersBody");
+      document.getElementById("empty").style.display = orders.length ? "none" : "block";
+      body.innerHTML = orders.map((order) => `
+        <tr>
+          <td>${escapeHtml(order.id)}</td>
+          <td>${escapeHtml(order.user_name)}</td>
+          <td>${escapeHtml(order.email)}</td>
+          <td>${escapeHtml(order.phone)}</td>
+          <td>${escapeHtml(order.product_name)}</td>
+          <td>${formatMoney(order.amount)}</td>
+          <td>${escapeHtml(order.depositor_name)}</td>
+          <td>${formatDate(order.ordered_at)}</td>
+          <td><span class="badge ${statusClass(order.status)}">${statusLabel(order.status)}</span></td>
+          <td>
+            ${order.status === "확인완료" ? "" : `<button type="button" onclick="confirmOrder('${escapeHtml(order.id)}')">확인</button>`}
+            ${order.status === "취소" ? "" : `<button type="button" class="secondary" onclick="cancelOrder('${escapeHtml(order.id)}')">취소</button>`}
+          </td>
+        </tr>
+      `).join("");
+    }
+    async function confirmOrder(orderId) {
+      if (!confirm("정말 입금을 확인하셨습니까?")) return;
+      const response = await fetch(`/api/admin/orders/${encodeURIComponent(orderId)}/confirm`, {
+        method: "POST",
+        headers: { "x-sajuwar-admin-key": adminKey }
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.error || "확인 처리에 실패했습니다.");
+        return;
+      }
+      await loadOrders();
+    }
+    async function cancelOrder(orderId) {
+      if (!confirm("주문을 취소하시겠습니까?")) return;
+      const response = await fetch(`/api/admin/orders/${encodeURIComponent(orderId)}/cancel`, {
+        method: "POST",
+        headers: { "x-sajuwar-admin-key": adminKey }
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.error || "취소 처리에 실패했습니다.");
+        return;
+      }
+      await loadOrders();
+    }
+    if (document.getElementById("adminKey").value) saveKeyAndLoad();
+  </script>
+</body>
+</html>

@@ -2910,6 +2910,8 @@
         <a href="#naming-apply">작명 신청</a>
         <a href="#premium">유료 해석</a>
         <a href="/payment.html">결제</a>
+        <a href="/mypage.html">구매내역</a>
+        <a href="/admin-bank.html">입금확인 관리</a>
       </nav>
     </header>
 
@@ -3627,7 +3629,7 @@
   <script src="/site-config.js"></script>
   <script src="/policy.js"></script>
   <script>
-    let isPaid = localStorage.getItem("sajuwar_paid") === "true";
+    let isPaid = false;
     let developerModeAvailable = false;
     let developerModeOn = localStorage.getItem("sajuwar_developer_mode") === "true";
     let developerAdminKey = localStorage.getItem("sajuwar_admin_key") || "";
@@ -3637,6 +3639,8 @@
     const developerReviewParagraphs = {};
     let lastFullResult = "";
     let loadingTimer = null;
+    const accessParams = new URLSearchParams(window.location.search);
+    const accessToken = accessParams.get("token") || localStorage.getItem("sajuwar_auth_token") || "";
 
     const hiddenGan = {
       "子": ["癸"],
@@ -3707,6 +3711,12 @@
 
     fillOptions();
     initDeveloperPreviewMode();
+    refreshPurchaseAccess().then(() => {
+      if (accessParams.get("paid") === "1" && !canViewPaidReport()) {
+        const result = document.getElementById("result");
+        if (result) result.innerHTML = renderPurchaseRequiredMessage();
+      }
+    });
 
     async function initDeveloperPreviewMode() {
       const params = new URLSearchParams(window.location.search);
@@ -3758,8 +3768,41 @@
       return developerModeAvailable && developerModeOn && developerAdminKey;
     }
 
+    async function refreshPurchaseAccess() {
+      if (!accessToken) {
+        isPaid = false;
+        return false;
+      }
+      try {
+        const params = new URLSearchParams({ product_id: "premium_report" });
+        const response = await fetch(`/api/purchases/check?${params.toString()}`, {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        const data = await response.json();
+        isPaid = Boolean(data.active);
+        if (isPaid) {
+          localStorage.setItem("sajuwar_auth_token", accessToken);
+        }
+        return isPaid;
+      } catch (error) {
+        isPaid = false;
+        return false;
+      }
+    }
+
     function canViewPaidReport() {
       return isPaid || hasDeveloperAccess();
+    }
+
+    function renderPurchaseRequiredMessage() {
+      return `
+        <section class="box">
+          <h2 class="section-title">구매가 완료되지 않았습니다.</h2>
+          <p>관리자 확인 후 이용 가능합니다.</p>
+          <button type="button" onclick="location.href='/mypage.html'">구매내역 확인</button>
+          <button type="button" class="secondary" style="margin-top:10px" onclick="location.href='/payment.html'">무통장입금 신청</button>
+        </section>
+      `;
     }
 
     function escapeHtml(value) {
@@ -4765,12 +4808,19 @@
       loadingTimer = null;
     }
 
-    function openPaidReport() {
+    async function openPaidReport() {
+      await refreshPurchaseAccess();
       if (canViewPaidReport()) {
         analyze(true);
         return;
       }
-      location.href = "/payment.html";
+      const result = document.getElementById("result");
+      if (result) {
+        result.innerHTML = renderPurchaseRequiredMessage();
+        document.getElementById("report").scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        location.href = "/payment.html";
+      }
     }
 
     async function analyze(forcePaid = false) {

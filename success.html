@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>결제 완료 | 사주전쟁</title>
+  <title>접수 완료 | 사주전쟁</title>
   <style>
     body {
       margin: 0;
@@ -22,48 +22,30 @@
       background: rgba(18, 17, 14, 0.86);
     }
     h1 { color: #f2db8d; }
-    p { color: #c8bfa9; }
-    .legal-footer {
-      width: min(480px, calc(100% - 32px));
-      margin: 18px auto 0;
-      color: rgba(246, 239, 221, 0.7);
-      font-size: 13px;
-      line-height: 1.7;
+    p { color: #c8bfa9; line-height: 1.7; }
+    a {
+      min-height: 48px;
+      display: grid;
+      place-items: center;
+      margin-top: 12px;
+      color: #17110a;
+      background: linear-gradient(135deg, #f2db8d, #d8ad4f);
+      font-weight: 900;
+      text-decoration: none;
     }
-    .legal-footer nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px 12px;
-      margin-bottom: 8px;
+    a.secondary {
+      color: #f2db8d;
+      border: 1px solid rgba(242,219,141,.32);
+      background: rgba(8,8,7,.56);
     }
-    .legal-footer a { color: #f2db8d; font-weight: 900; text-decoration: none; }
   </style>
-  <script src="/site-config.js"></script>
 </head>
 <body>
-  <div>
-    <main class="panel">
-      <h1>결제가 완료되었습니다</h1>
-      <p>프리미엄 리포트를 열 수 있도록 이동합니다.</p>
-    </main>
-    <footer class="legal-footer">
-      <nav aria-label="정책 링크">
-        <a href="/terms">이용약관</a>
-        <a href="/privacy">개인정보처리방침</a>
-        <a href="/refund">환불정책</a>
-        <a href="/payment">결제안내</a>
-        <a href="/support">문의하기</a>
-      </nav>
-      <div>운영사: <span data-config="companyName">J Company</span> · 사업자등록번호: <span data-config="businessRegistrationNumber">472-01-04135</span></div>
-    </footer>
-  </div>
-  <script>
-    localStorage.setItem("sajuwar_paid", "true");
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 1000);
-  </script>
-  <script src="/policy.js"></script>
+  <main class="panel">
+    <h1>접수가 완료되었습니다</h1>
+    <p>무통장입금은 관리자 입금 확인 후 이용 가능합니다. 확인완료가 되면 구매내역에서 리포트 또는 강의 버튼이 표시됩니다.</p>
+    <a href="/mypage.html">구매내역 확인</a>
+    <a class="secondary" href="/">메인으로</a>
+  </main>
 </body>
 </html>
