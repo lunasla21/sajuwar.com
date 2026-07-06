@@ -246,6 +246,64 @@ function createOrderStore(baseDir) {
     return purchases[index];
   }
 
+  function normalizeReportProfile(profile = {}) {
+    return {
+      name: String(profile.name || "").trim(),
+      birth: String(profile.birth || "").trim(),
+      time: String(profile.time || "").trim(),
+      gender: String(profile.gender || "").trim(),
+      calendarType: String(profile.calendarType || "solar").trim(),
+    };
+  }
+
+  function reportProfileKey(profile = {}) {
+    const normalized = normalizeReportProfile(profile);
+    return [
+      normalized.name,
+      normalized.birth,
+      normalized.time,
+      normalized.gender,
+      normalized.calendarType,
+    ].join("|");
+  }
+
+  function getPurchase({ user_id, product_id }) {
+    return listPurchases().find(
+      (purchase) => purchase.user_id === user_id && purchase.product_id === product_id
+    ) || null;
+  }
+
+  function ensureReportProfileAccess({ user_id, product_id = "premium_report", profile }) {
+    const purchases = listPurchases();
+    const index = purchases.findIndex(
+      (purchase) => purchase.user_id === user_id && purchase.product_id === product_id
+    );
+    if (index === -1) throw makeError("Purchase required", 403);
+
+    const normalized = normalizeReportProfile(profile);
+    const nextKey = reportProfileKey(normalized);
+    const currentProfile = purchases[index].report_profile || null;
+    const currentKey = currentProfile ? reportProfileKey(currentProfile) : "";
+
+    if (currentProfile && currentKey !== nextKey) {
+      throw makeError("This purchase is already assigned to another birth profile", 403, {
+        report_profile: currentProfile,
+      });
+    }
+
+    if (!currentProfile) {
+      purchases[index] = {
+        ...purchases[index],
+        report_profile: normalized,
+        report_profile_key: nextKey,
+        report_profile_bound_at: new Date().toISOString(),
+      };
+      writePurchases(purchases);
+    }
+
+    return purchases[index];
+  }
+
   function cancelOrder(orderId) {
     const order = findOrder(orderId);
     if (!order) return null;
@@ -297,7 +355,9 @@ function createOrderStore(baseDir) {
     createBankTransferOrder,
     findOrder,
     findUserOrders,
+    getPurchase,
     hasPurchase,
+    ensureReportProfileAccess,
     listOrders,
     listPurchases,
     markPurchaseAccess,
