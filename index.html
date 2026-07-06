@@ -613,6 +613,47 @@
       line-height: 1.35;
     }
 
+    .war-report-art {
+      position: relative;
+      min-height: 190px;
+      margin: 4px 0 16px;
+      overflow: hidden;
+      border: 1px solid rgba(249, 215, 126, 0.16);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(7, 17, 31, 0.06), rgba(7, 17, 31, 0.82)),
+        var(--war-art-image, url("assets/premium-battlefield-command.webp")) center/cover;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 14px 34px rgba(0, 0, 0, 0.18);
+    }
+
+    .war-report-art::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(249, 215, 126, 0.16);
+      background:
+        linear-gradient(90deg, transparent 49%, rgba(249, 215, 126, 0.14) 50%, transparent 51%),
+        linear-gradient(0deg, transparent 49%, rgba(56, 189, 248, 0.1) 50%, transparent 51%);
+    }
+
+    .war-report-art::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      max-width: calc(100% - 32px);
+      color: #fff1c2;
+      font-size: 14px;
+      font-weight: 950;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.72);
+    }
+
+    .war-art-0 { --war-art-image: url("assets/premium-battlefield-command.webp"); }
+    .war-art-1 { --war-art-image: url("assets/premium-card-item.webp"); }
+    .war-art-2 { --war-art-image: url("assets/premium-card-consult.webp"); }
+    .war-art-3 { --war-art-image: url("assets/premium-card-match.webp"); }
+    .war-art-4 { --war-art-image: url("assets/hero-saju-war.jpg"); }
+
     .war-report-card p {
       margin: 0;
       color: rgba(247, 234, 210, 0.84);
@@ -4390,6 +4431,13 @@
       const { name, strongElement, dayGan, hiddenItems, sewoonList } = context;
       const firstHidden = hiddenItems[0];
       const firstSewoon = sewoonList[0];
+      const artLabels = [
+        "원국의 큰 전장을 펼쳐 보는 구간",
+        "지장간 아이템과 숨은 무기를 확인하는 구간",
+        "현실 선택과 상담 전략을 정리하는 구간",
+        "관계와 타이밍의 흐름을 읽는 구간",
+        "대운과 세운의 스위치를 맞추는 구간"
+      ];
       const actionText = firstSewoon
         ? `${firstSewoon.year}년에는 ${escapeHtml(firstSewoon.theme || "가장 현실적인 선택")}을 기준으로 계획을 짧게 쪼개세요.`
         : "오늘 할 일 하나, 멈출 일 하나, 미룰 일 하나를 먼저 정리하세요.";
@@ -4400,6 +4448,7 @@
             ${sections.map((section, index) => `
               <article class="war-report-card">
                 <h4><span class="war-report-number">${escapeHtml(section.number || String(index + 1))}</span>${escapeHtml(section.title || "상담 해석")}</h4>
+                <div class="war-report-art war-art-${index % 5}" data-label="${escapeHtml(artLabels[index % artLabels.length])}" aria-hidden="true"></div>
                 ${section.body.length
                   ? section.body.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")
                   : `<p>${escapeHtml(report)}</p>`}

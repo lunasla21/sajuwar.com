@@ -383,6 +383,35 @@ function scoreReport(report) {
   };
 }
 
+function getPaidReportChapterStats(report) {
+  const lines = String(report || "").split(/\r?\n/);
+  const chapters = [];
+  let current = null;
+
+  lines.forEach((line) => {
+    const match = line.trim().match(/^(\d{1,2})[\.\)]\s*(.+)$/);
+    if (match) {
+      current = { number: match[1], title: match[2], body: [] };
+      chapters.push(current);
+      return;
+    }
+    if (current) current.body.push(line);
+  });
+
+  return chapters.map((chapter) => {
+    const text = chapter.body.join("\n").replace(/\s/g, "");
+    return {
+      number: chapter.number,
+      title: chapter.title,
+      chars: text.length,
+    };
+  });
+}
+
+function findShortPaidReportChapters(report, minChars = 2000) {
+  return getPaidReportChapterStats(report).filter((chapter) => chapter.chars < minChars);
+}
+
 function buildDeveloperDebugPayload({ report, prompt, ragContext, sources, gptResponse, finalMarkdown, goldenDatasetGuidance, aiBrainContext }) {
   const reviewDatasetApplication = evaluateReviewDatasetApplication(
     report,
@@ -814,7 +843,11 @@ ${sewoon.list.map((s) => `${s.year}년 ${s.ganji}: 천간 ${s.stemElement}, 지�
 - 무섭게 단정하지 말고, 움직이게 만드는 전략 문체로 쓴다.
 - 각 항목마다 실제 행동 예시를 포함한다.
 - "좋다/나쁘다"보다 "어떻게 쓰는가"를 중심으로 설명한다.
-- 전체 분량은 충분히 길게, 유료 리포트처럼 밀도 있게 작성한다.
+- 각 제목(1번부터 13번까지)마다 본문은 반드시 공백 제외 최소 2000자 이상 작성한다.
+- 각 제목마다 최소 7개 이상의 긴 문단을 작성한다.
+- 각 제목마다 현실 사례 3개, 실행 전략 3개, 주의할 점 2개, 상담사가 실제로 말하는 한 줄 조언 1개를 포함한다.
+- 짧은 요약형 문단으로 끝내지 말고, 고객이 돈을 내고 받은 프리미엄 심화 리포트처럼 충분히 길고 구체적으로 작성한다.
+- 분량 제한 때문에 줄일 필요가 있으면 항목 수를 줄이지 말고 각 항목을 모두 깊게 쓴다.
 `;
 
     prompt += [
@@ -840,8 +873,10 @@ ${sewoon.list.map((s) => `${s.year}년 ${s.ganji}: 천간 ${s.stemElement}, 지�
       "[Authoritative Dataset Order Reminder]",
       "The paid report must use this final order: Master Rule -> Decision Priority -> Golden Brain Case -> Consultation Strategy -> Action Strategy -> Language Style -> Evidence -> Review Dataset -> Customer Information.",
       "Developer Mode and paid customer generation both use this same prompt and AI Brain dataset context.",
-      "Make the paid report feel materially richer than a free reading: every chapter must include at least two concrete real-life scenes and at least two practical next actions.",
-      "Avoid a wall of text. Write with clear chapter rhythm: core judgment, why it happens, how it appears in daily life, what the customer should do next, and one counselor-style closing line.",
+      "Make the paid report feel materially richer than a free reading: every numbered chapter must be at least 2000 Korean characters excluding spaces.",
+      "Every numbered chapter must include at least three concrete real-life scenes, three practical next actions, two cautions, and one counselor-style closing line.",
+      "Do not compress chapters into short summaries. Write long, premium, paid-report depth for every heading.",
+      "Avoid a wall of text by using clear paragraph rhythm inside each long chapter: core judgment, why it happens, how it appears in daily life, what the customer should do next, cautions, and one counselor-style closing line.",
       "Use more practical detail for work, money, relationships, health management, yearly timing, and immediate action. Do not add new product features; only improve the report content quality.",
       "The final message must land like a decisive closing: name the year to start, the year by which the customer can secure the desired result, and the exact personal weapon/strength to use at that time.",
       "Output style must be counseling-first: why -> real-life manifestation -> next action in every chapter, at least three '맞아.' recognition sentences, restrained metaphor use, one counselor advice line per chapter, and a final practical action instruction.",
@@ -858,18 +893,46 @@ ${sewoon.list.map((s) => `${s.year}년 ${s.ganji}: 천간 ${s.stemElement}, 지�
         {
           role: "system",
           content:
-            "Authoritative generation order: Master Rule -> Decision Priority -> Golden Brain Case -> Consultation Strategy -> Action Strategy -> Language Style -> Evidence -> Review Dataset -> Customer Information. This order overrides any legacy priority text. Paid reports and Developer Mode previews must share this same AI Brain prompt context. Write in a human counseling style, not explanatory prose. Every chapter must follow why -> real-life manifestation -> next action. Reduce repeated '입니다'. Prefer real-life examples over hanja explanation. Use 전장/군단/스위치/아이템 only 2-3 times total. Include at least three sentences that make the customer feel '맞아.' End each chapter with one counselor-style advice line. End the whole report with a concrete action instruction.",
+            "Authoritative generation order: Master Rule -> Decision Priority -> Golden Brain Case -> Consultation Strategy -> Action Strategy -> Language Style -> Evidence -> Review Dataset -> Customer Information. This order overrides any legacy priority text. Paid reports and Developer Mode previews must share this same AI Brain prompt context. Write in a human counseling style, not explanatory prose. Every numbered chapter must be at least 2000 Korean characters excluding spaces and must follow why -> real-life manifestation -> next action -> cautions -> counselor closing line. Reduce repeated '입니다'. Prefer real-life examples over hanja explanation. Use 전장/군단/스위치/아이템 only 2-3 times total. Include at least three sentences that make the customer feel '맞아.' End each chapter with one counselor-style advice line. End the whole report with a concrete action instruction.",
         },
         {
           role: "user",
           content: prompt,
         },
       ],
-      max_tokens: 10000,
+      max_tokens: 24000,
       temperature: 0.75,
     });
 
-    const report = completion.choices[0].message.content;
+    let report = completion.choices[0].message.content;
+    const shortChapters = findShortPaidReportChapters(report, 2000);
+    if (shortChapters.length) {
+      const expansion = await client.chat.completions.create({
+        model: "gpt-4.1-mini",
+        messages: [
+          {
+            role: "system",
+            content:
+              "너는 프리미엄 유료 사주 리포트 편집자다. 기존 리포트의 판단은 유지하되, 짧은 챕터를 대폭 확장한다. 모든 번호 제목은 유지하고, 각 제목 본문은 공백 제외 최소 2000자 이상이어야 한다. 각 챕터에 현실 사례 3개, 실행 전략 3개, 주의점 2개, 상담 조언 1개를 반드시 포함한다.",
+          },
+          {
+            role: "user",
+            content: [
+              "아래 유료 리포트는 일부 챕터가 너무 짧다.",
+              "전체 1번부터 13번까지 모든 제목을 유지하면서, 각 제목 본문을 공백 제외 최소 2000자 이상으로 확장하라.",
+              "특히 짧은 챕터:",
+              shortChapters.map((chapter) => `${chapter.number}. ${chapter.title} (${chapter.chars}자)`).join("\n"),
+              "",
+              "[기존 리포트]",
+              report,
+            ].join("\n"),
+          },
+        ],
+        max_tokens: 24000,
+        temperature: 0.72,
+      });
+      report = expansion.choices[0].message.content;
+    }
     const response = {
       result: report,
       pillars,
