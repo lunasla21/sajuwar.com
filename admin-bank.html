@@ -13,10 +13,10 @@
       font-family: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
       line-height: 1.55;
     }
-    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0; }
+    main { width: min(1220px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0; }
     header { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; }
     h1 { margin: 0; }
-    input {
+    input, select {
       min-height: 42px;
       border: 1px solid rgba(113,80,44,.22);
       padding: 0 10px;
@@ -37,9 +37,14 @@
       text-decoration: none;
     }
     .secondary { border: 1px solid rgba(137,91,31,.28); color: #6d4310; background: #fffaf0; }
+    .danger { color: #8a1d1d; border: 1px solid rgba(138,29,29,.22); background: #ffd6d6; }
     .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+    .stat { padding: 14px; border: 1px solid rgba(113,80,44,.16); background: rgba(255,255,255,.78); }
+    .stat strong { display: block; color: #8a5b12; font-size: 13px; }
+    .stat b { display: block; margin-top: 4px; font-size: 24px; }
     .table-wrap { overflow: auto; border: 1px solid rgba(113,80,44,.18); background: rgba(255,255,255,.78); }
-    table { width: 100%; border-collapse: collapse; min-width: 1040px; }
+    table { width: 100%; border-collapse: collapse; min-width: 1180px; }
     th, td { padding: 12px; border-bottom: 1px solid rgba(113,80,44,.12); text-align: left; vertical-align: top; }
     th { color: #8a5b12; background: #fff1cc; white-space: nowrap; }
     .badge { display: inline-block; padding: 4px 8px; border-radius: 999px; font-weight: 900; font-size: 13px; }
@@ -47,6 +52,14 @@
     .confirmed { color: #12613f; background: #c9f3df; }
     .canceled { color: #8a1d1d; background: #ffd6d6; }
     .empty { padding: 30px; color: #705642; }
+    .actions { display: flex; flex-wrap: wrap; gap: 6px; }
+    .small { color: #705642; font-size: 12px; }
+    @media (max-width: 760px) {
+      header { align-items: flex-start; flex-direction: column; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      input, select, button, a { width: 100%; }
+      .toolbar { align-items: stretch; }
+    }
   </style>
 </head>
 <body>
@@ -58,11 +71,35 @@
       </div>
       <a class="secondary" href="/">메인</a>
     </header>
+
     <div class="toolbar">
       <input id="adminKey" placeholder="관리자 키" />
       <button type="button" onclick="saveKeyAndLoad()">조회</button>
       <button type="button" class="secondary" onclick="loadOrders()">새로고침</button>
+      <button type="button" class="secondary" onclick="downloadCsv()">CSV 다운로드</button>
     </div>
+
+    <div class="stats">
+      <div class="stat"><strong>오늘 주문</strong><b id="statToday">0</b></div>
+      <div class="stat"><strong>입금대기</strong><b id="statWaiting">0</b></div>
+      <div class="stat"><strong>승인완료</strong><b id="statConfirmed">0</b></div>
+      <div class="stat"><strong>총매출</strong><b id="statRevenue">0원</b></div>
+    </div>
+
+    <div class="toolbar">
+      <input id="searchKeyword" placeholder="주문번호, 이름, 이메일 검색" oninput="renderOrders()" />
+      <select id="statusFilter" onchange="renderOrders()">
+        <option value="">전체 상태</option>
+        <option value="입금대기">입금대기</option>
+        <option value="확인완료">확인완료</option>
+        <option value="취소">취소</option>
+      </select>
+      <select id="sortOrder" onchange="renderOrders()">
+        <option value="latest">최신순</option>
+        <option value="oldest">오래된순</option>
+      </select>
+    </div>
+
     <div class="table-wrap">
       <table>
         <thead>
@@ -76,6 +113,7 @@
             <th>입금자명</th>
             <th>신청일</th>
             <th>상태</th>
+            <th>이용이력</th>
             <th>처리</th>
           </tr>
         </thead>
@@ -86,7 +124,11 @@
   </main>
 
   <script>
+    const WAITING = "\uc785\uae08\ub300\uae30";
+    const CONFIRMED = "\ud655\uc778\uc644\ub8cc";
+    const CANCELED = "\ucde8\uc18c";
     let adminKey = localStorage.getItem("sajuwar_admin_key") || "";
+    let allOrders = [];
     document.getElementById("adminKey").value = new URLSearchParams(location.search).get("adminKey") || adminKey;
 
     function formatMoney(value) { return `${Number(value || 0).toLocaleString("ko-KR")}원`; }
@@ -97,14 +139,14 @@
       }[char]));
     }
     function statusClass(status) {
-      if (status === "확인완료") return "confirmed";
-      if (status === "취소") return "canceled";
+      if (status === CONFIRMED) return "confirmed";
+      if (status === CANCELED) return "canceled";
       return "waiting";
     }
     function statusLabel(status) {
-      if (status === "확인완료") return "🟢 확인완료";
-      if (status === "취소") return "🔴 취소";
-      return "🟡 입금대기";
+      if (status === CONFIRMED) return "확인완료";
+      if (status === CANCELED) return "취소";
+      return "입금대기";
     }
     function saveKeyAndLoad() {
       adminKey = document.getElementById("adminKey").value.trim();
@@ -121,28 +163,67 @@
         alert(data.error || "관리자 인증에 실패했습니다.");
         return;
       }
-      renderOrders(data.orders || []);
+      allOrders = data.orders || [];
+      renderStats();
+      renderOrders();
     }
-    function renderOrders(orders) {
+    function filteredOrders() {
+      const keyword = document.getElementById("searchKeyword").value.trim().toLowerCase();
+      const status = document.getElementById("statusFilter").value;
+      const sort = document.getElementById("sortOrder").value;
+      return allOrders
+        .filter((order) => {
+          const haystack = [order.id, order.user_name, order.email, order.phone, order.product_name, order.depositor_name]
+            .join(" ")
+            .toLowerCase();
+          return (!keyword || haystack.includes(keyword)) && (!status || order.status === status);
+        })
+        .sort((a, b) => {
+          const diff = new Date(b.ordered_at) - new Date(a.ordered_at);
+          return sort === "oldest" ? -diff : diff;
+        });
+    }
+    function renderStats() {
+      const today = new Date().toISOString().slice(0, 10);
+      const todayCount = allOrders.filter((order) => String(order.ordered_at || "").slice(0, 10) === today).length;
+      const waitingCount = allOrders.filter((order) => order.status === WAITING).length;
+      const confirmedOrders = allOrders.filter((order) => order.status === CONFIRMED);
+      const revenue = confirmedOrders.reduce((sum, order) => sum + Number(order.amount || 0), 0);
+      document.getElementById("statToday").textContent = todayCount;
+      document.getElementById("statWaiting").textContent = waitingCount;
+      document.getElementById("statConfirmed").textContent = confirmedOrders.length;
+      document.getElementById("statRevenue").textContent = formatMoney(revenue);
+    }
+    function renderOrders() {
+      const orders = filteredOrders();
       const body = document.getElementById("ordersBody");
       document.getElementById("empty").style.display = orders.length ? "none" : "block";
-      body.innerHTML = orders.map((order) => `
-        <tr>
-          <td>${escapeHtml(order.id)}</td>
-          <td>${escapeHtml(order.user_name)}</td>
-          <td>${escapeHtml(order.email)}</td>
-          <td>${escapeHtml(order.phone)}</td>
-          <td>${escapeHtml(order.product_name)}</td>
-          <td>${formatMoney(order.amount)}</td>
-          <td>${escapeHtml(order.depositor_name)}</td>
-          <td>${formatDate(order.ordered_at)}</td>
-          <td><span class="badge ${statusClass(order.status)}">${statusLabel(order.status)}</span></td>
-          <td>
-            ${order.status === "확인완료" ? "" : `<button type="button" onclick="confirmOrder('${escapeHtml(order.id)}')">확인</button>`}
-            ${order.status === "취소" ? "" : `<button type="button" class="secondary" onclick="cancelOrder('${escapeHtml(order.id)}')">취소</button>`}
-          </td>
-        </tr>
-      `).join("");
+      body.innerHTML = orders.map((order) => {
+        const purchase = order.purchase || {};
+        const accessCount = Number(purchase.access_count || 0);
+        return `
+          <tr>
+            <td>${escapeHtml(order.id)}</td>
+            <td>${escapeHtml(order.user_name)}</td>
+            <td>${escapeHtml(order.email)}</td>
+            <td>${escapeHtml(order.phone)}</td>
+            <td>${escapeHtml(order.product_name)}</td>
+            <td>${formatMoney(order.amount)}</td>
+            <td>${escapeHtml(order.depositor_name)}</td>
+            <td>${formatDate(order.ordered_at)}</td>
+            <td><span class="badge ${statusClass(order.status)}">${statusLabel(order.status)}</span></td>
+            <td>
+              <div>${accessCount ? `${accessCount}회 이용` : "-"}</div>
+              <div class="small">${purchase.last_accessed_at ? formatDate(purchase.last_accessed_at) : ""}</div>
+            </td>
+            <td><div class="actions">
+              ${order.status === CONFIRMED ? "" : `<button type="button" onclick="confirmOrder('${escapeHtml(order.id)}')">확인</button>`}
+              ${order.status === CONFIRMED ? `<button type="button" class="danger" onclick="revokeOrder('${escapeHtml(order.id)}', ${accessCount})">승인취소</button>` : ""}
+              ${order.status === CANCELED || order.status === CONFIRMED ? "" : `<button type="button" class="secondary" onclick="cancelOrder('${escapeHtml(order.id)}')">취소</button>`}
+            </div></td>
+          </tr>
+        `;
+      }).join("");
     }
     async function confirmOrder(orderId) {
       if (!confirm("정말 입금을 확인하셨습니까?")) return;
@@ -153,6 +234,22 @@
       const data = await response.json();
       if (!response.ok) {
         alert(data.error || "확인 처리에 실패했습니다.");
+        return;
+      }
+      await loadOrders();
+    }
+    async function revokeOrder(orderId, accessCount) {
+      const warning = accessCount > 0
+        ? `이미 리포트/강의가 ${accessCount}회 열람되었습니다. 그래도 승인취소하고 구매권한을 삭제할까요?`
+        : "승인취소하면 구매권한이 삭제되고 주문 상태가 입금대기로 돌아갑니다. 계속할까요?";
+      if (!confirm(warning)) return;
+      const response = await fetch(`/api/admin/orders/${encodeURIComponent(orderId)}/revoke`, {
+        method: "POST",
+        headers: { "x-sajuwar-admin-key": adminKey }
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.error || "승인취소 처리에 실패했습니다.");
         return;
       }
       await loadOrders();
@@ -169,6 +266,35 @@
         return;
       }
       await loadOrders();
+    }
+    function csvCell(value) {
+      return `"${String(value ?? "").replace(/"/g, '""')}"`;
+    }
+    function downloadCsv() {
+      const rows = [
+        ["주문번호", "신청자", "이메일", "연락처", "상품명", "금액", "입금자명", "신청일", "상태", "이용횟수", "마지막이용일"],
+        ...filteredOrders().map((order) => [
+          order.id,
+          order.user_name,
+          order.email,
+          order.phone,
+          order.product_name,
+          order.amount,
+          order.depositor_name,
+          formatDate(order.ordered_at),
+          statusLabel(order.status),
+          order.purchase?.access_count || 0,
+          order.purchase?.last_accessed_at ? formatDate(order.purchase.last_accessed_at) : "",
+        ])
+      ];
+      const csv = `\uFEFF${rows.map((row) => row.map(csvCell).join(",")).join("\n")}`;
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `sajuwar-orders-${new Date().toISOString().slice(0, 10)}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
     }
     if (document.getElementById("adminKey").value) saveKeyAndLoad();
   </script>

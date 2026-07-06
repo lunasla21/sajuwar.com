@@ -57,6 +57,12 @@ function canAccessProduct(req, productId) {
   return orderStore.hasPurchase({ user_id: user.id, product_id: productId });
 }
 
+function markProductAccess(req, productId, accessType = "view") {
+  const user = getAuthUser(req);
+  if (!user) return null;
+  return orderStore.markPurchaseAccess({ user_id: user.id, product_id: productId, access_type: accessType });
+}
+
 function sendPurchaseRequired(res) {
   res.status(403).type("text/plain; charset=utf-8").send(PURCHASE_REQUIRED_MESSAGE);
 }
@@ -77,6 +83,7 @@ app.use((req, res, next) => {
   if (["/lecture.html", "/report", "/report.html", "/pdf"].includes(requestPath)) {
     const productId = requestPath === "/lecture.html" ? "saju_lecture" : "premium_report";
     if (!canAccessProduct(req, productId)) return sendPurchaseRequired(res);
+    markProductAccess(req, productId, requestPath === "/pdf" ? "download" : "view");
   }
   return next();
 });
@@ -1056,12 +1063,18 @@ app.get("/api/purchases/check", (req, res) => {
 
 app.get("/api/report", (req, res) => {
   if (!canAccessProduct(req, "premium_report")) return sendPurchaseRequired(res);
+  markProductAccess(req, "premium_report", "view");
   res.json({ ok: true, message: "report access granted" });
 });
 
 app.get("/api/admin/orders", (req, res) => {
   if (!requireAdmin(req, res)) return;
-  res.json({ orders: orderStore.listOrders() });
+  const purchases = orderStore.listPurchases();
+  const orders = orderStore.listOrders().map((order) => ({
+    ...order,
+    purchase: purchases.find((purchase) => purchase.order_id === order.id) || null,
+  }));
+  res.json({ orders });
 });
 
 app.post("/api/admin/orders/:id/confirm", (req, res) => {
@@ -1081,6 +1094,17 @@ app.post("/api/admin/orders/:id/cancel", (req, res) => {
     const order = orderStore.cancelOrder(req.params.id);
     if (!order) return res.status(404).json({ error: "order not found" });
     res.json({ order });
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+});
+
+app.post("/api/admin/orders/:id/revoke", (req, res) => {
+  try {
+    if (!requireAdmin(req, res)) return;
+    const result = orderStore.revokePurchase(req.params.id);
+    if (!result) return res.status(404).json({ error: "order not found" });
+    res.json(result);
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message });
   }

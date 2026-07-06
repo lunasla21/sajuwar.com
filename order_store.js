@@ -68,6 +68,10 @@ function createOrderStore(baseDir) {
     return readJson(purchasesPath);
   }
 
+  function writePurchases(purchases) {
+    writeJson(purchasesPath, purchases);
+  }
+
   function makeOrderId() {
     const stamp = new Date()
       .toISOString()
@@ -207,6 +211,41 @@ function createOrderStore(baseDir) {
     return { order: confirmedOrder, purchase, duplicate: existingIndex >= 0 };
   }
 
+  function revokePurchase(orderId) {
+    const order = findOrder(orderId);
+    if (!order) return null;
+    if (order.status === ORDER_STATUS.CANCELED) throw makeError("Canceled order cannot be reverted", 409);
+
+    const purchases = listPurchases();
+    const purchase = purchases.find((item) => item.order_id === orderId);
+    const nextPurchases = purchases.filter((item) => item.order_id !== orderId);
+    writePurchases(nextPurchases);
+
+    const revertedOrder = updateOrder(orderId, (current) => ({
+      ...current,
+      status: ORDER_STATUS.WAITING,
+      confirmed_at: null,
+    }));
+    return { order: revertedOrder, removed_purchase: purchase || null };
+  }
+
+  function markPurchaseAccess({ user_id, product_id, access_type = "view" }) {
+    const purchases = listPurchases();
+    const index = purchases.findIndex(
+      (purchase) => purchase.user_id === user_id && purchase.product_id === product_id
+    );
+    if (index === -1) return null;
+    const now = new Date().toISOString();
+    purchases[index] = {
+      ...purchases[index],
+      access_count: Number(purchases[index].access_count || 0) + 1,
+      last_accessed_at: now,
+      last_access_type: access_type,
+    };
+    writePurchases(purchases);
+    return purchases[index];
+  }
+
   function cancelOrder(orderId) {
     const order = findOrder(orderId);
     if (!order) return null;
@@ -261,7 +300,9 @@ function createOrderStore(baseDir) {
     hasPurchase,
     listOrders,
     listPurchases,
+    markPurchaseAccess,
     markDepositWaiting,
+    revokePurchase,
   };
 }
 
