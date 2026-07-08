@@ -3197,6 +3197,409 @@
         font-size: 52px;
       }
     }
+
+    .saju-live-experience {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto 34px;
+      padding: 28px;
+      border: 1px solid rgba(212, 175, 55, 0.26);
+      border-radius: 8px;
+      color: #f4f1ea;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(212, 175, 55, 0.28), transparent 32%),
+        radial-gradient(circle at 88% 8%, rgba(63, 143, 113, 0.18), transparent 28%),
+        linear-gradient(135deg, rgba(12, 12, 12, 0.96), rgba(26, 22, 16, 0.94));
+      box-shadow: 0 34px 90px rgba(0, 0, 0, 0.34);
+      overflow: hidden;
+    }
+
+    .saju-live-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .saju-live-kicker {
+      margin: 0 0 12px;
+      color: #d4af37;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .saju-live-head h2 {
+      margin: 0 0 14px;
+      max-width: 760px;
+      color: #fff8df;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.03;
+    }
+
+    .saju-live-head h2 span { color: #d4af37; }
+
+    .saju-live-copy {
+      max-width: 680px;
+      margin: 0 0 22px;
+      color: rgba(244, 241, 234, 0.78);
+      font-size: clamp(16px, 1.8vw, 20px);
+    }
+
+    .saju-live-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .saju-live-actions button,
+    .saju-live-actions a {
+      min-height: 46px;
+      padding: 0 18px;
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 8px;
+      color: #0b0b0b;
+      background: linear-gradient(135deg, #fff0aa, #d4af37);
+      font-weight: 950;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .saju-live-actions a {
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .saju-live-actions .ghost {
+      color: #fff8df;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .saju-live-actions button:hover,
+    .saju-live-actions a:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 231, 148, 0.72);
+      box-shadow: 0 18px 40px rgba(212, 175, 55, 0.14);
+    }
+
+    .weapon-stage {
+      position: relative;
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 50% 44%, rgba(212, 175, 55, 0.3), transparent 32%),
+        radial-gradient(circle at 52% 48%, rgba(255, 255, 255, 0.12), transparent 18%),
+        rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .weapon-stage::before,
+    .weapon-stage::after {
+      content: "";
+      position: absolute;
+      inset: 44px;
+      border: 1px dashed rgba(212, 175, 55, 0.28);
+      border-radius: 50%;
+      animation: sajuSpin 18s linear infinite;
+    }
+
+    .weapon-stage::after {
+      inset: 86px;
+      border-color: rgba(255, 255, 255, 0.12);
+      animation-duration: 12s;
+      animation-direction: reverse;
+    }
+
+    .weapon-core {
+      position: relative;
+      z-index: 2;
+      width: min(250px, 70%);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(212, 175, 55, 0.38);
+      border-radius: 8px;
+      background:
+        linear-gradient(145deg, rgba(255, 240, 170, 0.28), rgba(212, 175, 55, 0.08)),
+        rgba(0, 0, 0, 0.34);
+      transform: rotate(45deg);
+      box-shadow: 0 0 70px rgba(212, 175, 55, 0.28), inset 0 0 50px rgba(255, 255, 255, 0.08);
+      transition: transform 600ms cubic-bezier(.2,.9,.2,1), box-shadow 600ms ease;
+    }
+
+    .weapon-core strong {
+      display: block;
+      transform: rotate(-45deg);
+      color: #fff7d0;
+      font-size: 30px;
+      line-height: 1.12;
+      text-align: center;
+    }
+
+    .saju-live-experience.weapon-revealed .weapon-core {
+      transform: rotate(45deg) scale(1.08);
+      box-shadow: 0 0 110px rgba(212, 175, 55, 0.58), inset 0 0 70px rgba(255, 255, 255, 0.16);
+    }
+
+    .weapon-caption {
+      position: absolute;
+      z-index: 3;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      padding: 16px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.42);
+      backdrop-filter: blur(12px);
+    }
+
+    .weapon-caption h3 {
+      margin: 0 0 6px;
+      color: #d4af37;
+      font-size: 18px;
+    }
+
+    .weapon-caption p {
+      margin: 0;
+      color: rgba(244, 241, 234, 0.76);
+      font-size: 14px;
+    }
+
+    .experience-grid-live {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .experience-module {
+      min-height: 220px;
+      padding: 18px;
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: 8px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.035);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .experience-module:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212, 175, 55, 0.34);
+      background:
+        linear-gradient(145deg, rgba(212, 175, 55, 0.1), rgba(255, 255, 255, 0.025)),
+        rgba(255, 255, 255, 0.045);
+    }
+
+    .module-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: #d4af37;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .module-label::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #d4af37;
+      box-shadow: 0 0 16px rgba(212, 175, 55, 0.9);
+    }
+
+    .experience-module h3 {
+      margin: 0 0 8px;
+      color: #fff8df;
+      font-size: 22px;
+    }
+
+    .experience-module p {
+      margin: 0;
+      color: rgba(244, 241, 234, 0.72);
+      font-size: 14px;
+    }
+
+    .map-path {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .map-node {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.22);
+      color: rgba(244, 241, 234, 0.82);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .map-node strong { color: #fff8df; }
+    .map-node span { color: #d4af37; }
+
+    .quest-clear {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .xp-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .xp-bar i {
+      display: block;
+      width: 42%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #d4af37, #fff1a8);
+      transition: width 450ms ease;
+    }
+
+    .saju-live-experience.quest-done .xp-bar i { width: 82%; }
+
+    .quest-clear button {
+      min-height: 38px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 8px;
+      color: #0b0b0b;
+      background: #d4af37;
+      font-weight: 950;
+      cursor: pointer;
+    }
+
+    .skill-tree {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-top: 16px;
+    }
+
+    .skill-tree span {
+      min-height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.18);
+      color: rgba(244, 241, 234, 0.84);
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .storybook {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .storybook span {
+      min-height: 58px;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.18));
+      color: rgba(244, 241, 234, 0.82);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .guild-stack {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .guild-stack span {
+      padding: 10px;
+      border-radius: 8px;
+      color: #fff8df;
+      background: rgba(212, 175, 55, 0.12);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .daily-strip {
+      margin-top: 22px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.24);
+    }
+
+    .daily-strip strong {
+      color: #fff8df;
+      font-size: 18px;
+    }
+
+    .daily-strip p {
+      margin: 4px 0 0;
+      color: rgba(244, 241, 234, 0.72);
+    }
+
+    .daily-strip a {
+      min-height: 42px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0 16px;
+      border-radius: 8px;
+      color: #0b0b0b;
+      background: #d4af37;
+      font-weight: 950;
+    }
+
+    @keyframes sajuSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 980px) {
+      .saju-live-head,
+      .experience-grid-live,
+      .daily-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .saju-live-experience {
+        width: min(100% - 28px, 1180px);
+        padding: 18px;
+      }
+
+      .weapon-stage {
+        min-height: 320px;
+      }
+
+      .storybook,
+      .skill-tree,
+      .guild-stack {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
   </style>
 </head>
 <body class="sajuwar-product-home">
@@ -3216,6 +3619,114 @@
         <a href="/mypage.html">내 작전실</a>
       </nav>
     </header>
+
+    <section class="saju-live-experience" id="experience" aria-labelledby="experience-title">
+      <div class="saju-live-head">
+        <div>
+          <p class="saju-live-kicker">EXPERIENCE BIBLE IS NOW LIVE</p>
+          <h2 id="experience-title">사주를 보는 곳이 아니라, <span>내 인생을 탐험하는 작전실</span></h2>
+          <p class="saju-live-copy">
+            SAJU WAR는 생년월일 입력을 캐릭터 생성으로, 리포트를 인생 스토리북으로,
+            오늘의 운세를 성장 퀘스트로 바꿉니다. 사용자는 결과를 소비하는 것이 아니라
+            자신의 무기와 다음 선택을 발견합니다.
+          </p>
+          <div class="saju-live-actions">
+            <button type="button" id="weaponRevealButton">Weapon 공개 연출 보기</button>
+            <a class="ghost" href="#sajuForm">내 무기 분석 시작</a>
+            <a class="ghost" href="#content-map">Strategy Map 보기</a>
+          </div>
+        </div>
+
+        <div class="weapon-stage" aria-label="Weapon Reveal 미리보기">
+          <div class="weapon-core"><strong>YOUR<br>WEAPON</strong></div>
+          <div class="weapon-caption">
+            <h3 id="weaponCaptionTitle">Weapon Reveal 대기 중</h3>
+            <p id="weaponCaptionText">버튼을 누르면 금빛 입자, 카드 반전, 빛 확산의 감정 곡선으로 사용자의 첫 무기가 공개됩니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="experience-grid-live">
+        <article class="experience-module">
+          <span class="module-label">Strategy Map</span>
+          <h3>대운표가 아니라 인생 World Map</h3>
+          <p>현재 위치, 다음 지역, 도전, 보상, 추천 행동을 탐험하듯 이해합니다.</p>
+          <div class="map-path">
+            <div class="map-node"><strong>현재 위치</strong><span>자기 이해</span></div>
+            <div class="map-node"><strong>다음 지역</strong><span>관계 전략</span></div>
+            <div class="map-node"><strong>보상</strong><span>선택 명료도 +15</span></div>
+          </div>
+        </article>
+
+        <article class="experience-module">
+          <span class="module-label">Daily Quest</span>
+          <h3>할 일이 아니라 오늘의 성장 미션</h3>
+          <p>작은 행동을 완료하면 Mission Clear, XP, Level, Reward가 즉시 연결됩니다.</p>
+          <div class="quest-clear">
+            <div class="xp-bar" aria-label="XP 진행률"><i></i></div>
+            <button type="button" id="questClearButton">Mission Clear</button>
+            <p id="questState">Level 3 · XP 420 / 1000</p>
+          </div>
+        </article>
+
+        <article class="experience-module">
+          <span class="module-label">Academy</span>
+          <h3>강의가 아니라 Skill Tree</h3>
+          <p>생활명리, 십성, 육친, 용신, 대운을 스킬처럼 배우고 칭호와 수료증을 얻습니다.</p>
+          <div class="skill-tree">
+            <span>생활명리</span>
+            <span>십성</span>
+            <span>용신</span>
+            <span>대운</span>
+            <span>사례분석</span>
+            <span>Certificate</span>
+          </div>
+        </article>
+
+        <article class="experience-module">
+          <span class="module-label">AI Report</span>
+          <h3>리포트가 아니라 인생 스토리북</h3>
+          <p>책장을 넘기듯 무기, 반복 패턴, 관계, 커리어, 오늘의 행동을 챕터로 읽습니다.</p>
+          <div class="storybook">
+            <span>Chapter 1<br>무기</span>
+            <span>Chapter 2<br>전장</span>
+            <span>Chapter 3<br>전략</span>
+            <span>Chapter 4<br>행동</span>
+          </div>
+        </article>
+
+        <article class="experience-module">
+          <span class="module-label">AI Chat</span>
+          <h3>챗봇이 아니라 작전 회의</h3>
+          <p>AI는 단정하지 않고 질문, 교육, 코칭, 선택지, 다음 행동으로 대화를 이끕니다.</p>
+          <div class="map-path">
+            <div class="map-node"><strong>질문</strong><span>상황 정리</span></div>
+            <div class="map-node"><strong>해석</strong><span>현대 언어 번역</span></div>
+            <div class="map-node"><strong>Action</strong><span>다음 1수</span></div>
+          </div>
+        </article>
+
+        <article class="experience-module">
+          <span class="module-label">Guild Community</span>
+          <h3>게시판이 아니라 함께 성장하는 Guild</h3>
+          <p>랭킹, 칭호, 명예의 전당, 스터디, 사례 연구, 멘토링이 성장 루프로 연결됩니다.</p>
+          <div class="guild-stack">
+            <span>이번 주 전략가</span>
+            <span>사례 분석가</span>
+            <span>연속 출석</span>
+            <span>명예의 전당</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="daily-strip">
+        <div>
+          <strong>오늘의 전략: 완벽한 답보다 작은 실행을 먼저 선택하세요.</strong>
+          <p>오늘의 AI 브리핑, Quest, 성장 기록이 매일 다시 돌아올 이유를 만듭니다.</p>
+        </div>
+        <a href="#free-play">오늘의 Quest 열기</a>
+      </div>
+    </section>
 
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
@@ -5962,6 +6473,32 @@
         "#content-map .section-head p",
         "SAJU WAR의 모든 기능은 하나의 흐름으로 연결됩니다. Weapon을 발견하고, Report로 이해하고, Quest로 실행하고, Academy에서 배우고, War Room에서 중요한 선택을 정교화합니다."
       );
+    })();
+
+    (function bootSajuExperienceLayer() {
+      const shell = document.querySelector(".saju-live-experience");
+      const weaponButton = document.getElementById("weaponRevealButton");
+      const questButton = document.getElementById("questClearButton");
+      const questState = document.getElementById("questState");
+      const weaponTitle = document.getElementById("weaponCaptionTitle");
+      const weaponText = document.getElementById("weaponCaptionText");
+
+      if (weaponButton && shell) {
+        weaponButton.addEventListener("click", () => {
+          shell.classList.add("weapon-revealed");
+          if (weaponTitle) weaponTitle.textContent = "Weapon Revealed · 선택을 설계하는 사람";
+          if (weaponText) {
+            weaponText.textContent = "당신의 무기는 미래를 맞히는 힘이 아니라, 복잡한 상황에서 다음 선택을 선명하게 만드는 전략 감각입니다.";
+          }
+        });
+      }
+
+      if (questButton && shell) {
+        questButton.addEventListener("click", () => {
+          shell.classList.add("quest-done");
+          if (questState) questState.textContent = "Mission Clear · Level 3 · XP 820 / 1000 · Reward: 선택 명료도 +15";
+        });
+      }
     })();
   </script>
 </body>
