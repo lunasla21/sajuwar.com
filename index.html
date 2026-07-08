@@ -2933,6 +2933,270 @@
       .premium-grid { grid-template-columns: 1fr; }
       .mini-row { grid-template-columns: 1fr; }
     }
+    /* SAJU WAR Product Bible launch layer */
+    body.sajuwar-product-home {
+      color: #f4f1ea;
+      background:
+        radial-gradient(circle at 16% 8%, rgba(212, 175, 55, 0.18), transparent 28%),
+        radial-gradient(circle at 82% 18%, rgba(47, 143, 107, 0.14), transparent 30%),
+        radial-gradient(circle at 50% 92%, rgba(138, 31, 31, 0.16), transparent 34%),
+        linear-gradient(180deg, #050505 0%, #090b0f 44%, #070707 100%);
+    }
+
+    body.sajuwar-product-home .topbar {
+      position: sticky;
+      top: 12px;
+      z-index: 20;
+      width: min(1180px, calc(100% - 40px));
+      padding: 13px 16px;
+      border-radius: 8px;
+      backdrop-filter: blur(22px);
+      background:
+        linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent 24%, transparent 72%, rgba(47, 143, 107, 0.09)),
+        rgba(7, 7, 7, 0.76);
+      border: 1px solid rgba(212, 175, 55, 0.26);
+    }
+
+    body.sajuwar-product-home .brand span:last-child {
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    body.sajuwar-product-home .nav {
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    body.sajuwar-product-home .nav a {
+      color: rgba(244, 241, 234, 0.72);
+      background: transparent;
+      white-space: nowrap;
+    }
+
+    body.sajuwar-product-home .nav a:hover {
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    body.sajuwar-product-home .hero {
+      width: min(1180px, calc(100% - 40px));
+      min-height: min(760px, calc(100vh - 120px));
+      margin-top: 16px;
+      padding: clamp(34px, 5vw, 74px);
+      border-radius: 8px;
+      grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.98fr);
+      background:
+        linear-gradient(105deg, rgba(7, 7, 7, 0.98) 0%, rgba(7, 7, 7, 0.86) 44%, rgba(7, 7, 7, 0.42) 100%),
+        url("assets/premium-battlefield-command.webp") center/cover;
+      border: 1px solid rgba(212, 175, 55, 0.34);
+      box-shadow: 0 34px 110px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    body.sajuwar-product-home .hero::before {
+      background:
+        linear-gradient(rgba(212, 175, 55, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.045) 1px, transparent 1px),
+        linear-gradient(115deg, transparent 0 48%, rgba(212, 175, 55, 0.16) 49%, transparent 51%);
+      background-size: 42px 42px, 42px 42px, 100% 100%;
+      mask-image: linear-gradient(90deg, rgba(0,0,0,0.82), transparent 82%);
+    }
+
+    body.sajuwar-product-home .hero-copy {
+      max-width: 760px;
+    }
+
+    body.sajuwar-product-home .eyebrow {
+      color: #d4af37;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    body.sajuwar-product-home h1 {
+      margin-bottom: 14px;
+      color: #f4f1ea;
+      font-size: clamp(52px, 8vw, 112px);
+      line-height: 0.94;
+      letter-spacing: 0;
+    }
+
+    body.sajuwar-product-home .hero-manifesto {
+      max-width: 720px;
+      color: #f4f1ea;
+      font-size: clamp(24px, 3.2vw, 44px);
+      line-height: 1.14;
+    }
+
+    body.sajuwar-product-home .hero-manifesto mark {
+      color: #d4af37;
+      background: linear-gradient(180deg, transparent 62%, rgba(212, 175, 55, 0.22) 0);
+    }
+
+    body.sajuwar-product-home .lead {
+      max-width: 680px;
+      color: rgba(244, 241, 234, 0.74);
+      font-size: clamp(16px, 1.7vw, 20px);
+    }
+
+    body.sajuwar-product-home .hero-actions a {
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 8px;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    body.sajuwar-product-home .hero-actions a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 44px rgba(212, 175, 55, 0.24);
+    }
+
+    body.sajuwar-product-home .hero-actions a.secondary-link {
+      color: #f4f1ea;
+      background: rgba(244, 241, 234, 0.055);
+      border-color: rgba(244, 241, 234, 0.22);
+    }
+
+    body.sajuwar-product-home .proof-strip {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    body.sajuwar-product-home .proof-card {
+      min-height: 132px;
+      padding: 16px;
+      border-radius: 8px;
+      color: rgba(244, 241, 234, 0.72);
+      background:
+        linear-gradient(135deg, rgba(212, 175, 55, 0.08), transparent 40%),
+        rgba(12, 12, 12, 0.72);
+      backdrop-filter: blur(18px);
+    }
+
+    body.sajuwar-product-home .proof-card strong {
+      color: #d4af37;
+    }
+
+    body.sajuwar-product-home .hero-map {
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.2), transparent 20%),
+        linear-gradient(180deg, rgba(7, 7, 7, 0.12), rgba(7, 7, 7, 0.66)),
+        url("assets/hero-saju-war.jpg") center/cover;
+      animation: warFloat 8s ease-in-out infinite;
+    }
+
+    body.sajuwar-product-home .pillar {
+      width: 86px;
+      height: 118px;
+      color: #f4f1ea;
+      border-radius: 8px;
+      border-color: rgba(212, 175, 55, 0.42);
+      background: rgba(7, 7, 7, 0.5);
+      backdrop-filter: blur(14px);
+    }
+
+    body.sajuwar-product-home .input-band {
+      margin-top: 22px;
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent 36%),
+        rgba(10, 10, 10, 0.82);
+      backdrop-filter: blur(18px);
+    }
+
+    body.sajuwar-product-home .birth-panel::before {
+      content: "Weapon Onboarding";
+      display: block;
+      margin-bottom: 12px;
+      color: #d4af37;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    body.sajuwar-product-home .content-band {
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(212, 175, 55, 0.07), transparent 34%),
+        rgba(8, 8, 8, 0.9);
+    }
+
+    body.sajuwar-product-home .sajuwar-experience-rail {
+      width: min(1180px, calc(100% - 40px));
+      margin: 22px auto;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    body.sajuwar-product-home .sajuwar-experience-card {
+      min-height: 170px;
+      padding: 18px;
+      border-radius: 8px;
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      color: rgba(244, 241, 234, 0.76);
+      background:
+        linear-gradient(135deg, rgba(212, 175, 55, 0.08), transparent 42%),
+        rgba(14, 14, 14, 0.86);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 20px 60px rgba(0,0,0,0.22);
+    }
+
+    body.sajuwar-product-home .sajuwar-experience-card span {
+      display: inline-grid;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 18px;
+      place-items: center;
+      border-radius: 8px;
+      color: #070707;
+      background: #d4af37;
+      font-weight: 950;
+    }
+
+    body.sajuwar-product-home .sajuwar-experience-card h3 {
+      margin-bottom: 8px;
+      color: #f4f1ea;
+      font-size: 18px;
+    }
+
+    @keyframes warFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @media (max-width: 960px) {
+      body.sajuwar-product-home .hero,
+      body.sajuwar-product-home .sajuwar-experience-rail {
+        grid-template-columns: 1fr;
+      }
+
+      body.sajuwar-product-home .hero {
+        padding: 28px 18px;
+      }
+
+      body.sajuwar-product-home .proof-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body.sajuwar-product-home .topbar,
+      body.sajuwar-product-home .hero,
+      body.sajuwar-product-home .input-band,
+      body.sajuwar-product-home .content-band,
+      body.sajuwar-product-home .sajuwar-experience-rail {
+        width: min(100% - 28px, 1180px);
+      }
+
+      body.sajuwar-product-home .proof-strip {
+        grid-template-columns: 1fr;
+      }
+
+      body.sajuwar-product-home h1 {
+        font-size: 52px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -5524,6 +5788,162 @@
       event.preventDefault();
       analyze();
     });
+  </script>
+  <script>
+    (() => {
+      const setText = (selector, text) => {
+        const node = document.querySelector(selector);
+        if (node) node.textContent = text;
+      };
+
+      const setHTML = (selector, html) => {
+        const node = document.querySelector(selector);
+        if (node) node.innerHTML = html;
+      };
+
+      document.documentElement.lang = "ko";
+      document.title = "SAJU WAR | Find Your Weapon";
+      document.body.classList.add("sajuwar-product-home");
+
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute(
+          "content",
+          "SAJU WAR는 사주를 예언이 아닌 인생 전략 지도로 재해석하는 AI Life Strategy Platform입니다. 당신의 무기를 찾고 오늘의 전략을 설계하세요."
+        );
+      }
+
+      setHTML(".brand", '<span class="brand-mark">SW</span><span>SAJU WAR</span>');
+
+      const nav = document.querySelector(".nav");
+      if (nav) {
+        nav.setAttribute("aria-label", "SAJU WAR 주요 메뉴");
+        nav.innerHTML = `
+          <a href="#report">AI Report</a>
+          <a href="#content-map">Strategy Map</a>
+          <a href="#free-play">Quest</a>
+          <a href="#premium">Premium</a>
+          <a href="#consulting">War Room</a>
+          <a href="/payment.html">결제</a>
+          <a href="/mypage.html">내 작전실</a>
+        `;
+      }
+
+      setText(".hero .eyebrow", "AI LIFE STRATEGY PLATFORM");
+      setText("#hero-title", "Find Your Weapon.");
+      setHTML(
+        ".hero-manifesto",
+        '사주는 미래가 아니라 <mark>당신의 선택을 설계하는 전략 지도</mark>입니다.'
+      );
+      setText(
+        ".lead",
+        "SAJU WAR는 사주를 공포나 예언으로 소비하지 않습니다. AI 전략가가 당신의 기질, 반복 패턴, 관계와 커리어의 전장을 읽고 오늘 실행할 수 있는 다음 전략으로 바꿉니다."
+      );
+
+      const heroActions = document.querySelector(".hero-actions");
+      if (heroActions) {
+        heroActions.setAttribute("aria-label", "SAJU WAR 주요 행동");
+        heroActions.innerHTML = `
+          <a href="#report">내 무기 찾기</a>
+          <a class="secondary-link" href="#content-map">작전실 둘러보기</a>
+        `;
+      }
+
+      const proofStrip = document.querySelector(".proof-strip");
+      if (proofStrip) {
+        proofStrip.setAttribute("aria-label", "SAJU WAR 경험 원칙");
+        proofStrip.innerHTML = `
+          <article class="proof-card">
+            <strong>Weapon</strong>
+            당신의 사주에서 타고난 강점과 반복되는 선택 패턴을 하나의 무기 카드로 정리합니다.
+          </article>
+          <article class="proof-card">
+            <strong>Strategy</strong>
+            운명을 단정하지 않고 커리어, 관계, 돈, 학습의 다음 선택지를 비교합니다.
+          </article>
+          <article class="proof-card">
+            <strong>Quest</strong>
+            오늘 바로 실행할 수 있는 작은 미션으로 통찰을 행동으로 바꿉니다.
+          </article>
+          <article class="proof-card">
+            <strong>War Room</strong>
+            중요한 선택 앞에서는 AI와 전문가가 함께 최종 전략 회의를 준비합니다.
+          </article>
+        `;
+      }
+
+      const pillars = [
+        ["나의<br>무기", ".p1"],
+        ["현재<br>전장", ".p2"],
+        ["AI<br>전략가", ".p3"],
+        ["다음<br>선택", ".p4"]
+      ];
+      pillars.forEach(([html, selector]) => setHTML(selector, html));
+
+      const form = document.querySelector("#sajuForm");
+      if (form) {
+        form.setAttribute("aria-label", "SAJU WAR 무기 분석 입력");
+        const labels = form.querySelectorAll("label");
+        const labelText = ["이름 또는 닉네임", "생년월일", "태어난 시간", "기준 / 성별"];
+        labels.forEach((label, index) => {
+          if (labelText[index]) {
+            label.childNodes[0].textContent = `${labelText[index]} `;
+          }
+        });
+        const nameInput = document.getElementById("name");
+        if (nameInput) nameInput.placeholder = "작전실에서 사용할 이름";
+        const submit = form.querySelector('button[type="submit"]');
+        if (submit) submit.textContent = "무료 Weapon 분석 시작";
+        const buttons = form.querySelectorAll(".button-row button");
+        if (buttons[1]) buttons[1].textContent = "Premium Report 열기";
+        if (buttons[2]) buttons[2].textContent = "PDF 저장";
+      }
+
+      const inputBand = document.querySelector(".input-band");
+      if (inputBand && !document.querySelector(".sajuwar-experience-rail")) {
+        inputBand.insertAdjacentHTML(
+          "afterend",
+          `
+          <section class="sajuwar-experience-rail" aria-label="SAJU WAR 핵심 경험">
+            <article class="sajuwar-experience-card">
+              <span>1</span>
+              <h3>Weapon Reveal</h3>
+              <p>입력은 회원가입 폼이 아니라 당신의 첫 무기를 여는 의식입니다.</p>
+            </article>
+            <article class="sajuwar-experience-card">
+              <span>2</span>
+              <h3>AI Report</h3>
+              <p>긴 운세 풀이가 아니라 강점, 취약점, 전장, 행동 전략을 담은 작전 지도입니다.</p>
+            </article>
+            <article class="sajuwar-experience-card">
+              <span>3</span>
+              <h3>Daily Quest</h3>
+              <p>오늘 할 수 있는 5분짜리 행동으로 선택 능력을 훈련합니다.</p>
+            </article>
+            <article class="sajuwar-experience-card">
+              <span>4</span>
+              <h3>Strategy Map</h3>
+              <p>커리어, 관계, 돈, 학습의 현재 위치와 다음 경로를 하나의 지도로 봅니다.</p>
+            </article>
+          </section>
+          `
+        );
+      }
+
+      setText("#report .section-head .eyebrow", "AI REPORT");
+      setText("#report .section-head h2", "버튼을 누르면 당신의 첫 작전 지도가 열립니다");
+      setText(
+        "#report .section-head p",
+        "무료 분석은 Primary Weapon과 현재 전장의 핵심 신호를 먼저 보여줍니다. Premium Report는 커리어, 관계, 돈, 올해의 흐름과 30일 실행 전략까지 확장됩니다."
+      );
+
+      setText("#content-map .section-head .eyebrow", "STRATEGY MAP");
+      setText("#content-map .section-head h2", "사주 사이트가 아니라 당신의 인생 작전실");
+      setText(
+        "#content-map .section-head p",
+        "SAJU WAR의 모든 기능은 하나의 흐름으로 연결됩니다. Weapon을 발견하고, Report로 이해하고, Quest로 실행하고, Academy에서 배우고, War Room에서 중요한 선택을 정교화합니다."
+      );
+    })();
   </script>
 </body>
 </html>
