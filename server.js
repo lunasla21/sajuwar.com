@@ -9,6 +9,7 @@ const { Solar, Lunar } = require("lunar-javascript");
 const { buildAiBrainContext } = require("./dataset_loader");
 const { PRODUCTS, createOrderStore } = require("./order_store");
 const { createUserStore } = require("./user_store");
+const { createStrategyStore } = require("./strategy_store");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +31,7 @@ const bankAccount = {
 };
 const orderStore = createOrderStore(__dirname);
 const userStore = createUserStore(__dirname);
+const strategyStore = createStrategyStore(__dirname);
 const PURCHASE_REQUIRED_MESSAGE = "구매가 완료되지 않았습니다.\n관리자 확인 후 이용 가능합니다.";
 
 app.use(cors());
@@ -1193,6 +1195,112 @@ app.get("/api/report", (req, res) => {
   if (!canAccessProduct(req, "premium_report")) return sendPurchaseRequired(res);
   markProductAccess(req, "premium_report", "view");
   res.json({ ok: true, message: "report access granted" });
+});
+
+function fallbackStrategyReply(message) {
+  const text = String(message || "");
+  const risky = /죽|자살|폭력|의료|투자|법률|소송|우울|극단|학대|중독/.test(text);
+  if (risky) {
+    return "이 주제는 안전이 먼저입니다. 저는 명리로 미래를 단정하지 않겠습니다. 지금 위험하거나 급박하다면 즉시 주변 사람, 전문가, 긴급 지원 기관의 도움을 받아주세요. 오늘의 Action은 혼자 판단하지 않고 신뢰할 수 있는 사람에게 상황을 공유하는 것입니다.";
+  }
+  return "미래를 단정하기보다 현재 패턴을 정리해보겠습니다. 선택지는 세 가지입니다. 1. 바로 결정하지 않고 기준을 적는다. 2. 감정과 사실을 분리한다. 3. 작은 실험으로 확인한다. 오늘의 Action은 이 선택에서 가장 두려운 이유 한 가지와 가장 원하는 결과 한 가지를 적는 것입니다.";
+}
+
+async function buildStrategyReply(user, state, message) {
+  const safeMessage = String(message || "").trim();
+  if (!client) return fallbackStrategyReply(safeMessage);
+  const profile = state.profile || {};
+  const weapon = state.weapon || {};
+  const completion = await createChatCompletionWithTimeout({
+    model: process.env.SAJUWAR_CHAT_MODEL || "gpt-4o-mini",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are SAJU WAR AI Strategist. You are not a fortune teller. Never assert fixed destiny. Never use fear. Always provide options, reasons, and one small Action. Follow HYUNMYUNG METHOD: translate saju into modern life strategy, preserve user autonomy, and end with action. For medical, legal, investment, self-harm, violence, abuse, addiction, severe depression, or urgent safety topics, do not provide definitive advice; recommend appropriate professional or emergency help.",
+      },
+      {
+        role: "user",
+        content: JSON.stringify({
+          user: { name: user.name },
+          profile,
+          weapon,
+          level: state.level,
+          xp: state.xp,
+          question: safeMessage,
+        }),
+      },
+    ],
+    temperature: 0.5,
+  });
+  return completion.choices?.[0]?.message?.content?.trim() || fallbackStrategyReply(safeMessage);
+}
+
+app.get("/api/strategy-room/state", (req, res) => {
+  const user = requireLogin(req, res);
+  if (!user) return;
+  res.json({ state: strategyStore.getState(user), user });
+});
+
+app.post("/api/strategy-room/profile", (req, res) => {
+  try {
+    const user = requireLogin(req, res);
+    if (!user) return;
+    res.json({ state: strategyStore.updateProfile(user, req.body || {}) });
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+});
+
+app.post("/api/strategy-room/quests/:id/complete", (req, res) => {
+  const user = requireLogin(req, res);
+  if (!user) return;
+  const state = strategyStore.completeQuest(user, req.params.id);
+  if (!state) return res.status(404).json({ error: "Quest not found" });
+  res.json({ state });
+});
+
+app.post("/api/strategy-room/skills/:id/complete", (req, res) => {
+  const user = requireLogin(req, res);
+  if (!user) return;
+  const state = strategyStore.completeSkill(user, req.params.id);
+  if (!state) return res.status(404).json({ error: "Skill not found" });
+  res.json({ state });
+});
+
+app.post("/api/strategy-room/guild", (req, res) => {
+  const user = requireLogin(req, res);
+  if (!user) return;
+  const state = strategyStore.addGuildPost(user, req.body?.body);
+  if (!state) return res.status(400).json({ error: "Guild post body is required" });
+  res.json({ state });
+});
+
+app.patch("/api/strategy-room/settings", (req, res) => {
+  const user = requireLogin(req, res);
+  if (!user) return;
+  res.json({ state: strategyStore.updateSettings(user, req.body?.settings || {}) });
+});
+
+app.post("/api/strategy-room/chat", async (req, res) => {
+  try {
+    const user = requireLogin(req, res);
+    if (!user) return;
+    const message = String(req.body?.message || "").trim();
+    if (!message) return res.status(400).json({ error: "message is required" });
+    const currentState = strategyStore.getState(user);
+    const reply = await buildStrategyReply(user, currentState, message);
+    const state = strategyStore.appendChat(user, message, reply);
+    res.json({ reply, state });
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+});
+
+app.post("/api/strategy-room/reset", (req, res) => {
+  const user = requireLogin(req, res);
+  if (!user) return;
+  res.json({ state: strategyStore.resetState(user) });
 });
 
 app.get("/api/admin/orders", (req, res) => {

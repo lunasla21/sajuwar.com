@@ -731,7 +731,7 @@
     <section class="section" id="quests">
       <div class="section-head">
         <h2>Quest: 할 일이 아니라 오늘의 성장 미션</h2>
-        <p>Quest는 localStorage에 저장됩니다. 완료하면 XP, Level, Badge, Dashboard가 갱신됩니다.</p>
+        <p>로그인 사용자는 서버에 저장됩니다. 완료하면 XP, Level, Badge, Dashboard가 함께 갱신됩니다.</p>
       </div>
       <div class="grid" id="questList"></div>
     </section>
@@ -900,6 +900,8 @@
       settings: { aiConsent: true, briefingNotice: true, soundEnabled: false, reduceMotion: false }
     };
     let state = loadState();
+    const authToken = localStorage.getItem("sajuwar_auth_token") || "";
+    let serverBacked = false;
 
     function clone(value) {
       return JSON.parse(JSON.stringify(value));
@@ -916,6 +918,39 @@
 
     function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    async function apiRequest(path, options = {}) {
+      if (!authToken) throw new Error("로그인 후 서버 저장을 사용할 수 있습니다.");
+      const response = await fetch(path, {
+        ...options,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+          ...(options.headers || {}),
+        },
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "Strategy Room API error");
+      return data;
+    }
+
+    async function syncFromServer() {
+      if (!authToken) {
+        toast("비로그인 체험 모드입니다. 로그인하면 서버에 저장됩니다.");
+        return;
+      }
+      try {
+        const data = await apiRequest("/api/strategy-room/state");
+        state = { ...clone(defaultState), ...data.state };
+        serverBacked = true;
+        saveState();
+        render();
+        toast("서버 저장형 Strategy Room에 연결되었습니다.");
+      } catch (error) {
+        serverBacked = false;
+        toast(error.message || "서버 동기화에 실패해 로컬 체험 모드로 실행합니다.");
+      }
     }
 
     function toast(message) {
@@ -1017,9 +1052,21 @@
       });
     }
 
-    function completeQuest(id) {
+    async function completeQuest(id) {
       const quest = state.quests.find((item) => item.id === id);
       if (!quest || quest.done) return;
+      if (serverBacked) {
+        try {
+          const data = await apiRequest(`/api/strategy-room/quests/${encodeURIComponent(id)}/complete`, { method: "POST", body: "{}" });
+          state = { ...clone(defaultState), ...data.state };
+          saveState();
+          render();
+          toast(`Mission Clear · +${quest.xp} XP · 서버 저장 완료`);
+          return;
+        } catch (error) {
+          toast(error.message || "서버 저장 실패. 로컬로 완료합니다.");
+        }
+      }
       quest.done = true;
       addXp(quest.xp);
       toast(`Mission Clear · +${quest.xp} XP`);
@@ -1037,9 +1084,21 @@
       });
     }
 
-    function completeSkill(id) {
+    async function completeSkill(id) {
       const skill = state.skills.find((item) => item.id === id);
       if (!skill || skill.done) return;
+      if (serverBacked) {
+        try {
+          const data = await apiRequest(`/api/strategy-room/skills/${encodeURIComponent(id)}/complete`, { method: "POST", body: "{}" });
+          state = { ...clone(defaultState), ...data.state };
+          saveState();
+          render();
+          toast(`${skill.title} Skill Unlocked · 서버 저장 완료`);
+          return;
+        } catch (error) {
+          toast(error.message || "서버 저장 실패. 로컬로 완료합니다.");
+        }
+      }
       skill.done = true;
       addXp(25);
       toast(`${skill.title} Skill Unlocked · +25 XP`);
@@ -1047,10 +1106,11 @@
 
     function renderChat() {
       const root = document.getElementById("chatWindow");
-      if (!root.dataset.booted) {
-        root.dataset.booted = "1";
-        root.innerHTML = `<div class="bubble">작전실에 오신 것을 환영합니다. 저는 미래를 단정하지 않고, 상황을 정리하고 선택지를 함께 세우는 AI Strategist입니다.</div>`;
-      }
+      const messages = state.chat && state.chat.length
+        ? state.chat.map((item) => `<div class="bubble ${item.role === "user" ? "user" : ""}">${escapeHtml(item.content)}</div>`).join("")
+        : `<div class="bubble">작전실에 오신 것을 환영합니다. 저는 미래를 단정하지 않고, 상황을 정리하고 선택지를 함께 세우는 AI Strategist입니다.</div>`;
+      root.innerHTML = messages;
+      root.scrollTop = root.scrollHeight;
     }
 
     function aiReply(text) {
@@ -1061,14 +1121,29 @@
       return "미래를 단정하기보다 현재 패턴을 정리해보겠습니다. 선택지는 세 가지입니다. 1. 바로 결정하지 않고 기준을 적는다. 2. 감정과 사실을 분리한다. 3. 작은 실험으로 확인한다. 오늘의 Action은 이 선택에서 가장 두려운 이유 한 가지와 가장 원하는 결과 한 가지를 적는 것입니다.";
     }
 
-    function sendChat() {
+    async function sendChat() {
       const input = document.getElementById("chatInput");
       const text = input.value.trim();
       if (!text) return;
       const root = document.getElementById("chatWindow");
       root.insertAdjacentHTML("beforeend", `<div class="bubble user">${escapeHtml(text)}</div>`);
-      root.insertAdjacentHTML("beforeend", `<div class="bubble">${escapeHtml(aiReply(text))}</div>`);
       input.value = "";
+      if (serverBacked) {
+        root.insertAdjacentHTML("beforeend", `<div class="bubble">AI Strategist가 작전 회의를 정리하는 중입니다...</div>`);
+        try {
+          const data = await apiRequest("/api/strategy-room/chat", {
+            method: "POST",
+            body: JSON.stringify({ message: text }),
+          });
+          state = { ...clone(defaultState), ...data.state };
+          saveState();
+          render();
+          return;
+        } catch (error) {
+          toast(error.message || "AI 서버 응답 실패. 로컬 전략 응답을 사용합니다.");
+        }
+      }
+      root.insertAdjacentHTML("beforeend", `<div class="bubble">${escapeHtml(aiReply(text))}</div>`);
       root.scrollTop = root.scrollHeight;
     }
 
@@ -1125,7 +1200,7 @@
       }[char]));
     }
 
-    document.getElementById("profileForm").addEventListener("submit", (event) => {
+    document.getElementById("profileForm").addEventListener("submit", async (event) => {
       event.preventDefault();
       const focus = document.getElementById("profileFocus");
       const profile = {
@@ -1135,6 +1210,22 @@
         focus: focus.value,
         focusLabel: focus.options[focus.selectedIndex].textContent
       };
+      if (serverBacked) {
+        try {
+          const data = await apiRequest("/api/strategy-room/profile", {
+            method: "POST",
+            body: JSON.stringify(profile),
+          });
+          state = { ...clone(defaultState), ...data.state };
+          saveState();
+          render();
+          toast("Weapon Revealed · 서버 저장 완료");
+          document.getElementById("weaponStage").scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        } catch (error) {
+          toast(error.message || "서버 저장 실패. 로컬로 생성합니다.");
+        }
+      }
       state.profile = profile;
       state.weapon = chooseWeapon(profile);
       if (state.xp === 0) state.xp = 100;
@@ -1145,9 +1236,24 @@
       document.getElementById("weaponStage").scrollIntoView({ behavior: "smooth", block: "center" });
     });
 
-    document.getElementById("quickReveal").addEventListener("click", () => {
+    document.getElementById("quickReveal").addEventListener("click", async () => {
       if (!state.profile) {
         state.profile = { name: "전략가", birth: "", time: "", focus: "career", focusLabel: "커리어" };
+      }
+      if (serverBacked) {
+        try {
+          const data = await apiRequest("/api/strategy-room/profile", {
+            method: "POST",
+            body: JSON.stringify(state.profile),
+          });
+          state = { ...clone(defaultState), ...data.state };
+          saveState();
+          render();
+          toast("Weapon Revealed · 서버 저장 완료");
+          return;
+        } catch (error) {
+          toast(error.message || "서버 저장 실패. 로컬로 공개합니다.");
+        }
       }
       state.weapon = chooseWeapon(state.profile);
       if (state.xp === 0) state.xp = 100;
@@ -1156,7 +1262,19 @@
       toast("Weapon Revealed");
     });
 
-    document.getElementById("resetRoom").addEventListener("click", () => {
+    document.getElementById("resetRoom").addEventListener("click", async () => {
+      if (serverBacked) {
+        try {
+          const data = await apiRequest("/api/strategy-room/reset", { method: "POST", body: "{}" });
+          state = { ...clone(defaultState), ...data.state };
+          saveState();
+          render();
+          toast("서버 작전실 상태를 초기화했습니다.");
+          return;
+        } catch (error) {
+          toast(error.message || "서버 초기화 실패. 로컬만 초기화합니다.");
+        }
+      }
       state = clone(defaultState);
       saveState();
       render();
@@ -1168,10 +1286,26 @@
       if (event.key === "Enter") sendChat();
     });
 
-    document.getElementById("guildForm").addEventListener("submit", (event) => {
+    document.getElementById("guildForm").addEventListener("submit", async (event) => {
       event.preventDefault();
       const post = document.getElementById("guildPost").value.trim();
       if (!post) return;
+      if (serverBacked) {
+        try {
+          const data = await apiRequest("/api/strategy-room/guild", {
+            method: "POST",
+            body: JSON.stringify({ body: post }),
+          });
+          state = { ...clone(defaultState), ...data.state };
+          saveState();
+          document.getElementById("guildPost").value = "";
+          render();
+          toast("Guild Contribution · 서버 저장 완료");
+          return;
+        } catch (error) {
+          toast(error.message || "서버 저장 실패. 로컬로 공유합니다.");
+        }
+      }
       state.guild.push({
         name: state.profile?.name || "익명 전략가",
         body: post,
@@ -1183,15 +1317,29 @@
     });
 
     ["aiConsent", "briefingNotice", "soundEnabled", "reduceMotion"].forEach((id) => {
-      document.getElementById(id).addEventListener("change", (event) => {
+      document.getElementById(id).addEventListener("change", async (event) => {
         state.settings[id] = event.target.checked;
         saveState();
         renderSettings();
+        if (serverBacked) {
+          try {
+            const data = await apiRequest("/api/strategy-room/settings", {
+              method: "PATCH",
+              body: JSON.stringify({ settings: state.settings }),
+            });
+            state = { ...clone(defaultState), ...data.state };
+            saveState();
+            render();
+          } catch (error) {
+            toast(error.message || "설정 서버 저장 실패. 로컬에는 저장했습니다.");
+          }
+        }
         toast("Settings saved");
       });
     });
 
     render();
+    syncFromServer();
   </script>
 </body>
 </html>
