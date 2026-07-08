@@ -1,0 +1,5529 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>쭈쌤의 사주전쟁 | 지장간 아이템과 대운 스위치 리포트</title>
+  <meta name="description" content="쭈쌤이 원국의 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 분석하는 사주전쟁 리포트." />
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #2b1b12;
+      --ink2: #5b3a21;
+      --panel: rgba(255, 250, 239, 0.78);
+      --paper: #2b1b12;
+      --muted: #705642;
+      --gold: #c98d23;
+      --gold2: #8a5b12;
+      --jade: #2f8e72;
+      --red: #bd5b52;
+      --line: rgba(113, 80, 44, 0.18);
+      --shadow: 0 24px 80px rgba(126, 82, 35, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 76% 4%, rgba(255, 214, 128, 0.55), transparent 30%),
+        radial-gradient(circle at 18% 10%, rgba(255, 151, 136, 0.28), transparent 28%),
+        radial-gradient(circle at 84% 60%, rgba(132, 218, 183, 0.28), transparent 34%),
+        linear-gradient(180deg, #fff1cc 0%, #fff8e9 42%, #ecfff6 76%, #fff7e8 100%);
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    button, input, select { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    p, h1, h2, h3 { margin-top: 0; }
+
+    .app { min-height: 100vh; overflow: hidden; }
+    .topbar {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(242, 219, 141, 0.44);
+      color: var(--gold2);
+      background: rgba(255, 250, 239, 0.72);
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .hero {
+      position: relative;
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      min-height: 560px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 34px;
+      align-items: center;
+      padding: 44px 0 56px;
+    }
+
+    .hero-copy { position: relative; z-index: 2; }
+    .eyebrow {
+      margin-bottom: 12px;
+      color: var(--gold2);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin-bottom: 14px;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .hero-manifesto {
+      max-width: 760px;
+      margin-bottom: 18px;
+      color: #2b1b12;
+      font-size: clamp(27px, 4.2vw, 48px);
+      font-weight: 950;
+      line-height: 1.16;
+    }
+
+    .hero-manifesto mark {
+      color: var(--gold2);
+      background: linear-gradient(180deg, transparent 58%, rgba(255, 226, 146, 0.56) 0);
+    }
+
+    .lead {
+      max-width: 660px;
+      color: #5c4432;
+      font-size: clamp(17px, 2vw, 21px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .hero-actions a {
+      min-height: 46px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0 18px;
+      border: 1px solid rgba(137, 91, 31, 0.22);
+      color: #2b1b12;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffe6a3, #d99b2e);
+      box-shadow: 0 12px 28px rgba(150, 96, 28, 0.16);
+    }
+
+    .hero-actions a.secondary-link {
+      color: #6d4310;
+      background: rgba(255, 252, 244, 0.78);
+      box-shadow: none;
+    }
+
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 22px;
+      max-width: 760px;
+    }
+
+    .proof-card {
+      padding: 13px;
+      border: 1px solid rgba(201, 141, 35, 0.18);
+      background: rgba(255, 252, 244, 0.62);
+      color: #6d523d;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .proof-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--gold2);
+      font-size: 15px;
+    }
+
+    .hero-map {
+      position: relative;
+      aspect-ratio: 1;
+      min-height: 420px;
+      border: 1px solid rgba(242, 219, 141, 0.2);
+      background:
+        linear-gradient(180deg, rgba(255, 250, 239, 0.02), rgba(43, 27, 18, 0.24)),
+        url("assets/hero-saju-war.jpg");
+      background-size: cover;
+      background-position: center;
+      box-shadow: inset 0 0 96px rgba(43, 27, 18, 0.22), 0 0 80px rgba(216, 173, 79, 0.18);
+      overflow: hidden;
+    }
+
+    .hero-map:before, .hero-map:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(246, 239, 221, 0.16);
+    }
+
+    .hero-map:before { inset: 11%; }
+    .hero-map:after { inset: 26%; border-color: rgba(120, 180, 154, 0.22); transform: rotate(24deg); }
+    .pillar, .item, .switch { position: absolute; }
+    .pillar {
+      width: 72px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid rgba(255, 252, 244, 0.36);
+      background: linear-gradient(180deg, rgba(255, 252, 244, 0.5), rgba(255, 228, 168, 0.16));
+      color: #fff7df;
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.24;
+      text-shadow: 0 2px 12px rgba(43, 27, 18, 0.48);
+      box-shadow: 0 18px 40px rgba(43, 27, 18, 0.2);
+    }
+
+    .p1 { left: 15%; top: 22%; transform: rotate(-12deg); }
+    .p2 { left: 42%; top: 13%; transform: rotate(8deg); }
+    .p3 { right: 15%; top: 32%; transform: rotate(-5deg); }
+    .p4 { left: 36%; bottom: 15%; transform: rotate(14deg); }
+    .core {
+      position: absolute;
+      left: 45%;
+      top: 52%;
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 238, 164, 0.78), rgba(216, 173, 79, 0.22) 45%, transparent 70%);
+      filter: blur(2px);
+    }
+
+    .item {
+      width: 20px;
+      height: 20px;
+      transform: rotate(45deg);
+      box-shadow: 0 0 24px currentColor;
+      border: 1px solid rgba(255, 252, 244, 0.7);
+    }
+
+    .i1 { left: 55%; top: 58%; color: var(--gold2); background: var(--gold2); }
+    .i2 { left: 38%; top: 64%; color: var(--jade); background: var(--jade); }
+    .i3 { left: 62%; top: 42%; color: var(--red); background: var(--red); }
+    .switch {
+      height: 2px;
+      width: 250px;
+      background: linear-gradient(90deg, transparent, rgba(242, 219, 141, 0.84), transparent);
+      transform-origin: left center;
+    }
+
+    .s1 { left: 36%; top: 56%; transform: rotate(-28deg); }
+    .s2 { left: 42%; top: 62%; transform: rotate(24deg); }
+
+    .input-band {
+      width: min(1180px, calc(100% - 40px));
+      margin: -22px auto 40px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .birth-panel { padding: 18px; }
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr 0.8fr 0.8fr;
+      gap: 12px;
+    }
+
+    .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .time-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    input, select {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid rgba(246, 239, 221, 0.16);
+      border-radius: 0;
+      padding: 0 12px;
+      color: var(--paper);
+      background: rgba(255, 252, 244, 0.78);
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: rgba(242, 219, 141, 0.68);
+      box-shadow: 0 0 0 3px rgba(216, 173, 79, 0.14);
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      min-height: 50px;
+      border: 0;
+      cursor: pointer;
+      color: #2b1b12;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffe6a3, #d99b2e);
+      box-shadow: 0 12px 28px rgba(150, 96, 28, 0.18);
+    }
+
+    .secondary {
+      padding: 0 18px;
+      color: #6d4310;
+      border: 1px solid rgba(137, 91, 31, 0.28);
+      background: rgba(255, 252, 244, 0.82);
+      box-shadow: none;
+    }
+
+    .content-band {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto 80px;
+    }
+
+    .section-head { max-width: 760px; margin-bottom: 28px; }
+    .section-head h2 { margin-bottom: 10px; font-size: clamp(30px, 4vw, 48px); line-height: 1.12; }
+    .section-head p { color: var(--muted); }
+    .report-stack { display: grid; gap: 18px; }
+
+    .box {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .section-title {
+      margin-bottom: 16px;
+      color: var(--gold2);
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .dashboard { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 18px; }
+    .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+
+    .card {
+      min-height: 160px;
+      padding: 18px;
+      border: 1px solid rgba(246, 239, 221, 0.12);
+      background: rgba(255, 252, 244, 0.62);
+    }
+
+    .card h3 { margin-bottom: 10px; color: var(--gold2); font-size: 21px; }
+    .card p, .small { color: #6d523d; }
+    .small { font-size: 14px; }
+    .menu-link {
+      display: block;
+      color: inherit;
+      min-height: 320px;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .menu-link:hover {
+      transform: translateY(-3px);
+      border-color: rgba(201, 141, 35, 0.42);
+      box-shadow: 0 18px 44px rgba(126, 82, 35, 0.18);
+    }
+
+    .menu-kicker {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 5px 9px;
+      border: 1px solid rgba(201, 141, 35, 0.28);
+      color: var(--gold2);
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(255, 246, 222, 0.62);
+    }
+
+    .menu-art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 112px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(201, 141, 35, 0.2);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 240, 204, 0.4)),
+        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.9), transparent 34%),
+        linear-gradient(120deg, rgba(248, 169, 96, 0.2), rgba(255, 215, 119, 0.18));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .menu-art::before,
+    .menu-art::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+
+    .menu-art::before {
+      width: 168px;
+      height: 168px;
+      right: -52px;
+      top: -62px;
+      border: 1px solid rgba(201, 141, 35, 0.22);
+      background: rgba(255, 255, 255, 0.26);
+    }
+
+    .menu-art::after {
+      width: 74px;
+      height: 74px;
+      left: 16px;
+      bottom: -34px;
+      background: rgba(255, 255, 255, 0.36);
+      box-shadow: 0 0 0 1px rgba(201, 141, 35, 0.14);
+    }
+
+    .menu-art i {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      color: #7b3d2d;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1.15;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 16px 34px rgba(126, 82, 35, 0.16);
+    }
+
+    .art-war { background: linear-gradient(135deg, #fff4d9, #ffd1a8 52%, #f7a65e); }
+    .art-today { background: linear-gradient(135deg, #fff8d8, #c9f1d7 54%, #82d3c3); }
+    .art-love { background: linear-gradient(135deg, #fff0f2, #ffc1c8 52%, #f48a9b); }
+    .art-match { background: linear-gradient(135deg, #f4f0ff, #d7c7ff 52%, #9dc6ff); }
+    .art-name { background: linear-gradient(135deg, #fff7e7, #f2ddab 52%, #d6ad58); }
+    .art-apply { background: linear-gradient(135deg, #fff9f1, #ffcda7 50%, #e5a15d); }
+    .art-money { background: linear-gradient(135deg, #f7ffe8, #d5ef9d 52%, #8fc96b); }
+    .art-career { background: linear-gradient(135deg, #f0fbff, #b9e4ef 52%, #7db5d6); }
+    .art-time { background: linear-gradient(135deg, #fff5df, #ffd78e 52%, #c6a3ff); }
+
+    .badge {
+      display: inline-block;
+      margin: 4px 4px 0 0;
+      padding: 5px 9px;
+      border: 1px solid rgba(242, 219, 141, 0.3);
+      color: var(--gold2);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .manse {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      text-align: center;
+      border: 1px solid rgba(242, 219, 141, 0.36);
+    }
+
+    .manse th, .manse td {
+      border: 1px solid rgba(242, 219, 141, 0.22);
+      padding: 13px 8px;
+    }
+
+    .label { width: 72px; color: var(--muted); background: rgba(216, 173, 79, 0.08); font-weight: 900; }
+    .gan, .ji { font-size: 34px; font-weight: 900; color: inherit; }
+    .hidden-stems { color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+    .ganji-colored {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 3px;
+      color: inherit;
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      text-shadow: none;
+      filter: none;
+    }
+
+    .element-glyph {
+      --element-color: #f9d77e;
+      --element-glow: rgba(249, 215, 126, 0.24);
+      color: var(--element-color);
+      -webkit-text-fill-color: var(--element-color);
+      font-family: Georgia, "Times New Roman", "Malgun Gothic", serif;
+      font-weight: 950;
+      text-shadow: 0 0 18px var(--element-glow);
+      filter: drop-shadow(0 0 10px var(--element-glow));
+    }
+
+    .element-wood { --element-color: #31c978; --element-glow: rgba(49, 201, 120, 0.36); }
+    .element-fire { --element-color: #ef4444; --element-glow: rgba(239, 68, 68, 0.38); }
+    .element-earth { --element-color: #d4af37; --element-glow: rgba(212, 175, 55, 0.36); }
+    .element-metal { --element-color: #e5e7eb; --element-glow: rgba(229, 231, 235, 0.32); }
+    .element-water { --element-color: #38bdf8; --element-glow: rgba(56, 189, 248, 0.38); }
+    .element-neutral { --element-color: #f9d77e; --element-glow: rgba(249, 215, 126, 0.22); }
+
+    .element-glyph.element-wood { color: #31c978 !important; -webkit-text-fill-color: #31c978 !important; }
+    .element-glyph.element-fire { color: #ef4444 !important; -webkit-text-fill-color: #ef4444 !important; }
+    .element-glyph.element-earth { color: #d4af37 !important; -webkit-text-fill-color: #d4af37 !important; }
+    .element-glyph.element-metal { color: #e5e7eb !important; -webkit-text-fill-color: #e5e7eb !important; }
+    .element-glyph.element-water { color: #38bdf8 !important; -webkit-text-fill-color: #38bdf8 !important; }
+
+    .hidden-stems .element-glyph {
+      font-size: 15px;
+    }
+
+    .ganji-large {
+      margin: 8px 0;
+      font-size: 26px;
+      font-weight: 900;
+    }
+
+    .bar {
+      height: 9px;
+      margin-top: 6px;
+      background: rgba(255, 247, 232, 0.12);
+      overflow: hidden;
+    }
+
+    .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--jade), var(--gold2)); }
+    .report { white-space: pre-wrap; color: #352216; font-size: 16px; line-height: 2.02; }
+
+    .premium-war-shell {
+      display: grid;
+      gap: 16px;
+      color: #f7ead2;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(107, 70, 193, 0.28), transparent 32%),
+        radial-gradient(circle at 85% 12%, rgba(212, 175, 55, 0.18), transparent 28%),
+        linear-gradient(180deg, #07111f 0%, #0a1020 52%, #050913 100%);
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      box-shadow: 0 24px 80px rgba(5, 9, 19, 0.38);
+      padding: 18px;
+      border-radius: 8px;
+    }
+
+    .premium-war-shell .box,
+    .premium-war-shell .card {
+      color: #f7ead2;
+      background:
+        linear-gradient(180deg, rgba(19, 31, 51, 0.92), rgba(9, 16, 29, 0.94)),
+        rgba(9, 16, 29, 0.9);
+      border-color: rgba(212, 175, 55, 0.2);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 14px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    .premium-war-shell .section-title,
+    .premium-war-shell h3 { color: #f9d77e; }
+
+    .premium-war-shell p,
+    .premium-war-shell .small { color: rgba(247, 234, 210, 0.78); }
+
+    .premium-war-shell .report {
+      color: #f7ead2;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      padding: 18px;
+      border-radius: 8px;
+    }
+
+    .war-report-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 270px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .war-report-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .war-report-card {
+      position: relative;
+      overflow: hidden;
+      padding: 18px;
+      border: 1px solid rgba(249, 215, 126, 0.18);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+        rgba(9, 16, 29, 0.86);
+    }
+
+    .war-report-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: linear-gradient(180deg, #d4af37, #6b46c1, #38bdf8);
+      opacity: 0.9;
+    }
+
+    .war-report-card h4 {
+      margin: 0 0 12px;
+      color: #fff1c2;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .war-report-art {
+      position: relative;
+      min-height: 190px;
+      margin: 4px 0 16px;
+      overflow: hidden;
+      border: 1px solid rgba(249, 215, 126, 0.16);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(7, 17, 31, 0.06), rgba(7, 17, 31, 0.82)),
+        var(--war-art-image, url("assets/premium-battlefield-command.webp")) center/cover;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 14px 34px rgba(0, 0, 0, 0.18);
+    }
+
+    .war-report-art::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(249, 215, 126, 0.16);
+      background:
+        linear-gradient(90deg, transparent 49%, rgba(249, 215, 126, 0.14) 50%, transparent 51%),
+        linear-gradient(0deg, transparent 49%, rgba(56, 189, 248, 0.1) 50%, transparent 51%);
+    }
+
+    .war-report-art::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      max-width: calc(100% - 32px);
+      color: #fff1c2;
+      font-size: 14px;
+      font-weight: 950;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.72);
+    }
+
+    .war-art-0 { --war-art-image: url("assets/premium-battlefield-command.webp"); }
+    .war-art-1 { --war-art-image: url("assets/premium-card-item.webp"); }
+    .war-art-2 { --war-art-image: url("assets/premium-card-consult.webp"); }
+    .war-art-3 { --war-art-image: url("assets/premium-card-match.webp"); }
+    .war-art-4 { --war-art-image: url("assets/hero-saju-war.jpg"); }
+
+    .war-report-card p {
+      margin: 0;
+      color: rgba(247, 234, 210, 0.84);
+      font-size: 15.5px;
+      line-height: 1.95;
+    }
+
+    .war-report-card p + p {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(249, 215, 126, 0.1);
+    }
+
+    .war-report-number {
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      aspect-ratio: 1;
+      margin-right: 8px;
+      border: 1px solid rgba(249, 215, 126, 0.34);
+      border-radius: 50%;
+      color: #f9d77e;
+      font-size: 12px;
+      font-weight: 950;
+      background: rgba(212, 175, 55, 0.12);
+    }
+
+    .war-report-side {
+      position: sticky;
+      top: 84px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .war-visual-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 180px;
+      padding: 16px;
+      border: 1px solid rgba(249, 215, 126, 0.22);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(7, 17, 31, 0.14), rgba(7, 17, 31, 0.9)),
+        url("assets/hero-saju-war.jpg") center/cover;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 16px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .war-visual-card::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(249, 215, 126, 0.18);
+      background:
+        linear-gradient(90deg, transparent 49%, rgba(249, 215, 126, 0.16) 50%, transparent 51%),
+        linear-gradient(0deg, transparent 49%, rgba(56, 189, 248, 0.12) 50%, transparent 51%);
+      opacity: 0.86;
+    }
+
+    .war-visual-card::after {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      right: -54px;
+      bottom: -54px;
+      border: 1px solid rgba(249, 215, 126, 0.28);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.16), transparent 62%);
+    }
+
+    .war-visual-card strong {
+      position: relative;
+      z-index: 1;
+      display: block;
+      color: #fff1c2;
+      font-size: 19px;
+      line-height: 1.35;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7);
+    }
+
+    .war-visual-card span {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      margin-top: 12px;
+      padding: 5px 8px;
+      border: 1px solid rgba(249, 215, 126, 0.34);
+      color: #f9d77e;
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(5, 9, 19, 0.72);
+    }
+
+    .war-battle-track {
+      position: relative;
+      z-index: 1;
+      height: 72px;
+      margin-top: 18px;
+    }
+
+    .war-battle-track i {
+      position: absolute;
+      left: 10%;
+      right: 8%;
+      top: 34px;
+      height: 2px;
+      background: linear-gradient(90deg, #38bdf8, #f9d77e, #ef4444);
+      box-shadow: 0 0 16px rgba(249, 215, 126, 0.36);
+    }
+
+    .war-battle-node {
+      position: absolute;
+      top: 18px;
+      display: grid;
+      place-items: center;
+      width: 34px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(249, 215, 126, 0.52);
+      color: #fff1c2;
+      font-size: 12px;
+      font-weight: 950;
+      background: rgba(6, 13, 25, 0.82);
+      transform: rotate(45deg);
+      box-shadow: 0 0 18px rgba(212, 175, 55, 0.25);
+    }
+
+    .war-battle-node b {
+      transform: rotate(-45deg);
+    }
+
+    .war-battle-node:nth-child(2) { left: 6%; }
+    .war-battle-node:nth-child(3) { left: 45%; }
+    .war-battle-node:nth-child(4) { right: 4%; }
+
+    .war-action-card {
+      padding: 14px;
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.09), rgba(49, 201, 120, 0.04));
+    }
+
+    .war-action-card b {
+      display: block;
+      color: #bdefff;
+      margin-bottom: 8px;
+    }
+
+    .war-action-card p {
+      margin: 0;
+      color: rgba(247, 234, 210, 0.78);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .war-hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 300px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      align-items: stretch;
+      background:
+        linear-gradient(90deg, rgba(5, 9, 19, 0.42), rgba(5, 9, 19, 0.74)),
+        url("assets/hero-saju-war.jpg") center/cover;
+      border: 1px solid rgba(212, 175, 55, 0.32);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .war-hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      max-width: 660px;
+      z-index: 1;
+    }
+
+    .war-hero-copy h2 {
+      margin: 0;
+      color: #fff6de;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .war-hero-copy .eyebrow { color: #f9d77e; }
+
+    .war-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .war-kpi {
+      min-height: 94px;
+      padding: 14px;
+      border: 1px solid rgba(212, 175, 55, 0.24);
+      background: rgba(6, 13, 25, 0.72);
+      border-radius: 8px;
+    }
+
+    .war-kpi span {
+      display: block;
+      color: rgba(247, 234, 210, 0.64);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .war-kpi strong {
+      display: block;
+      margin-top: 8px;
+      color: #f9d77e;
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .war-score-panel {
+      display: grid;
+      gap: 14px;
+      align-content: center;
+      padding: 18px;
+      background: rgba(6, 13, 25, 0.72);
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      border-radius: 8px;
+      z-index: 1;
+    }
+
+    .war-score-medal {
+      display: grid;
+      place-items: center;
+      width: 132px;
+      aspect-ratio: 1;
+      margin: 0 auto;
+      border-radius: 50%;
+      color: #f9d77e;
+      font-size: 38px;
+      font-weight: 900;
+      background:
+        radial-gradient(circle, rgba(212, 175, 55, 0.26), rgba(212, 175, 55, 0.06) 64%, transparent 65%),
+        linear-gradient(145deg, rgba(249, 215, 126, 0.14), rgba(107, 70, 193, 0.18));
+      border: 1px solid rgba(249, 215, 126, 0.38);
+    }
+
+    .war-grid {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.92fr) minmax(0, 1.35fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .war-panel {
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(9, 16, 29, 0.82);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .war-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .war-panel-head h3 { margin: 0; }
+
+    .war-item-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .war-item-card {
+      min-height: 142px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+      border-radius: 8px;
+    }
+
+    .war-item-card strong {
+      color: #f9d77e;
+      font-size: 18px;
+    }
+
+    .war-timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(108px, 1fr));
+      gap: 10px;
+    }
+
+    .war-time-card {
+      min-height: 154px;
+      padding: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: linear-gradient(180deg, rgba(23, 33, 50, 0.96), rgba(10, 17, 30, 0.96));
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .war-time-card b {
+      display: block;
+      color: #fff6de;
+      font-size: 12px;
+    }
+
+    .war-time-card strong {
+      display: block;
+      margin: 8px 0;
+      color: #f9d77e;
+      font-size: 24px;
+    }
+
+    .war-mini-bars {
+      display: grid;
+      gap: 10px;
+    }
+
+    .war-mini-row {
+      display: grid;
+      grid-template-columns: 92px 1fr 44px;
+      gap: 10px;
+      align-items: center;
+      color: rgba(247, 234, 210, 0.82);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .war-mini-row i {
+      display: block;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .war-mini-row i::before {
+      content: "";
+      display: block;
+      width: var(--value);
+      height: 100%;
+      background: linear-gradient(90deg, #f9d77e, #6b46c1);
+    }
+
+    .war-final-card {
+      display: grid;
+      grid-template-columns: 0.74fr 1.26fr;
+      gap: 18px;
+      align-items: stretch;
+      border: 1px solid rgba(212, 175, 55, 0.32);
+      background:
+        linear-gradient(90deg, rgba(6, 13, 25, 0.08), rgba(6, 13, 25, 0.94)),
+        url("assets/hero-saju-war.jpg") center/cover;
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .war-final-emblem {
+      min-height: 220px;
+      position: relative;
+      overflow: hidden;
+      color: #f9d77e;
+      font-size: 78px;
+      font-weight: 900;
+      border: 1px solid rgba(249, 215, 126, 0.22);
+      background:
+        radial-gradient(circle at 50% 42%, rgba(249, 215, 126, 0.22), transparent 24%),
+        linear-gradient(145deg, rgba(6, 13, 25, 0.3), rgba(6, 13, 25, 0.86));
+      border-radius: 8px;
+    }
+
+    .war-final-emblem::before,
+    .war-final-emblem::after {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 1px solid rgba(249, 215, 126, 0.2);
+      transform: rotate(12deg);
+    }
+
+    .war-final-emblem::after {
+      inset: 56px;
+      border-color: rgba(56, 189, 248, 0.18);
+      transform: rotate(-18deg);
+    }
+
+    .war-final-mark {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 74px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      color: #fff1c2;
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.92), rgba(107, 70, 193, 0.72));
+      transform: translate(-50%, -50%) rotate(45deg);
+      box-shadow: 0 0 28px rgba(249, 215, 126, 0.38);
+    }
+
+    .war-final-mark b {
+      transform: rotate(-45deg);
+      font-size: 32px;
+    }
+
+    .war-final-content {
+      display: grid;
+      gap: 12px;
+      align-content: center;
+    }
+
+    .war-final-content p {
+      margin: 0;
+      color: rgba(247, 234, 210, 0.84);
+      line-height: 1.85;
+    }
+
+    .war-final-content .final-strike {
+      color: #fff1c2;
+      font-size: 17px;
+      font-weight: 850;
+    }
+
+    .war-final-steps {
+      display: grid;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .war-final-steps span {
+      display: block;
+      padding: 8px 10px;
+      border-left: 3px solid #d4af37;
+      color: rgba(247, 234, 210, 0.86);
+      background: rgba(6, 13, 25, 0.56);
+    }
+
+    .report-guide {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .report-visual {
+      position: relative;
+      min-height: 310px;
+      overflow: hidden;
+      border: 1px solid rgba(201, 141, 35, 0.2);
+      background:
+        linear-gradient(135deg, rgba(255, 248, 222, 0.94), rgba(255, 210, 148, 0.62)),
+        radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.88), transparent 34%);
+    }
+
+    .report-visual::before {
+      content: "";
+      position: absolute;
+      inset: 30px;
+      border: 1px solid rgba(123, 61, 45, 0.16);
+      transform: rotate(-7deg);
+    }
+
+    .report-visual::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -74px;
+      bottom: -74px;
+      border-radius: 50%;
+      background: rgba(116, 190, 155, 0.28);
+      box-shadow: 0 0 0 1px rgba(116, 190, 155, 0.26);
+    }
+
+    .battle-board {
+      position: absolute;
+      inset: 34px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      z-index: 1;
+    }
+
+    .battle-tile {
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      text-align: center;
+      border: 1px solid rgba(123, 61, 45, 0.14);
+      color: #7b3d2d;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.18;
+      background: rgba(255, 255, 255, 0.48);
+      box-shadow: 0 14px 30px rgba(126, 82, 35, 0.1);
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .guide-card {
+      padding: 16px;
+      border: 1px solid rgba(201, 141, 35, 0.16);
+      background: rgba(255, 252, 244, 0.72);
+    }
+
+    .guide-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold2);
+      font-size: 17px;
+    }
+
+    .guide-card p { color: #6d523d; font-size: 14px; }
+
+    .reading-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .reading-card {
+      overflow: hidden;
+      border: 1px solid rgba(201, 141, 35, 0.16);
+      background: rgba(255, 252, 244, 0.76);
+    }
+
+    .reading-art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 92px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fff1d2, #ffd9a8);
+    }
+
+    .reading-art::before {
+      content: "";
+      position: absolute;
+      width: 132px;
+      height: 132px;
+      right: -40px;
+      top: -54px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.34);
+      box-shadow: 0 0 0 1px rgba(123, 61, 45, 0.12);
+    }
+
+    .reading-art i {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      color: #7b3d2d;
+      font-size: 17px;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1.15;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: 0 12px 26px rgba(126, 82, 35, 0.14);
+    }
+
+    .reading-card div:last-child { padding: 0 16px 16px; }
+    .reading-card strong { display: block; margin-bottom: 8px; color: var(--gold2); }
+    .reading-card p { color: #6d523d; font-size: 14px; }
+    .reading-art.stem { background: linear-gradient(135deg, #fff4d8, #ffc887); }
+    .reading-art.branch { background: linear-gradient(135deg, #eefbe9, #9dd7c1); }
+    .reading-art.hidden { background: linear-gradient(135deg, #fff0f4, #f49ab0); }
+    .reading-art.yearluck { background: linear-gradient(135deg, #f3f0ff, #c9b8ff); }
+    .reading-art.origin { background: linear-gradient(135deg, #fff8df, #f2db8d); }
+    .reading-art.switch { background: linear-gradient(135deg, #edf8ff, #94cde8); }
+
+    .paid-lock-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .paid-lock-card {
+      padding: 16px;
+      border: 1px solid rgba(242, 219, 141, 0.18);
+      background: rgba(255, 255, 255, 0.44);
+    }
+
+    .paid-lock-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold2);
+      line-height: 1.32;
+    }
+
+    .price-badge {
+      display: inline-grid;
+      place-items: center;
+      min-height: 42px;
+      margin: 14px 0;
+      padding: 0 16px;
+      color: #fffaf0;
+      background: linear-gradient(135deg, #9d5630, #d8ad4f);
+      font-weight: 900;
+    }
+
+    .upgrade-callout {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(201, 141, 35, 0.24);
+      background:
+        linear-gradient(135deg, rgba(255, 248, 226, 0.94), rgba(255, 225, 165, 0.72)),
+        radial-gradient(circle at 84% 12%, rgba(255, 255, 255, 0.78), transparent 34%);
+    }
+
+    .upgrade-callout::after {
+      content: "운";
+      position: absolute;
+      right: 22px;
+      top: 18px;
+      color: rgba(123, 61, 45, 0.08);
+      font-size: 120px;
+      font-weight: 900;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .upgrade-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .upgrade-point {
+      padding: 14px;
+      border: 1px solid rgba(201, 141, 35, 0.18);
+      background: rgba(255, 255, 255, 0.42);
+      color: #6d523d;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .free-tools {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+
+    .free-card-art {
+      position: relative;
+      height: 104px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(201, 141, 35, 0.18);
+      background: linear-gradient(135deg, #fff7e8, #ffe1aa);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    }
+
+    .free-card-art::before,
+    .free-card-art::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.36);
+      box-shadow: 0 0 0 1px rgba(201, 141, 35, 0.14);
+    }
+
+    .free-card-art::before {
+      width: 150px;
+      height: 150px;
+      right: -42px;
+      top: -62px;
+    }
+
+    .free-card-art::after {
+      width: 64px;
+      height: 64px;
+      left: 18px;
+      bottom: -28px;
+    }
+
+    .free-card-art i {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      color: #7b3d2d;
+      font-size: 17px;
+      font-style: normal;
+      font-weight: 900;
+      line-height: 1.15;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.76);
+      transform: translate(-50%, -50%);
+      box-shadow: 0 14px 30px rgba(126, 82, 35, 0.15);
+    }
+
+    .free-art-item { background: linear-gradient(135deg, #fff3d8, #ffd19a 52%, #f7a65e); }
+    .free-art-love { background: linear-gradient(135deg, #fff0f5, #ffc0cf 52%, #ef86a0); }
+    .free-art-match { background: linear-gradient(135deg, #f3f0ff, #d8c8ff 52%, #9dc6ff); }
+    .free-art-manse { background: linear-gradient(135deg, #fff9df, #d9efb1 52%, #9dd7c1); }
+    .free-art-daily { background: linear-gradient(135deg, #fff6e7, #ffd48f 50%, #ffaf78); }
+    .free-art-color { background: linear-gradient(135deg, #f7efff, #ffd0e8 42%, #aee7ff); }
+
+    .free-card-art.photo-art {
+      height: 132px;
+      border-color: rgba(137, 91, 31, 0.22);
+      background-image:
+        linear-gradient(135deg, rgba(255, 250, 239, 0.16), rgba(255, 228, 168, 0.2)),
+        url("assets/card-manse.jpg");
+      background-size: cover;
+      background-position: center;
+      box-shadow: inset 0 -70px 90px rgba(43, 27, 18, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+
+    .free-card-art.photo-art::before {
+      inset: 0;
+      width: auto;
+      height: auto;
+      right: auto;
+      top: auto;
+      border-radius: 0;
+      background: linear-gradient(180deg, rgba(255, 252, 244, 0.04), rgba(255, 252, 244, 0.36));
+      box-shadow: none;
+    }
+
+    .free-card-art.photo-art::after {
+      width: 92px;
+      height: 92px;
+      right: -28px;
+      left: auto;
+      bottom: -28px;
+      background: rgba(255, 252, 244, 0.34);
+      box-shadow: 0 0 0 1px rgba(255, 252, 244, 0.3);
+    }
+
+    .free-card-art.photo-art i {
+      left: 16px;
+      top: auto;
+      bottom: 14px;
+      width: auto;
+      min-width: 72px;
+      height: 34px;
+      padding: 0 13px;
+      border-radius: 999px;
+      font-size: 15px;
+      color: #4e2d19;
+      background: rgba(255, 252, 244, 0.88);
+      transform: none;
+      box-shadow: 0 12px 28px rgba(43, 27, 18, 0.2);
+    }
+
+    .free-art-manse.photo-art {
+      background-image:
+        linear-gradient(135deg, rgba(255, 250, 239, 0.16), rgba(255, 228, 168, 0.2)),
+        url("assets/card-manse.jpg");
+      background-position: center 48%;
+    }
+
+    .free-art-daily.photo-art {
+      background-image:
+        linear-gradient(135deg, rgba(255, 250, 239, 0.14), rgba(255, 228, 168, 0.18)),
+        url("assets/card-daily.jpg");
+      background-position: center 56%;
+    }
+
+    .free-art-color.photo-art {
+      background-image:
+        linear-gradient(135deg, rgba(255, 250, 239, 0.12), rgba(255, 228, 168, 0.16)),
+        url("assets/card-color.jpg");
+      background-position: center 42%;
+    }
+
+    .free-art-name.photo-art {
+      background-image:
+        linear-gradient(135deg, rgba(255, 250, 239, 0.14), rgba(255, 228, 168, 0.18)),
+        url("assets/card-name-score.jpg");
+      background-position: center 54%;
+    }
+
+    .free-art-apply.photo-art {
+      background-image:
+        linear-gradient(135deg, rgba(255, 250, 239, 0.14), rgba(255, 228, 168, 0.18)),
+        url("assets/card-naming-apply.jpg");
+      background-position: center 50%;
+    }
+
+    .free-art-compat-paid.photo-art {
+      background-image:
+        linear-gradient(135deg, rgba(255, 250, 239, 0.12), rgba(255, 228, 168, 0.18)),
+        url("assets/card-compatibility-paid.jpg");
+      background-position: center 50%;
+    }
+
+    .color-oracle {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 14px 0;
+    }
+
+    .color-chip {
+      width: 76px;
+      height: 76px;
+      flex: 0 0 76px;
+      border: 4px solid rgba(255, 255, 255, 0.82);
+      box-shadow: 0 14px 28px rgba(126, 82, 35, 0.16);
+    }
+
+    .mini-form {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .fortune-result {
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px solid rgba(242, 219, 141, 0.18);
+      background: rgba(255, 252, 244, 0.66);
+      min-height: 170px;
+    }
+
+    .score-ring {
+      width: 104px;
+      height: 104px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      border: 2px solid rgba(242, 219, 141, 0.5);
+      color: var(--gold2);
+      font-size: 32px;
+      font-weight: 900;
+      background: radial-gradient(circle, rgba(255, 226, 146, 0.72), rgba(255, 252, 244, 0.5));
+    }
+
+    .fortune-list {
+      display: grid;
+      gap: 10px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fortune-list li {
+      position: relative;
+      padding-left: 18px;
+      color: #6d523d;
+    }
+
+    .fortune-list li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 7px;
+      height: 7px;
+      background: var(--jade);
+      transform: rotate(45deg);
+    }
+
+    .battle-loading {
+      min-height: 460px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at center, rgba(255, 211, 112, 0.44), rgba(255, 250, 239, 0.34) 36%, rgba(255, 250, 239, 0.84) 76%),
+        #fff7e8;
+    }
+
+    .battle-loading:before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      border: 1px solid rgba(242, 219, 141, 0.28);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .countdown {
+      margin: 26px 0 0;
+      color: var(--gold2);
+      font-size: 92px;
+      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 0 32px rgba(216, 173, 79, 0.5);
+    }
+
+    .loading-line {
+      width: 280px;
+      height: 8px;
+      margin: 24px auto 0;
+      border: 1px solid rgba(242, 219, 141, 0.24);
+      background: rgba(255, 247, 232, 0.12);
+      overflow: hidden;
+    }
+
+    .loading-line i { display: block; width: 0%; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold2)); transition: width 0.35s ease; }
+    .lock {
+      text-align: center;
+      background:
+        repeating-linear-gradient(135deg, rgba(246, 239, 221, 0.06) 0 1px, transparent 1px 12px),
+        rgba(255, 250, 239, 0.86);
+    }
+
+    .premium-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 22px 0; }
+    .premium-item {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      text-align: left;
+      align-items: start;
+      padding: 16px;
+      border: 1px solid rgba(242, 219, 141, 0.16);
+      background: rgba(255, 252, 244, 0.62);
+    }
+
+    .premium-item span {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(242, 219, 141, 0.34);
+      color: var(--gold2);
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .premium-item strong { color: var(--paper); }
+    .premium-item p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+
+    .footer {
+      margin-top: 80px;
+      padding: 54px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      background: #fff4db;
+    }
+
+    .footer h3 { color: var(--gold2); }
+    .footer a { color: var(--gold2); font-weight: 800; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 16px;
+      margin: 16px auto;
+    }
+    .footer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 14px;
+      max-width: 980px;
+      margin: 12px auto;
+      font-size: 14px;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(120px);
+      max-width: min(540px, calc(100% - 32px));
+      padding: 14px 18px;
+      border: 1px solid rgba(242, 219, 141, 0.35);
+      background: rgba(255, 250, 239, 0.96);
+      color: var(--paper);
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease;
+      z-index: 20;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Polished visual layer */
+    body {
+      background:
+        linear-gradient(120deg, rgba(255, 247, 229, 0.94) 0%, rgba(255, 236, 194, 0.68) 34%, rgba(226, 249, 237, 0.76) 68%, rgba(255, 248, 235, 0.98) 100%),
+        repeating-linear-gradient(90deg, rgba(137, 91, 31, 0.035) 0 1px, transparent 1px 92px),
+        repeating-linear-gradient(0deg, rgba(47, 142, 114, 0.028) 0 1px, transparent 1px 92px);
+    }
+
+    .app {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .app::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.52), transparent 34%),
+        repeating-linear-gradient(135deg, rgba(201, 141, 35, 0.045) 0 1px, transparent 1px 18px);
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 82%);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 10px;
+      z-index: 30;
+      margin-top: 10px;
+      padding: 12px 14px;
+      border: 1px solid rgba(201, 141, 35, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 252, 244, 0.78);
+      box-shadow: 0 18px 46px rgba(126, 82, 35, 0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand-mark {
+      border-radius: 8px;
+      color: #fffaf1;
+      background: linear-gradient(135deg, #2f8e72, #d99b2e);
+      box-shadow: 0 10px 24px rgba(47, 142, 114, 0.18);
+    }
+
+    .nav {
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 999px;
+      transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+
+    .nav a:hover {
+      color: var(--gold2);
+      background: rgba(255, 230, 163, 0.52);
+      transform: translateY(-1px);
+    }
+
+    .developer-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border: 1px solid rgba(47, 142, 114, 0.34);
+      border-radius: 999px;
+      color: #165846;
+      background: rgba(226, 249, 237, 0.82);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .developer-toggle input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--jade);
+    }
+
+    .developer-debug {
+      border-color: rgba(47, 142, 114, 0.34);
+      background: rgba(241, 255, 249, 0.86);
+    }
+
+    .developer-debug-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .developer-debug-head p {
+      margin: 0;
+    }
+
+    .developer-section {
+      border: 1px solid rgba(47, 142, 114, 0.22);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.62);
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .developer-section summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      color: #165846;
+      font-weight: 900;
+      list-style: none;
+    }
+
+    .developer-section summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .developer-section summary span::before {
+      content: "펼치기";
+      display: inline-flex;
+      margin-right: 8px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(47, 142, 114, 0.12);
+      color: #2f8e72;
+      font-size: 11px;
+    }
+
+    .developer-section[open] summary span::before {
+      content: "접기";
+    }
+
+    .developer-section-body {
+      border-top: 1px solid rgba(47, 142, 114, 0.16);
+      padding: 14px;
+    }
+
+    .developer-copy {
+      border: 1px solid rgba(47, 142, 114, 0.35);
+      background: #fff;
+      color: #165846;
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .developer-copy:hover {
+      background: rgba(226, 249, 237, 0.86);
+    }
+
+    .developer-report-preview {
+      max-height: 520px;
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid rgba(201, 141, 35, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.86);
+    }
+
+    .developer-score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .developer-score-card {
+      padding: 12px;
+      border: 1px solid rgba(47, 142, 114, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .developer-score-card strong {
+      display: block;
+      color: #165846;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .developer-score-card b {
+      color: #8a6500;
+      font-size: 22px;
+    }
+
+    .review-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .review-paragraph {
+      border: 1px solid rgba(201, 141, 35, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.78);
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .review-paragraph textarea {
+      width: 100%;
+      min-height: 96px;
+      resize: vertical;
+      border: 1px solid rgba(47, 142, 114, 0.2);
+      border-radius: 8px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #352216;
+      font: inherit;
+      line-height: 1.7;
+    }
+
+    .review-paragraph textarea[readonly] {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .review-reasons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      margin: 10px 0;
+      color: #4b3525;
+      font-size: 13px;
+    }
+
+    .review-reasons label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .review-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .review-history-item {
+      border: 1px solid rgba(47, 142, 114, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.68);
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .review-history-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: #6d5846;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .review-diff {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    .review-diff-box {
+      border-radius: 8px;
+      padding: 10px;
+      white-space: pre-wrap;
+      line-height: 1.65;
+      font-size: 13px;
+    }
+
+    .review-diff-before {
+      border: 1px solid rgba(205, 80, 80, 0.26);
+      background: rgba(255, 236, 236, 0.72);
+    }
+
+    .review-diff-after {
+      border: 1px solid rgba(47, 142, 114, 0.28);
+      background: rgba(235, 255, 244, 0.78);
+    }
+
+    .review-status {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(47, 142, 114, 0.12);
+      color: #165846;
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .developer-debug pre {
+      max-height: 360px;
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid rgba(47, 142, 114, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .hero {
+      margin-top: 18px;
+      padding: 52px 38px 62px;
+      border: 1px solid rgba(201, 141, 35, 0.16);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 253, 248, 0.82), rgba(255, 241, 207, 0.48) 55%, rgba(224, 248, 236, 0.62)),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.04));
+      box-shadow: 0 28px 90px rgba(126, 82, 35, 0.14);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold2), rgba(47, 142, 114, 0.58));
+    }
+
+    h1, .hero-manifesto, .section-head h2 {
+      text-wrap: balance;
+    }
+
+    .hero-manifesto mark {
+      padding: 0 0.08em;
+      border-radius: 6px;
+      background:
+        linear-gradient(180deg, transparent 54%, rgba(255, 226, 146, 0.76) 0),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.5), transparent);
+    }
+
+    .hero-actions a,
+    button {
+      border-radius: 8px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    }
+
+    .hero-actions a:hover,
+    button:hover {
+      transform: translateY(-2px);
+      filter: saturate(1.04);
+      box-shadow: 0 18px 36px rgba(150, 96, 28, 0.2);
+    }
+
+    .hero-map {
+      border-radius: 8px;
+      border-color: rgba(255, 246, 222, 0.5);
+    }
+
+    .pillar {
+      border-radius: 8px;
+    }
+
+    .input-band {
+      margin-top: -36px;
+    }
+
+    .panel,
+    .box,
+    .card,
+    .fortune-result,
+    .paid-lock-card,
+    .reading-card,
+    .guide-card {
+      border-radius: 8px;
+      background: rgba(255, 253, 247, 0.78);
+      box-shadow: 0 18px 54px rgba(126, 82, 35, 0.1);
+      backdrop-filter: blur(8px);
+    }
+
+    input,
+    select {
+      border-radius: 8px;
+      border-color: rgba(137, 91, 31, 0.13);
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .content-band {
+      scroll-margin-top: 120px;
+    }
+
+    .section-head {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .section-head::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      bottom: 8px;
+      width: 4px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #d99b2e, #2f8e72);
+    }
+
+    .menu-link {
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 248, 232, 0.68)),
+        rgba(255, 252, 244, 0.62);
+    }
+
+    .menu-link::after {
+      content: "";
+      display: block;
+      width: 42px;
+      height: 3px;
+      margin-top: 18px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--gold2), rgba(47, 142, 114, 0.72));
+      opacity: 0.52;
+    }
+
+    .menu-art,
+    .free-card-art.photo-art {
+      border-radius: 8px;
+    }
+
+    .free-card-art.photo-art {
+      min-height: 180px;
+      box-shadow: inset 0 -70px 90px rgba(43, 27, 18, 0.22);
+    }
+
+    .free-card-art.photo-art i {
+      border-radius: 999px;
+      background: rgba(255, 253, 247, 0.84);
+      box-shadow: 0 12px 30px rgba(43, 27, 18, 0.12);
+    }
+
+    .report-visual,
+    .battle-board {
+      border-radius: 8px;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(201, 141, 35, 0.18);
+      background:
+        linear-gradient(135deg, rgba(255, 244, 219, 0.98), rgba(226, 249, 237, 0.88));
+    }
+
+    /* SAJU WAR dashboard homepage refresh */
+    body {
+      color: #f7ead2;
+      background:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.18), rgba(5, 9, 19, 0.86)),
+        url("assets/site-battlefield-map.svg") center top / cover fixed,
+        radial-gradient(circle at 15% 4%, rgba(107, 70, 193, 0.34), transparent 34%),
+        radial-gradient(circle at 84% 12%, rgba(212, 175, 55, 0.24), transparent 30%),
+        radial-gradient(circle at 72% 72%, rgba(16, 185, 129, 0.14), transparent 34%),
+        linear-gradient(180deg, #050913 0%, #07111f 46%, #090d18 100%);
+    }
+
+    .topbar {
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      background:
+        linear-gradient(90deg, rgba(249, 215, 126, 0.08), transparent 18%, transparent 82%, rgba(107, 70, 193, 0.1)),
+        linear-gradient(180deg, rgba(19, 31, 51, 0.92), rgba(8, 15, 28, 0.94));
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .brand { color: #fff6de; }
+    .brand-mark {
+      color: #07111f;
+      background: linear-gradient(135deg, #f9d77e, #d4af37);
+      border-color: rgba(249, 215, 126, 0.65);
+      border-radius: 8px;
+      box-shadow: 0 0 28px rgba(212, 175, 55, 0.26);
+    }
+
+    .nav { color: rgba(247, 234, 210, 0.76); }
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+    }
+    .nav a:hover {
+      color: #f9d77e;
+      border-color: rgba(212, 175, 55, 0.22);
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    .hero {
+      overflow: hidden;
+      border: 1px solid rgba(212, 175, 55, 0.24);
+      background:
+        linear-gradient(90deg, rgba(5, 9, 19, 0.96), rgba(5, 9, 19, 0.7) 50%, rgba(5, 9, 19, 0.28)),
+        url("assets/site-battlefield-map.svg") center / cover,
+        linear-gradient(90deg, rgba(5, 9, 19, 0.96), rgba(9, 16, 29, 0.84) 54%, rgba(7, 17, 31, 0.78)),
+        radial-gradient(circle at 18% 12%, rgba(107, 70, 193, 0.32), transparent 32%),
+        radial-gradient(circle at 76% 18%, rgba(212, 175, 55, 0.18), transparent 30%);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(115deg, transparent 0 46%, rgba(249, 215, 126, 0.12) 47%, transparent 49%),
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(90deg, rgba(0,0,0,0.7), transparent 78%);
+      pointer-events: none;
+    }
+
+    .hero-copy { max-width: 720px; }
+    .eyebrow,
+    .hero .eyebrow { color: #f9d77e; }
+    h1,
+    .hero-manifesto,
+    .section-head h2 {
+      color: #fff6de;
+      text-shadow: 0 18px 46px rgba(0, 0, 0, 0.45);
+    }
+    .hero-manifesto mark {
+      color: #f9d77e;
+      background: linear-gradient(180deg, transparent 58%, rgba(212, 175, 55, 0.22) 0);
+    }
+    .lead { color: rgba(247, 234, 210, 0.74); }
+
+    .hero-actions a {
+      color: #08101d;
+      border-color: rgba(249, 215, 126, 0.55);
+      background: linear-gradient(135deg, #f9d77e, #d4af37);
+      box-shadow: 0 16px 34px rgba(212, 175, 55, 0.22);
+      border-radius: 8px;
+    }
+    .hero-actions a.secondary-link {
+      color: #f7ead2;
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(247, 234, 210, 0.2);
+    }
+
+    .proof-card {
+      min-height: 118px;
+      color: rgba(247, 234, 210, 0.72);
+      background: linear-gradient(180deg, rgba(19, 31, 51, 0.9), rgba(8, 15, 28, 0.92));
+      border-color: rgba(212, 175, 55, 0.2);
+      border-radius: 8px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .proof-card strong { color: #f9d77e; }
+
+    .hero-map {
+      background:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.04), rgba(5, 9, 19, 0.48)),
+        url("assets/premium-battlefield-command.webp") center/cover;
+      border-color: rgba(212, 175, 55, 0.36);
+      box-shadow: inset 0 0 120px rgba(5, 9, 19, 0.56), 0 24px 70px rgba(0, 0, 0, 0.34);
+    }
+
+    .hero-map::before,
+    .hero-map::after {
+      border-color: rgba(249, 215, 126, 0.25);
+    }
+
+    .pillar {
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(107, 70, 193, 0.16));
+      backdrop-filter: blur(10px);
+      border-color: rgba(249, 215, 126, 0.36);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    }
+    .core {
+      border-color: rgba(249, 215, 126, 0.42);
+      background: radial-gradient(circle, rgba(249, 215, 126, 0.85), rgba(212, 175, 55, 0.18));
+    }
+    .item {
+      background: #10b981;
+      box-shadow: 0 0 28px rgba(16, 185, 129, 0.68);
+    }
+    .switch {
+      background: #6b46c1;
+      box-shadow: 0 0 30px rgba(107, 70, 193, 0.72);
+    }
+
+    .input-band,
+    .content-band {
+      border-color: rgba(212, 175, 55, 0.2);
+      background:
+        linear-gradient(135deg, rgba(249, 215, 126, 0.055), transparent 28%),
+        linear-gradient(180deg, rgba(6, 13, 25, 0.66), rgba(4, 9, 18, 0.76));
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.2);
+    }
+
+    .content-band {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content-band::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(249, 215, 126, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(249, 215, 126, 0.028) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.36), transparent 58%);
+      pointer-events: none;
+    }
+
+    .content-band > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .box,
+    .card,
+    .panel,
+    .guide-card,
+    .reading-card,
+    .paid-lock-card,
+    .premium-item,
+    .fortune-result {
+      color: #f7ead2;
+      background:
+        linear-gradient(135deg, rgba(249, 215, 126, 0.045), transparent 30%),
+        linear-gradient(180deg, rgba(19, 31, 51, 0.94), rgba(8, 15, 28, 0.96));
+      border-color: rgba(212, 175, 55, 0.2);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 16px 44px rgba(0, 0, 0, 0.25);
+    }
+
+    .box p,
+    .card p,
+    .small,
+    .guide-card p,
+    .reading-card p,
+    .premium-item p,
+    .fortune-result p,
+    .fortune-result li {
+      color: rgba(247, 234, 210, 0.72);
+    }
+
+    .section-title,
+    .card h3,
+    .guide-card strong,
+    .reading-card strong,
+    .premium-item strong,
+    .fortune-result h3 {
+      color: #f9d77e;
+    }
+
+    input,
+    select,
+    textarea {
+      color: #fff6de;
+      background: rgba(3, 8, 18, 0.76);
+      border-color: rgba(212, 175, 55, 0.24);
+    }
+    input::placeholder,
+    textarea::placeholder { color: rgba(247, 234, 210, 0.44); }
+
+    .menu-link {
+      background:
+        linear-gradient(180deg, rgba(19, 31, 51, 0.94), rgba(8, 15, 28, 0.96));
+    }
+    .menu-link::after {
+      background: linear-gradient(90deg, #f9d77e, #6b46c1);
+      opacity: 0.82;
+    }
+    .menu-art,
+    .free-card-art {
+      border-color: rgba(212, 175, 55, 0.24);
+      background:
+        radial-gradient(circle at 20% 18%, rgba(249, 215, 126, 0.28), transparent 34%),
+        radial-gradient(circle at 76% 24%, rgba(107, 70, 193, 0.28), transparent 30%),
+        linear-gradient(145deg, rgba(11, 23, 39, 0.98), rgba(5, 9, 19, 0.98));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    .menu-art i,
+    .free-card-art i {
+      color: #f9d77e;
+      background: rgba(5, 9, 19, 0.72);
+      border-color: rgba(249, 215, 126, 0.28);
+    }
+
+    #content-map .grid3 {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 10px;
+    }
+
+    #content-map .section-head {
+      margin-bottom: 18px;
+    }
+
+    #content-map .section-head p:last-child {
+      max-width: 720px;
+      font-size: 14px;
+    }
+
+    #content-map .menu-link {
+      min-height: 128px;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      grid-template-areas:
+        "icon tag"
+        "icon title"
+        "icon desc";
+      gap: 2px 12px;
+      align-items: start;
+      padding: 12px;
+      border-radius: 8px;
+      border-color: rgba(249, 215, 126, 0.16);
+      background:
+        linear-gradient(180deg, rgba(10, 20, 35, 0.92), rgba(5, 11, 22, 0.96));
+      box-shadow: none;
+    }
+
+    #content-map .menu-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(249, 215, 126, 0.42);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+    }
+
+    #content-map .menu-link::after {
+      grid-column: 2;
+      width: 34px;
+      height: 2px;
+      margin-top: 7px;
+    }
+
+    #content-map .menu-art {
+      grid-area: icon;
+      width: 44px;
+      height: 44px;
+      margin: 2px 0 0;
+      border-radius: 999px;
+      background: rgba(5, 9, 19, 0.76);
+      overflow: hidden;
+    }
+
+    #content-map .menu-art::before,
+    #content-map .menu-art::after {
+      display: none;
+    }
+
+    #content-map .menu-art i {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      font-size: 12px;
+      box-shadow: none;
+      background: rgba(5, 9, 19, 0.72);
+    }
+
+    #content-map .menu-kicker {
+      grid-area: tag;
+      width: fit-content;
+      margin: 0;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    #content-map .menu-link h3 {
+      grid-area: title;
+      margin: 3px 0 2px;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    #content-map .menu-link p {
+      grid-area: desc;
+      margin: 0;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    #content-map .menu-free {
+      border-color: rgba(47, 142, 114, 0.54);
+      background:
+        linear-gradient(135deg, rgba(47, 142, 114, 0.18), rgba(249, 215, 126, 0.08)),
+        linear-gradient(180deg, rgba(12, 28, 35, 0.96), rgba(5, 13, 22, 0.98));
+    }
+
+    #content-map .menu-free .menu-kicker {
+      color: #07111f;
+      background: linear-gradient(135deg, #dbffe9, #f9d77e);
+      border-color: transparent;
+    }
+
+    #content-map .menu-free .menu-art i {
+      color: #07111f;
+      background: linear-gradient(135deg, #a7f3d0, #f9d77e);
+    }
+
+    #content-map .menu-paid {
+      opacity: 0.82;
+    }
+
+    #content-map .menu-paid .menu-kicker {
+      color: rgba(247, 234, 210, 0.7);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(249, 215, 126, 0.16);
+    }
+
+    #content-map .menu-action {
+      border-style: dashed;
+      border-color: rgba(249, 215, 126, 0.34);
+    }
+
+    #free-play .free-tools {
+      gap: 14px;
+    }
+
+    #free-play .free-card-art {
+      height: 124px;
+      margin-bottom: 14px;
+      border-color: rgba(249, 215, 126, 0.34);
+      background-color: #07111f;
+      background-size: cover;
+      background-position: center;
+      box-shadow:
+        inset 0 -78px 96px rgba(5, 9, 19, 0.72),
+        inset 0 1px 0 rgba(249, 215, 126, 0.28),
+        0 14px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    #free-play .free-card-art::before {
+      inset: 0;
+      width: auto;
+      height: auto;
+      right: auto;
+      top: auto;
+      border-radius: 0;
+      background:
+        linear-gradient(90deg, rgba(5, 9, 19, 0.34), rgba(5, 9, 19, 0.02) 52%, rgba(5, 9, 19, 0.46)),
+        repeating-linear-gradient(135deg, rgba(249, 215, 126, 0.1) 0 1px, transparent 1px 18px);
+      box-shadow: none;
+    }
+
+    #free-play .free-card-art::after {
+      left: auto;
+      right: 14px;
+      bottom: 12px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(249, 215, 126, 0.92) 0 3px, transparent 4px),
+        radial-gradient(circle, transparent 0 14px, rgba(249, 215, 126, 0.24) 15px 17px, transparent 18px);
+      box-shadow: 0 0 0 1px rgba(249, 215, 126, 0.14);
+    }
+
+    #free-play .free-card-art i {
+      left: 14px;
+      top: auto;
+      bottom: 12px;
+      width: auto;
+      min-width: 58px;
+      height: 28px;
+      padding: 0 11px;
+      border-radius: 999px;
+      color: #07111f;
+      font-size: 13px;
+      background: linear-gradient(135deg, #ffe8a3, #f1b536);
+      transform: none;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+    }
+
+    #free-play .free-art-item {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.02), rgba(5, 9, 19, 0.3)),
+        url("assets/premium-card-item.webp");
+    }
+
+    #free-play .free-art-love {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.02), rgba(5, 9, 19, 0.3)),
+        url("assets/premium-card-match.webp");
+    }
+
+    #free-play .free-art-match {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.02), rgba(5, 9, 19, 0.3)),
+        url("assets/premium-card-match.webp");
+    }
+
+    #free-play .free-art-manse.photo-art {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.02), rgba(5, 9, 19, 0.3)),
+        url("assets/premium-battlefield-command.webp");
+    }
+
+    #free-play .free-art-daily.photo-art {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.02), rgba(5, 9, 19, 0.3)),
+        url("assets/premium-card-item.webp");
+    }
+
+    #free-play .free-art-color.photo-art {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.02), rgba(5, 9, 19, 0.3)),
+        url("assets/premium-battlefield-command.webp");
+    }
+
+    .free-art-name.photo-art {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.02), rgba(5, 9, 19, 0.32)),
+        url("assets/premium-card-consult.webp");
+    }
+
+    .free-art-apply.photo-art {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.02), rgba(5, 9, 19, 0.32)),
+        url("assets/premium-card-consult.webp");
+    }
+
+    #consulting .free-art-daily.photo-art {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.02), rgba(5, 9, 19, 0.32)),
+        url("assets/premium-card-consult.webp");
+    }
+
+    .free-art-compat-paid.photo-art {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.02), rgba(5, 9, 19, 0.32)),
+        url("assets/premium-card-match.webp");
+    }
+    .free-card-art.photo-art {
+      background-blend-mode: overlay, normal;
+      box-shadow: inset 0 -90px 110px rgba(5, 9, 19, 0.62);
+    }
+
+    .report-guide {
+      background: linear-gradient(180deg, rgba(19, 31, 51, 0.92), rgba(8, 15, 28, 0.94));
+    }
+    .report-visual {
+      border-color: rgba(212, 175, 55, 0.24);
+      background:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.06), rgba(5, 9, 19, 0.62)),
+        url("assets/premium-battlefield-command.webp") center/cover;
+    }
+
+    .war-visual-card,
+    .war-hero,
+    .war-final-card {
+      background-image:
+        linear-gradient(180deg, rgba(5, 9, 19, 0.12), rgba(5, 9, 19, 0.72)),
+        url("assets/premium-battlefield-command.webp");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .battle-board,
+    .fortune-result {
+      background:
+        linear-gradient(rgba(249, 215, 126, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(249, 215, 126, 0.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(8, 15, 28, 0.94), rgba(5, 9, 19, 0.96));
+      background-size: 34px 34px, 34px 34px, auto;
+    }
+
+    .battle-tile,
+    .premium-item span {
+      border-color: rgba(249, 215, 126, 0.28);
+      background: linear-gradient(135deg, rgba(249, 215, 126, 0.18), rgba(107, 70, 193, 0.1));
+    }
+
+    .hero-actions a,
+    button {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-actions a::after,
+    button::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, transparent 0 42%, rgba(255, 255, 255, 0.28) 47%, transparent 53%);
+      transform: translateX(-120%);
+      transition: transform 0.42s ease;
+      pointer-events: none;
+    }
+
+    .hero-actions a:hover::after,
+    button:hover::after {
+      transform: translateX(120%);
+    }
+
+    .footer {
+      color: rgba(247, 234, 210, 0.72);
+      background: linear-gradient(180deg, rgba(8, 15, 28, 0.98), rgba(5, 9, 19, 1));
+      border-color: rgba(212, 175, 55, 0.16);
+    }
+
+    /* SAJU WAR typography power-up */
+    h1,
+    .hero-manifesto,
+    .section-title,
+    .war-hero-copy h2,
+    .war-panel-head h3,
+    .war-final-card h3 {
+      font-family: "Pretendard", "Malgun Gothic", system-ui, sans-serif;
+      font-weight: 950;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    h1 {
+      color: transparent;
+      background: linear-gradient(180deg, #fff9e8 0%, #f9d77e 48%, #b77a19 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.58)) drop-shadow(0 0 18px rgba(212, 175, 55, 0.18));
+    }
+
+    .hero-manifesto {
+      color: #fff6de;
+      font-weight: 900;
+      text-shadow:
+        0 2px 0 rgba(5, 9, 19, 0.75),
+        0 18px 40px rgba(0, 0, 0, 0.58);
+    }
+
+    .hero-manifesto mark {
+      position: relative;
+      display: inline;
+      padding: 0 6px 2px;
+      color: #07111f;
+      background: linear-gradient(90deg, #f9d77e, #d4af37);
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+      text-shadow: none;
+      border-radius: 4px;
+      box-shadow: 0 0 28px rgba(212, 175, 55, 0.26);
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      color: #f9d77e;
+      text-shadow: 0 0 18px rgba(212, 175, 55, 0.24);
+    }
+
+    .section-title {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #f9d77e;
+      text-shadow: 0 0 22px rgba(212, 175, 55, 0.2);
+    }
+
+    .section-title::before,
+    .card h3::before,
+    .premium-item strong::before,
+    .fortune-result h3::before {
+      content: "◆";
+      color: #6b46c1;
+      font-size: 0.72em;
+      text-shadow: 0 0 16px rgba(107, 70, 193, 0.5);
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: -18px;
+      bottom: -8px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(249, 215, 126, 0.72), rgba(107, 70, 193, 0.32), transparent);
+    }
+
+    .card h3,
+    .guide-card strong,
+    .reading-card strong,
+    .premium-item strong,
+    .fortune-result h3,
+    .proof-card strong,
+    .war-item-card strong,
+    .war-time-card strong {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #f9d77e;
+      font-weight: 950;
+      text-shadow: 0 0 18px rgba(212, 175, 55, 0.18);
+    }
+
+    .proof-card strong,
+    .guide-card strong,
+    .reading-card strong,
+    .premium-item strong {
+      letter-spacing: 0;
+    }
+
+    .badge,
+    .review-status,
+    .war-kpi span,
+    .war-panel-head .badge {
+      letter-spacing: 0;
+      text-transform: uppercase;
+      border-color: rgba(249, 215, 126, 0.26);
+      color: #f9d77e;
+      background: rgba(212, 175, 55, 0.09);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .gan,
+    .ji,
+    .war-kpi strong,
+    .war-score-medal,
+    .war-time-card strong {
+      font-family: Georgia, "Times New Roman", "Malgun Gothic", serif;
+      color: transparent;
+      background: linear-gradient(180deg, #fff9e8, #f9d77e 55%, #b77a19);
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 14px rgba(212, 175, 55, 0.22));
+    }
+
+    .gan,
+    .ji,
+    .ganji-colored,
+    .war-time-card strong.ganji-colored {
+      color: inherit;
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      text-shadow: none;
+      filter: none;
+    }
+
+    .gan .element-glyph,
+    .ji .element-glyph,
+    .ganji-colored .element-glyph,
+    .war-time-card strong.ganji-colored .element-glyph {
+      color: var(--element-color);
+      -webkit-text-fill-color: var(--element-color);
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      text-shadow: 0 0 18px var(--element-glow);
+      filter: drop-shadow(0 0 10px var(--element-glow));
+    }
+
+    .hero-actions a,
+    button {
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 950;
+    }
+
+    .nav a,
+    label,
+    .proof-card,
+    .small {
+      letter-spacing: 0;
+    }
+
+    /* Korean heading wrapping fix */
+    h1,
+    h2,
+    h3,
+    .hero-manifesto,
+    .section-head h2,
+    .section-title,
+    .card h3,
+    .guide-card strong,
+    .reading-card strong,
+    .premium-item strong,
+    .fortune-result h3 {
+      word-break: keep-all;
+      overflow-wrap: normal;
+      line-break: strict;
+    }
+
+    .section-head {
+      max-width: min(100%, 980px);
+    }
+
+    .section-head h2 {
+      max-width: 100%;
+      font-size: clamp(28px, 3.1vw, 42px);
+      line-height: 1.18;
+    }
+
+    .section-head p {
+      max-width: min(100%, 980px);
+      line-height: 1.75;
+    }
+
+    .section-title {
+      max-width: 100%;
+      white-space: normal;
+      line-height: 1.25;
+    }
+
+    .card h3,
+    .fortune-result h3,
+    .premium-item strong {
+      line-height: 1.28;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(0.92); opacity: 0.35; }
+      50% { transform: scale(1.04); opacity: 0.9; }
+    }
+
+    @media (max-width: 960px) {
+      .hero, .dashboard { grid-template-columns: 1fr; }
+      .war-hero,
+      .war-grid,
+      .war-report-layout,
+      .war-final-card { grid-template-columns: 1fr; }
+      .war-report-side { position: static; }
+      .war-kpi-grid,
+      .war-item-grid { grid-template-columns: 1fr; }
+      .premium-war-shell { padding: 12px; }
+      .war-hero { min-height: auto; padding: 16px; }
+      .war-mini-row { grid-template-columns: 78px 1fr 38px; }
+      .hero-map { min-height: 360px; }
+      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid, .upgrade-points, .paid-lock-grid, .proof-strip { grid-template-columns: 1fr; }
+      .report-visual { min-height: 260px; }
+      .button-row { grid-template-columns: 1fr; }
+      .topbar {
+        position: static;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .nav {
+        display: flex;
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+      }
+      .nav::-webkit-scrollbar { display: none; }
+      .nav a {
+        flex: 0 0 auto;
+        background: rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar, .hero, .input-band, .content-band { width: min(100% - 28px, 1180px); }
+      .topbar { margin-top: 8px; padding: 12px; }
+      .hero { padding: 28px 18px 30px; min-height: auto; }
+      h1 { font-size: 42px; }
+      .hero-manifesto { font-size: 30px; }
+      .hero-map { min-height: 310px; }
+      .input-band { margin-top: 18px; }
+      .content-band { margin-bottom: 58px; }
+      .box { padding: 18px; }
+      .manse th, .manse td { padding: 10px 4px; }
+      .gan, .ji { font-size: 27px; }
+      .premium-grid { grid-template-columns: 1fr; }
+      .mini-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="top">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="사주전쟁 홈">
+        <span class="brand-mark">SW</span>
+        <span>쭈쌤의 사주전쟁</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="#content-map">콘텐츠 지도</a>
+        <a href="#report">전장 리포트</a>
+        <a href="#consulting">상담 신청</a>
+        <a href="#compatibility-paid">유료 궁합</a>
+        <a href="#naming">이름 점수</a>
+        <a href="#naming-apply">작명 신청</a>
+        <a href="#premium">유료 해석</a>
+        <a href="/payment.html">결제</a>
+        <a href="/mypage.html">구매내역</a>
+        <a href="/admin-bank.html">입금확인 관리</a>
+      </nav>
+    </header>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">검증된 쭈쌤 해석으로 받는 나만의 사주 지침서</p>
+        <h1 id="hero-title">쭈쌤의 사주전쟁</h1>
+        <p class="hero-manifesto">
+          사주는 운명이 아니라, <mark>꺼내 쓸 무기</mark>입니다.
+        </p>
+        <p class="lead">
+          기존 AI 운세처럼 좋은 말만 던지는 곳이 아닙니다. 쭈쌤의 사주 해석으로 원국의 오해를 풀고,
+          내 사주만의 무기와 지장간 아이템, 그 아이템을 꺼낼 세운·월운 타이밍까지 읽어드립니다.
+          더 깊은 내용은 상담, 강의, 궁합, 작명으로 바로 이어집니다.
+        </p>
+        <div class="hero-actions" aria-label="주요 행동">
+          <a href="#report">무료 리포트 보기</a>
+          <a class="secondary-link" href="#consulting">상담 신청하기</a>
+        </div>
+        <div class="proof-strip" aria-label="사주전쟁 차별점">
+          <article class="proof-card">
+            <strong>쭈쌤 해석</strong>
+            검증된 관점으로 원국을 읽어 AI보다 믿을 수 있는 지침서로 정리합니다.
+          </article>
+          <article class="proof-card">
+            <strong>내 무기 찾기</strong>
+            사주 안의 지장간 아이템과 부족한 기운을 채우는 방법을 봅니다.
+          </article>
+          <article class="proof-card">
+            <strong>시기 제시</strong>
+            다른 운세가 놓치는 세운과 월운의 사용 타이밍까지 안내합니다.
+          </article>
+          <article class="proof-card">
+            <strong>실행 연결</strong>
+            상담, 강의, 궁합, 작명으로 실제 선택과 행동까지 이어갑니다.
+          </article>
+        </div>
+      </div>
+
+      <div class="hero-map" aria-hidden="true">
+        <div class="pillar p1">기본</div>
+        <div class="pillar p2">환경</div>
+        <div class="pillar p3">나</div>
+        <div class="pillar p4">미래</div>
+        <div class="core"></div>
+        <div class="item i1"></div>
+        <div class="item i2"></div>
+        <div class="item i3"></div>
+        <div class="switch s1"></div>
+        <div class="switch s2"></div>
+      </div>
+    </section>
+
+    <section class="input-band" aria-label="사주 입력">
+      <form class="panel birth-panel" id="sajuForm">
+        <div class="field-grid">
+          <label>
+            이름
+            <input id="name" autocomplete="name" placeholder="이름을 입력하세요" />
+          </label>
+          <label>
+            생년월일
+            <span class="row">
+              <select id="year"></select>
+              <select id="month"></select>
+              <select id="day"></select>
+            </span>
+          </label>
+          <label>
+            태어난 시간
+            <span class="time-row">
+              <select id="hour"></select>
+              <select id="minute"></select>
+            </span>
+          </label>
+          <label>
+            기준 / 성별
+            <span class="time-row">
+              <select id="calendarType">
+                <option value="solar">양력</option>
+                <option value="lunar">음력</option>
+              </select>
+              <select id="gender">
+                <option value="">성별</option>
+                <option value="female">여성</option>
+                <option value="male">남성</option>
+              </select>
+            </span>
+          </label>
+        </div>
+        <div class="button-row">
+          <button type="submit">무료 전장 리포트 보기</button>
+          <button class="secondary" type="button" onclick="openPaidReport()">결제하고 전체보기</button>
+          <button class="secondary" type="button" onclick="downloadPDF()">PDF 저장</button>
+        </div>
+      </form>
+    </section>
+
+    <main class="content-band" id="report">
+      <div class="section-head">
+        <p class="eyebrow">사주전쟁 리포트</p>
+        <h2>입력하면 바로 아래에서 리포트가 열립니다</h2>
+        <p>무료 리포트는 핵심 전장과 지장간 아이템을 먼저 보여주고, 유료 리포트는 대운/세운 타이밍과 행동 전략까지 깊게 엽니다.</p>
+      </div>
+      <div id="result" class="report-stack">
+        <div class="box report-guide">
+          <div class="report-visual" aria-hidden="true">
+            <div class="battle-board">
+              <span class="battle-tile">원국</span>
+              <span class="battle-tile">아이템</span>
+              <span class="battle-tile">운</span>
+              <span class="battle-tile">전략</span>
+            </div>
+          </div>
+          <div>
+            <p class="eyebrow">무료 리포트 안내</p>
+            <h2 class="section-title">버튼을 누르면 이 자리에서 결과가 열립니다</h2>
+            <p class="small">스크롤을 많이 내리지 않아도 바로 확인할 수 있도록, 리포트 영역을 입력창 바로 아래에 배치했습니다. 무료 리포트는 원국의 큰 전장과 잠재 아이템의 입구를 먼저 보여줍니다.</p>
+            <div class="guide-grid" style="margin-top:18px">
+              <article class="guide-card">
+                <strong>1. 원국 전장</strong>
+                <p>연월일시 네 기둥이 어떤 힘으로 부딪히는지 먼저 봅니다.</p>
+              </article>
+              <article class="guide-card">
+                <strong>2. 지장간 아이템</strong>
+                <p>겉으로 약해 보여도 안쪽에 숨어 있는 재능과 돈맥을 찾습니다.</p>
+              </article>
+              <article class="guide-card">
+                <strong>3. 대운 스위치</strong>
+                <p>운이 켜질 때 어떤 아이템이 밖으로 나올 수 있는지 연결합니다.</p>
+              </article>
+              <article class="guide-card">
+                <strong>4. 세운 타이밍</strong>
+                <p>올해 어떤 행동을 하면 전장이 움직이는지 미리 봅니다.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <section class="content-band" id="content-map">
+      <div class="section-head">
+        <p class="eyebrow">콘텐츠 지도</p>
+        <h2>오늘 뭐 볼지 고르는 사주전쟁 메뉴판</h2>
+        <p>무료로 가볍게 눌러보는 코너부터 프리미엄 리포트, 사주 상담, 강의, 궁합, 작명 신청까지 한 화면에서 바로 이동할 수 있게 정리했습니다.</p>
+      </div>
+
+      <div class="grid3">
+        <a class="card menu-link menu-free" href="#report">
+          <span class="menu-art art-war" aria-hidden="true"><i>전장</i></span>
+          <span class="menu-kicker">무료</span>
+          <h3>무료 전장 리포트</h3>
+          <p>원국의 기본 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 먼저 확인합니다.</p>
+        </a>
+        <a class="card menu-link menu-free" href="#free-play">
+          <span class="menu-art art-today" aria-hidden="true"><i>오늘</i></span>
+          <span class="menu-kicker">무료</span>
+          <h3>오늘의 운세</h3>
+          <p>오늘 꺼내면 좋은 아이템, 조심할 전장, 바로 실행할 행동 카드를 가볍게 봅니다.</p>
+        </a>
+        <a class="card menu-link menu-free" href="#free-play">
+          <span class="menu-art art-love" aria-hidden="true"><i>연애</i></span>
+          <span class="menu-kicker">무료</span>
+          <h3>오늘의 연애 무기</h3>
+          <p>오늘 써야 할 말투, 매력 포인트, 피해야 할 관계 패턴을 짧고 재미있게 확인합니다.</p>
+        </a>
+        <a class="card menu-link menu-free" href="#free-play">
+          <span class="menu-art art-match" aria-hidden="true"><i>궁합</i></span>
+          <span class="menu-kicker">무료</span>
+          <h3>간단 궁합 스파크</h3>
+          <p>두 사람의 관계 온도와 오늘의 대화 전략을 무료로 빠르게 뽑아봅니다.</p>
+        </a>
+        <a class="card menu-link menu-free" href="#naming">
+          <span class="menu-art art-name" aria-hidden="true"><i>이름</i></span>
+          <span class="menu-kicker">무료</span>
+          <h3>내 이름 전투력 점수</h3>
+          <p>이름의 소리, 의미, 브랜드감, 실행력을 점수로 보고 이름의 무기를 확인합니다.</p>
+        </a>
+        <a class="card menu-link menu-action" href="#naming-apply">
+          <span class="menu-art art-apply" aria-hidden="true"><i>작명</i></span>
+          <span class="menu-kicker">신청</span>
+          <h3>쭈쌤 작명 신청</h3>
+          <p>아기 이름, 개명, 예명, 브랜드명까지 사주전쟁 세계관으로 신청서를 만듭니다.</p>
+        </a>
+        <a class="card menu-link menu-paid" href="#premium">
+          <span class="menu-art art-money" aria-hidden="true"><i>돈</i></span>
+          <span class="menu-kicker">유료</span>
+          <h3>재물 아이템 해석</h3>
+          <p>돈이 약해 보여도 지장간과 운의 스위치가 맞을 때 꺼낼 수 있는 재물 회로를 봅니다.</p>
+        </a>
+        <a class="card menu-link menu-paid" href="#premium">
+          <span class="menu-art art-career" aria-hidden="true"><i>일</i></span>
+          <span class="menu-kicker">유료</span>
+          <h3>직업·사업 전장</h3>
+          <p>나에게 맞는 일 방식, 브랜드 방향, 사업으로 꺼낼 수 있는 아이템을 심화 리포트로 연결합니다.</p>
+        </a>
+        <a class="card menu-link menu-paid" href="#premium">
+          <span class="menu-art art-time" aria-hidden="true"><i>운</i></span>
+          <span class="menu-kicker">유료</span>
+          <h3>대운·세운 스위치</h3>
+          <p>언제 움직여야 운이 열리는지, 올해와 앞으로의 타이밍을 전장 지도처럼 확인합니다.</p>
+        </a>
+        <a class="card menu-link menu-action" href="#consulting">
+          <span class="menu-art art-career" aria-hidden="true"><i>상담</i></span>
+          <span class="menu-kicker">신청</span>
+          <h3>쭈쌤 사주 상담 신청</h3>
+          <p>세운·월운, 직업, 돈, 관계, 궁합, 작명까지 궁금한 주제를 상담 신청서로 정리합니다.</p>
+        </a>
+        <a class="card menu-link menu-paid" href="#compatibility-paid">
+          <span class="menu-art art-match" aria-hidden="true"><i>심화</i></span>
+          <span class="menu-kicker">유료</span>
+          <h3>자세한 궁합 신청</h3>
+          <p>두 사람의 원국, 지장간 아이템, 충돌 지점, 세운·월운 관계 타이밍을 깊게 봅니다.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="content-band" id="free-play">
+      <div class="section-head">
+        <p class="eyebrow">무료 콘텐츠</p>
+        <h2>오늘의 운세, 연애 무기, 간단 궁합</h2>
+        <p>가볍게 눌러보는 무료 코너입니다. 깊은 해석은 프리미엄 리포트로 연결하고, 여기서는 오늘 바로 써먹을 한 줄 전략을 보여줍니다.</p>
+      </div>
+
+      <div class="free-tools">
+        <article class="box">
+          <div class="free-card-art free-art-item" aria-hidden="true"><i>아이템</i></div>
+          <h2 class="section-title">오늘의 아이템 운세</h2>
+          <p class="small">이름과 생년월일만으로 오늘 켜지는 분위기를 가볍게 뽑아봅니다.</p>
+          <div class="mini-form">
+            <label>
+              이름
+              <input id="todayName" placeholder="이름" />
+            </label>
+            <label>
+              생년월일
+              <input id="todayBirth" type="date" />
+            </label>
+            <button type="button" onclick="makeTodayFortune()">오늘의 운세 보기</button>
+          </div>
+          <div class="fortune-result" id="todayResult">
+            <h3>오늘의 전장 대기 중</h3>
+            <p class="small">입력 후 버튼을 누르면 오늘 꺼내기 좋은 아이템이 열립니다.</p>
+          </div>
+        </article>
+
+        <article class="box">
+          <div class="free-card-art free-art-love" aria-hidden="true"><i>연애</i></div>
+          <h2 class="section-title">오늘의 연애 무기</h2>
+          <p class="small">오늘 관계에서 어떤 태도와 말투를 꺼내면 좋은지 가볍게 뽑아봅니다.</p>
+          <div class="mini-form">
+            <label>
+              이름
+              <input id="loveName" placeholder="이름" />
+            </label>
+            <label>
+              생년월일
+              <input id="loveBirth" type="date" />
+            </label>
+            <button type="button" onclick="makeLoveWeapon()">연애 무기 뽑기</button>
+          </div>
+          <div class="fortune-result" id="loveResult">
+            <h3>연애 무기 대기 중</h3>
+            <p class="small">오늘 써야 할 말, 거리감, 매력 포인트가 열립니다.</p>
+          </div>
+        </article>
+
+        <article class="box">
+          <div class="free-card-art free-art-match" aria-hidden="true"><i>궁합</i></div>
+          <h2 class="section-title">간단 궁합 스파크</h2>
+          <p class="small">두 사람의 리듬을 재미로 보는 무료 궁합입니다. 관계의 정답보다 오늘의 사용법에 가깝습니다.</p>
+          <div class="mini-form">
+            <div class="mini-row">
+              <label>
+                나
+                <input id="matchNameA" placeholder="내 이름" />
+              </label>
+              <label>
+                상대
+                <input id="matchNameB" placeholder="상대 이름" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                내 생년월일
+                <input id="matchBirthA" type="date" />
+              </label>
+              <label>
+                상대 생년월일
+                <input id="matchBirthB" type="date" />
+              </label>
+            </div>
+            <button type="button" onclick="makeCompatibility()">궁합 스파크 보기</button>
+          </div>
+          <div class="fortune-result" id="matchResult">
+            <h3>궁합 전장 대기 중</h3>
+            <p class="small">두 사람의 정보를 넣으면 관계 점수와 오늘의 대화 전략이 나옵니다.</p>
+          </div>
+        </article>
+
+        <article class="box">
+          <div class="free-card-art free-art-manse photo-art" aria-hidden="true"><i>만세력</i></div>
+          <h2 class="section-title">정확 만세력 보기</h2>
+          <p class="small">생년월일, 시간, 양력/음력 기준을 넣으면 서버의 실제 만세력 계산기로 네 기둥을 확인합니다.</p>
+          <div class="mini-form">
+            <label>
+              이름
+              <input id="manseName" placeholder="이름" />
+            </label>
+            <div class="mini-row">
+              <label>
+                생년월일
+                <input id="manseBirth" type="date" />
+              </label>
+              <label>
+                태어난 시간
+                <input id="manseTime" type="time" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                기준
+                <select id="manseCalendar">
+                  <option value="solar">양력</option>
+                  <option value="lunar">음력</option>
+                </select>
+              </label>
+              <label>
+                성별
+                <select id="manseGender">
+                  <option value="female">여성</option>
+                  <option value="male">남성</option>
+                </select>
+              </label>
+            </div>
+            <button type="button" onclick="showFreeManse()">실제 만세력 계산하기</button>
+          </div>
+          <div class="fortune-result" id="freeManseResult">
+            <h3>만세력 전장 대기 중</h3>
+            <p class="small">입력 후 버튼을 누르면 원국의 큰 그림과 숨은 아이템 힌트가 나옵니다.</p>
+          </div>
+        </article>
+
+        <article class="box">
+          <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>일일</i></div>
+          <h2 class="section-title">일일 운세 전장</h2>
+          <p class="small">오늘 해야 할 일, 피해야 할 말, 꺼내기 좋은 지장간 아이템을 한 번 더 자세히 봅니다.</p>
+          <div class="mini-form">
+            <label>
+              이름
+              <input id="dailyName" placeholder="이름" />
+            </label>
+            <label>
+              생년월일
+              <input id="dailyBirth" type="date" />
+            </label>
+            <button type="button" onclick="makeDailyFortune()">일일 운세 열기</button>
+          </div>
+          <div class="fortune-result" id="dailyResult">
+            <h3>일일 작전 대기 중</h3>
+            <p class="small">오늘의 공격, 방어, 회복 포인트를 짧게 정리합니다.</p>
+          </div>
+        </article>
+
+        <article class="box">
+          <div class="free-card-art free-art-color photo-art" aria-hidden="true"><i>색상</i></div>
+          <h2 class="section-title">오늘의 행운 색상</h2>
+          <p class="small">오늘 나에게 힘을 보태는 색상과 피하면 좋은 색상을 재미로 뽑아봅니다.</p>
+          <div class="mini-form">
+            <label>
+              이름
+              <input id="colorName" placeholder="이름" />
+            </label>
+            <label>
+              생년월일
+              <input id="colorBirth" type="date" />
+            </label>
+            <button type="button" onclick="makeLuckyColor()">행운 색상 보기</button>
+          </div>
+          <div class="fortune-result" id="colorResult">
+            <h3>행운 색상 대기 중</h3>
+            <p class="small">오늘 입기 좋은 색, 소품 색, 피하면 좋은 색을 알려드립니다.</p>
+          </div>
+        </article>      </div>
+    </section>
+
+    <section class="content-band" id="compatibility-paid">
+      <div class="section-head">
+        <p class="eyebrow">유료 궁합 신청</p>
+        <h2>두 사람의 전장과 관계 아이템을 깊게 봅니다</h2>
+        <p>무료 궁합은 오늘의 관계 온도만 가볍게 봅니다. 자세한 유료 궁합은 두 사람의 원국, 지장간 아이템, 충돌 지점, 관계가 풀리는 세운·월운까지 신청서로 정리합니다.</p>
+      </div>
+
+      <div class="grid2">
+        <article class="box">
+          <div class="free-card-art free-art-compat-paid photo-art" aria-hidden="true"><i>궁합</i></div>
+          <h2 class="section-title">자세한 유료 궁합 신청서</h2>
+          <p class="small">좋고 나쁜 궁합만 보는 것이 아니라, 서로의 사주에서 어떤 무기와 아이템을 써야 관계가 살아나는지 봅니다.</p>
+          <div class="mini-form">
+            <div class="mini-row">
+              <label>
+                내 이름
+                <input id="paidMatchNameA" placeholder="내 이름" />
+              </label>
+              <label>
+                상대 이름
+                <input id="paidMatchNameB" placeholder="상대 이름" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                내 생년월일
+                <input id="paidMatchBirthA" type="date" />
+              </label>
+              <label>
+                상대 생년월일
+                <input id="paidMatchBirthB" type="date" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                내 태어난 시간
+                <input id="paidMatchTimeA" type="time" />
+              </label>
+              <label>
+                상대 태어난 시간
+                <input id="paidMatchTimeB" type="time" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                관계 유형
+                <select id="paidMatchType">
+                  <option value="연애 궁합">연애 궁합</option>
+                  <option value="결혼 궁합">결혼 궁합</option>
+                  <option value="재회·이별 고민">재회·이별 고민</option>
+                  <option value="부부 관계">부부 관계</option>
+                  <option value="사업 파트너 궁합">사업 파트너 궁합</option>
+                  <option value="가족 관계 궁합">가족 관계 궁합</option>
+                </select>
+              </label>
+              <label>
+                보고 싶은 시기
+                <input id="paidMatchPeriod" placeholder="예: 2026년 하반기, 올해 8월" />
+              </label>
+            </div>
+            <label>
+              궁금한 내용
+              <input id="paidMatchMemo" placeholder="갈등, 결혼, 재회, 연락 시기, 관계 흐름 등" />
+            </label>
+            <button type="button" onclick="makePaidCompatibilityApplication()">유료 궁합 신청서 만들기</button>
+          </div>
+        </article>
+
+        <article class="box">
+          <h2 class="section-title">유료 궁합에서 보는 것</h2>
+          <p class="small">두 사람이 왜 끌리고 왜 부딪히는지, 그리고 어느 시기에 관계의 아이템을 꺼내야 하는지를 봅니다.</p>
+          <div class="premium-grid">
+            <article class="premium-item">
+              <span>원국</span>
+              <div>
+                <strong>두 사람의 기본 전장</strong>
+                <p>성향, 끌림, 충돌 지점을 원국 기준으로 봅니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>아이템</span>
+              <div>
+                <strong>관계 지장간</strong>
+                <p>서로에게 켜지는 숨은 무기와 보완점을 찾습니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>세운</span>
+              <div>
+                <strong>올해의 관계 사건</strong>
+                <p>올해 관계가 움직이는 사건과 선택 포인트를 봅니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>월운</span>
+              <div>
+                <strong>연락·결정 타이밍</strong>
+                <p>어느 달에 말하고, 만나고, 결정하면 좋은지 봅니다.</p>
+              </div>
+            </article>
+          </div>
+          <div class="fortune-result" id="paidMatchResult">
+            <h3>유료 궁합 신청 대기 중</h3>
+            <p class="small">신청서를 만들면 상담/결제 연결에 필요한 핵심 정보가 정리됩니다.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-band" id="consulting">
+      <div class="section-head">
+        <p class="eyebrow">상담 신청</p>
+        <h2>세운·월운까지 묻는 쭈쌤 사주 상담</h2>
+        <p>프리미엄 리포트보다 더 자세한 내용이 필요하면 상담 신청서를 먼저 정리해보세요. 직업, 재물, 관계, 궁합, 작명, 강의 문의까지 한 번에 적을 수 있습니다.</p>
+      </div>
+
+      <div class="grid2">
+        <article class="box">
+          <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>상담</i></div>
+          <h2 class="section-title">사주 상담 신청서</h2>
+          <p class="small">내 사주만의 무기와 아이템, 그 아이템을 꺼낼 세운·월운 타이밍을 중심으로 상담 주제를 정리합니다.</p>
+          <div class="mini-form">
+            <div class="mini-row">
+              <label>
+                신청자
+                <input id="consultName" placeholder="신청자 이름" />
+              </label>
+              <label>
+                연락처
+                <input id="consultContact" placeholder="휴대폰 또는 이메일" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                생년월일
+                <input id="consultBirth" type="date" />
+              </label>
+              <label>
+                태어난 시간
+                <input id="consultTime" type="time" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                상담 주제
+                <select id="consultTopic">
+                  <option value="세운·월운 타이밍">세운·월운 타이밍</option>
+                  <option value="직업·사업 방향">직업·사업 방향</option>
+                  <option value="재물·돈 흐름">재물·돈 흐름</option>
+                  <option value="연애·궁합">연애·궁합</option>
+                  <option value="작명·개명">작명·개명</option>
+                  <option value="사주강의·교육">사주강의·교육</option>
+                </select>
+              </label>
+              <label>
+                보고 싶은 시기
+                <input id="consultPeriod" placeholder="예: 2026년 7월, 하반기, 올해" />
+              </label>
+            </div>
+            <label>
+              상담 메모
+              <input id="consultMemo" placeholder="궁금한 상황, 고민, 원하는 상담 방향" />
+            </label>
+            <button type="button" onclick="makeConsultApplication()">상담 신청서 만들기</button>
+          </div>
+        </article>
+
+        <article class="box">
+          <h2 class="section-title">상담에서 깊게 보는 것</h2>
+          <p class="small">무료 운세는 입구이고, 상담은 실제 선택을 위한 지도입니다. 어떤 달에 움직일지, 어떤 무기를 써야 하는지까지 구체적으로 봅니다.</p>
+          <div class="premium-grid">
+            <article class="premium-item">
+              <span>세운</span>
+              <div>
+                <strong>올해의 큰 흐름</strong>
+                <p>올해 어떤 사건과 기회가 열리는지 봅니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>월운</span>
+              <div>
+                <strong>움직일 달</strong>
+                <p>어느 월에 시작, 계약, 관계, 돈 흐름이 유리한지 봅니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>무기</span>
+              <div>
+                <strong>내 사주의 아이템</strong>
+                <p>부족한 사주를 채우는 행동과 선택을 찾습니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>연결</span>
+              <div>
+                <strong>강의·궁합·작명</strong>
+                <p>필요한 경우 교육, 궁합, 작명 방향까지 이어갑니다.</p>
+              </div>
+            </article>
+          </div>
+          <div class="fortune-result" id="consultResult">
+            <h3>상담 신청 대기 중</h3>
+            <p class="small">신청서를 만들면 상담에 필요한 핵심 정보가 정리됩니다.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-band" id="naming">
+      <div class="section-head">
+        <p class="eyebrow">이름 콘텐츠</p>
+        <h2>내 이름의 점수와 작명 신청</h2>
+        <p>이름은 사주전쟁에서 매일 들고 나가는 깃발입니다. 무료로 이름의 분위기를 가볍게 보고, 더 깊은 이름 설계는 작명 신청으로 연결합니다.</p>
+      </div>
+
+      <div class="grid2">
+        <article class="box">
+          <div class="free-card-art free-art-name photo-art" aria-hidden="true"><i>이름</i></div>
+          <h2 class="section-title">내 이름 전투력 점수</h2>
+          <p class="small">이름의 소리, 인상, 실행력, 브랜드성을 재미로 점수화합니다. 실제 작명 판단은 사주 원국과 함께 봐야 더 정확합니다.</p>
+          <div class="mini-form">
+            <label>
+              이름
+              <input id="scoreName" placeholder="예: 김지수" />
+            </label>
+            <div class="mini-row">
+              <label>
+                생년월일
+                <input id="scoreBirth" type="date" />
+              </label>
+              <label>
+                성별
+                <select id="scoreGender">
+                  <option value="">선택</option>
+                  <option value="female">여성</option>
+                  <option value="male">남성</option>
+                </select>
+              </label>
+            </div>
+            <button type="button" onclick="scoreMyName()">내 이름 점수 보기</button>
+          </div>
+          <div class="fortune-result" id="nameScoreResult">
+            <h3>이름 점수 대기 중</h3>
+            <p class="small">이름을 입력하면 오늘의 이름 무기와 보완 포인트가 나옵니다.</p>
+          </div>
+        </article>
+
+        <article class="box" id="naming-apply">
+          <div class="free-card-art free-art-apply photo-art" aria-hidden="true"><i>작명</i></div>
+          <h2 class="section-title">사주전쟁 작명 신청</h2>
+          <p class="small">아기 이름, 개명, 예명, 브랜드명까지 신청서를 먼저 만들 수 있습니다. 신청 내용은 복사해서 상담/결제 연결에 사용할 수 있습니다.</p>
+          <div class="mini-form">
+            <div class="mini-row">
+              <label>
+                신청자
+                <input id="applyName" placeholder="신청자 이름" />
+              </label>
+              <label>
+                작명 대상
+                <select id="applyType">
+                  <option value="아기 이름">아기 이름</option>
+                  <option value="개명">개명</option>
+                  <option value="예명">예명</option>
+                  <option value="브랜드명">브랜드명</option>
+                </select>
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                생년월일
+                <input id="applyBirth" type="date" />
+              </label>
+              <label>
+                태어난 시간
+                <input id="applyTime" type="time" />
+              </label>
+            </div>
+            <label>
+              원하는 이름 느낌
+              <select id="applyStyle">
+                <option value="부드럽고 귀한 느낌">부드럽고 귀한 느낌</option>
+                <option value="강하고 리더십 있는 느낌">강하고 리더십 있는 느낌</option>
+                <option value="세련되고 브랜드감 있는 느낌">세련되고 브랜드감 있는 느낌</option>
+                <option value="돈과 사업운을 살리는 느낌">돈과 사업운을 살리는 느낌</option>
+                <option value="예술성과 인기를 살리는 느낌">예술성과 인기를 살리는 느낌</option>
+              </select>
+            </label>
+            <label>
+              요청 메모
+              <input id="applyMemo" placeholder="피하고 싶은 글자, 원하는 이미지, 성씨 등" />
+            </label>
+            <button type="button" onclick="makeNamingApplication()">작명 신청서 만들기</button>
+          </div>
+          <div class="fortune-result" id="namingApplyResult">
+            <h3>작명 신청 대기 중</h3>
+            <p class="small">신청서를 만들면 상담에 필요한 핵심 정보가 정리됩니다.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <h3>쭈쌤의 사주전쟁</h3>
+      <p>원국은 전쟁터, 지장간은 아이템, 대운은 스위치, 세운은 타이밍입니다.</p>
+      <div class="footer-links" aria-label="정책 링크">
+        <a href="/terms">이용약관</a>
+        <a href="/privacy">개인정보처리방침</a>
+        <a href="/refund">환불정책</a>
+        <a href="/payment">결제안내</a>
+        <a href="/support">문의하기</a>
+      </div>
+      <p><a href="/payment.html">프리미엄 리포트 열기</a></p>
+      <div class="footer-meta">
+        <span>운영사: <span data-config="companyName">J Company</span></span>
+        <span>대표자: <span data-config="representativeName">추후 입력</span></span>
+        <span>사업자등록번호: <span data-config="businessRegistrationNumber">472-01-04135</span></span>
+        <span>통신판매업번호: <span data-config="ecommerceRegistrationNumber">추후 입력</span></span>
+        <span>주소: <span data-config="address">추후 입력</span></span>
+        <span>고객센터: <span data-config="contactPhone">010-8708-0544</span></span>
+        <span>이메일: <span data-config="contactEmail">support@sajuwar.com</span></span>
+      </div>
+      <p>© 2026 SAJU WAR. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/site-config.js"></script>
+  <script src="/policy.js"></script>
+  <script>
+    let isPaid = false;
+    let developerModeAvailable = false;
+    let developerModeOn = localStorage.getItem("sajuwar_developer_mode") === "true";
+    let developerAdminKey = localStorage.getItem("sajuwar_admin_key") || "";
+    let developerCopyCounter = 0;
+    const developerCopyPayloads = {};
+    let developerReviewCounter = 0;
+    const developerReviewParagraphs = {};
+    let lastFullResult = "";
+    let loadingTimer = null;
+    const accessParams = new URLSearchParams(window.location.search);
+    const accessToken = accessParams.get("token") || localStorage.getItem("sajuwar_auth_token") || "";
+
+    const hiddenGan = {
+      "子": ["癸"],
+      "丑": ["己", "癸", "辛"],
+      "寅": ["甲", "丙", "戊"],
+      "卯": ["乙"],
+      "辰": ["戊", "乙", "癸"],
+      "巳": ["丙", "戊", "庚"],
+      "午": ["丁", "己"],
+      "未": ["己", "丁", "乙"],
+      "申": ["庚", "壬", "戊"],
+      "酉": ["辛"],
+      "戌": ["戊", "辛", "丁"],
+      "亥": ["壬", "甲"]
+    };
+
+    const elementMap = {
+      "甲": "목", "乙": "목", "寅": "목", "卯": "목",
+      "丙": "화", "丁": "화", "巳": "화", "午": "화",
+      "戊": "토", "己": "토", "辰": "토", "戌": "토", "丑": "토", "未": "토",
+      "庚": "금", "辛": "금", "申": "금", "酉": "금",
+      "壬": "수", "癸": "수", "亥": "수", "子": "수"
+    };
+
+    const itemInfo = {
+      "甲": { name: "성장 아이템", desc: "시작, 기획, 교육, 확장, 새로운 길을 여는 힘" },
+      "乙": { name: "섬세한 성장 아이템", desc: "관계 조율, 감각, 브랜드, 유연한 생존력" },
+      "丙": { name: "태양 아이템", desc: "노출, 인기, 표현, 무대, 사람을 끌어오는 힘" },
+      "丁": { name: "불빛 아이템", desc: "콘텐츠 감성, 집중력, 작지만 깊게 남는 영향력" },
+      "戊": { name: "기반 아이템", desc: "신뢰, 관리, 부동산, 조직, 버티는 힘" },
+      "己": { name: "현실화 아이템", desc: "실무, 루틴, 설계, 정리, 생활형 수익" },
+      "庚": { name: "결단 아이템", desc: "판단, 실행, 기술, 규칙, 구조를 세우는 힘" },
+      "辛": { name: "정교함 아이템", desc: "디자인, 미감, 전문성, 고급화, 날카로운 분석" },
+      "壬": { name: "흐름 아이템", desc: "정보, 유통, 이동, 네트워크, 큰 흐름을 읽는 힘" },
+      "癸": { name: "지혜 아이템", desc: "학습, 분석, 상담, 숨은 지식, 조용한 통찰" }
+    };
+
+    const pillarLabel = { year: "년주", month: "월주", day: "일주", hour: "시주" };
+    const elementCopy = {
+      "목": "새롭게 시작하고 키우는 힘",
+      "화": "드러내고 표현하고 사람을 모으는 힘",
+      "토": "버티고 축적하고 현실화하는 힘",
+      "금": "판단하고 정리하고 결과를 만드는 힘",
+      "수": "배우고 연결하고 흐름을 읽는 힘"
+    };
+
+    function pad(n) { return String(n).padStart(2, "0"); }
+
+    function fillOptions() {
+      const year = document.getElementById("year");
+      const month = document.getElementById("month");
+      const day = document.getElementById("day");
+      const hour = document.getElementById("hour");
+      const minute = document.getElementById("minute");
+
+      year.innerHTML = '<option value="">년도</option>';
+      month.innerHTML = '<option value="">월</option>';
+      day.innerHTML = '<option value="">일</option>';
+      hour.innerHTML = '<option value="">시</option>';
+      minute.innerHTML = '<option value="">분</option>';
+
+      for (let y = 1950; y <= 2026; y++) year.innerHTML += `<option value="${y}">${y}년</option>`;
+      for (let m = 1; m <= 12; m++) month.innerHTML += `<option value="${pad(m)}">${m}월</option>`;
+      for (let d = 1; d <= 31; d++) day.innerHTML += `<option value="${pad(d)}">${d}일</option>`;
+      for (let h = 0; h <= 23; h++) hour.innerHTML += `<option value="${pad(h)}">${h}시</option>`;
+      for (let m = 0; m < 60; m += 5) minute.innerHTML += `<option value="${pad(m)}">${m}분</option>`;
+    }
+
+    fillOptions();
+    initDeveloperPreviewMode();
+    refreshPurchaseAccess().then(() => {
+      if (accessParams.get("paid") === "1" && !canViewPaidReport()) {
+        const result = document.getElementById("result");
+        if (result) result.innerHTML = renderPurchaseRequiredMessage();
+      }
+    });
+
+    async function initDeveloperPreviewMode() {
+      const params = new URLSearchParams(window.location.search);
+      const urlAdminKey = params.get("adminKey") || params.get("devKey");
+      if (urlAdminKey) {
+        developerAdminKey = urlAdminKey;
+        localStorage.setItem("sajuwar_admin_key", urlAdminKey);
+        params.delete("adminKey");
+        params.delete("devKey");
+        const nextQuery = params.toString();
+        history.replaceState(null, "", `${location.pathname}${nextQuery ? `?${nextQuery}` : ""}${location.hash}`);
+      }
+      if (!developerAdminKey) return;
+
+      try {
+        const response = await fetch("/api/developer-preview-config", {
+          headers: { "x-sajuwar-admin-key": developerAdminKey }
+        });
+        const data = await response.json();
+        developerModeAvailable = Boolean(data.available);
+        if (!developerModeAvailable) {
+          localStorage.removeItem("sajuwar_developer_mode");
+          return;
+        }
+        renderDeveloperModeToggle();
+      } catch (error) {
+        developerModeAvailable = false;
+      }
+    }
+
+    function renderDeveloperModeToggle() {
+      const topbar = document.querySelector(".topbar");
+      if (!topbar || document.getElementById("developerModeToggle")) return;
+      const label = document.createElement("label");
+      label.className = "developer-toggle";
+      label.innerHTML = `
+        <input id="developerModeToggle" type="checkbox" ${developerModeOn ? "checked" : ""} />
+        Developer Mode
+      `;
+      topbar.appendChild(label);
+      label.querySelector("input").addEventListener("change", (event) => {
+        developerModeOn = event.target.checked;
+        localStorage.setItem("sajuwar_developer_mode", developerModeOn ? "true" : "false");
+        showToast(developerModeOn ? "Developer Mode ON" : "Developer Mode OFF");
+      });
+    }
+
+    function hasDeveloperAccess() {
+      return developerModeAvailable && developerModeOn && developerAdminKey;
+    }
+
+    async function refreshPurchaseAccess() {
+      if (!accessToken) {
+        isPaid = false;
+        return false;
+      }
+      try {
+        const params = new URLSearchParams({ product_id: "premium_report" });
+        const response = await fetch(`/api/purchases/check?${params.toString()}`, {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        const data = await response.json();
+        isPaid = Boolean(data.active);
+        if (isPaid) {
+          localStorage.setItem("sajuwar_auth_token", accessToken);
+        }
+        return isPaid;
+      } catch (error) {
+        isPaid = false;
+        return false;
+      }
+    }
+
+    function canViewPaidReport() {
+      return isPaid || hasDeveloperAccess();
+    }
+
+    function renderPurchaseRequiredMessage() {
+      return `
+        <section class="box">
+          <h2 class="section-title">구매가 완료되지 않았습니다.</h2>
+          <p>관리자 확인 후 이용 가능합니다.</p>
+          <button type="button" onclick="location.href='/mypage.html'">구매내역 확인</button>
+          <button type="button" class="secondary" style="margin-top:10px" onclick="location.href='/payment.html'">무통장입금 신청</button>
+        </section>
+      `;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function stringifyDebugValue(value) {
+      if (value === null || value === undefined) return "";
+      return typeof value === "string" ? value : JSON.stringify(value, null, 2);
+    }
+
+    function registerDeveloperCopyPayload(value) {
+      const id = `developer-copy-${++developerCopyCounter}`;
+      developerCopyPayloads[id] = stringifyDebugValue(value);
+      return id;
+    }
+
+    function renderDeveloperCopyButton(copyId) {
+      return `<button class="developer-copy" type="button" onclick="copyDeveloperSection('${copyId}', event)">복사</button>`;
+    }
+
+    function renderDeveloperPre(value) {
+      return `<pre>${escapeHtml(stringifyDebugValue(value))}</pre>`;
+    }
+
+    function renderDeveloperReport(value) {
+      return `<div class="report developer-report-preview">${escapeHtml(stringifyDebugValue(value))}</div>`;
+    }
+
+    function renderDeveloperScores(debug) {
+      const scores = [
+        ["Quality", debug.quality_score],
+        ["Retrieval", debug.retrieval_score],
+        ["Interpretation", debug.interpretation_score],
+        ["Personalization", debug.personalization_score]
+      ];
+      return `
+        <div class="developer-score-grid">
+          ${scores.map(([label, value]) => `
+            <div class="developer-score-card">
+              <strong>${label}</strong>
+              <b>${escapeHtml(value ?? "-")}</b>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderDeveloperSection(title, value, options = {}) {
+      const copyId = registerDeveloperCopyPayload(value);
+      const body = options.html ? value
+        : options.type === "report" ? renderDeveloperReport(value)
+        : options.type === "scores" ? renderDeveloperScores(value)
+        : renderDeveloperPre(value);
+      return `
+        <details class="developer-section" ${options.open ? "open" : ""}>
+          <summary>
+            <span>${escapeHtml(title)}</span>
+            ${options.noCopy ? "" : renderDeveloperCopyButton(copyId)}
+          </summary>
+          <div class="developer-section-body">
+            ${body}
+          </div>
+        </details>
+      `;
+    }
+
+    function registerReviewParagraph(text, index) {
+      const id = `review-paragraph-${++developerReviewCounter}`;
+      developerReviewParagraphs[id] = {
+        section: inferReviewSection(text),
+        before: text,
+        index
+      };
+      return id;
+    }
+
+    function inferReviewSection(text) {
+      const value = String(text || "");
+      if (/직업|사업|브랜드|커리어|일\b/.test(value)) return "career";
+      if (/재물|돈|수익|자산/.test(value)) return "money";
+      if (/연애|관계|배우자|인연/.test(value)) return "relationship";
+      if (/건강|생활 관리|루틴/.test(value)) return "health";
+      if (/대운|스위치/.test(value)) return "daewoon";
+      if (/세운|타이밍|올해/.test(value)) return "sewoon";
+      if (/지장간|아이템/.test(value)) return "hidden_stem";
+      if (/오행|세력/.test(value)) return "elements";
+      if (/총평|최종 메시지/.test(value)) return "summary";
+      return "report";
+    }
+
+    function splitReviewParagraphs(report) {
+      return stringifyDebugValue(report)
+        .split(/\n{2,}/)
+        .map((text) => text.trim())
+        .filter(Boolean);
+    }
+
+    function renderReviewReasons(id) {
+      const reasons = ["표현 개선", "논리 수정", "해석 보강", "상담톤 변경", "용어 변경", "오타 수정", "근거 부족", "기타"];
+      return `
+        <div class="review-reasons" data-review-reasons="${id}">
+          ${reasons.map((reason) => `
+            <label>
+              <input type="checkbox" value="${escapeHtml(reason)}" />
+              ${escapeHtml(reason)}
+            </label>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderReviewMode(report) {
+      const paragraphs = splitReviewParagraphs(report);
+      return `
+        <div class="review-toolbar">
+          <p class="small">문단별로 수정하고 저장하면 검수 데이터가 쌓입니다. 승인된 수정만 다음 AI 생성 프롬프트에 반영됩니다.</p>
+          <button class="developer-copy" type="button" onclick="downloadReviewDataset()">Dataset Export</button>
+        </div>
+        ${paragraphs.map((paragraph, index) => {
+          const id = registerReviewParagraph(paragraph, index);
+          return `
+            <article class="review-paragraph" data-review-id="${id}">
+              <p class="eyebrow">문단 ${index + 1}</p>
+              <textarea readonly>${escapeHtml(paragraph)}</textarea>
+              ${renderReviewReasons(id)}
+              <div class="review-actions">
+                <button class="developer-copy" type="button" onclick="enableReviewEdit('${id}', event)">수정</button>
+                <button class="developer-copy" type="button" onclick="saveReviewEdit('${id}', event)">저장</button>
+              </div>
+            </article>
+          `;
+        }).join("")}
+      `;
+    }
+
+    function renderReviewHistoryShell() {
+      return `
+        <div class="review-toolbar">
+          <p class="small">누가, 언제, 무엇을 어떻게 수정했는지 확인하고 승인할 수 있습니다.</p>
+          <button class="developer-copy" type="button" onclick="loadReviewHistory()">새로고침</button>
+        </div>
+        <div id="reviewHistoryList" class="review-history-list">
+          <p class="small">Review History를 불러오는 중입니다.</p>
+        </div>
+      `;
+    }
+
+    function renderDeveloperDebugPanel(debug) {
+      if (!hasDeveloperAccess() || !debug) return "";
+      const qualityScores = {
+        quality_score: debug.quality_score,
+        retrieval_score: debug.retrieval_score,
+        interpretation_score: debug.interpretation_score,
+        personalization_score: debug.personalization_score
+      };
+      return `
+        <section class="box developer-debug">
+          <div class="developer-debug-head">
+            <div>
+              <p class="eyebrow">Developer Preview</p>
+              <h2 class="section-title">관리자 검수 데이터</h2>
+              <p class="small">각 항목을 펼쳐서 확인하고 필요한 내용만 복사할 수 있습니다. Developer Mode OFF 상태에서는 이 영역이 렌더링되지 않습니다.</p>
+            </div>
+          </div>
+          ${renderDeveloperSection("전체 유료 리포트", debug.full_paid_report, { type: "report", open: true })}
+          ${renderDeveloperSection("Prompt", debug.prompt)}
+          ${renderDeveloperSection("Dataset Order", debug.dataset_order, { open: true })}
+          ${renderDeveloperSection("Used Datasets", debug.used_datasets, { open: true })}
+          ${renderDeveloperSection("Dataset Sections", debug.dataset_sections)}
+          ${renderDeveloperSection("Review Dataset Application", debug.review_dataset_application, { open: true })}
+          ${renderDeveloperSection("RAG Context", debug.rag_context)}
+          ${renderDeveloperSection("Review Dataset Guidance", debug.review_dataset_guidance)}
+          ${renderDeveloperSection("검색 Source", debug.sources)}
+          ${renderDeveloperSection("GPT 응답", debug.gpt_response)}
+          ${renderDeveloperSection("최종 Markdown", debug.final_markdown)}
+          ${renderDeveloperSection("품질 점수", qualityScores, { type: "scores", open: true })}
+          ${renderDeveloperSection("Review Mode", renderReviewMode(debug.full_paid_report), { html: true, open: true, noCopy: true })}
+          ${renderDeveloperSection("Review History", renderReviewHistoryShell(), { html: true, open: true, noCopy: true })}
+        </section>
+      `;
+    }
+
+    async function copyDeveloperSection(copyId, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const text = developerCopyPayloads[copyId] || "";
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("검수 데이터가 복사되었습니다.");
+      } catch (error) {
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.style.position = "fixed";
+        area.style.left = "-9999px";
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+        showToast("검수 데이터가 복사되었습니다.");
+      }
+    }
+
+    function enableReviewEdit(reviewId, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const card = document.querySelector(`[data-review-id="${reviewId}"]`);
+      const textarea = card?.querySelector("textarea");
+      if (!textarea) return;
+      textarea.removeAttribute("readonly");
+      textarea.focus();
+      showToast("문단을 수정할 수 있습니다.");
+    }
+
+    function getReviewReasons(reviewId) {
+      return Array.from(document.querySelectorAll(`[data-review-reasons="${reviewId}"] input:checked`))
+        .map((input) => input.value);
+    }
+
+    async function saveReviewEdit(reviewId, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      if (!hasDeveloperAccess()) return;
+      const item = developerReviewParagraphs[reviewId];
+      const card = document.querySelector(`[data-review-id="${reviewId}"]`);
+      const textarea = card?.querySelector("textarea");
+      if (!item || !textarea) return;
+      const after = textarea.value.trim();
+      if (!after || after === item.before.trim()) {
+        showToast("수정된 내용이 없습니다.");
+        return;
+      }
+      const reasons = getReviewReasons(reviewId);
+      if (!reasons.length) {
+        showToast("수정 이유를 하나 이상 선택해주세요.");
+        return;
+      }
+      const response = await fetch("/api/review-dataset", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-sajuwar-admin-key": developerAdminKey
+        },
+        body: JSON.stringify({
+          section: item.section,
+          before: item.before,
+          after,
+          reason: reasons,
+          reviewer: "현명역학원"
+        })
+      });
+      if (!response.ok) {
+        showToast("저장에 실패했습니다.");
+        return;
+      }
+      textarea.setAttribute("readonly", "readonly");
+      showToast("Review Dataset에 저장되었습니다.");
+      await loadReviewHistory();
+    }
+
+    function renderReviewDiff(before, after) {
+      return `
+        <div class="review-diff">
+          <div class="review-diff-box review-diff-before">
+            <strong>수정 전</strong>
+            <div>${escapeHtml(before)}</div>
+          </div>
+          <div class="review-diff-box review-diff-after">
+            <strong>수정 후</strong>
+            <div>${escapeHtml(after)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderReviewHistoryItems(items) {
+      if (!items.length) {
+        return `<p class="small">아직 저장된 리뷰가 없습니다.</p>`;
+      }
+      return items.map((item) => `
+        <article class="review-history-item">
+          <div class="review-history-meta">
+            <span><strong>${escapeHtml(item.reviewer || "현명역학원")}</strong> · ${escapeHtml(item.created_at || "")}</span>
+            <span class="review-status">${item.approved ? "승인됨" : "승인 대기"}</span>
+          </div>
+          <p class="small">무엇: ${escapeHtml(item.section || "report")} / 이유: ${escapeHtml(item.reason || "")}</p>
+          ${renderReviewDiff(item.before || "", item.after || "")}
+          ${item.approved ? "" : `<button class="developer-copy" type="button" style="margin-top:10px" onclick="approveReviewItem('${escapeHtml(item.id)}', event)">승인</button>`}
+        </article>
+      `).join("");
+    }
+
+    async function loadReviewHistory() {
+      if (!hasDeveloperAccess()) return;
+      const container = document.getElementById("reviewHistoryList");
+      if (!container) return;
+      const response = await fetch("/api/review-dataset", {
+        headers: { "x-sajuwar-admin-key": developerAdminKey }
+      });
+      if (!response.ok) {
+        container.innerHTML = `<p class="small">Review History를 불러오지 못했습니다.</p>`;
+        return;
+      }
+      const data = await response.json();
+      container.innerHTML = renderReviewHistoryItems(data.items || []);
+    }
+
+    async function approveReviewItem(id, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      if (!hasDeveloperAccess()) return;
+      const response = await fetch(`/api/review-dataset/${encodeURIComponent(id)}/approve`, {
+        method: "POST",
+        headers: { "x-sajuwar-admin-key": developerAdminKey }
+      });
+      if (!response.ok) {
+        showToast("승인에 실패했습니다.");
+        return;
+      }
+      showToast("승인되어 AI Dataset에 반영됩니다.");
+      await loadReviewHistory();
+    }
+
+    function downloadReviewDataset() {
+      if (!hasDeveloperAccess()) return;
+      const url = `/api/review-dataset/export?adminKey=${encodeURIComponent(developerAdminKey)}`;
+      window.open(url, "_blank", "noopener");
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 3200);
+    }
+
+    function splitPillar(value) {
+      return { gan: value ? value[0] : "-", ji: value ? value[1] : "-" };
+    }
+
+    const elementClassMap = {
+      "목": "wood",
+      "화": "fire",
+      "토": "earth",
+      "금": "metal",
+      "수": "water"
+    };
+
+    function getElementClass(char) {
+      return elementClassMap[elementMap[char]] || "neutral";
+    }
+
+    function renderElementGlyph(char) {
+      const glyph = char || "-";
+      const element = elementMap[glyph] || "";
+      return `<span class="element-glyph element-${getElementClass(glyph)}" title="${escapeHtml(element)}">${escapeHtml(glyph)}</span>`;
+    }
+
+    function renderElementCell(char, typeClass) {
+      return `<td class="${typeClass} element-${getElementClass(char)}">${renderElementGlyph(char)}</td>`;
+    }
+
+    function renderGanji(value) {
+      const chars = String(value || "-").split("");
+      return `<span class="ganji-colored">${chars.map((char) => renderElementGlyph(char)).join("")}</span>`;
+    }
+
+    function renderHiddenStems(stems) {
+      return (stems && stems.length ? stems : ["-"]).map((stem) => renderElementGlyph(stem)).join(" · ");
+    }
+
+    function getElementStats(pillars) {
+      const stats = { "목": 0, "화": 0, "토": 0, "금": 0, "수": 0 };
+      ["year", "month", "day", "hour"].forEach((key) => {
+        const { gan, ji } = splitPillar(pillars[key]);
+        if (elementMap[gan]) stats[elementMap[gan]] += 1;
+        if (elementMap[ji]) stats[elementMap[ji]] += 1;
+        (hiddenGan[ji] || []).forEach((stem) => {
+          if (elementMap[stem]) stats[elementMap[stem]] += 0.5;
+        });
+      });
+      return stats;
+    }
+
+    function getHiddenItems(pillars) {
+      const items = [];
+      ["year", "month", "day", "hour"].forEach((key) => {
+        const ji = splitPillar(pillars[key]).ji;
+        (hiddenGan[ji] || []).forEach((stem) => {
+          const info = itemInfo[stem];
+          if (!info) return;
+          items.push({
+            pillar: key,
+            ji,
+            stem,
+            element: elementMap[stem],
+            ...info
+          });
+        });
+      });
+      return items;
+    }
+
+    function getStrongest(stats) {
+      return Object.entries(stats).sort((a, b) => b[1] - a[1])[0] || ["-", 0];
+    }
+
+    function getWeakest(stats) {
+      return Object.entries(stats).sort((a, b) => a[1] - b[1])[0] || ["-", 0];
+    }
+
+    function renderPillars(pillars) {
+      const cols = [
+        { key: "year", value: pillars.year },
+        { key: "month", value: pillars.month },
+        { key: "day", value: pillars.day },
+        { key: "hour", value: pillars.hour }
+      ];
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const dayGan = splitPillar(pillars.day).gan;
+      const dayElement = elementMap[dayGan] || "-";
+      const maxVal = Math.max(...Object.values(stats), 1);
+
+      return `
+        <div class="dashboard">
+          <section class="box">
+            <h2 class="section-title">원국 전장 구성</h2>
+            <table class="manse">
+              <tr>
+                <th class="label"></th>
+                ${cols.map((col) => `<th>${pillarLabel[col.key]}</th>`).join("")}
+              </tr>
+              <tr>
+                <td class="label">천간</td>
+                ${cols.map((col) => renderElementCell(splitPillar(col.value).gan, "gan")).join("")}
+              </tr>
+              <tr>
+                <td class="label">지지</td>
+                ${cols.map((col) => renderElementCell(splitPillar(col.value).ji, "ji")).join("")}
+              </tr>
+              <tr>
+                <td class="label">지장간</td>
+                ${cols.map((col) => {
+                  const ji = splitPillar(col.value).ji;
+                  return `<td class="hidden-stems">${renderHiddenStems(hiddenGan[ji])}</td>`;
+                }).join("")}
+              </tr>
+            </table>
+          </section>
+
+          <section class="box">
+            <h2 class="section-title">전장 상태</h2>
+            <article class="card">
+              <h3>일간 캐릭터</h3>
+              <p>이 사주의 주인공은 <strong>${renderElementGlyph(dayGan)}</strong> 일간입니다. 중심 속성은 <strong>${dayElement}</strong> 기운이며, 현재 원국에서 가장 크게 반복되는 세력은 <strong>${strongElement}</strong>입니다.</p>
+              <span class="badge">주인공 ${renderElementGlyph(dayGan)}</span>
+              <span class="badge">${dayElement} 일간</span>
+              <span class="badge">${strongElement} 세력 우세</span>
+            </article>
+            <article class="card" style="margin-top:12px">
+              <h3>오행 병력</h3>
+              <p class="small">천간과 지지, 지장간을 합쳐 원국의 세력 분포를 가볍게 시각화했습니다.</p>
+              ${Object.entries(stats).map(([key, value]) => `
+                <div style="margin-top:10px">${key} 기운 ${value} · ${elementCopy[key]}</div>
+                <div class="bar"><i style="width:${Math.min((value / maxVal) * 100, 100)}%"></i></div>
+              `).join("")}
+            </article>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderItems(pillars) {
+      const items = getHiddenItems(pillars);
+      const [strongElement] = getStrongest(items.reduce((acc, item) => {
+        acc[item.element] = (acc[item.element] || 0) + 1;
+        return acc;
+      }, { "목": 0, "화": 0, "토": 0, "금": 0, "수": 0 }));
+
+      return `
+        <section class="box">
+          <h2 class="section-title">지장간 아이템</h2>
+          <p class="small">지장간은 겉으로 드러난 팔자 뒤에 숨어 있는 아이템 창고입니다. 원국이 불리해 보여도, 이 안에 있는 아이템이 대운과 세운을 만날 때 현실의 무기가 됩니다.</p>
+          <div class="grid3" style="margin-top:18px">
+            ${items.map((item) => `
+              <article class="card">
+                <h3>${renderElementGlyph(item.stem)} · ${item.name}</h3>
+                <p>${item.desc}</p>
+                <span class="badge">${item.element} 아이템</span>
+                <span class="badge">${pillarLabel[item.pillar]} ${renderElementGlyph(item.ji)} 속</span>
+              </article>
+            `).join("")}
+          </div>
+          <article class="card" style="margin-top:14px">
+            <h3>아이템 해석 요약</h3>
+            <p>현재 원국 안에는 총 <strong>${items.length}</strong>개의 지장간 아이템이 확인됩니다. 가장 많이 반복되는 아이템 계열은 <strong>${strongElement}</strong>입니다. 이 계열은 평소에는 잠복해 있다가, 관련 대운과 세운이 들어올 때 갑자기 현실적인 선택지로 떠오르기 쉽습니다.</p>
+          </article>
+        </section>
+      `;
+    }
+
+    function renderDaewoon(daewoon) {
+      if (!daewoon || !daewoon.list || !daewoon.list.length) return "";
+      return `
+        <section class="box">
+          <h2 class="section-title">대운 스위치</h2>
+          <p class="small">${daewoon.startInfo || ""}</p>
+          <div class="grid3" style="margin-top:18px">
+            ${daewoon.list.map((item) => `
+              <article class="card">
+                <h3>${item.startAge}세 - ${item.endAge}세</h3>
+                <p class="ganji-large">${renderGanji(item.ganji)}</p>
+                <p class="small">${item.startYear}년 - ${item.endYear}년</p>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderSewoon(sewoon) {
+      if (!sewoon || !sewoon.list || !sewoon.list.length) return "";
+      return `
+        <section class="box">
+          <h2 class="section-title">세운 타이밍</h2>
+          <p class="small">${sewoon.startInfo || ""}</p>
+          <div class="grid3" style="margin-top:18px">
+            ${sewoon.list.map((item) => `
+              <article class="card">
+                <h3>${item.year}년</h3>
+                <p class="ganji-large">${renderGanji(item.ganji)}</p>
+                <p class="small">천간 ${item.stemElement} / 지지 ${item.branchElement}</p>
+                <p class="small">${item.theme}</p>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function parseReportSections(report) {
+      const lines = String(report || "")
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+      const sections = [];
+      let current = null;
+
+      lines.forEach((line) => {
+        const headingMatch = line.match(/^(\d{1,2})[\.\)]\s*(.+)$/);
+        if (headingMatch) {
+          current = {
+            number: headingMatch[1],
+            title: headingMatch[2],
+            body: []
+          };
+          sections.push(current);
+          return;
+        }
+
+        if (!current) {
+          current = { number: String(sections.length + 1), title: "핵심 상담", body: [] };
+          sections.push(current);
+        }
+        current.body.push(line);
+      });
+
+      return sections.length ? sections : [{ number: "1", title: "프리미엄 심화 해석", body: [report] }];
+    }
+
+    function renderPremiumReportCards(report, context) {
+      const sections = parseReportSections(report);
+      const { name, strongElement, dayGan, hiddenItems, sewoonList } = context;
+      const firstHidden = hiddenItems[0];
+      const firstSewoon = sewoonList[0];
+      const artLabels = [
+        "원국의 큰 전장을 펼쳐 보는 구간",
+        "지장간 아이템과 숨은 무기를 확인하는 구간",
+        "현실 선택과 상담 전략을 정리하는 구간",
+        "관계와 타이밍의 흐름을 읽는 구간",
+        "대운과 세운의 스위치를 맞추는 구간"
+      ];
+      const actionText = firstSewoon
+        ? `${firstSewoon.year}년에는 ${escapeHtml(firstSewoon.theme || "가장 현실적인 선택")}을 기준으로 계획을 짧게 쪼개세요.`
+        : "오늘 할 일 하나, 멈출 일 하나, 미룰 일 하나를 먼저 정리하세요.";
+
+      return `
+        <div class="war-report-layout">
+          <div class="war-report-stack">
+            ${sections.map((section, index) => `
+              <article class="war-report-card">
+                <h4><span class="war-report-number">${escapeHtml(section.number || String(index + 1))}</span>${escapeHtml(section.title || "상담 해석")}</h4>
+                <div class="war-report-art war-art-${index % 5}" data-label="${escapeHtml(artLabels[index % artLabels.length])}" aria-hidden="true"></div>
+                ${section.body.length
+                  ? section.body.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")
+                  : `<p>${escapeHtml(report)}</p>`}
+              </article>
+            `).join("")}
+          </div>
+          <aside class="war-report-side">
+            <div class="war-visual-card">
+              <strong>${escapeHtml(name)}님의 원국을 읽는 핵심 장면</strong>
+              <span>${renderElementGlyph(dayGan)} 일간 · ${escapeHtml(strongElement)} 기운 중심</span>
+              <div class="war-battle-track" aria-hidden="true">
+                <i></i>
+                <em class="war-battle-node"><b>시작</b></em>
+                <em class="war-battle-node"><b>돌파</b></em>
+                <em class="war-battle-node"><b>확보</b></em>
+              </div>
+            </div>
+            <div class="war-action-card">
+              <b>오늘의 적용 포인트</b>
+              <p>${actionText}</p>
+            </div>
+            <div class="war-action-card">
+              <b>숨은 카드</b>
+              <p>${firstHidden ? `${renderElementGlyph(firstHidden.stem)} ${escapeHtml(firstHidden.name)}은(는) ${escapeHtml(firstHidden.desc)}` : "지장간에서 반복되는 기운을 현실 선택의 보조 기준으로 보세요."}</p>
+            </div>
+          </aside>
+        </div>
+      `;
+    }
+
+    function buildFinalActionMessage(name, context) {
+      const { report, dayGan, strongElement, hiddenItems, daewoonList, sewoonList } = context;
+      const firstYear = sewoonList[0] || null;
+      const targetYear = sewoonList[2] || sewoonList[1] || firstYear;
+      const anchorYear = Number(firstYear?.year) || new Date().getFullYear();
+      const resultYear = Number(targetYear?.year) || anchorYear + 2;
+      const currentTurn = daewoonList.find((item) => {
+        const start = Number(item.startYear);
+        const end = Number(item.endYear);
+        return start <= anchorYear && anchorYear <= end;
+      }) || daewoonList[0] || {};
+      const weapon = itemInfo[dayGan]?.name || `${dayGan} 일간`;
+      const hiddenWeapon = hiddenItems[0] ? `${hiddenItems[0].name}` : `${strongElement} 기운`;
+      const reportLastLine = String(report || "")
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .slice(-1)[0] || "오늘 바로 한 가지를 정하고 실행하세요.";
+
+      return {
+        lead: `${name}님은 ${anchorYear}년에 준비를 더 늘리는 사람이 아니라, ${firstYear ? firstYear.theme : "현실에서 바로 움직일 선택"}을 기준으로 첫 깃발을 꽂아야 합니다. 이때 ${weapon}을 숨기지 말고 꺼내 쓰면, ${resultYear}년에는 지금 흩어져 있는 기회가 눈에 보이는 성과로 모이기 시작합니다.`,
+        timing: `${currentTurn.startYear ? `${currentTurn.startYear}년부터 ${currentTurn.endYear}년까지의 대운 구간` : "현재 대운 구간"}은 방향을 자주 바꾸는 시기가 아니라, 한 가지 전장을 정하고 반복해서 점령하는 흐름입니다. ${hiddenWeapon}은 보조 무기처럼 쓰세요. 감으로 밀어붙이기보다 기록, 일정, 돈의 흐름을 같이 잡을수록 원하는 바가 빨리 현실화됩니다.`,
+        close: `최종 조언: ${reportLastLine}`,
+        steps: [
+          `${anchorYear}년: 새 계획을 늘리지 말고 바로 팔거나 보여줄 수 있는 결과물 하나를 정하세요.`,
+          `${resultYear}년: 같은 무기를 반복해서 꺼내 성과, 매출, 관계 중 하나의 지표를 확보하세요.`,
+          `오늘: 해야 할 일 1개, 버릴 일 1개, 미룰 일 1개를 적고 첫 행동을 끝내세요.`
+        ]
+      };
+    }
+
+    function renderPremiumWarDashboard(name, data, report) {
+      const pillars = data.pillars || {};
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const dayGan = splitPillar(pillars.day).gan || "-";
+      const hiddenItems = getHiddenItems(pillars).slice(0, 6);
+      const daewoonList = (data.daewoon?.list || []).slice(0, 8);
+      const sewoonList = (data.sewoon?.list || []).slice(0, 10);
+      const scoreSeed = simpleHash(`${name}${pillars.year}${pillars.month}${pillars.day}${pillars.hour}`);
+      const totalScore = 86 + (Math.abs(scoreSeed) % 10);
+      const bars = [
+        ["전략 실행력", 82 + (Math.abs(scoreSeed) % 12)],
+        ["관계 조율력", 74 + (Math.abs(scoreSeed + 7) % 16)],
+        ["현실 돌파력", 78 + (Math.abs(scoreSeed + 13) % 15)],
+        ["성장 회복력", 80 + (Math.abs(scoreSeed + 19) % 14)]
+      ];
+      const finalAction = buildFinalActionMessage(name, {
+        report,
+        dayGan,
+        strongElement,
+        hiddenItems,
+        daewoonList,
+        sewoonList
+      });
+
+      return `
+        <div class="premium-war-shell">
+          <section class="war-hero">
+            <div class="war-hero-copy">
+              <div>
+                <p class="eyebrow">SAJU WAR Premium Report</p>
+                <h2>${escapeHtml(name)}님의 전략 리포트</h2>
+                <p>원국, 지장간, 대운, 세운을 한 화면에서 훑고 바로 행동으로 옮길 수 있게 정리했습니다.</p>
+              </div>
+              <div class="war-kpi-grid">
+                <div class="war-kpi"><span>중심 일간</span><strong>${renderElementGlyph(dayGan)}</strong></div>
+                <div class="war-kpi"><span>주요 기운</span><strong>${strongElement}</strong></div>
+                <div class="war-kpi"><span>숨은 카드</span><strong>${hiddenItems.length}</strong></div>
+              </div>
+            </div>
+            <aside class="war-score-panel">
+              <div class="war-score-medal">${totalScore}%</div>
+              <div>
+                <h3>종합 전투력</h3>
+                <p class="small">현재 리포트의 핵심 판단을 실행력 중심으로 요약한 지표입니다.</p>
+              </div>
+              <div class="war-mini-bars">
+                ${bars.map(([label, value]) => `
+                  <div class="war-mini-row">
+                    <span>${label}</span>
+                    <i style="--value:${value}%"></i>
+                    <b>${value}%</b>
+                  </div>
+                `).join("")}
+              </div>
+            </aside>
+          </section>
+
+          ${renderPillars(pillars)}
+
+          <div class="war-grid">
+            <section class="war-panel">
+              <div class="war-panel-head">
+                <h3>지장간 아이템 카드</h3>
+                <span class="badge">${hiddenItems.length} cards</span>
+              </div>
+              <div class="war-item-grid">
+                ${hiddenItems.map((item) => `
+                  <article class="war-item-card">
+                    <strong>${renderElementGlyph(item.stem)} · ${escapeHtml(item.name)}</strong>
+                    <p>${escapeHtml(item.desc)}</p>
+                    <span class="badge">${item.element}</span>
+                    <span class="badge">${pillarLabel[item.pillar]} ${renderElementGlyph(item.ji)}</span>
+                  </article>
+                `).join("")}
+              </div>
+            </section>
+
+            <section class="war-panel">
+              <div class="war-panel-head">
+                <h3>대운 스위치 타임라인</h3>
+                <span class="badge">${daewoonList.length} turns</span>
+              </div>
+              <div class="war-timeline">
+                ${daewoonList.map((item) => `
+                  <article class="war-time-card">
+                    <b>${item.startAge}세 - ${item.endAge}세</b>
+                    <strong class="ganji-colored">${renderGanji(item.ganji)}</strong>
+                    <p class="small">${item.startYear} - ${item.endYear}</p>
+                  </article>
+                `).join("")}
+              </div>
+            </section>
+          </div>
+
+          <section class="war-panel">
+            <div class="war-panel-head">
+              <h3>세운 타이밍 타임라인</h3>
+              <span class="badge">${sewoonList.length} years</span>
+            </div>
+            <div class="war-timeline">
+              ${sewoonList.map((item) => `
+                <article class="war-time-card">
+                  <b>${item.year}년</b>
+                  <strong class="ganji-colored">${renderGanji(item.ganji)}</strong>
+                  <p class="small">${item.stemElement} / ${item.branchElement}</p>
+                  <p class="small">${escapeHtml(item.theme || "")}</p>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+
+          <section class="war-panel">
+            <div class="war-panel-head">
+              <h3>프리미엄 심화 해석</h3>
+              <span class="badge">full report</span>
+            </div>
+            ${renderPremiumReportCards(report, { name, strongElement, dayGan, hiddenItems, sewoonList })}
+          </section>
+
+          <section class="war-final-card">
+            <div class="war-final-emblem" aria-hidden="true">
+              <div class="war-final-mark"><b>決</b></div>
+            </div>
+            <div class="war-final-content">
+              <p class="eyebrow">Final Action Card</p>
+              <h3>최종 메시지</h3>
+              <p class="final-strike">${escapeHtml(finalAction.lead)}</p>
+              <p>${escapeHtml(finalAction.timing)}</p>
+              <div class="war-final-steps">
+                ${finalAction.steps.map((step) => `<span>${escapeHtml(step)}</span>`).join("")}
+              </div>
+              <p>${escapeHtml(finalAction.close)}</p>
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderFreeReadingCards(name, pillars, sewoon) {
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const dayGan = splitPillar(pillars.day).gan;
+      const monthJi = splitPillar(pillars.month).ji;
+      const hiddenItems = getHiddenItems(pillars);
+      const firstYearLuck = sewoon && sewoon.list && sewoon.list[0] ? sewoon.list[0] : null;
+      const dayInfo = itemInfo[dayGan] || { name: "중심 아이템", desc: "일간은 내가 전장에서 쓰는 기본 무기입니다." };
+      const hiddenText = hiddenItems.length
+        ? hiddenItems.slice(0, 3).map((item) => `${pillarLabel[item.pillar]} ${renderElementGlyph(item.stem)}`).join(", ")
+        : "아직 드러나지 않은 보조 아이템";
+
+      return `
+        <section class="box">
+          <p class="eyebrow">책 구조 참고 무료 해석</p>
+          <h2 class="section-title">${name}님의 무료 핵심 독해 카드</h2>
+          <p class="small">명리전의 천간·지지·조합·계절 분석 축과 생활명리식 세운 관점을 참고해, 무료 리포트에서도 원국을 여러 각도로 볼 수 있게 정리했습니다. 원문을 옮긴 것이 아니라 사주전쟁 세계관에 맞게 새로 풀어낸 안내입니다.</p>
+          <div class="reading-grid">
+            <article class="reading-card">
+              <div class="reading-art stem" aria-hidden="true"><i>겉</i></div>
+              <div>
+                <strong>천간 무기: ${renderElementGlyph(dayGan)}</strong>
+                <p>${dayInfo.name}. 겉으로 드러나는 선택 방식과 말투, 일 처리의 첫 인상이 여기서 시작됩니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art branch" aria-hidden="true"><i>환경</i></div>
+              <div>
+                <strong>지지 전장: ${renderElementGlyph(monthJi)}</strong>
+                <p>월지는 계절과 환경입니다. 내가 강해지는 판, 지치기 쉬운 판, 사람을 만나는 방식이 이 전장에 깔립니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art hidden" aria-hidden="true"><i>숨은 힘</i></div>
+              <div>
+                <strong>숨은 아이템</strong>
+                <p>${hiddenText} 쪽에 숨어 있는 재능과 가능성을 먼저 봅니다. 움직일 때 이 카드들이 밖으로 나옵니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art yearluck" aria-hidden="true"><i>올해</i></div>
+              <div>
+                <strong>세운 스위치${firstYearLuck ? `: ${firstYearLuck.year}` : ""}</strong>
+                <p>${firstYearLuck ? `${renderGanji(firstYearLuck.ganji)}의 흐름은 ${firstYearLuck.theme} 쪽으로 올해의 사건을 움직입니다.` : "세운은 올해 실제로 어떤 아이템을 꺼내 쓸지 알려주는 타이밍입니다."}</p>
+              </div>
+            </article>
+          </div>
+          <article class="guide-card" style="margin-top:14px">
+            <strong>무료 리포트에서 먼저 보는 핵심</strong>
+            <p>${strongElement} 기운이 현재 원국에서 가장 크게 반복됩니다. 강한 기운은 장점이면서 오해의 전장이 되기도 하므로, 지장간 아이템과 세운 타이밍을 함께 봐야 실제 쓰임이 보입니다.</p>
+          </article>
+        </section>
+      `;
+    }
+
+    function renderFreeIntroCards(name, pillars) {
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const dayGan = splitPillar(pillars.day).gan;
+      const monthJi = splitPillar(pillars.month).ji;
+      const dayInfo = itemInfo[dayGan] || { name: "중심 무기", desc: "내가 전장에서 쓰는 기본 반응 방식입니다." };
+
+      return `
+        <section class="box">
+          <p class="eyebrow">무료 공개 범위</p>
+          <h2 class="section-title">${name}님의 원국 입구 해석</h2>
+          <p class="small">무료 리포트에서는 원국의 뼈대와 일간 캐릭터, 가장 강하게 반복되는 기운까지만 먼저 보여드립니다. 지장간 아이템부터는 유료 리포트에서 열립니다.</p>
+          <div class="reading-grid">
+            <article class="reading-card">
+              <div class="reading-art origin" aria-hidden="true"><i>원국</i></div>
+              <div>
+                <strong>원국 전장</strong>
+                <p>네 기둥이 어떤 배열로 서 있는지 확인합니다. 이 표가 모든 해석의 지도입니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art stem" aria-hidden="true"><i>나</i></div>
+              <div>
+                <strong>일간 무기: ${renderElementGlyph(dayGan)}</strong>
+                <p>${dayInfo.name}. 겉으로 드러나는 선택 방식과 첫 반응을 가볍게 봅니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art branch" aria-hidden="true"><i>환경</i></div>
+              <div>
+                <strong>월지 전장: ${renderElementGlyph(monthJi)}</strong>
+                <p>월지는 내가 놓인 계절과 환경입니다. 강해지는 판과 지치기 쉬운 판을 봅니다.</p>
+              </div>
+            </article>
+            <article class="reading-card">
+              <div class="reading-art switch" aria-hidden="true"><i>세력</i></div>
+              <div>
+                <strong>강한 세력: ${strongElement}</strong>
+                <p>반복되는 기운은 장점이면서 오해의 전장이 됩니다. 실제 쓰임은 지장간부터 깊게 봅니다.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderFreePreviewGuide(name, pillars, sewoon) {
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const [weakElement] = getWeakest(stats);
+      const dayGan = splitPillar(pillars.day).gan;
+      const monthJi = splitPillar(pillars.month).ji;
+      const yearGan = splitPillar(pillars.year).gan;
+      const hourJi = splitPillar(pillars.hour).ji;
+      const hiddenItems = getHiddenItems(pillars);
+      const hiddenHint = hiddenItems.length
+        ? hiddenItems.slice(0, 4).map((item) => `${pillarLabel[item.pillar]} ${renderElementGlyph(item.stem)}`).join(" · ")
+        : "지장간은 유료 리포트에서 세밀하게 확인";
+      const firstYearLuck = sewoon && sewoon.list && sewoon.list[0] ? sewoon.list[0] : null;
+
+      return `
+        <section class="box">
+          <p class="eyebrow">무료 맛보기 확장</p>
+          <h2 class="section-title">${name}님의 사주 구조 미리보기</h2>
+          <p class="small">무료 리포트에서는 현명역학원식 판단 순서에 맞춰 원국의 겉 구조, 계절감, 강약의 방향, 올해 기운의 첫 인상까지 넓게 보여드립니다. 다만 실제 핵심인 지장간의 작용, 십성 관계, 대운·세운의 구체적 사건화, 돈·일·관계 전략은 유료 리포트에서만 깊게 열립니다.</p>
+          <div class="reading-grid">
+            <article class="reading-card">
+              <div class="free-card-art free-art-manse photo-art" aria-hidden="true"><i>원국</i></div>
+              <strong>겉으로 드러난 네 기둥</strong>
+              <p>연간 ${renderElementGlyph(yearGan)}, 일간 ${renderElementGlyph(dayGan)}, 월지 ${renderElementGlyph(monthJi)}, 시지 ${renderElementGlyph(hourJi)}의 배치를 먼저 봅니다. 무료에서는 이 배열이 어떤 분위기를 만들고, 내가 어떤 자리에서 힘을 쓰기 쉬운지 입구를 잡아드립니다.</p>
+            </article>
+            <article class="reading-card">
+              <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>계절</i></div>
+              <strong>월지로 보는 계절감</strong>
+              <p>월지는 사주의 온도와 배경입니다. ${renderElementGlyph(monthJi)} 기운이 깔린 환경에서는 내가 빠르게 반응하는 지점과 에너지가 소모되는 지점이 함께 생깁니다. 무료에서는 큰 방향만 보고, 유료에서는 이 계절이 십성과 지장간을 통해 어떻게 현실 문제로 이어지는지 풉니다.</p>
+            </article>
+            <article class="reading-card">
+              <div class="free-card-art free-art-color photo-art" aria-hidden="true"><i>균형</i></div>
+              <strong>오행 균형 힌트</strong>
+              <p>현재 원국에서 가장 두드러지는 기운은 ${strongElement}, 상대적으로 보강이 필요한 기운은 ${weakElement} 쪽입니다. 강한 기운은 장점이지만 과하면 고집, 피로, 관계의 오해로도 나타납니다. 무료에서는 균형의 방향을 보여주고, 유료에서는 무엇을 언제 보완해야 하는지 구체화합니다.</p>
+            </article>
+            <article class="reading-card">
+              <div class="free-card-art free-art-item photo-art" aria-hidden="true"><i>숨은</i></div>
+              <strong>지장간은 힌트만 공개</strong>
+              <p>${hiddenHint}. 숨은 기운은 겉으로 바로 보이지 않지만 실제 선택, 돈의 흐름, 관계 반응, 직업적 쓰임을 결정하는 중요한 층입니다. 이 부분은 무료에서 결론을 단정하지 않고, 유료 리포트에서 사주 근거와 함께 자세히 해석합니다.</p>
+            </article>
+          </div>
+          <article class="guide-card" style="margin-top:14px">
+            <strong>올해 흐름 맛보기</strong>
+            <p>${firstYearLuck ? `${firstYearLuck.year}년 ${renderGanji(firstYearLuck.ganji)}의 흐름은 ${firstYearLuck.theme} 쪽으로 먼저 움직입니다. 무료에서는 올해의 분위기만 보여드리고, 실제로 어떤 달과 상황에서 움직이면 좋은지는 유료 리포트에서 대운·세운과 연결해 정리합니다.` : "올해 흐름은 원국의 강약과 지장간이 만날 때 실제 사건으로 드러납니다. 무료에서는 큰 분위기를 보고, 유료에서는 행동 타이밍까지 확인합니다."}</p>
+          </article>
+        </section>
+      `;
+    }
+
+    function renderPaidLockFromJijanggan(name) {
+      return `
+        <section class="box upgrade-callout" id="premium">
+          <p class="eyebrow">유료 구간 시작</p>
+          <h2 class="section-title">지장간 아이템 분석부터 유료 리포트에서 열립니다</h2>
+          <p>${name}님의 원국 입구는 무료로 확인했습니다. 이제부터는 숨은 무기창고인 지장간, 대운 스위치, 세운 타이밍, 돈·일·관계 행동전략까지 연결되는 심화 구간입니다.</p>
+          <span class="price-badge">전체 심화 리포트 9,900원</span>
+          <div class="paid-lock-grid">
+            <article class="paid-lock-card">
+              <strong>숨은 아이템</strong>
+              <p class="small">겉으로 보이지 않는 재능, 돈맥, 직업 힌트, 관계 패턴을 구체적으로 풉니다.</p>
+            </article>
+            <article class="paid-lock-card">
+              <strong>대운 스위치</strong>
+              <p class="small">어느 10년 운에서 숨은 아이템이 켜지는지 흐름으로 연결합니다.</p>
+            </article>
+            <article class="paid-lock-card">
+              <strong>세운 타이밍</strong>
+              <p class="small">올해와 앞으로의 해에 실제로 움직여야 할 행동 카드를 정리합니다.</p>
+            </article>
+            <article class="paid-lock-card">
+              <strong>돈·일·관계 전략</strong>
+              <p class="small">돈, 일, 명예, 관계에서 어떤 방식으로 아이템을 써야 하는지 봅니다.</p>
+            </article>
+          </div>
+          <button type="button" onclick="location.href='/payment.html'">9,900원으로 유료 리포트 보기</button>
+        </section>
+      `;
+    }
+
+    function renderUpgradePrompt(name, mode = "middle") {
+      const headline = mode === "final"
+        ? "여기서부터는 유료 리포트에서 깊게 열립니다"
+        : "무료 리포트는 입구입니다. 깊은 작전은 유료에서 이어집니다";
+      const note = mode === "final"
+        ? `${name}님의 원국과 지장간은 확인했습니다. 이제 중요한 것은 어느 대운에서 어떤 아이템이 켜지고, 올해 어떤 행동으로 결과를 만들지입니다.`
+        : "무료 리포트는 원국의 큰 전장과 숨은 아이템을 먼저 보여줍니다. 유료 리포트에서는 돈, 일, 관계, 대운, 세운을 실제 행동 전략으로 더 깊게 풀어냅니다.";
+
+      return `
+        <section class="box upgrade-callout">
+          <p class="eyebrow">심화 해석 안내</p>
+          <h2 class="section-title">${headline}</h2>
+          <p>${note}</p>
+          <div class="upgrade-points">
+            <div class="upgrade-point">대운 스위치가 켜지는 시기</div>
+            <div class="upgrade-point">재물·직업·관계별 아이템 사용법</div>
+            <div class="upgrade-point">올해 세운에 맞는 행동 카드</div>
+          </div>
+          <button type="button" onclick="location.href='/payment.html'">유료 리포트로 깊게 보기</button>
+        </section>
+      `;
+    }
+
+    function cleanText(text) {
+      return (text || "결과가 비어 있습니다.")
+        .replace(/\*\*/g, "")
+        .replace(/###/g, "")
+        .replace(/(\n\s*){3,}/g, "\n\n")
+        .trim();
+    }
+
+    function startBattleLoading() {
+      if (loadingTimer) clearInterval(loadingTimer);
+      const result = document.getElementById("result");
+      const reportSection = document.getElementById("report");
+      const messages = [
+        "원국의 병력을 배치하고 있습니다.",
+        "지장간 아이템을 찾고 있습니다.",
+        "대운 스위치가 켜지는 구간을 확인하고 있습니다.",
+        "세운 타이밍과 행동 카드를 맞추고 있습니다.",
+        "무료 리포트와 잠금 영역을 구성하고 있습니다."
+      ];
+      let count = 10;
+
+      result.innerHTML = `
+        <div class="box battle-loading">
+          <div style="position:relative;z-index:2">
+            <h2 class="section-title">전장 지도를 여는 중</h2>
+            <p>당신의 원국 안에 숨어 있는 아이템을 불러오고 있습니다.</p>
+            <div id="countdown" class="countdown">10</div>
+            <div class="loading-line"><i id="loadingBar"></i></div>
+            <p id="loadingText" class="small" style="margin-top:20px">전장의 문이 열리고 있습니다.</p>
+          </div>
+        </div>
+      `;
+      reportSection.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      loadingTimer = setInterval(() => {
+        count -= 1;
+        const countdown = document.getElementById("countdown");
+        const loadingText = document.getElementById("loadingText");
+        const loadingBar = document.getElementById("loadingBar");
+        if (countdown) countdown.textContent = count > 0 ? count : "열림";
+        if (loadingText) loadingText.textContent = messages[Math.abs(count) % messages.length];
+        if (loadingBar) loadingBar.style.width = `${Math.min((10 - count) * 10, 100)}%`;
+        if (count <= 0) {
+          clearInterval(loadingTimer);
+          loadingTimer = null;
+        }
+      }, 700);
+    }
+
+    function stopBattleLoading() {
+      if (loadingTimer) clearInterval(loadingTimer);
+      loadingTimer = null;
+    }
+
+    async function openPaidReport() {
+      await refreshPurchaseAccess();
+      if (canViewPaidReport()) {
+        analyze(true);
+        return;
+      }
+      const result = document.getElementById("result");
+      if (result) {
+        result.innerHTML = renderPurchaseRequiredMessage();
+        document.getElementById("report").scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        location.href = "/payment.html";
+      }
+    }
+
+    async function analyze(forcePaid = false) {
+      const name = document.getElementById("name").value.trim();
+      const calendarType = document.getElementById("calendarType").value;
+      const year = document.getElementById("year").value;
+      const month = document.getElementById("month").value;
+      const day = document.getElementById("day").value;
+      const hour = document.getElementById("hour").value;
+      const minute = document.getElementById("minute").value;
+      const gender = document.getElementById("gender").value;
+      const result = document.getElementById("result");
+
+      if (!name || !calendarType || !year || !month || !day || !hour || !minute || !gender) {
+        showToast("이름, 생년월일, 시간, 성별을 모두 입력해주세요.");
+        return;
+      }
+
+      startBattleLoading();
+
+      try {
+        const response = await fetch("/analyze", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(forcePaid && accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+            ...(hasDeveloperAccess() ? { "x-sajuwar-admin-key": developerAdminKey } : {})
+          },
+          body: JSON.stringify({
+            name,
+            calendarType,
+            birth: `${year}-${month}-${day}`,
+            time: `${hour}:${minute}`,
+            gender,
+            paidReport: Boolean(forcePaid && canViewPaidReport()),
+            developerMode: hasDeveloperAccess()
+          })
+        });
+
+        const data = await response.json();
+        stopBattleLoading();
+
+        if (!response.ok) {
+          result.innerHTML = `<div class="box">서버 오류: ${data.result || data.error || "응답 오류"}</div>`;
+          return;
+        }
+
+        const report = cleanText(data.result);
+        const fullHTML = `
+          ${renderPremiumWarDashboard(name, data, report)}
+          ${renderDeveloperDebugPanel(data.developer_debug)}
+        `;
+
+        const previewHTML = `
+          <section class="box">
+            <h2 class="section-title">${name}님의 무료 전장 리포트</h2>
+            <p>무료 결과에서는 원국 구성과 일간 캐릭터까지만 먼저 공개합니다. 지장간 아이템 분석부터는 유료 리포트에서 깊게 열립니다.</p>
+          </section>
+          ${renderPillars(data.pillars)}
+          ${renderFreeIntroCards(name, data.pillars)}
+          ${renderFreePreviewGuide(name, data.pillars, data.sewoon)}
+          ${renderFreeReadingCards(name, data.pillars, data.sewoon)}
+          ${renderPaidLockFromJijanggan(name)}
+        `;
+
+        lastFullResult = fullHTML;
+        result.innerHTML = forcePaid && canViewPaidReport() ? fullHTML : previewHTML;
+        if (forcePaid && hasDeveloperAccess()) {
+          loadReviewHistory();
+        }
+        document.getElementById("report").scrollIntoView({ behavior: "smooth", block: "start" });
+        showToast(forcePaid && canViewPaidReport() ? "전체 리포트가 열렸습니다." : "무료 전장 리포트가 열렸습니다.");
+      } catch (error) {
+        stopBattleLoading();
+        result.innerHTML = `<div class="box">연결 오류가 발생했습니다: ${error.message}</div>`;
+      }
+    }
+
+    function downloadPDF() {
+      if (!canViewPaidReport()) {
+        showToast("PDF 저장은 결제 후 사용할 수 있습니다.");
+        return;
+      }
+      window.print();
+    }
+
+    function simpleHash(value) {
+      return [...String(value || "")].reduce((sum, char, index) => {
+        return sum + char.charCodeAt(0) * (index + 7);
+      }, 0);
+    }
+
+    function pick(list, seed) {
+      return list[Math.abs(seed) % list.length];
+    }
+
+    function makeTodayFortune() {
+      const name = document.getElementById("todayName").value.trim();
+      const birth = document.getElementById("todayBirth").value;
+      const result = document.getElementById("todayResult");
+
+      if (!name || !birth) {
+        showToast("오늘의 운세는 이름과 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const today = new Date();
+      const dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+      const seed = simpleHash(name + birth + dateKey);
+      const score = 58 + (seed % 39);
+      const item = pick([
+        ["말의 아이템", "오늘은 길게 설득하기보다 짧고 선명하게 말할수록 운이 붙습니다."],
+        ["돈의 아이템", "작은 제안, 견적, 판매글처럼 돈과 연결되는 행동을 하나 꺼내기 좋습니다."],
+        ["정리의 아이템", "흩어진 일을 정리하면 막힌 흐름이 풀립니다. 버릴 것 하나를 정하세요."],
+        ["관계의 아이템", "먼저 안부를 건네면 의외의 기회가 돌아옵니다. 가볍게 연락하세요."],
+        ["공부의 아이템", "배운 것을 저장만 하지 말고 한 문장으로 공개하면 운이 움직입니다."]
+      ], seed);
+      const caution = pick([
+        "오늘은 감정적으로 바로 답하지 말고 10분 뒤에 답하는 편이 좋습니다.",
+        "너무 크게 시작하면 지치기 쉽습니다. 작게 끝내는 승리가 필요합니다.",
+        "남의 속도에 맞추다 내 리듬을 잃지 않도록 기준을 먼저 정하세요.",
+        "돈 이야기는 애매하게 넘기지 말고 숫자로 정리하는 것이 좋습니다.",
+        "혼자 끌어안기보다 하나는 부탁해야 전장이 가벼워집니다."
+      ], seed + 13);
+
+      result.innerHTML = `
+        <div class="score-ring">${score}</div>
+        <h3>${name}님의 오늘 아이템: ${item[0]}</h3>
+        <p>${item[1]}</p>
+        <ul class="fortune-list">
+          <li>오늘의 행동 카드: ${pick(["먼저 제안하기", "정리하고 버리기", "짧게 공개하기", "연락 한 번 하기", "가격을 적어보기"], seed + 3)}</li>
+          <li>주의할 전장: ${caution}</li>
+          <li>행운 시간대: ${pick(["오전 9-11시", "점심 직후", "오후 3-5시", "저녁 7-9시", "밤 10시 이후"], seed + 5)}</li>
+        </ul>
+      `;
+      showToast("오늘의 무료 운세가 열렸습니다.");
+    }
+
+
+    function getTodayKey() {
+      const today = new Date();
+      return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    }
+
+    async function showFreeManse() {
+      const name = document.getElementById("manseName").value.trim();
+      const birth = document.getElementById("manseBirth").value;
+      const time = document.getElementById("manseTime").value || "12:00";
+      const calendarType = document.getElementById("manseCalendar").value;
+      const result = document.getElementById("freeManseResult");
+
+      if (!name || !birth) {
+        showToast("만세력 보기는 이름과 생년월일을 입력해주세요.");
+        return;
+      }
+
+      result.innerHTML = `
+        <h3>만세력 계산 중</h3>
+        <p class="small">서버의 실제 만세력 계산기로 네 기둥을 확인하고 있습니다.</p>
+      `;
+
+      try {
+        const response = await fetch("/api/manse", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, birth, time, calendarType }),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.result || data.error || "만세력 계산에 실패했습니다.");
+        }
+
+        const pillars = data.pillars;
+        result.innerHTML = `
+          <h3>${name}님의 실제 만세력</h3>
+          <p class="small">입력 기준: ${calendarType === "lunar" ? "음력" : "양력"} / 양력 변환일: ${pillars.solarDate}</p>
+          <table class="manse" style="margin-top:12px">
+            <tr><th class="label">연</th><th>월</th><th>일</th><th>시</th></tr>
+            <tr><td class="ji">${renderGanji(pillars.year)}</td><td class="ji">${renderGanji(pillars.month)}</td><td class="ji">${renderGanji(pillars.day)}</td><td class="ji">${renderGanji(pillars.hour)}</td></tr>
+          </table>
+          <ul class="fortune-list">
+            <li>지장간 힌트는 아래 무료 전장 리포트에서 같은 원국 기준으로 이어서 확인할 수 있습니다.</li>
+            <li>대운과 세운 스위치까지 보려면 전장 리포트에서 같은 정보를 입력해 주세요.</li>
+          </ul>
+        `;
+        showToast("실제 만세력이 열렸습니다.");
+      } catch (error) {
+        result.innerHTML = `
+          <h3>만세력 계산 오류</h3>
+          <p class="small">${error.message}</p>
+        `;
+        showToast("만세력 계산을 다시 확인해주세요.");
+      }
+    }
+
+    function makeDailyFortune() {
+      const name = document.getElementById("dailyName").value.trim();
+      const birth = document.getElementById("dailyBirth").value;
+      const result = document.getElementById("dailyResult");
+
+      if (!name || !birth) {
+        showToast("일일 운세는 이름과 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const seed = simpleHash("daily" + name + birth + getTodayKey());
+      const attack = pick(["먼저 연락하기", "제안서 한 줄 쓰기", "가격을 말해보기", "내 생각을 공개하기", "미뤄둔 약속 잡기"], seed);
+      const defense = pick(["감정적으로 바로 답하지 않기", "계약과 돈 이야기는 숫자로 확인하기", "남의 속도에 끌려가지 않기", "완벽주의로 시작을 미루지 않기", "과한 설명을 줄이기"], seed + 3);
+      const recovery = pick(["따뜻한 물과 짧은 산책", "책상 위 세 가지 정리", "좋아하는 음악 한 곡", "휴대폰 알림 30분 끄기", "오늘 할 일 하나만 남기기"], seed + 6);
+      const score = 57 + (seed % 41);
+
+      result.innerHTML = `
+        <div class="score-ring">${score}</div>
+        <h3>${name}님의 오늘 작전</h3>
+        <ul class="fortune-list">
+          <li>공격 카드: ${attack}</li>
+          <li>방어 카드: ${defense}</li>
+          <li>회복 카드: ${recovery}</li>
+          <li>오늘의 결론: 움직이는 사람이 아이템을 꺼냅니다. 아주 작게라도 시작하세요.</li>
+        </ul>
+      `;
+      showToast("일일 운세가 열렸습니다.");
+    }
+
+    function makeLuckyColor() {
+      const name = document.getElementById("colorName").value.trim();
+      const birth = document.getElementById("colorBirth").value;
+      const result = document.getElementById("colorResult");
+
+      if (!name || !birth) {
+        showToast("행운 색상은 이름과 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const colors = [
+        { name: "햇살 골드", hex: "#f6c453", power: "자신감과 돈의 흐름" },
+        { name: "복숭아 핑크", hex: "#f49ab0", power: "연애운과 부드러운 말투" },
+        { name: "비취 그린", hex: "#72c5a0", power: "회복력과 좋은 인연" },
+        { name: "하늘 블루", hex: "#76b7e8", power: "대화운과 정리력" },
+        { name: "석류 레드", hex: "#df5b56", power: "결단력과 존재감" },
+        { name: "라벤더 퍼플", hex: "#a98be8", power: "직감과 콘텐츠 감각" }
+      ];
+      const seed = simpleHash("color" + name + birth + getTodayKey());
+      const color = pick(colors, seed);
+      const avoid = pick(colors.filter((item) => item.name !== color.name), seed + 5);
+      const item = pick(["상의", "핸드폰 배경", "노트", "립/악세서리", "가방 속 작은 소품", "프로필 포인트 색"], seed + 8);
+
+      result.innerHTML = `
+        <div class="color-oracle">
+          <span class="color-chip" style="background:${color.hex}"></span>
+          <div>
+            <h3>${color.name}</h3>
+            <p class="small">오늘 보태는 기운: ${color.power}</p>
+          </div>
+        </div>
+        <ul class="fortune-list">
+          <li>추천 사용처: ${item}</li>
+          <li>피하면 좋은 색: ${avoid.name}</li>
+          <li>한 줄 팁: 오늘은 색을 크게 입기보다 작은 포인트로 쓰면 운이 자연스럽게 켜집니다.</li>
+        </ul>
+      `;
+      showToast("오늘의 행운 색상이 열렸습니다.");
+    }
+
+    function makeLoveWeapon() {
+      const name = document.getElementById("loveName").value.trim();
+      const birth = document.getElementById("loveBirth").value;
+      const result = document.getElementById("loveResult");
+
+      if (!name || !birth) {
+        showToast("오늘의 연애 무기는 이름과 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const today = new Date();
+      const dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+      const seed = simpleHash("love" + name + birth + dateKey);
+      const score = 55 + (seed % 42);
+      const weapon = pick([
+        ["부드러운 선 긋기", "오늘은 다 맞춰주는 것보다 내 기준을 다정하게 말할 때 매력이 살아납니다."],
+        ["짧은 칭찬", "길게 설명하지 말고 상대가 한 행동 하나를 콕 집어 칭찬하면 분위기가 열립니다."],
+        ["느린 답장", "바로 반응하기보다 한 박자 늦게 답할수록 말의 무게가 좋아집니다."],
+        ["솔직한 한 문장", "빙빙 돌려 말하기보다 마음을 한 문장으로 정리하면 관계의 스위치가 켜집니다."],
+        ["가벼운 제안", "무거운 고백보다 커피, 산책, 짧은 통화처럼 부담 없는 제안이 잘 먹힙니다."],
+        ["눈치보다 표현", "오늘은 상대 반응을 추측하기보다 작은 표현을 먼저 꺼낼수록 흐름이 좋아집니다."]
+      ], seed);
+      const avoid = pick([
+        "상대의 마음을 시험하는 말은 피하세요.",
+        "읽씹으로 기싸움하면 운이 새기 쉽습니다.",
+        "과거 이야기를 꺼내 오늘의 분위기를 흐리지 마세요.",
+        "너무 빠른 결론 요구는 상대를 방어적으로 만들 수 있습니다.",
+        "괜찮다고 말하면서 티 내는 방식은 피하는 게 좋습니다.",
+        "혼자 상상해서 결론 내리지 말고 확인 질문을 쓰세요."
+      ], seed + 11);
+      const charm = pick([
+        "차분한 말투",
+        "먼저 웃어주는 태도",
+        "현실적인 배려",
+        "센스 있는 질문",
+        "자기 일에 집중하는 모습",
+        "작지만 정확한 표현"
+      ], seed + 17);
+      const message = pick([
+        "오늘 시간 괜찮으면 잠깐 이야기할래?",
+        "그 말 좋았다. 계속 생각났어.",
+        "무리하지 말고, 그래도 나는 네 편이야.",
+        "나 오늘 네 생각 좀 났어.",
+        "이번 주에 가볍게 커피 어때?",
+        "말해줘서 고마워. 나는 그 부분이 좋았어."
+      ], seed + 23);
+
+      result.innerHTML = `
+        <div class="score-ring">${score}</div>
+        <h3>${name}님의 오늘 연애 무기: ${weapon[0]}</h3>
+        <p>${weapon[1]}</p>
+        <ul class="fortune-list">
+          <li>오늘의 매력 포인트: ${charm}</li>
+          <li>보내기 좋은 한 문장: ${message}</li>
+          <li>피해야 할 전장: ${avoid}</li>
+          <li>프리미엄에서 볼 내용: 인연 패턴, 표현 방식, 관계가 켜지는 대운/세운</li>
+        </ul>
+      `;
+      showToast("오늘의 연애 무기가 열렸습니다.");
+    }
+
+    function makeCompatibility() {
+      const nameA = document.getElementById("matchNameA").value.trim();
+      const nameB = document.getElementById("matchNameB").value.trim();
+      const birthA = document.getElementById("matchBirthA").value;
+      const birthB = document.getElementById("matchBirthB").value;
+      const result = document.getElementById("matchResult");
+
+      if (!nameA || !nameB || !birthA || !birthB) {
+        showToast("궁합은 두 사람의 이름과 생년월일을 모두 입력해주세요.");
+        return;
+      }
+
+      const seedA = simpleHash(nameA + birthA);
+      const seedB = simpleHash(nameB + birthB);
+      const gap = Math.abs(seedA - seedB);
+      const score = 52 + (gap % 45);
+      const chemistry = pick([
+        ["불꽃형", "서로 자극을 주며 빨리 가까워지는 조합입니다. 다만 말의 속도가 빨라지면 감정이 앞설 수 있습니다."],
+        ["동맹형", "같은 목표를 잡으면 강해지는 조합입니다. 함께 계획을 세울수록 관계가 안정됩니다."],
+        ["거울형", "비슷한 약점을 비춰주는 관계입니다. 불편함을 성장 신호로 쓰면 깊어집니다."],
+        ["보완형", "한쪽이 놓친 부분을 다른 쪽이 채워주는 조합입니다. 역할을 나누면 운이 좋아집니다."],
+        ["느린 발효형", "처음보다 시간이 갈수록 맛이 나는 관계입니다. 서두르지 않을수록 오래 갑니다."]
+      ], gap);
+      const strategy = pick([
+        "오늘은 결론보다 마음을 먼저 확인하세요.",
+        "돈이나 일정 이야기는 숫자로 정하면 다툼이 줄어듭니다.",
+        "상대의 방식을 고치려 하기보다 내 기준을 부드럽게 말하세요.",
+        "짧은 칭찬 하나가 관계의 스위치를 켭니다.",
+        "같이 할 작은 목표를 하나 정하면 분위기가 살아납니다."
+      ], gap + 9);
+
+      result.innerHTML = `
+        <div class="score-ring">${score}</div>
+        <h3>${nameA} × ${nameB}: ${chemistry[0]} 궁합</h3>
+        <p>${chemistry[1]}</p>
+        <ul class="fortune-list">
+          <li>관계 온도: ${pick(["따뜻하지만 속도 조절 필요", "친구처럼 편한 흐름", "강한 끌림과 작은 긴장", "천천히 깊어지는 흐름", "현실적인 동맹 기운"], gap + 2)}</li>
+          <li>오늘의 대화 전략: ${strategy}</li>
+          <li>프리미엄에서 볼 내용: 인연 패턴, 결혼운, 충돌 지점, 관계 회복 타이밍</li>
+        </ul>
+      `;
+      showToast("간단 궁합이 열렸습니다.");
+    }
+
+    function scoreMyName() {
+      const name = document.getElementById("scoreName").value.trim();
+      const birth = document.getElementById("scoreBirth").value;
+      const gender = document.getElementById("scoreGender").value;
+      const result = document.getElementById("nameScoreResult");
+
+      if (!name || !birth || !gender) {
+        showToast("이름 점수는 이름, 생년월일, 성별을 모두 입력해주세요.");
+        return;
+      }
+
+      const seed = simpleHash(name + birth + gender);
+      const total = 56 + (seed % 42);
+      const sound = 55 + ((seed + 11) % 43);
+      const meaning = 55 + ((seed + 23) % 43);
+      const brand = 55 + ((seed + 37) % 43);
+      const action = 55 + ((seed + 51) % 43);
+      const weapon = pick([
+        ["기억되는 이름", "처음 들었을 때 인상이 남는 힘이 있습니다. 사람 앞에 자주 나설수록 이름값이 살아납니다."],
+        ["신뢰를 쌓는 이름", "빠른 화려함보다 오래 두고 믿음이 쌓이는 이름입니다. 전문성, 상담, 교육과 잘 맞습니다."],
+        ["돈을 부르는 이름", "거래와 제안에 강한 이름입니다. 가격, 상품, 브랜드로 연결할 때 힘이 납니다."],
+        ["관계를 여는 이름", "부드럽게 다가가고 사람을 연결하는 힘이 있습니다. 소개, 협업, 커뮤니티에 유리합니다."],
+        ["무대를 여는 이름", "표현력과 존재감이 살아나는 이름입니다. 콘텐츠, 예술, 홍보와 잘 맞습니다."],
+        ["정리하는 이름", "복잡한 것을 명확하게 만드는 힘이 있습니다. 기획, 운영, 관리에서 이름의 힘이 살아납니다."]
+      ], seed);
+      const supplement = pick([
+        "이름을 쓸 때 직함이나 전문 분야를 함께 붙이면 힘이 더 좋아집니다.",
+        "SNS나 브랜드에서는 짧은 소개 문장을 같이 쓰는 것이 좋습니다.",
+        "부드러운 이미지가 강하므로 결과물과 숫자를 함께 보여주면 균형이 맞습니다.",
+        "강한 인상이 있으니 첫 문장은 따뜻하게 시작하는 편이 좋습니다.",
+        "이름 자체보다 반복 노출이 중요합니다. 같은 표기를 꾸준히 쓰세요.",
+        "브랜드명으로 쓸 때는 한글 표기와 영문 표기를 함께 점검하는 것이 좋습니다."
+      ], seed + 7);
+
+      result.innerHTML = `
+        <div class="score-ring">${total}</div>
+        <h3>${name}님의 이름 무기: ${weapon[0]}</h3>
+        <p>${weapon[1]}</p>
+        <ul class="fortune-list">
+          <li>소리 점수: ${sound}</li>
+          <li>의미 점수: ${meaning}</li>
+          <li>브랜드 점수: ${brand}</li>
+          <li>실행력 점수: ${action}</li>
+          <li>보완 포인트: ${supplement}</li>
+        </ul>
+      `;
+      showToast("내 이름 점수가 열렸습니다.");
+    }
+
+    function makeNamingApplication() {
+      const applicant = document.getElementById("applyName").value.trim();
+      const type = document.getElementById("applyType").value;
+      const birth = document.getElementById("applyBirth").value;
+      const time = document.getElementById("applyTime").value || "모름";
+      const style = document.getElementById("applyStyle").value;
+      const memo = document.getElementById("applyMemo").value.trim() || "없음";
+      const result = document.getElementById("namingApplyResult");
+
+      if (!applicant || !birth) {
+        showToast("작명 신청은 신청자 이름과 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const applicationText = [
+        "[사주전쟁 작명 신청]",
+        `신청자: ${applicant}`,
+        `작명 대상: ${type}`,
+        `생년월일: ${birth}`,
+        `태어난 시간: ${time}`,
+        `원하는 이름 느낌: ${style}`,
+        `요청 메모: ${memo}`,
+        "상담 요청: 원국 전장과 지장간 아이템을 살리는 이름 후보를 받고 싶습니다."
+      ].join("\n");
+
+      result.dataset.application = applicationText;
+      result.innerHTML = `
+        <h3>${type} 신청서가 준비되었습니다</h3>
+        <p>원하는 방향은 <strong>${style}</strong>입니다. 사주전쟁 작명에서는 원국의 부족한 기운을 억지로 덮기보다, 지장간 아이템이 잘 켜지는 이름을 우선으로 봅니다.</p>
+        <ul class="fortune-list">
+          <li>1단계: 원국 전장과 필요한 이름 방향 확인</li>
+          <li>2단계: 소리, 뜻, 이미지, 사용 장면을 함께 점검</li>
+          <li>3단계: 후보 이름과 피해야 할 이름 결 정리</li>
+        </ul>
+        <button type="button" style="margin-top:16px" onclick="copyNamingApplication()">신청 내용 복사하기</button>
+      `;
+      showToast("작명 신청서가 만들어졌습니다.");
+    }
+
+    async function copyNamingApplication() {
+      const result = document.getElementById("namingApplyResult");
+      const text = result.dataset.application;
+
+      if (!text) {
+        showToast("먼저 작명 신청서를 만들어주세요.");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("작명 신청 내용이 복사되었습니다.");
+      } catch (error) {
+        showToast("복사가 막혔습니다. 화면의 내용을 직접 선택해 복사해주세요.");
+      }
+    }
+
+    function makeConsultApplication() {
+      const name = document.getElementById("consultName").value.trim();
+      const contact = document.getElementById("consultContact").value.trim();
+      const birth = document.getElementById("consultBirth").value;
+      const time = document.getElementById("consultTime").value || "모름";
+      const topic = document.getElementById("consultTopic").value;
+      const period = document.getElementById("consultPeriod").value.trim() || "상담 때 함께 확인";
+      const memo = document.getElementById("consultMemo").value.trim() || "없음";
+      const result = document.getElementById("consultResult");
+
+      if (!name || !contact || !birth) {
+        showToast("상담 신청은 이름, 연락처, 생년월일을 입력해주세요.");
+        return;
+      }
+
+      const applicationText = [
+        "[쭈쌤 사주전쟁 상담 신청]",
+        `신청자: ${name}`,
+        `연락처: ${contact}`,
+        `생년월일: ${birth}`,
+        `태어난 시간: ${time}`,
+        `상담 주제: ${topic}`,
+        `보고 싶은 시기: ${period}`,
+        `상담 메모: ${memo}`,
+        "상담 요청: 원국의 무기와 지장간 아이템, 세운·월운 타이밍까지 구체적으로 알고 싶습니다."
+      ].join("\n");
+
+      result.dataset.application = applicationText;
+      result.innerHTML = `
+        <h3>${name}님의 상담 신청서가 준비되었습니다</h3>
+        <p><strong>${topic}</strong>을 중심으로, <strong>${period}</strong>의 세운·월운 타이밍과 실제 행동 전략을 상담에서 확인할 수 있습니다.</p>
+        <ul class="fortune-list">
+          <li>확인할 핵심: 원국의 무기와 지장간 아이템</li>
+          <li>상담 포인트: 언제, 어떤 달에, 무엇을 꺼내 쓸지</li>
+          <li>연결 가능: 사주강의, 궁합, 작명, 개명, 브랜드명 상담</li>
+        </ul>
+        <button type="button" style="margin-top:16px" onclick="copyConsultApplication()">상담 내용 복사하기</button>
+      `;
+      showToast("상담 신청서가 만들어졌습니다.");
+    }
+
+    async function copyConsultApplication() {
+      const result = document.getElementById("consultResult");
+      const text = result.dataset.application;
+
+      if (!text) {
+        showToast("먼저 상담 신청서를 만들어주세요.");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("상담 신청 내용이 복사되었습니다.");
+      } catch (error) {
+        showToast("복사가 막혔습니다. 화면의 내용을 직접 선택해 복사해주세요.");
+      }
+    }
+
+    function makePaidCompatibilityApplication() {
+      const nameA = document.getElementById("paidMatchNameA").value.trim();
+      const nameB = document.getElementById("paidMatchNameB").value.trim();
+      const birthA = document.getElementById("paidMatchBirthA").value;
+      const birthB = document.getElementById("paidMatchBirthB").value;
+      const timeA = document.getElementById("paidMatchTimeA").value || "모름";
+      const timeB = document.getElementById("paidMatchTimeB").value || "모름";
+      const type = document.getElementById("paidMatchType").value;
+      const period = document.getElementById("paidMatchPeriod").value.trim() || "상담 때 함께 확인";
+      const memo = document.getElementById("paidMatchMemo").value.trim() || "없음";
+      const result = document.getElementById("paidMatchResult");
+
+      if (!nameA || !nameB || !birthA || !birthB) {
+        showToast("유료 궁합은 두 사람의 이름과 생년월일을 모두 입력해주세요.");
+        return;
+      }
+
+      const applicationText = [
+        "[쭈쌤 사주전쟁 유료 궁합 신청]",
+        `내 이름: ${nameA}`,
+        `내 생년월일: ${birthA}`,
+        `내 태어난 시간: ${timeA}`,
+        `상대 이름: ${nameB}`,
+        `상대 생년월일: ${birthB}`,
+        `상대 태어난 시간: ${timeB}`,
+        `관계 유형: ${type}`,
+        `보고 싶은 시기: ${period}`,
+        `궁금한 내용: ${memo}`,
+        "요청 내용: 두 사람의 원국 전장, 지장간 관계 아이템, 충돌 지점, 세운·월운 타이밍까지 자세히 보고 싶습니다."
+      ].join("\n");
+
+      result.dataset.application = applicationText;
+      result.innerHTML = `
+        <h3>${nameA} × ${nameB} 유료 궁합 신청서가 준비되었습니다</h3>
+        <p><strong>${type}</strong>을 중심으로, <strong>${period}</strong>의 관계 세운·월운과 서로가 꺼내야 할 관계 아이템을 깊게 확인할 수 있습니다.</p>
+        <ul class="fortune-list">
+          <li>확인할 핵심: 두 사람의 원국 전장과 끌림/충돌 지점</li>
+          <li>관계 아이템: 서로에게 필요한 말투, 거리감, 행동 방식</li>
+          <li>타이밍: 연락, 만남, 결정, 재회, 결혼을 움직일 세운·월운</li>
+          <li>다음 단계: 결제 또는 상담 신청으로 자세한 궁합 리포트 연결</li>
+        </ul>
+        <button type="button" style="margin-top:16px" onclick="copyPaidCompatibilityApplication()">궁합 신청 내용 복사하기</button>
+        <button type="button" class="secondary" style="margin-top:10px" onclick="location.href='/payment.html'">결제하고 자세한 궁합 보기</button>
+      `;
+      showToast("유료 궁합 신청서가 만들어졌습니다.");
+    }
+
+    async function copyPaidCompatibilityApplication() {
+      const result = document.getElementById("paidMatchResult");
+      const text = result.dataset.application;
+
+      if (!text) {
+        showToast("먼저 유료 궁합 신청서를 만들어주세요.");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("유료 궁합 신청 내용이 복사되었습니다.");
+      } catch (error) {
+        showToast("복사가 막혔습니다. 화면의 내용을 직접 선택해 복사해주세요.");
+      }
+    }
+
+    document.getElementById("sajuForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      analyze();
+    });
+  </script>
+</body>
+</html>

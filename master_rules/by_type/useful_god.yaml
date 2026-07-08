@@ -1,0 +1,31 @@
+type: "용신"
+count: 2
+rules:
+  - rule_id: "MR-YG-0001"
+    if: "IF 과열된 화가 사건을 키운다."
+    then: "THEN 수의 방식인 휴식, 경청, 속도 조절을 조언한다."
+    because: "BECAUSE 용신적 보완은 부족한 기운을 현실 행동으로 가져오는 것이다."
+    exceptions:
+      - "반대 신호가 더 강하면 결론을 보류한다."
+      - "실제 상담에서는 원국, 대운, 세운을 함께 확인한다."
+    priority: 2
+    related_cases:
+      - "case_0009"
+      - "case_0037"
+      - "case_0065"
+    confidence: 0.91
+  - rule_id: "MR-YG-0002"
+    if: "IF 금이 과도하게 목을 누른다."
+    then: "THEN 목의 방식인 성장 여지와 자율성을 확보하게 한다."
+    because: "BECAUSE 억압된 목은 공간과 방향을 얻을 때 회복된다."
+    exceptions:
+      - "반대 신호가 더 강하면 결론을 보류한다."
+      - "실제 상담에서는 원국, 대운, 세운을 함께 확인한다."
+    priority: 2
+    related_cases:
+      - "case_0001"
+      - "case_0002"
+      - "case_0003"
+      - "case_0004"
+      - "case_0005"
+    confidence: 0.93

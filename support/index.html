@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>고객 문의 | 사주전쟁 SAJU WAR</title>
+  <meta name="description" content="사주전쟁(SAJU WAR) 결제, 환불, 리포트 오류, 계정 및 기타 문의를 접수하는 고객 문의 페이지입니다." />
+  <link rel="stylesheet" href="/policy.css" />
+  <script src="/site-config.js"></script>
+</head>
+<body>
+  <div class="policy-shell">
+    <header class="policy-topbar">
+      <a class="brand" href="/"><span class="brand-mark">SW</span><span><span data-config="serviceName">사주전쟁</span> 고객센터</span></a>
+      <nav class="policy-nav" aria-label="정책 메뉴">
+        <a href="/terms">이용약관</a>
+        <a href="/privacy">개인정보처리방침</a>
+        <a href="/refund">환불정책</a>
+        <a href="/payment">결제안내</a>
+        <a href="/support">문의하기</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="policy-hero">
+        <p class="eyebrow">Customer Support</p>
+        <h1>고객 문의</h1>
+        <p class="lead">결제, 환불, 리포트 오류, 계정 문제를 비공개로 문의해 주세요. 주문번호나 결제일을 함께 남겨주시면 더 빠르게 확인할 수 있습니다.</p>
+      </section>
+
+      <div class="policy-grid">
+        <article class="policy-card notice">
+          <h2>답변 안내</h2>
+          <p>문의는 <span data-config="contactEmail">support@sajuwar.com</span>으로 접수됩니다. 접수된 문의는 영업일 기준 1~3일 내 답변을 원칙으로 하며, 결제 및 환불 문의는 PG 승인내역 확인 후 처리됩니다.</p>
+        </article>
+
+        <article class="policy-card">
+          <h2>문의 접수</h2>
+          <form class="support-form" id="supportForm">
+            <div class="support-row">
+              <label>
+                이름
+                <input id="supportName" name="name" autocomplete="name" required placeholder="홍길동" />
+              </label>
+              <label>
+                이메일 또는 연락처
+                <input id="supportContact" name="contact" autocomplete="email" required placeholder="답변 받을 이메일 또는 연락처" />
+              </label>
+            </div>
+
+            <div class="support-row">
+              <label>
+                문의 유형
+                <select id="supportType" name="type" required>
+                  <option value="결제 문의">결제 문의</option>
+                  <option value="환불 문의">환불 문의</option>
+                  <option value="리포트 오류">리포트 오류</option>
+                  <option value="계정 문의">계정 문의</option>
+                  <option value="기타 문의">기타 문의</option>
+                </select>
+              </label>
+              <label>
+                주문번호 또는 결제일
+                <input id="supportOrder" name="order" placeholder="예: SAJUWAR_..., 2026-07-03" />
+              </label>
+            </div>
+
+            <label>
+              문의 내용
+              <textarea id="supportMessage" name="message" required placeholder="문제 상황, 결제수단, 오류 화면, 요청사항을 가능한 자세히 적어주세요."></textarea>
+            </label>
+
+            <label class="support-check">
+              <input id="supportConsent" type="checkbox" required />
+              <span>문의 처리를 위해 입력한 개인정보를 수집 및 이용하는 데 동의합니다. 수집 정보는 고객지원, 결제/환불 확인, 분쟁 처리 목적으로 사용되며 관련 법령에 따른 보관기간 이후 파기됩니다.</span>
+            </label>
+
+            <div class="support-actions">
+              <button class="support-button" type="submit">문의 메일 작성하기</button>
+              <button class="support-button secondary" type="button" id="copySupportButton">문의 내용 복사</button>
+            </div>
+            <div class="support-result" id="supportResult" role="status" aria-live="polite"></div>
+          </form>
+        </article>
+
+        <article class="policy-card">
+          <h2>빠른 확인을 위한 안내</h2>
+          <ul>
+            <li>결제/환불 문의는 주문번호, 결제일, 결제금액, 결제수단을 함께 남겨주세요.</li>
+            <li>리포트 오류는 입력한 생년월일, 성별, 태어난 시간, 오류 화면 내용을 알려주세요.</li>
+            <li>환불 가능 여부는 <a href="/refund">환불 및 취소 정책</a>과 리포트 생성 상태를 기준으로 확인합니다.</li>
+            <li>카드번호, 주민등록번호, 계좌 비밀번호 등 민감정보는 문의 내용에 입력하지 마세요.</li>
+          </ul>
+        </article>
+      </div>
+    </main>
+
+    <footer class="policy-footer">
+      <strong><span data-config="serviceName">사주전쟁</span> <span data-config="serviceNameEn">SAJU WAR</span></strong>
+      <div class="footer-links">
+        <a href="/terms">이용약관</a><a href="/privacy">개인정보처리방침</a><a href="/refund">환불정책</a><a href="/payment">결제안내</a><a href="/support">문의하기</a>
+      </div>
+      <div class="company-lines">
+        <span>운영사: <span data-config="companyName">J Company</span></span><span>대표자: <span data-config="representativeName">박현주</span></span><span>사업자등록번호: <span data-config="businessRegistrationNumber">472-01-04135</span></span><span>통신판매업번호: <span data-config="ecommerceRegistrationNumber">추후 입력</span></span><span>주소: <span data-config="address">인천 제물량로24번길51</span></span><span>이메일: <span data-config="contactEmail">support@sajuwar.com</span></span>
+      </div>
+      <p>© 2026 SAJU WAR. All rights reserved.</p>
+    </footer>
+  </div>
+  <script src="/policy.js"></script>
+  <script>
+    const config = window.SAJUWAR_SITE_CONFIG || {};
+    const form = document.getElementById("supportForm");
+    const result = document.getElementById("supportResult");
+    const copyButton = document.getElementById("copySupportButton");
+
+    function buildSupportText() {
+      const name = document.getElementById("supportName").value.trim();
+      const contact = document.getElementById("supportContact").value.trim();
+      const type = document.getElementById("supportType").value;
+      const order = document.getElementById("supportOrder").value.trim() || "미입력";
+      const message = document.getElementById("supportMessage").value.trim();
+
+      return [
+        "[사주전쟁 고객 문의]",
+        `문의 유형: ${type}`,
+        `이름: ${name}`,
+        `이메일/연락처: ${contact}`,
+        `주문번호/결제일: ${order}`,
+        "",
+        "문의 내용:",
+        message
+      ].join("\n");
+    }
+
+    function validateSupportForm() {
+      if (!form.reportValidity()) return false;
+      if (!document.getElementById("supportConsent").checked) {
+        result.textContent = "개인정보 수집 및 이용 동의가 필요합니다.";
+        result.classList.add("show");
+        return false;
+      }
+      return true;
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!validateSupportForm()) return;
+
+      const type = document.getElementById("supportType").value;
+      const subject = encodeURIComponent(`[사주전쟁] ${type}`);
+      const body = encodeURIComponent(buildSupportText());
+      const email = config.contactEmail || "support@sajuwar.com";
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+
+      result.innerHTML = "메일 작성창이 열렸습니다. 열리지 않으면 문의 내용 복사 버튼을 눌러 고객센터 이메일로 보내주세요.<br>고객센터: " + email;
+      result.classList.add("show");
+    });
+
+    copyButton.addEventListener("click", async () => {
+      if (!validateSupportForm()) return;
+      const text = buildSupportText();
+      try {
+        await navigator.clipboard.writeText(text);
+        result.textContent = "문의 내용이 복사되었습니다. 고객센터 이메일로 붙여넣어 보내주세요.";
+      } catch (error) {
+        result.textContent = text;
+      }
+      result.classList.add("show");
+    });
+  </script>
+</body>
+</html>

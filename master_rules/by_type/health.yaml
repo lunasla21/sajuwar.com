@@ -1,0 +1,73 @@
+type: "건강"
+count: 6
+rules:
+  - rule_id: "MR-HL-0001"
+    if: "IF 고객 질문이 심리와 생활 리듬 문제이고 핵심 신호가 관성/식상로 잡힌다."
+    then: "THEN 상담은 사건명 확인, 핵심 신호 번역, 현실 선택지 정리, 행동 기준 제시 순서로 진행한다."
+    because: "BECAUSE 고객은 명리 용어보다 왜 이 결론이 나왔고 무엇을 해야 하는지를 먼저 이해해야 한다."
+    exceptions:
+      - "고객이 이미 결정을 내린 경우에는 설득보다 위험 조건과 보완 행동을 먼저 제시한다."
+    priority: 4
+    related_cases:
+      - "case_0070"
+    confidence: 0.86
+  - rule_id: "MR-HL-0002"
+    if: "IF 인성의 보호보다 식상/충의 산만함이 강하면 THEN 목표를 키우기보다 공부 장소, 시간표, 시험 전략을 좁히게 한다."
+    then: "THEN 즉시 실행보다 실행, 보류, 축소, 정리 중 하나로 행동을 좁혀 안내한다."
+    because: "BECAUSE 현명역학원 Brain은 길흉 설명에서 끝나지 않고 고객의 현실 행동으로 결론을 내려야 하기 때문이다."
+    exceptions:
+      - "합격/불합격을 단정하거나 학생의 가능성을 꺾는 표현을 하지 않는다."
+      - "OCR 원문이나 기존 사례 문장을 고객 답변에 그대로 붙이지 않는다."
+    priority: 5
+    related_cases:
+      - "case_0070"
+    confidence: 0.86
+  - rule_id: "MR-HL-0003"
+    if: "IF 고객 질문이 심리와 생활 리듬 문제이고 핵심 신호가 사해충/관성로 잡힌다."
+    then: "THEN 상담은 사건명 확인, 핵심 신호 번역, 현실 선택지 정리, 행동 기준 제시 순서로 진행한다."
+    because: "BECAUSE 고객은 명리 용어보다 왜 이 결론이 나왔고 무엇을 해야 하는지를 먼저 이해해야 한다."
+    exceptions:
+      - "고객이 이미 결정을 내린 경우에는 설득보다 위험 조건과 보완 행동을 먼저 제시한다."
+    priority: 4
+    related_cases:
+      - "case_0075"
+    confidence: 0.86
+  - rule_id: "MR-HL-0004"
+    if: "IF 오행이 한쪽으로 과열되거나 막히면 THEN 병명 단정보다 수면, 수분, 활동량, 관계 자극을 먼저 낮추게 한다."
+    then: "THEN 즉시 실행보다 실행, 보류, 축소, 정리 중 하나로 행동을 좁혀 안내한다."
+    because: "BECAUSE 현명역학원 Brain은 길흉 설명에서 끝나지 않고 고객의 현실 행동으로 결론을 내려야 하기 때문이다."
+    exceptions:
+      - "질병을 진단하거나 치료를 대신하는 말로 상담 범위를 넘지 않는다."
+      - "OCR 원문이나 기존 사례 문장을 고객 답변에 그대로 붙이지 않는다."
+    priority: 5
+    related_cases:
+      - "case_0075"
+    confidence: 0.86
+  - rule_id: "MR-HL-0005"
+    if: "IF 오행이 한쪽으로 과열되어 생활 리듬이 무너진다."
+    then: "THEN 병명보다 수면, 수분, 휴식, 관계 자극을 조절하게 한다."
+    because: "BECAUSE 건강 상담은 진단이 아니라 생활 관리 관점으로 해야 한다."
+    exceptions:
+      - "반대 신호가 더 강하면 결론을 보류한다."
+      - "실제 상담에서는 원국, 대운, 세운을 함께 확인한다."
+    priority: 2
+    related_cases:
+      - "case_0009"
+      - "case_0037"
+      - "case_0065"
+    confidence: 0.91
+  - rule_id: "MR-HL-0006"
+    if: "IF 사춘기나 우울 질문에서 충과 형이 반복된다."
+    then: "THEN 성격 문제로 몰지 말고 환경 압박과 회복 루틴을 본다."
+    because: "BECAUSE 심리 사건은 운의 압력이 생활 리듬을 흔드는 방식으로 드러난다."
+    exceptions:
+      - "반대 신호가 더 강하면 결론을 보류한다."
+      - "실제 상담에서는 원국, 대운, 세운을 함께 확인한다."
+    priority: 2
+    related_cases:
+      - "case_0001"
+      - "case_0002"
+      - "case_0003"
+      - "case_0004"
+      - "case_0005"
+    confidence: 0.93

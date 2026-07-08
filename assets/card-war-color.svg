@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" role="img" aria-label="Battle color arsenal">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111f33"/>
+      <stop offset=".52" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#2c1834"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="260" fill="url(#bg)"/>
+  <g stroke="#f9d77e" stroke-opacity=".14" stroke-width="2">
+    <path d="M48 68h544M48 132h544M48 196h544M112 36v188M224 36v188M336 36v188M448 36v188M560 36v188"/>
+  </g>
+  <g transform="translate(126 60)">
+    <path d="M0 116 74 0h252l74 116z" fill="#07111f" stroke="#f9d77e" stroke-width="7"/>
+    <path d="M48 96 102 24h64L116 96z" fill="#2f8e72"/>
+    <path d="M144 96 194 24h64l-50 72z" fill="#7c5cff"/>
+    <path d="M240 96 290 24h64l-50 72z" fill="#f9d77e"/>
+  </g>
+  <path d="M462 176 532 74" stroke="#f9d77e" stroke-width="16" stroke-linecap="round"/>
+  <path d="m532 74 54-12-22 52z" fill="#f9d77e"/>
+</svg>

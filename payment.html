@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>무통장입금 안내 | 사주전쟁</title>
+  <style>
+    :root { --gold:#f2db8d; --line:rgba(242,219,141,.24); --panel:rgba(18,17,14,.86); }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: #f6efdd;
+      background: radial-gradient(circle at top, #2a2112, #080807 58%);
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      line-height: 1.65;
+    }
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 46px 0;
+    }
+    .panel, .card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: 0 24px 80px rgba(0,0,0,.32);
+    }
+    .panel { padding: 30px; }
+    h1, h2, h3 { margin-top: 0; color: var(--gold); line-height: 1.25; }
+    p { color: #c8bfa9; }
+    label { display: grid; gap: 7px; color: #d8caa5; font-weight: 800; }
+    input, select, textarea {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid rgba(242,219,141,.2);
+      padding: 0 12px;
+      color: #f6efdd;
+      background: rgba(8,8,7,.62);
+      font: inherit;
+    }
+    textarea { min-height: 96px; padding: 12px; resize: vertical; }
+    button, a.button {
+      min-height: 48px;
+      display: inline-grid;
+      place-items: center;
+      border: 0;
+      padding: 0 16px;
+      color: #17110a;
+      background: linear-gradient(135deg, #f2db8d, #d8ad4f);
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .secondary {
+      color: var(--gold);
+      border: 1px solid rgba(242,219,141,.32);
+      background: rgba(8,8,7,.56);
+    }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .summary {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 8px 14px;
+      margin: 18px 0;
+      padding: 18px;
+      border: 1px solid rgba(242,219,141,.18);
+      background: rgba(255,255,255,.035);
+    }
+    .summary dt { color: #bcae8b; font-weight: 900; }
+    .summary dd { margin: 0; color: #fff7dc; overflow-wrap: anywhere; }
+    .hidden { display: none; }
+    .notice { padding: 14px 16px; border: 1px solid rgba(242,219,141,.18); color: #d8caa5; background: rgba(242,219,141,.08); }
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+      .summary { grid-template-columns: 1fr; }
+      .panel { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panel" id="orderFormPanel">
+      <p>무통장입금</p>
+      <h1>상품 신청 후 입금 안내를 확인하세요</h1>
+      <p>신청서를 만들면 주문번호가 생성됩니다. 입금 후 관리자가 확인 버튼을 누르면 마이페이지에서 바로 리포트 또는 강의를 이용할 수 있습니다.</p>
+
+      <div class="grid">
+        <label>상품
+          <select id="productId"></select>
+        </label>
+        <label>신청자
+          <input id="buyerName" autocomplete="name" placeholder="이름" />
+        </label>
+        <label>이메일
+          <input id="buyerEmail" type="email" autocomplete="email" placeholder="email@example.com" />
+        </label>
+        <label>연락처
+          <input id="buyerPhone" autocomplete="tel" placeholder="010-0000-0000" />
+        </label>
+      </div>
+      <label style="margin-top:14px">신청 내용
+        <textarea id="application" placeholder="생년월일, 태어난 시간, 상담/리포트 요청 내용을 적어주세요."></textarea>
+      </label>
+      <div class="actions">
+        <button type="button" onclick="createOrder()">주문 생성하기</button>
+        <a class="button secondary" href="/mypage.html">구매내역 보기</a>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="depositPanel">
+      <p>입금 안내</p>
+      <h1>입금 후 입금 완료 버튼을 눌러주세요</h1>
+      <dl class="summary">
+        <dt>주문번호</dt><dd id="orderId"></dd>
+        <dt>상품명</dt><dd id="productName"></dd>
+        <dt>입금금액</dt><dd id="amount"></dd>
+        <dt>은행명</dt><dd id="bankName"></dd>
+        <dt>계좌번호</dt><dd id="accountNumber"></dd>
+        <dt>예금주</dt><dd id="accountHolder"></dd>
+      </dl>
+      <label>입금자명
+        <input id="depositorName" placeholder="실제 입금자명을 입력해주세요" />
+      </label>
+      <div class="actions">
+        <button type="button" class="secondary" onclick="copyOrderId()">주문번호 복사</button>
+        <button type="button" class="secondary" onclick="copyAccountNumber()">계좌번호 복사</button>
+        <button type="button" class="secondary" onclick="copyApplication()">신청내용 복사</button>
+        <button type="button" onclick="markDepositComplete()">입금 완료</button>
+      </div>
+      <p class="notice" id="depositNotice">입금 완료 버튼을 누르면 관리자 페이지에 입금대기 주문으로 표시됩니다.</p>
+    </section>
+  </main>
+
+  <script>
+    const authToken = localStorage.getItem("sajuwar_auth_token") || "";
+    let authUser = null;
+    let products = [];
+    let bankAccount = {};
+    let currentOrder = null;
+
+    function formatMoney(value) {
+      return `${Number(value || 0).toLocaleString("ko-KR")}원`;
+    }
+
+    async function copyText(text, label) {
+      try {
+        await navigator.clipboard.writeText(text || "");
+        alert(`${label} 복사 완료`);
+      } catch (error) {
+        alert("복사가 막혔습니다. 화면에서 직접 선택해 복사해주세요.");
+      }
+    }
+
+    async function loadMe() {
+      if (!authToken) {
+        location.href = "/login.html";
+        return;
+      }
+      const response = await fetch("/api/auth/me", {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        localStorage.removeItem("sajuwar_auth_token");
+        localStorage.removeItem("sajuwar_user");
+        location.href = "/login.html";
+        return;
+      }
+      authUser = data.user;
+      document.getElementById("buyerName").value = authUser.name;
+      document.getElementById("buyerEmail").value = authUser.email;
+      document.getElementById("buyerPhone").value = authUser.phone;
+      document.getElementById("buyerName").readOnly = true;
+      document.getElementById("buyerEmail").readOnly = true;
+      document.getElementById("buyerPhone").readOnly = true;
+    }
+
+    async function loadProducts() {
+      const response = await fetch("/api/products");
+      const data = await response.json();
+      products = data.products || [];
+      bankAccount = data.bankAccount || {};
+      const select = document.getElementById("productId");
+      select.innerHTML = products.map((product) => (
+        `<option value="${product.id}">${product.name} - ${formatMoney(product.amount)}</option>`
+      )).join("");
+    }
+
+    function selectedProduct() {
+      return products.find((product) => product.id === document.getElementById("productId").value) || products[0];
+    }
+
+    async function createOrder() {
+      const product = selectedProduct();
+      const payload = {
+        product_id: product.id,
+        depositor_name: document.getElementById("buyerName").value.trim(),
+        application: document.getElementById("application").value.trim(),
+      };
+
+      const response = await fetch("/api/orders/bank-transfer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}` },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.error || "주문 생성에 실패했습니다.");
+        return;
+      }
+
+      currentOrder = data.order;
+      bankAccount = data.bankAccount || bankAccount;
+      renderDepositGuide();
+    }
+
+    function renderDepositGuide() {
+      document.getElementById("orderFormPanel").classList.add("hidden");
+      document.getElementById("depositPanel").classList.remove("hidden");
+      document.getElementById("orderId").textContent = currentOrder.id;
+      document.getElementById("productName").textContent = currentOrder.product_name;
+      document.getElementById("amount").textContent = formatMoney(currentOrder.amount);
+      document.getElementById("bankName").textContent = bankAccount.bankName;
+      document.getElementById("accountNumber").textContent = bankAccount.accountNumber;
+      document.getElementById("accountHolder").textContent = bankAccount.accountHolder;
+      document.getElementById("depositorName").value = currentOrder.depositor_name || currentOrder.user_name;
+    }
+
+    function applicationText() {
+      if (!currentOrder) return "";
+      return [
+        "[사주전쟁 무통장입금 신청]",
+        `주문번호: ${currentOrder.id}`,
+        `신청자: ${currentOrder.user_name}`,
+        `이메일: ${currentOrder.email}`,
+        `연락처: ${currentOrder.phone}`,
+        `상품명: ${currentOrder.product_name}`,
+        `금액: ${formatMoney(currentOrder.amount)}`,
+        `입금자명: ${document.getElementById("depositorName").value.trim()}`,
+        "",
+        currentOrder.application || "신청 내용 없음",
+      ].join("\n");
+    }
+
+    function copyOrderId() { copyText(currentOrder?.id, "주문번호"); }
+    function copyAccountNumber() { copyText(bankAccount.accountNumber, "계좌번호"); }
+    function copyApplication() { copyText(applicationText(), "신청내용"); }
+
+    async function markDepositComplete() {
+      if (!currentOrder) return;
+      const depositorName = document.getElementById("depositorName").value.trim();
+      if (!depositorName) {
+        alert("입금자명을 입력해주세요.");
+        return;
+      }
+      const response = await fetch(`/api/orders/${encodeURIComponent(currentOrder.id)}/deposit-complete`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}` },
+        body: JSON.stringify({ depositor_name: depositorName }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.error || "입금 완료 처리에 실패했습니다.");
+        return;
+      }
+      currentOrder = data.order;
+      document.getElementById("depositNotice").textContent = "입금 확인 대기 상태입니다. 관리자 확인 후 이용 가능합니다.";
+      alert("입금 확인 대기로 접수되었습니다.");
+      location.href = "/mypage.html";
+    }
+
+    Promise.all([loadMe(), loadProducts()]);
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" role="img" aria-label="Tactical item battlefield">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#162238"/>
+      <stop offset=".55" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#0f241f"/>
+    </linearGradient>
+    <radialGradient id="flare" cx=".24" cy=".28" r=".44">
+      <stop offset="0" stop-color="#f9d77e" stop-opacity=".52"/>
+      <stop offset="1" stop-color="#f9d77e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="260" fill="url(#bg)"/>
+  <rect width="640" height="260" fill="url(#flare)"/>
+  <g stroke="#f9d77e" stroke-opacity=".16" stroke-width="2">
+    <path d="M42 50h556M42 106h556M42 162h556M42 218h556M86 26v208M172 26v208M258 26v208M344 26v208M430 26v208M516 26v208"/>
+    <path d="M80 210 255 76l126 58 165-86" fill="none"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M182 174 362 52" stroke="#f9d77e" stroke-width="18"/>
+    <path d="m362 52 66-18-38 58z" fill="#f9d77e" stroke="#ffe6a3" stroke-width="8"/>
+    <path d="M158 190h72" stroke="#7c5cff" stroke-width="14"/>
+    <path d="m228 168 46 46" stroke="#7c5cff" stroke-width="12"/>
+  </g>
+  <circle cx="504" cy="92" r="42" fill="#07111f" stroke="#2f8e72" stroke-width="8" opacity=".88"/>
+  <circle cx="504" cy="92" r="12" fill="#f9d77e"/>
+</svg>
