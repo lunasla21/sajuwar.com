@@ -1,0 +1,1197 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAJU WAR Strategy Room</title>
+  <meta name="description" content="SAJU WAR Strategy Room. Weapon, Strategy Map, Quest, Academy, Library, Guild, AI Strategist를 한 곳에서 체험하는 AI Life Strategy Platform." />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070707;
+      --panel: rgba(18, 18, 18, 0.86);
+      --soft: rgba(255, 255, 255, 0.055);
+      --ink: #f5f1e8;
+      --muted: rgba(245, 241, 232, 0.68);
+      --line: rgba(212, 175, 55, 0.2);
+      --gold: #d4af37;
+      --gold2: #fff0a8;
+      --green: #64d3a0;
+      --shadow: 0 34px 90px rgba(0, 0, 0, 0.42);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% -8%, rgba(212, 175, 55, 0.22), transparent 32%),
+        radial-gradient(circle at 84% 10%, rgba(100, 211, 160, 0.12), transparent 28%),
+        radial-gradient(circle at 50% 88%, rgba(141, 183, 255, 0.1), transparent 34%),
+        var(--bg);
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(7, 7, 7, 0.76);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      width: min(1240px, calc(100% - 36px));
+      margin: 0 auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 950;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--gold2);
+      background: rgba(212, 175, 55, 0.12);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.14);
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 8px;
+      transition: color 160ms ease, background 160ms ease;
+    }
+
+    .nav a:hover {
+      color: var(--gold2);
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    .shell {
+      width: min(1240px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 28px 0 80px;
+    }
+
+    .hero {
+      min-height: calc(100vh - 110px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: 28px;
+      align-items: center;
+      padding: 34px 0;
+    }
+
+    .kicker {
+      margin-bottom: 12px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 18px;
+      max-width: 850px;
+      color: #fff9e8;
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 780px;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 22px);
+    }
+
+    .hero-actions,
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button,
+    button.button {
+      min-height: 46px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0 18px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 8px;
+      color: #090909;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      font-weight: 950;
+      box-shadow: 0 18px 38px rgba(212, 175, 55, 0.12);
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 26px 52px rgba(212, 175, 55, 0.18);
+    }
+
+    .button.secondary {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: none;
+    }
+
+    .war-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)),
+        var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-panel {
+      position: relative;
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .hero-panel::before,
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: 38px;
+      border: 1px dashed rgba(212, 175, 55, 0.24);
+      border-radius: 50%;
+      animation: rotateRing 24s linear infinite;
+    }
+
+    .hero-panel::after {
+      inset: 90px;
+      border-color: rgba(255, 255, 255, 0.12);
+      animation-duration: 16s;
+      animation-direction: reverse;
+    }
+
+    .weapon-orb {
+      position: relative;
+      z-index: 1;
+      width: min(280px, 74%);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(212, 175, 55, 0.46);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255, 240, 168, 0.28), transparent 44%),
+        linear-gradient(145deg, rgba(212, 175, 55, 0.22), rgba(255, 255, 255, 0.04));
+      transform: rotate(45deg);
+      box-shadow: 0 0 120px rgba(212, 175, 55, 0.28), inset 0 0 70px rgba(255, 255, 255, 0.08);
+      transition: transform 600ms cubic-bezier(.2,.9,.2,1), box-shadow 600ms ease;
+    }
+
+    .weapon-orb strong {
+      transform: rotate(-45deg);
+      color: #fff5c5;
+      font-size: 31px;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .revealed .weapon-orb {
+      transform: rotate(45deg) scale(1.08);
+      box-shadow: 0 0 150px rgba(212, 175, 55, 0.62), inset 0 0 90px rgba(255, 255, 255, 0.15);
+    }
+
+    .panel-caption {
+      position: absolute;
+      z-index: 2;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      padding: 16px;
+      border: 1px solid rgba(212, 175, 55, 0.18);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.44);
+      backdrop-filter: blur(14px);
+    }
+
+    .panel-caption h3 {
+      margin-bottom: 6px;
+      color: var(--gold2);
+      font-size: 18px;
+    }
+
+    .panel-caption p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 52px 0 0;
+      scroll-margin-top: 88px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(320px, 1fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: #fff9e8;
+      font-size: clamp(30px, 4vw, 56px);
+      line-height: 1.06;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .module {
+      min-height: 180px;
+      padding: 18px;
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: 8px;
+      background: var(--soft);
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .module:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212, 175, 55, 0.34);
+      background: rgba(212, 175, 55, 0.075);
+    }
+
+    .module h3 {
+      margin-bottom: 8px;
+      color: #fff9e8;
+      font-size: 21px;
+    }
+
+    .module p,
+    .module li {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .module ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 12px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(212, 175, 55, 0.8);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: rgba(245, 241, 232, 0.82);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid rgba(212, 175, 55, 0.18);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(0, 0, 0, 0.32);
+      padding: 10px 12px;
+      outline: none;
+    }
+
+    textarea { min-height: 98px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { border-color: rgba(212, 175, 55, 0.54); }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.24);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--gold2);
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .xp-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.09);
+      overflow: hidden;
+    }
+
+    .xp-bar i {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      transition: width 350ms ease;
+    }
+
+    .map-board {
+      position: relative;
+      min-height: 520px;
+      padding: 22px;
+      background:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+        radial-gradient(circle at 50% 40%, rgba(212, 175, 55, 0.14), transparent 42%);
+      background-size: 34px 34px, 34px 34px, cover;
+    }
+
+    .map-node {
+      position: absolute;
+      width: 168px;
+      min-height: 96px;
+      padding: 13px;
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    }
+
+    .map-node h3 { margin: 0 0 4px; font-size: 15px; }
+    .map-node p { margin: 0; font-size: 12px; color: var(--muted); }
+    .map-node.current { border-color: var(--gold2); box-shadow: 0 0 50px rgba(212, 175, 55, 0.22); }
+    .n1 { left: 7%; top: 14%; }
+    .n2 { left: 38%; top: 7%; }
+    .n3 { right: 8%; top: 23%; }
+    .n4 { left: 20%; bottom: 18%; }
+    .n5 { right: 22%; bottom: 10%; }
+
+    .quest-card.done {
+      border-color: rgba(100, 211, 160, 0.38);
+      background: rgba(100, 211, 160, 0.08);
+    }
+
+    .quest-card.done h3::after {
+      content: " Mission Clear";
+      color: var(--green);
+      font-size: 12px;
+    }
+
+    .skill-tree {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .skill {
+      min-height: 110px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px solid rgba(212, 175, 55, 0.18);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.24);
+      color: var(--ink);
+      font-weight: 950;
+    }
+
+    .skill.done {
+      border-color: rgba(100, 211, 160, 0.42);
+      color: var(--green);
+    }
+
+    .chat-window {
+      display: grid;
+      gap: 10px;
+      max-height: 430px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .bubble {
+      max-width: 86%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.07);
+      color: rgba(245, 241, 232, 0.86);
+      font-size: 14px;
+    }
+
+    .bubble.user {
+      justify-self: end;
+      color: #0b0b0b;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      font-weight: 850;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .list-item {
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.22);
+    }
+
+    .list-item strong { display: block; color: #fff9e8; }
+    .list-item span { color: var(--muted); font-size: 13px; }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.22);
+    }
+
+    .toggle input { width: 20px; min-height: 20px; }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 20;
+      max-width: 360px;
+      padding: 14px 16px;
+      border: 1px solid rgba(212, 175, 55, 0.26);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(7, 7, 7, 0.88);
+      box-shadow: var(--shadow);
+      transform: translateY(18px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 180ms ease, opacity 180ms ease;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @keyframes rotateRing { to { transform: rotate(360deg); } }
+
+    @media (max-width: 980px) {
+      .hero,
+      .section-head,
+      .grid,
+      .grid.two,
+      .grid.four,
+      .form-grid,
+      .settings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel { min-height: 430px; }
+      .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .skill-tree { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .map-board { min-height: auto; display: grid; gap: 10px; }
+      .map-node { position: static; width: auto; }
+    }
+
+    @media (max-width: 620px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; padding: 14px 0; }
+      .nav { justify-content: flex-start; }
+      .shell { width: min(100% - 26px, 1240px); }
+      .stat-row { grid-template-columns: 1fr; }
+      h1 { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">SW</span>
+        <span>SAJU WAR Strategy Room</span>
+      </a>
+      <nav class="nav" aria-label="작전실 메뉴">
+        <a href="#onboarding">Onboarding</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#map">Strategy Map</a>
+        <a href="#quests">Quest</a>
+        <a href="#academy">Academy</a>
+        <a href="#chat">AI Chat</a>
+        <a href="#guild">Guild</a>
+        <a href="#settings">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero" id="top">
+      <div>
+        <p class="kicker">AI LIFE STRATEGY PLATFORM</p>
+        <h1>작전실에 입장했습니다.</h1>
+        <p class="hero-copy">
+          이 페이지는 문서화만 되어 있던 SAJU WAR의 핵심 경험을 실제 사이트에서 체험하도록 만든 작전실 MVP입니다.
+          사용자는 생년월일을 입력하는 것이 아니라 캐릭터를 생성하고, Weapon을 공개하고, Strategy Map을 열고,
+          Quest를 완료하며, Academy와 Guild에서 성장합니다.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#onboarding">내 캐릭터 생성</a>
+          <button class="button secondary" type="button" id="quickReveal">Weapon 바로 공개</button>
+          <a class="button secondary" href="/">홈으로 돌아가기</a>
+        </div>
+      </div>
+
+      <aside class="war-card hero-panel" id="weaponStage" aria-label="Weapon Reveal">
+        <div class="weapon-orb"><strong id="weaponName">HIDDEN<br>WEAPON</strong></div>
+        <div class="panel-caption">
+          <h3 id="weaponTitle">Weapon Reveal 대기 중</h3>
+          <p id="weaponCopy">캐릭터를 생성하면 사용자의 강점과 다음 선택을 상징하는 Weapon이 열립니다.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section" id="onboarding">
+      <div class="section-head">
+        <h2>Onboarding: 생년월일 입력이 아니라 캐릭터 생성</h2>
+        <p>Product Bible과 Experience Bible의 Onboarding을 실제 폼과 상태 저장으로 구현했습니다.</p>
+      </div>
+      <div class="grid two">
+        <form class="war-card module" id="profileForm">
+          <span class="tag">Character Creation</span>
+          <div class="form-grid">
+            <label>작전실 이름 <input id="profileName" placeholder="예: 현명한 전략가" autocomplete="name" /></label>
+            <label>생년월일 <input id="profileBirth" type="date" /></label>
+            <label>태어난 시간 <input id="profileTime" type="time" /></label>
+            <label>현재 고민
+              <select id="profileFocus">
+                <option value="career">커리어</option>
+                <option value="relationship">관계</option>
+                <option value="money">돈과 자원</option>
+                <option value="study">공부와 성장</option>
+                <option value="business">사업</option>
+              </select>
+            </label>
+          </div>
+          <div class="button-row">
+            <button class="button" type="submit">캐릭터 생성하고 Weapon 열기</button>
+            <button class="button secondary" type="button" id="resetRoom">작전실 초기화</button>
+          </div>
+        </form>
+        <article class="war-card module">
+          <span class="tag">Current Identity</span>
+          <h3 id="identityTitle">아직 생성된 캐릭터가 없습니다</h3>
+          <p id="identityCopy">정보를 입력하면 Dashboard, Quest, Profile, AI Chat이 같은 사용자 상태를 공유합니다.</p>
+          <div class="stat-row">
+            <div class="stat"><strong id="levelStat">1</strong><span>Level</span></div>
+            <div class="stat"><strong id="xpStat">0</strong><span>XP</span></div>
+            <div class="stat"><strong id="questStat">0</strong><span>Quest Clear</span></div>
+            <div class="stat"><strong id="badgeStat">0</strong><span>Badge</span></div>
+          </div>
+          <div class="xp-bar" style="margin-top: 14px"><i id="xpBar"></i></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="dashboard">
+      <div class="section-head">
+        <h2>Dashboard: 매일 돌아오는 개인 작전실</h2>
+        <p>오늘의 전략, 미완료 Quest, Academy 진행, AI 회의, 성장 기록을 한눈에 보여줍니다.</p>
+      </div>
+      <div class="grid four">
+        <article class="module war-card">
+          <span class="tag">Today Briefing</span>
+          <h3>오늘의 전략</h3>
+          <p id="dailyBriefing">완벽한 답보다 작은 실행을 먼저 선택하세요.</p>
+        </article>
+        <article class="module war-card">
+          <span class="tag">Next Action</span>
+          <h3>추천 Quest</h3>
+          <p id="nextQuest">반복되는 감정 하나를 3줄로 기록하기</p>
+        </article>
+        <article class="module war-card">
+          <span class="tag">Academy</span>
+          <h3>이어 배울 스킬</h3>
+          <p id="nextLesson">십성: 나의 행동 클래스 이해하기</p>
+        </article>
+        <article class="module war-card">
+          <span class="tag">War Room</span>
+          <h3>AI 전략 회의</h3>
+          <p>고민을 입력하면 AI Strategist가 선택지, 이유, Action으로 정리합니다.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="map">
+      <div class="section-head">
+        <h2>Strategy Map: 대운표가 아니라 인생 World Map</h2>
+        <p>현재 위치, 다음 지역, 도전, 보상, 추천 행동을 지도처럼 탐험합니다.</p>
+      </div>
+      <div class="war-card map-board">
+        <div class="map-node n1 current"><h3>Mirror Gate</h3><p>자기 이해. 보상: 자기 언어</p></div>
+        <div class="map-node n2"><h3>Forge of Skill</h3><p>훈련과 전문성. 보상: 실력</p></div>
+        <div class="map-node n3"><h3>River of Relation</h3><p>관계와 거리감. 보상: 안정</p></div>
+        <div class="map-node n4"><h3>Market of Choices</h3><p>돈과 자원. 보상: 기준</p></div>
+        <div class="map-node n5"><h3>Tower of Role</h3><p>책임과 리더십. 보상: 신뢰</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="quests">
+      <div class="section-head">
+        <h2>Quest: 할 일이 아니라 오늘의 성장 미션</h2>
+        <p>Quest는 localStorage에 저장됩니다. 완료하면 XP, Level, Badge, Dashboard가 갱신됩니다.</p>
+      </div>
+      <div class="grid" id="questList"></div>
+    </section>
+
+    <section class="section" id="academy">
+      <div class="section-head">
+        <h2>Academy: 강의가 아니라 Skill Tree</h2>
+        <p>생활명리, 십성, 용신, 대운, 사례분석을 스킬처럼 열고 완료할 수 있습니다.</p>
+      </div>
+      <div class="skill-tree" id="skillTree"></div>
+    </section>
+
+    <section class="section" id="library">
+      <div class="section-head">
+        <h2>Library: 지식 창고가 아니라 전략 무기고</h2>
+        <p>Knowledge Bible의 현대 번역 철학을 사용자가 다시 찾을 수 있는 카드로 구현했습니다.</p>
+      </div>
+      <div class="grid">
+        <article class="module war-card"><span class="tag">Dictionary</span><h3>관성</h3><p>책임, 규칙, 조직, 사회적 역할, 압박, 리더십.</p></article>
+        <article class="module war-card"><span class="tag">Dictionary</span><h3>식상</h3><p>표현, 생산성, 창작, 말과 결과물로 세상에 나가는 힘.</p></article>
+        <article class="module war-card"><span class="tag">Dictionary</span><h3>용신</h3><p>지금 필요한 성장 자원. 부족한 것을 보완하는 전략적 에너지.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="chat">
+      <div class="section-head">
+        <h2>AI Chat: 챗봇이 아니라 작전 회의</h2>
+        <p>실시간 LLM 연결 전 단계로, AI Constitution과 HYUNMYUNG METHOD를 따르는 안전한 전략 응답 패턴을 구현했습니다.</p>
+      </div>
+      <div class="grid two">
+        <div class="war-card module">
+          <div class="chat-window" id="chatWindow"></div>
+          <div class="button-row">
+            <input id="chatInput" placeholder="예: 이직을 고민 중입니다. 어떻게 정리할까요?" />
+            <button class="button" type="button" id="sendChat">전략 회의 시작</button>
+          </div>
+        </div>
+        <article class="war-card module">
+          <span class="tag">AI Constitution Guardrail</span>
+          <h3>AI는 점쟁이가 아니라 전략가입니다</h3>
+          <ul>
+            <li>미래를 단정하지 않습니다.</li>
+            <li>선택지와 이유를 함께 제공합니다.</li>
+            <li>항상 다음 Action으로 끝납니다.</li>
+            <li>의료, 법률, 투자 등 고위험 판단은 전문가 도움을 안내합니다.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="guild">
+      <div class="section-head">
+        <h2>Guild: 게시판이 아니라 함께 성장하는 전략가들의 모임</h2>
+        <p>질문, 사례, 랭킹, 명예의 전당을 실제 입력/저장 가능한 간단한 Guild로 구현했습니다.</p>
+      </div>
+      <div class="grid two">
+        <form class="war-card module" id="guildForm">
+          <span class="tag">Case Study</span>
+          <label>Guild에 남길 전략 사례
+            <textarea id="guildPost" placeholder="오늘 어떤 선택을 정리했나요?"></textarea>
+          </label>
+          <div class="button-row"><button class="button" type="submit">Guild에 공유</button></div>
+        </form>
+        <article class="war-card module">
+          <span class="tag">Hall of Strategy</span>
+          <div class="list" id="guildList"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="ranking">
+      <div class="section-head">
+        <h2>Ranking: 경쟁이 아니라 성장 기여 명예 시스템</h2>
+        <p>사용자를 운명 등급으로 나누지 않고, 꾸준함과 좋은 질문, 학습 기여를 조명합니다.</p>
+      </div>
+      <div class="grid">
+        <article class="module war-card"><span class="tag">Quest</span><h3>Quest Keeper</h3><p id="rankQuest">완료 Quest 0개. 첫 미션을 완료해보세요.</p></article>
+        <article class="module war-card"><span class="tag">Learning</span><h3>Skill Builder</h3><p id="rankSkill">완료 Skill 0개. Academy에서 하나를 열어보세요.</p></article>
+        <article class="module war-card"><span class="tag">Guild</span><h3>Signal Reader</h3><p id="rankGuild">공유 사례 0개. 좋은 질문이 Guild를 성장시킵니다.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="profile">
+      <div class="section-head">
+        <h2>Profile: 개인 전적 기록</h2>
+        <p>대표 Weapon, Title, Badge, 완료 기록을 한 곳에서 확인합니다.</p>
+      </div>
+      <div class="grid two">
+        <article class="module war-card">
+          <span class="tag">Weapon Identity</span>
+          <h3 id="profileWeapon">Hidden Weapon</h3>
+          <p id="profileSummary">캐릭터를 생성하면 당신의 Weapon과 성장 기록이 여기에 표시됩니다.</p>
+        </article>
+        <article class="module war-card">
+          <span class="tag">Badges</span>
+          <div class="list" id="badgeList"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="premium">
+      <div class="section-head">
+        <h2>Premium: 결제 벽이 아니라 작전실 확장</h2>
+        <p>불안 결제가 아니라 더 깊은 전략 경험을 선택하는 구조로 표현했습니다.</p>
+      </div>
+      <div class="grid">
+        <article class="module war-card"><span class="tag">Premium Arsenal</span><h3>고급 AI Report</h3><p>커리어, 관계, 돈, 올해 흐름, 30일 Action Plan으로 확장됩니다.</p></article>
+        <article class="module war-card"><span class="tag">War Room</span><h3>전문가 전략 회의</h3><p>중요한 선택 앞에서 AI 리포트와 상담을 연결합니다.</p></article>
+        <article class="module war-card"><span class="tag">Academy Bundle</span><h3>Skill Path</h3><p>Weapon별 추천 학습 경로와 사례 분석을 제공합니다.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="consultation">
+      <div class="section-head">
+        <h2>Consultation: 최종 전략 회의</h2>
+        <p>예언 구매가 아니라 의사결정 품질을 높이는 회의로 재구성했습니다.</p>
+      </div>
+      <div class="grid">
+        <article class="module war-card"><span class="tag">Career</span><h3>커리어 전략 회의</h3><p>이직, 직무, 사업 방향을 선택지와 리스크로 정리합니다.</p></article>
+        <article class="module war-card"><span class="tag">Relation</span><h3>관계 전략 회의</h3><p>반복되는 관계 패턴과 건강한 거리감을 설계합니다.</p></article>
+        <article class="module war-card"><span class="tag">Life Choice</span><h3>인생 전환 회의</h3><p>이사, 결혼, 공부, 사업 등 큰 선택 앞에서 작전 지도를 만듭니다.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="settings">
+      <div class="section-head">
+        <h2>Settings: 신뢰와 통제감</h2>
+        <p>민감한 데이터를 다루는 플랫폼답게 AI 동의, 알림, 접근성, 사운드 설정을 구현했습니다.</p>
+      </div>
+      <div class="war-card module">
+        <div class="settings-grid">
+          <label class="toggle">AI 개인화 동의 <input type="checkbox" id="aiConsent" /></label>
+          <label class="toggle">오늘의 전략 알림 <input type="checkbox" id="briefingNotice" /></label>
+          <label class="toggle">사운드 효과 <input type="checkbox" id="soundEnabled" /></label>
+          <label class="toggle">모션 줄이기 <input type="checkbox" id="reduceMotion" /></label>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = "sajuwar_strategy_room_v1";
+    const defaultState = {
+      profile: null,
+      weapon: null,
+      xp: 0,
+      level: 1,
+      quests: [
+        { id: "q1", title: "감정 패턴 3줄 기록", xp: 30, done: false, body: "오늘 반복된 감정 하나를 적고, 그 감정이 어떤 선택을 만들었는지 봅니다." },
+        { id: "q2", title: "중요한 말 하루 늦게 보내기", xp: 45, done: false, body: "즉시 반응하지 않고, 내일 다시 읽은 뒤 보낼 문장을 정리합니다." },
+        { id: "q3", title: "돈의 기준 하나 정하기", xp: 50, done: false, body: "오늘 지출 하나를 고르고, 가격이 아니라 가치 기준으로 평가합니다." }
+      ],
+      skills: [
+        { id: "s1", title: "오행 기초", done: false },
+        { id: "s2", title: "십성 이해", done: false },
+        { id: "s3", title: "용신 전략", done: false },
+        { id: "s4", title: "대운 World Map", done: false },
+        { id: "s5", title: "관계 사례분석", done: false },
+        { id: "s6", title: "상담 윤리", done: false },
+        { id: "s7", title: "Action 설계", done: false },
+        { id: "s8", title: "Certificate", done: false }
+      ],
+      guild: [],
+      settings: { aiConsent: true, briefingNotice: true, soundEnabled: false, reduceMotion: false }
+    };
+    let state = loadState();
+
+    function clone(value) {
+      return JSON.parse(JSON.stringify(value));
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        return saved ? { ...clone(defaultState), ...saved } : clone(defaultState);
+      } catch (_) {
+        return clone(defaultState);
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function toast(message) {
+      const node = document.getElementById("toast");
+      node.textContent = message;
+      node.classList.add("show");
+      clearTimeout(window.__sajuToast);
+      window.__sajuToast = setTimeout(() => node.classList.remove("show"), 2400);
+    }
+
+    function chooseWeapon(profile) {
+      const map = {
+        career: { name: "Calm Commander", title: "선택을 구조화하는 사람", copy: "당신은 혼란한 상황에서 기준을 세울 때 가장 강해집니다." },
+        relationship: { name: "Relation Navigator", title: "거리감을 설계하는 사람", copy: "당신은 사람의 신호를 읽고 관계의 방향을 조율할 때 강해집니다." },
+        money: { name: "Golden Builder", title: "자원을 전략으로 바꾸는 사람", copy: "당신은 흩어진 자원을 모아 현실적인 구조를 만들 때 강해집니다." },
+        study: { name: "Deep Signal Reader", title: "깊은 신호를 읽는 사람", copy: "당신은 남들이 지나치는 의미를 오래 관찰할 때 강해집니다." },
+        business: { name: "Pattern Breaker", title: "반복을 깨고 시장을 보는 사람", copy: "당신은 익숙한 방식을 의심하고 새 경로를 만들 때 강해집니다." }
+      };
+      return map[profile.focus] || map.career;
+    }
+
+    function addXp(amount) {
+      state.xp += amount;
+      state.level = Math.max(1, Math.floor(state.xp / 120) + 1);
+      saveState();
+      render();
+    }
+
+    function badges() {
+      const list = [];
+      if (state.weapon) list.push("Weapon Seeker");
+      if (state.quests.some((q) => q.done)) list.push("Quest Initiate");
+      if (state.quests.filter((q) => q.done).length >= 3) list.push("Quest Keeper");
+      if (state.skills.some((s) => s.done)) list.push("Skill Builder");
+      if (state.guild.length > 0) list.push("Signal Reader");
+      return list;
+    }
+
+    function renderWeapon() {
+      const stage = document.getElementById("weaponStage");
+      if (state.weapon) {
+        stage.classList.add("revealed");
+        document.getElementById("weaponName").innerHTML = state.weapon.name.split(" ").join("<br>");
+        document.getElementById("weaponTitle").textContent = state.weapon.title;
+        document.getElementById("weaponCopy").textContent = state.weapon.copy;
+      } else {
+        stage.classList.remove("revealed");
+        document.getElementById("weaponName").innerHTML = "HIDDEN<br>WEAPON";
+        document.getElementById("weaponTitle").textContent = "Weapon Reveal 대기 중";
+        document.getElementById("weaponCopy").textContent = "캐릭터를 생성하면 사용자의 강점과 다음 선택을 상징하는 Weapon이 열립니다.";
+      }
+    }
+
+    function renderIdentity() {
+      const profile = state.profile;
+      document.getElementById("identityTitle").textContent = profile ? `${profile.name}님의 작전실` : "아직 생성된 캐릭터가 없습니다";
+      document.getElementById("identityCopy").textContent = profile
+        ? `${state.weapon?.name || "Hidden Weapon"} · 현재 초점: ${profile.focusLabel}`
+        : "정보를 입력하면 Dashboard, Quest, Profile, AI Chat이 같은 사용자 상태를 공유합니다.";
+      document.getElementById("levelStat").textContent = state.level;
+      document.getElementById("xpStat").textContent = state.xp;
+      document.getElementById("questStat").textContent = state.quests.filter((q) => q.done).length;
+      document.getElementById("badgeStat").textContent = badges().length;
+      document.getElementById("xpBar").style.width = `${Math.min(100, (state.xp % 120) / 120 * 100)}%`;
+    }
+
+    function renderDashboard() {
+      const focus = state.profile?.focus || "career";
+      const briefings = {
+        career: "오늘은 할 일을 늘리기보다 기준 하나를 선명하게 정하세요.",
+        relationship: "오늘은 빠른 반응보다 건강한 거리감을 먼저 선택하세요.",
+        money: "오늘은 지출보다 자원 배분의 기준을 점검하세요.",
+        study: "오늘은 오래 붙잡을 주제 하나를 25분만 훈련하세요.",
+        business: "오늘은 새로운 아이디어보다 검증할 가설 하나를 고르세요."
+      };
+      document.getElementById("dailyBriefing").textContent = briefings[focus] || briefings.career;
+      const next = state.quests.find((q) => !q.done) || state.quests[0];
+      document.getElementById("nextQuest").textContent = next ? next.title : "오늘의 Quest를 모두 완료했습니다.";
+      const nextSkill = state.skills.find((s) => !s.done) || state.skills[0];
+      document.getElementById("nextLesson").textContent = nextSkill ? nextSkill.title : "모든 기본 스킬을 열었습니다.";
+    }
+
+    function renderQuests() {
+      const root = document.getElementById("questList");
+      root.innerHTML = state.quests.map((quest) => `
+        <article class="module war-card quest-card ${quest.done ? "done" : ""}">
+          <span class="tag">Daily Quest · ${quest.xp} XP</span>
+          <h3>${quest.title}</h3>
+          <p>${quest.body}</p>
+          <div class="button-row">
+            <button class="button ${quest.done ? "secondary" : ""}" type="button" data-quest="${quest.id}">
+              ${quest.done ? "완료됨" : "Mission Clear"}
+            </button>
+          </div>
+        </article>
+      `).join("");
+      root.querySelectorAll("[data-quest]").forEach((button) => {
+        button.addEventListener("click", () => completeQuest(button.dataset.quest));
+      });
+    }
+
+    function completeQuest(id) {
+      const quest = state.quests.find((item) => item.id === id);
+      if (!quest || quest.done) return;
+      quest.done = true;
+      addXp(quest.xp);
+      toast(`Mission Clear · +${quest.xp} XP`);
+    }
+
+    function renderSkills() {
+      const root = document.getElementById("skillTree");
+      root.innerHTML = state.skills.map((skill) => `
+        <button class="skill ${skill.done ? "done" : ""}" type="button" data-skill="${skill.id}">
+          ${skill.title}${skill.done ? "<br>Unlocked" : ""}
+        </button>
+      `).join("");
+      root.querySelectorAll("[data-skill]").forEach((button) => {
+        button.addEventListener("click", () => completeSkill(button.dataset.skill));
+      });
+    }
+
+    function completeSkill(id) {
+      const skill = state.skills.find((item) => item.id === id);
+      if (!skill || skill.done) return;
+      skill.done = true;
+      addXp(25);
+      toast(`${skill.title} Skill Unlocked · +25 XP`);
+    }
+
+    function renderChat() {
+      const root = document.getElementById("chatWindow");
+      if (!root.dataset.booted) {
+        root.dataset.booted = "1";
+        root.innerHTML = `<div class="bubble">작전실에 오신 것을 환영합니다. 저는 미래를 단정하지 않고, 상황을 정리하고 선택지를 함께 세우는 AI Strategist입니다.</div>`;
+      }
+    }
+
+    function aiReply(text) {
+      const risky = /죽|자살|폭력|의료|투자|법률|소송|우울|극단/.test(text);
+      if (risky) {
+        return "이 주제는 안전이 먼저입니다. 저는 명리로 단정하지 않겠습니다. 지금 위험하거나 급박하다면 즉시 주변 사람, 전문가, 긴급 지원 기관의 도움을 받아주세요. 오늘의 Action은 혼자 판단하지 않고 신뢰할 수 있는 사람에게 상황을 공유하는 것입니다.";
+      }
+      return "미래를 단정하기보다 현재 패턴을 정리해보겠습니다. 선택지는 세 가지입니다. 1. 바로 결정하지 않고 기준을 적는다. 2. 감정과 사실을 분리한다. 3. 작은 실험으로 확인한다. 오늘의 Action은 이 선택에서 가장 두려운 이유 한 가지와 가장 원하는 결과 한 가지를 적는 것입니다.";
+    }
+
+    function sendChat() {
+      const input = document.getElementById("chatInput");
+      const text = input.value.trim();
+      if (!text) return;
+      const root = document.getElementById("chatWindow");
+      root.insertAdjacentHTML("beforeend", `<div class="bubble user">${escapeHtml(text)}</div>`);
+      root.insertAdjacentHTML("beforeend", `<div class="bubble">${escapeHtml(aiReply(text))}</div>`);
+      input.value = "";
+      root.scrollTop = root.scrollHeight;
+    }
+
+    function renderGuild() {
+      const root = document.getElementById("guildList");
+      const posts = state.guild.length ? state.guild : [{ name: "SAJU WAR", body: "첫 Guild 사례를 남겨보세요. 좋은 질문이 좋은 전략을 만듭니다.", at: "Guide" }];
+      root.innerHTML = posts.slice().reverse().map((post) => `
+        <div class="list-item"><strong>${escapeHtml(post.name)}</strong><span>${escapeHtml(post.body)} · ${escapeHtml(post.at)}</span></div>
+      `).join("");
+    }
+
+    function renderRanking() {
+      document.getElementById("rankQuest").textContent = `완료 Quest ${state.quests.filter((q) => q.done).length}개. 꾸준함은 가장 조용한 무기입니다.`;
+      document.getElementById("rankSkill").textContent = `완료 Skill ${state.skills.filter((s) => s.done).length}개. 이해는 선택의 정확도를 높입니다.`;
+      document.getElementById("rankGuild").textContent = `공유 사례 ${state.guild.length}개. 나눈 경험은 Guild의 지도가 됩니다.`;
+    }
+
+    function renderProfile() {
+      document.getElementById("profileWeapon").textContent = state.weapon ? state.weapon.name : "Hidden Weapon";
+      document.getElementById("profileSummary").textContent = state.weapon ? `${state.weapon.title}. ${state.weapon.copy}` : "캐릭터를 생성하면 당신의 Weapon과 성장 기록이 여기에 표시됩니다.";
+      const list = badges();
+      document.getElementById("badgeList").innerHTML = (list.length ? list : ["아직 Badge가 없습니다"]).map((badge) => `
+        <div class="list-item"><strong>${escapeHtml(badge)}</strong><span>${badge === "아직 Badge가 없습니다" ? "첫 Weapon 또는 Quest를 완료해보세요." : "Unlocked"}</span></div>
+      `).join("");
+    }
+
+    function renderSettings() {
+      Object.entries(state.settings).forEach(([key, value]) => {
+        const input = document.getElementById(key);
+        if (input) input.checked = !!value;
+      });
+    }
+
+    function render() {
+      renderWeapon();
+      renderIdentity();
+      renderDashboard();
+      renderQuests();
+      renderSkills();
+      renderChat();
+      renderGuild();
+      renderRanking();
+      renderProfile();
+      renderSettings();
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+
+    document.getElementById("profileForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const focus = document.getElementById("profileFocus");
+      const profile = {
+        name: document.getElementById("profileName").value.trim() || "전략가",
+        birth: document.getElementById("profileBirth").value,
+        time: document.getElementById("profileTime").value,
+        focus: focus.value,
+        focusLabel: focus.options[focus.selectedIndex].textContent
+      };
+      state.profile = profile;
+      state.weapon = chooseWeapon(profile);
+      if (state.xp === 0) state.xp = 100;
+      state.level = Math.max(1, Math.floor(state.xp / 120) + 1);
+      saveState();
+      render();
+      toast("Weapon Revealed · First Weapon Discovery +100 XP");
+      document.getElementById("weaponStage").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    document.getElementById("quickReveal").addEventListener("click", () => {
+      if (!state.profile) {
+        state.profile = { name: "전략가", birth: "", time: "", focus: "career", focusLabel: "커리어" };
+      }
+      state.weapon = chooseWeapon(state.profile);
+      if (state.xp === 0) state.xp = 100;
+      saveState();
+      render();
+      toast("Weapon Revealed");
+    });
+
+    document.getElementById("resetRoom").addEventListener("click", () => {
+      state = clone(defaultState);
+      saveState();
+      render();
+      toast("작전실 상태를 초기화했습니다.");
+    });
+
+    document.getElementById("sendChat").addEventListener("click", sendChat);
+    document.getElementById("chatInput").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") sendChat();
+    });
+
+    document.getElementById("guildForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const post = document.getElementById("guildPost").value.trim();
+      if (!post) return;
+      state.guild.push({
+        name: state.profile?.name || "익명 전략가",
+        body: post,
+        at: new Date().toLocaleDateString("ko-KR")
+      });
+      document.getElementById("guildPost").value = "";
+      addXp(20);
+      toast("Guild Contribution · +20 XP");
+    });
+
+    ["aiConsent", "briefingNotice", "soundEnabled", "reduceMotion"].forEach((id) => {
+      document.getElementById(id).addEventListener("change", (event) => {
+        state.settings[id] = event.target.checked;
+        saveState();
+        renderSettings();
+        toast("Settings saved");
+      });
+    });
+
+    render();
+  </script>
+</body>
+</html>

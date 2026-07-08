@@ -6500,6 +6500,18 @@
         });
       }
     })();
+
+    (function linkFullStrategyRoom() {
+      const nav = document.querySelector(".nav");
+      if (nav && !nav.querySelector('a[href="/strategy-room.html"]')) {
+        nav.insertAdjacentHTML("afterbegin", '<a href="/strategy-room.html">Strategy Room</a>');
+      }
+
+      const actions = document.querySelector(".saju-live-actions");
+      if (actions && !actions.querySelector('a[href="/strategy-room.html"]')) {
+        actions.insertAdjacentHTML("afterbegin", '<a class="ghost" href="/strategy-room.html">Strategy Room 입장</a>');
+      }
+    })();
   </script>
 </body>
 </html>
