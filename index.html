@@ -6517,5 +6517,111 @@
       }
     })();
   </script>
+  <script>
+    (function applyKoreanFirstHomeLabels() {
+      const setText = (selector, text) => {
+        const node = document.querySelector(selector);
+        if (node) node.textContent = text;
+      };
+      const setHTML = (selector, html) => {
+        const node = document.querySelector(selector);
+        if (node) node.innerHTML = html;
+      };
+
+      document.documentElement.lang = "ko";
+      document.title = "쭈쌤의 사주전쟁 | 무료 AI 사주 분석";
+
+      setHTML(".brand", '<span class="brand-mark">쭈</span><span>쭈쌤의 사주전쟁</span>');
+
+      const nav = document.querySelector(".nav");
+      if (nav) {
+        nav.setAttribute("aria-label", "쭈쌤의 사주전쟁 주요 메뉴");
+        nav.innerHTML = `
+          <a href="/strategy-room.html">작전실</a>
+          <a href="#report">AI 리포트</a>
+          <a href="#content-map">전략 지도</a>
+          <a href="#free-play">오늘의 퀘스트</a>
+          <a href="#premium">프리미엄</a>
+          <a href="#consulting">상담/작전회의</a>
+          <a href="/payment.html">결제</a>
+          <a href="/mypage.html">내 작전실</a>
+        `;
+      }
+
+      setText(".saju-live-kicker", "AI 사주 작전실 오픈");
+      setHTML("#experience-title", '사주를 보는 곳이 아니라, <span>내 인생을 탐험하는 작전실</span>');
+      setText(
+        ".saju-live-copy",
+        "쭈쌤의 사주전쟁은 생년월일 입력을 캐릭터 생성으로, 리포트를 인생 스토리북으로, 오늘의 운세를 성장 퀘스트로 바꿉니다. 사용자는 결과를 소비하는 것이 아니라 자신의 무기와 다음 선택을 발견합니다."
+      );
+
+      const actions = document.querySelector(".saju-live-actions");
+      if (actions) {
+        actions.innerHTML = `
+          <a class="ghost" href="/strategy-room.html">작전실 입장</a>
+          <button type="button" id="weaponRevealButtonKo">무기 공개 연출 보기</button>
+          <a class="ghost" href="#sajuForm">내 무기 분석 시작</a>
+          <a class="ghost" href="#content-map">전략 지도 보기</a>
+        `;
+      }
+
+      const weaponButton = document.getElementById("weaponRevealButtonKo");
+      if (weaponButton) {
+        weaponButton.addEventListener("click", () => {
+          document.querySelector(".saju-live-experience")?.classList.add("weapon-revealed");
+          setText("#weaponCaptionTitle", "무기 공개 완료 · 선택을 설계하는 사람");
+          setText(
+            "#weaponCaptionText",
+            "당신의 무기는 미래를 맞히는 말이 아니라 복잡한 상황에서 다음 선택을 선명하게 만드는 전략 감각입니다."
+          );
+        });
+      }
+
+      const questButton = document.getElementById("questClearButton");
+      if (questButton) {
+        questButton.textContent = "미션 완료";
+        questButton.addEventListener("click", () => {
+          setText("#questState", "미션 완료 · 레벨 3 · 경험치 820 / 1000 · 보상: 선택 명료도 +15");
+        });
+      }
+
+      setHTML(".weapon-core strong", "나의<br>무기");
+      setText("#weaponCaptionTitle", "무기 공개 대기 중");
+      setText("#weaponCaptionText", "버튼을 누르면 금빛 입자, 카드 반전, 빛 확산과 함께 사용자의 첫 무기가 공개됩니다.");
+
+      const labels = document.querySelectorAll(".module-label");
+      const labelText = ["전략 지도", "오늘의 성장 미션", "스킬 아카데미", "AI 리포트", "AI 전략 회의", "성장 길드"];
+      labels.forEach((label, index) => {
+        if (labelText[index]) label.textContent = labelText[index];
+      });
+
+      setText(".hero .eyebrow", "AI 사주 전략 플랫폼");
+      setText("#hero-title", "당신에게도 무기가 있습니다");
+      setText(
+        ".lead",
+        "쭈쌤의 사주전쟁은 사주를 공포의 예언으로 소비하지 않습니다. AI 전략가가 당신의 기질, 반복 패턴, 관계와 커리어의 현장을 읽고 오늘 실행할 수 있는 다음 전략으로 바꿉니다."
+      );
+
+      const heroActions = document.querySelector(".hero-actions");
+      if (heroActions) {
+        heroActions.setAttribute("aria-label", "쭈쌤의 사주전쟁 주요 행동");
+        heroActions.innerHTML = `
+          <a href="#report">내 무기 찾기</a>
+          <a class="secondary-link" href="#content-map">전략 지도 보기</a>
+        `;
+      }
+
+      const proofStrip = document.querySelector(".proof-strip");
+      if (proofStrip) {
+        proofStrip.setAttribute("aria-label", "쭈쌤의 사주전쟁 경험 가치");
+        proofStrip.innerHTML = `
+          <article class="proof-card"><strong>무기</strong>사주에서 타고난 강점과 반복되는 선택 패턴을 하나의 무기 카드로 정리합니다.</article>
+          <article class="proof-card"><strong>전략</strong>운명을 단정하지 않고 커리어, 관계, 돈, 학습의 다음 선택지를 비교합니다.</article>
+          <article class="proof-card"><strong>퀘스트</strong>오늘 바로 실행할 수 있는 작은 성장 미션으로 통찰을 행동으로 바꿉니다.</article>
+          <article class="proof-card"><strong>작전회의</strong>중요한 선택 앞에서는 AI와 전문가가 함께 최종 전략 회의를 준비합니다.</article>
+        `;
+      }
+    })();
+  </script>
 </body>
 </html>

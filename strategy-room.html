@@ -1341,5 +1341,137 @@
     render();
     syncFromServer();
   </script>
+  <script>
+    (function applyKoreanFirstStrategyRoomLabels() {
+      const setText = (selector, text) => {
+        const node = document.querySelector(selector);
+        if (node) node.textContent = text;
+      };
+      const setHTML = (selector, html) => {
+        const node = document.querySelector(selector);
+        if (node) node.innerHTML = html;
+      };
+      const setAttr = (selector, name, value) => {
+        const node = document.querySelector(selector);
+        if (node) node.setAttribute(name, value);
+      };
+
+      const style = document.createElement("style");
+      style.textContent = `
+        .quest-card.done h3::after { content: " 미션 완료"; }
+        .brand span:last-child { word-break: keep-all; }
+      `;
+      document.head.appendChild(style);
+
+      function apply() {
+        document.documentElement.lang = "ko";
+        document.title = "AI 작전실 | 쭈쌤의 사주전쟁";
+        setAttr('meta[name="description"]', "content", "나의 사주 무기, 전략 지도, 오늘의 퀘스트, 아카데미, AI 전략 회의를 한 곳에서 확인하는 쭈쌤의 사주전쟁 작전실입니다.");
+
+        setHTML(".brand", '<span class="brand-mark">쭈</span><span>쭈쌤의 사주전쟁 작전실</span>');
+        const nav = document.querySelector(".nav");
+        if (nav) {
+          nav.setAttribute("aria-label", "작전실 메뉴");
+          nav.innerHTML = `
+            <a href="#onboarding">캐릭터 생성</a>
+            <a href="#dashboard">대시보드</a>
+            <a href="#map">전략 지도</a>
+            <a href="#quests">퀘스트</a>
+            <a href="#academy">아카데미</a>
+            <a href="#chat">AI 상담</a>
+            <a href="#guild">길드</a>
+            <a href="#settings">설정</a>
+          `;
+        }
+
+        setText(".kicker", "AI 사주 전략 플랫폼");
+        setText(".hero h1", "작전실에 입장했습니다.");
+        setText(
+          ".hero-copy",
+          "쭈쌤의 사주전쟁은 생년월일 입력을 캐릭터 생성으로, 무기 공개를 자기 이해의 순간으로, 전략 지도를 다음 선택의 길잡이로 바꿉니다. 사용자는 사주 결과를 소비하는 것이 아니라 자신의 인생 전략을 직접 탐험합니다."
+        );
+        setText('.hero-actions a[href="#onboarding"]', "내 캐릭터 생성");
+        setText("#quickReveal", "무기 바로 공개");
+        setText('.hero-actions a[href="/"]', "홈으로 돌아가기");
+
+        const weaponStage = document.querySelector("#weaponStage");
+        setAttr("#weaponStage", "aria-label", "무기 공개");
+        if (!weaponStage?.classList.contains("revealed")) {
+          setHTML("#weaponName", "숨겨진<br>무기");
+          setText("#weaponTitle", "무기 공개 대기 중");
+          setText("#weaponCopy", "캐릭터를 생성하면 사용자의 강점과 다음 선택을 상징하는 무기가 열립니다.");
+        }
+
+        const sections = {
+          onboarding: ["캐릭터 생성형 온보딩", "생년월일을 입력하는 절차가 아니라 나의 첫 캐릭터를 만드는 경험입니다."],
+          dashboard: ["대시보드: 매일 돌아오는 개인 작전실", "오늘의 전략, 미완료 퀘스트, 아카데미 진행, AI 회의, 성장 기록을 한눈에 보여줍니다."],
+          map: ["전략 지도: 대운표가 아니라 인생 지도", "현재 위치, 다음 지역, 도전, 보상, 추천 행동을 지도처럼 탐험합니다."],
+          quests: ["퀘스트: 오늘의 성장 미션", "완료하면 경험치, 레벨, 배지, 대시보드가 함께 갱신됩니다."],
+          academy: ["아카데미: 강의가 아니라 스킬 트리", "생활명리, 십성, 용신, 대운, 사례 분석을 스킬처럼 열고 완료할 수 있습니다."],
+          library: ["자료실: 지식 창고가 아니라 전략 무기고", "Knowledge Bible의 현대 번역 철학을 다시 찾아볼 수 있는 카드로 제공합니다."],
+          chat: ["AI 상담: 챗봇이 아니라 작전 회의", "AI는 답을 단정하지 않고 상황 정리, 해석, 선택지, 다음 행동을 함께 설계합니다."],
+          guild: ["길드: 함께 성장하는 전략가들의 모임", "질문, 토론, 사례 연구, 명예의 전당을 함께 성장하는 길드 경험으로 제공합니다."],
+          ranking: ["랭킹: 경쟁이 아니라 성장 기여", "사용자를 서열화하지 않고 꾸준함, 좋은 질문, 학습 기여를 조명합니다."],
+          profile: ["프로필: 개인 전적 기록", "대표 무기, 칭호, 배지, 완료 기록을 한 곳에서 확인합니다."],
+          premium: ["프리미엄: 작전실 확장", "불안을 결제시키는 것이 아니라 더 깊은 전략 경험을 선택하는 구조입니다."],
+          consultation: ["상담: 최종 전략 회의", "예언 구매가 아니라 의사결정 해상도를 높이는 회의로 설계합니다."],
+          settings: ["설정: 신뢰와 통제감", "AI 동의, 알림, 사운드, 접근성 설정을 사용자가 직접 통제합니다."]
+        };
+        Object.entries(sections).forEach(([id, copy]) => {
+          const section = document.getElementById(id);
+          if (!section) return;
+          const h2 = section.querySelector(".section-head h2");
+          const p = section.querySelector(".section-head p");
+          if (h2) h2.textContent = copy[0];
+          if (p) p.textContent = copy[1];
+        });
+
+        const tagMap = new Map([
+          ["Character Creation", "캐릭터 생성"],
+          ["Current Identity", "현재 정체성"],
+          ["Today Briefing", "오늘의 전략"],
+          ["Next Action", "다음 행동"],
+          ["Academy", "아카데미"],
+          ["Case Study", "사례 연구"],
+          ["Hall of Strategy", "전략 명예의 전당"],
+          ["Quest", "퀘스트"],
+          ["Learning", "학습"],
+          ["Guild", "길드"],
+          ["Weapon Identity", "무기 정체성"],
+          ["Premium Arsenal", "프리미엄 무기고"],
+          ["War Room", "작전회의"],
+          ["Academy Bundle", "아카데미 묶음"]
+        ]);
+        document.querySelectorAll(".tag").forEach((tag) => {
+          const clean = tag.textContent.trim();
+          if (tagMap.has(clean)) tag.textContent = tagMap.get(clean);
+          if (clean.startsWith("Daily Quest")) tag.textContent = clean.replace("Daily Quest", "오늘의 퀘스트");
+        });
+
+        document.querySelectorAll("button").forEach((button) => {
+          if (button.textContent.includes("Mission Clear")) button.textContent = "미션 완료";
+          if (button.textContent.includes("Weapon")) button.textContent = button.textContent.replace("Weapon", "무기");
+        });
+
+        setText("#identityCopy", "정보를 입력하면 대시보드, 퀘스트, 프로필, AI 상담이 같은 사용자 상태를 공유합니다.");
+        setText("#nextQuest", document.querySelector("#nextQuest")?.textContent.replace("Quest", "퀘스트") || "");
+        const profileWeapon = document.querySelector("#profileWeapon");
+        if (profileWeapon && profileWeapon.textContent.includes("Hidden Weapon")) {
+          profileWeapon.textContent = profileWeapon.textContent.replace("Hidden Weapon", "숨겨진 무기");
+        }
+      }
+
+      apply();
+      const originalRender = window.render;
+      if (typeof originalRender === "function") {
+        window.render = function renderKoreanFirstWrapper() {
+          originalRender();
+          requestAnimationFrame(apply);
+        };
+      }
+      setTimeout(apply, 300);
+      setTimeout(apply, 1200);
+    })();
+  </script>
 </body>
 </html>
