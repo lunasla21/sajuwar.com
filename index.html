@@ -17,6 +17,8 @@
       --gold2: #8a5b12;
       --jade: #2f8e72;
       --red: #bd5b52;
+      --flame: #ff6a2a;
+      --flame2: #ff9a3d;
       --line: rgba(113, 80, 44, 0.18);
       --shadow: 0 24px 80px rgba(126, 82, 35, 0.16);
     }
@@ -2188,7 +2190,10 @@
 
     .hero-copy { max-width: 720px; }
     .eyebrow,
-    .hero .eyebrow { color: #f9d77e; }
+    .hero .eyebrow {
+      color: var(--flame2);
+      text-shadow: 0 0 18px rgba(255, 106, 42, 0.22);
+    }
     h1,
     .hero-manifesto,
     .section-head h2 {
@@ -2196,8 +2201,9 @@
       text-shadow: 0 18px 46px rgba(0, 0, 0, 0.45);
     }
     .hero-manifesto mark {
-      color: #f9d77e;
-      background: linear-gradient(180deg, transparent 58%, rgba(212, 175, 55, 0.22) 0);
+      color: var(--flame2);
+      background: linear-gradient(180deg, transparent 58%, rgba(255, 106, 42, 0.28) 0);
+      text-shadow: 0 0 20px rgba(255, 106, 42, 0.3);
     }
     .lead { color: rgba(247, 234, 210, 0.74); }
 
