@@ -488,6 +488,40 @@
       gap: 12px;
     }
 
+    .course-feature {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1fr);
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 18px;
+    }
+
+    .course-image {
+      width: 100%;
+      max-height: 520px;
+      display: block;
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 8px;
+      object-fit: cover;
+      object-position: center top;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.44);
+    }
+
+    .course-copy h3 {
+      margin-bottom: 10px;
+      color: var(--gold2);
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.18;
+      word-break: keep-all;
+    }
+
+    .course-copy p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: clamp(16px, 1.8vw, 20px);
+    }
+
     .skill {
       min-height: 110px;
       display: grid;
@@ -603,6 +637,7 @@
       .hero-panel { min-height: 430px; }
       .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .skill-tree { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .course-feature { grid-template-columns: 1fr; }
       .map-board { min-height: auto; display: grid; gap: 10px; }
       .map-node { position: static; width: auto; }
     }
@@ -760,6 +795,14 @@
         <h2>명리 마스터 과정</h2>
         <p>오행, 십성, 용신, 대운, 사례 분석을 단계별로 배웁니다.</p>
       </div>
+      <article class="war-card course-feature">
+        <img class="course-image" src="assets/life-myeongri-2026.jpg" alt="2026 생활명리 핵심 세운 분석 신판 소개" loading="lazy" />
+        <div class="course-copy">
+          <span class="tag">2026 신판 소개</span>
+          <h3>생활명리 핵심 세운 분석</h3>
+          <p>생활 명리 핵심 정리, 세운 분석 가이드, 실전 사례를 한 흐름으로 연결한 명리 마스터 과정입니다.</p>
+        </div>
+      </article>
       <div class="skill-tree" id="skillTree"></div>
     </section>
 
