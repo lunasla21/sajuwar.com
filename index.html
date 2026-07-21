@@ -3,12 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>쭈쌤의 사주 전쟁 | 무료 AI 사주 분석</title>
-  <meta name="description" content="생년월일로 나의 사주 무기와 오늘의 전략을 확인하세요. 무료 AI 사주 분석, 궁합, 작명, 프리미엄 리포트까지 한 번에." />
-  <meta property="og:title" content="쭈쌤의 사주 전쟁 | 무료 AI 사주 분석" />
-  <meta property="og:description" content="생년월일로 나의 사주 무기와 오늘의 전략을 확인하세요. 무료 AI 사주 분석, 궁합, 작명, 프리미엄 리포트까지 한 번에." />
-  <meta name="twitter:title" content="쭈쌤의 사주 전쟁 | 무료 AI 사주 분석" />
-  <meta name="twitter:description" content="생년월일로 나의 사주 무기와 오늘의 전략을 확인하세요. 무료 AI 사주 분석, 궁합, 작명, 프리미엄 리포트까지 한 번에." />
+  <title>쭈쌤의 사주전쟁 | 무료 AI 사주 분석</title>
+  <meta name="description" content="생년월일만 입력하면 내 강점, 관계, 올해 흐름을 한 장의 전략 카드로 확인하세요." />
   <style>
     :root {
       color-scheme: light;
@@ -2937,841 +2933,63 @@
       .premium-grid { grid-template-columns: 1fr; }
       .mini-row { grid-template-columns: 1fr; }
     }
-    /* SAJU WAR Product Bible launch layer */
-    body.sajuwar-product-home {
-      color: #f4f1ea;
-      background:
-        radial-gradient(circle at 16% 8%, rgba(212, 175, 55, 0.18), transparent 28%),
-        radial-gradient(circle at 82% 18%, rgba(47, 143, 107, 0.14), transparent 30%),
-        radial-gradient(circle at 50% 92%, rgba(138, 31, 31, 0.16), transparent 34%),
-        linear-gradient(180deg, #050505 0%, #090b0f 44%, #070707 100%);
-    }
-
-    body.sajuwar-product-home .topbar {
-      position: sticky;
-      top: 12px;
-      z-index: 20;
-      width: min(1180px, calc(100% - 40px));
-      padding: 13px 16px;
-      border-radius: 8px;
-      backdrop-filter: blur(22px);
-      background:
-        linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent 24%, transparent 72%, rgba(47, 143, 107, 0.09)),
-        rgba(7, 7, 7, 0.76);
-      border: 1px solid rgba(212, 175, 55, 0.26);
-    }
-
-    body.sajuwar-product-home .brand span:last-child {
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    body.sajuwar-product-home .nav {
-      gap: 8px;
-      font-size: 13px;
-    }
-
-    body.sajuwar-product-home .nav a {
-      color: rgba(244, 241, 234, 0.72);
-      background: transparent;
-      white-space: nowrap;
-    }
-
-    body.sajuwar-product-home .nav a:hover {
-      color: #d4af37;
-      background: rgba(212, 175, 55, 0.08);
-    }
-
-    body.sajuwar-product-home .hero {
-      width: min(1180px, calc(100% - 40px));
-      min-height: min(760px, calc(100vh - 120px));
-      margin-top: 16px;
-      padding: clamp(34px, 5vw, 74px);
-      border-radius: 8px;
-      grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.98fr);
-      background:
-        linear-gradient(105deg, rgba(7, 7, 7, 0.98) 0%, rgba(7, 7, 7, 0.86) 44%, rgba(7, 7, 7, 0.42) 100%),
-        url("assets/premium-battlefield-command.webp") center/cover;
-      border: 1px solid rgba(212, 175, 55, 0.34);
-      box-shadow: 0 34px 110px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    }
-
-    body.sajuwar-product-home .hero::before {
-      background:
-        linear-gradient(rgba(212, 175, 55, 0.055) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(212, 175, 55, 0.045) 1px, transparent 1px),
-        linear-gradient(115deg, transparent 0 48%, rgba(212, 175, 55, 0.16) 49%, transparent 51%);
-      background-size: 42px 42px, 42px 42px, 100% 100%;
-      mask-image: linear-gradient(90deg, rgba(0,0,0,0.82), transparent 82%);
-    }
-
-    body.sajuwar-product-home .hero-copy {
-      max-width: 760px;
-    }
-
-    body.sajuwar-product-home .eyebrow {
-      color: #d4af37;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    body.sajuwar-product-home h1 {
-      margin-bottom: 14px;
-      color: #f4f1ea;
-      font-size: clamp(52px, 8vw, 112px);
-      line-height: 0.94;
-      letter-spacing: 0;
-    }
-
-    body.sajuwar-product-home .hero-manifesto {
-      max-width: 720px;
-      color: #f4f1ea;
-      font-size: clamp(24px, 3.2vw, 44px);
-      line-height: 1.14;
-    }
-
-    body.sajuwar-product-home .hero-manifesto mark {
-      color: #d4af37;
-      background: linear-gradient(180deg, transparent 62%, rgba(212, 175, 55, 0.22) 0);
-    }
-
-    body.sajuwar-product-home .lead {
-      max-width: 680px;
-      color: rgba(244, 241, 234, 0.74);
-      font-size: clamp(16px, 1.7vw, 20px);
-    }
-
-    body.sajuwar-product-home .hero-actions a {
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 8px;
-      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-    }
-
-    body.sajuwar-product-home .hero-actions a:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 44px rgba(212, 175, 55, 0.24);
-    }
-
-    body.sajuwar-product-home .hero-actions a.secondary-link {
-      color: #f4f1ea;
-      background: rgba(244, 241, 234, 0.055);
-      border-color: rgba(244, 241, 234, 0.22);
-    }
-
-    body.sajuwar-product-home .proof-strip {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    body.sajuwar-product-home .proof-card {
-      min-height: 132px;
-      padding: 16px;
-      border-radius: 8px;
-      color: rgba(244, 241, 234, 0.72);
-      background:
-        linear-gradient(135deg, rgba(212, 175, 55, 0.08), transparent 40%),
-        rgba(12, 12, 12, 0.72);
-      backdrop-filter: blur(18px);
-    }
-
-    body.sajuwar-product-home .proof-card strong {
-      color: #d4af37;
-    }
-
-    body.sajuwar-product-home .hero-map {
-      border-radius: 8px;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.2), transparent 20%),
-        linear-gradient(180deg, rgba(7, 7, 7, 0.12), rgba(7, 7, 7, 0.66)),
-        url("assets/hero-saju-war.jpg") center/cover;
-      animation: warFloat 8s ease-in-out infinite;
-    }
-
-    body.sajuwar-product-home .pillar {
-      width: 86px;
-      height: 118px;
-      color: #f4f1ea;
-      border-radius: 8px;
-      border-color: rgba(212, 175, 55, 0.42);
-      background: rgba(7, 7, 7, 0.5);
-      backdrop-filter: blur(14px);
-    }
-
-    body.sajuwar-product-home .input-band {
-      margin-top: 22px;
-      border-radius: 8px;
-      background:
-        linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent 36%),
-        rgba(10, 10, 10, 0.82);
-      backdrop-filter: blur(18px);
-    }
-
-    body.sajuwar-product-home .birth-panel::before {
-      content: "Weapon Onboarding";
-      display: block;
-      margin-bottom: 12px;
-      color: #d4af37;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    body.sajuwar-product-home .content-band {
-      border-radius: 8px;
-      background:
-        linear-gradient(135deg, rgba(212, 175, 55, 0.07), transparent 34%),
-        rgba(8, 8, 8, 0.9);
-    }
-
-    body.sajuwar-product-home .sajuwar-experience-rail {
-      width: min(1180px, calc(100% - 40px));
-      margin: 22px auto;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    body.sajuwar-product-home .sajuwar-experience-card {
-      min-height: 170px;
-      padding: 18px;
-      border-radius: 8px;
-      border: 1px solid rgba(212, 175, 55, 0.22);
-      color: rgba(244, 241, 234, 0.76);
-      background:
-        linear-gradient(135deg, rgba(212, 175, 55, 0.08), transparent 42%),
-        rgba(14, 14, 14, 0.86);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 20px 60px rgba(0,0,0,0.22);
-    }
-
-    body.sajuwar-product-home .sajuwar-experience-card span {
-      display: inline-grid;
-      width: 32px;
-      height: 32px;
-      margin-bottom: 18px;
-      place-items: center;
-      border-radius: 8px;
-      color: #070707;
-      background: #d4af37;
-      font-weight: 950;
-    }
-
-    body.sajuwar-product-home .sajuwar-experience-card h3 {
-      margin-bottom: 8px;
-      color: #f4f1ea;
-      font-size: 18px;
-    }
-
-    @keyframes warFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    @media (max-width: 960px) {
-      body.sajuwar-product-home .hero,
-      body.sajuwar-product-home .sajuwar-experience-rail {
-        grid-template-columns: 1fr;
-      }
-
-      body.sajuwar-product-home .hero {
-        padding: 28px 18px;
-      }
-
-      body.sajuwar-product-home .proof-strip {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 560px) {
-      body.sajuwar-product-home .topbar,
-      body.sajuwar-product-home .hero,
-      body.sajuwar-product-home .input-band,
-      body.sajuwar-product-home .content-band,
-      body.sajuwar-product-home .sajuwar-experience-rail {
-        width: min(100% - 28px, 1180px);
-      }
-
-      body.sajuwar-product-home .proof-strip {
-        grid-template-columns: 1fr;
-      }
-
-      body.sajuwar-product-home h1 {
-        font-size: 52px;
-      }
-    }
-
-    .saju-live-experience {
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto 34px;
-      padding: 28px;
-      border: 1px solid rgba(212, 175, 55, 0.26);
-      border-radius: 8px;
-      color: #f4f1ea;
-      background:
-        radial-gradient(circle at 18% 0%, rgba(212, 175, 55, 0.28), transparent 32%),
-        radial-gradient(circle at 88% 8%, rgba(63, 143, 113, 0.18), transparent 28%),
-        linear-gradient(135deg, rgba(12, 12, 12, 0.96), rgba(26, 22, 16, 0.94));
-      box-shadow: 0 34px 90px rgba(0, 0, 0, 0.34);
-      overflow: hidden;
-    }
-
-    .saju-live-head {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-      gap: 28px;
-      align-items: center;
-    }
-
-    .saju-live-kicker {
-      margin: 0 0 12px;
-      color: #d4af37;
-      font-size: 12px;
-      font-weight: 950;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    .saju-live-head h2 {
-      margin: 0 0 14px;
-      max-width: 760px;
-      color: #fff8df;
-      font-size: clamp(34px, 5vw, 64px);
-      line-height: 1.03;
-    }
-
-    .saju-live-head h2 span { color: #d4af37; }
-
-    .saju-live-copy {
-      max-width: 680px;
-      margin: 0 0 22px;
-      color: rgba(244, 241, 234, 0.78);
-      font-size: clamp(16px, 1.8vw, 20px);
-    }
-
-    .saju-live-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .saju-live-actions button,
-    .saju-live-actions a {
-      min-height: 46px;
-      padding: 0 18px;
-      border: 1px solid rgba(212, 175, 55, 0.28);
-      border-radius: 8px;
-      color: #0b0b0b;
-      background: linear-gradient(135deg, #fff0aa, #d4af37);
-      font-weight: 950;
-      cursor: pointer;
-      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-    }
-
-    .saju-live-actions a {
-      display: inline-grid;
-      place-items: center;
-    }
-
-    .saju-live-actions .ghost {
-      color: #fff8df;
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .saju-live-actions button:hover,
-    .saju-live-actions a:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255, 231, 148, 0.72);
-      box-shadow: 0 18px 40px rgba(212, 175, 55, 0.14);
-    }
-
-    .weapon-stage {
-      position: relative;
-      min-height: 360px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      background:
-        radial-gradient(circle at 50% 44%, rgba(212, 175, 55, 0.3), transparent 32%),
-        radial-gradient(circle at 52% 48%, rgba(255, 255, 255, 0.12), transparent 18%),
-        rgba(255, 255, 255, 0.04);
-      overflow: hidden;
-    }
-
-    .weapon-stage::before,
-    .weapon-stage::after {
-      content: "";
-      position: absolute;
-      inset: 44px;
-      border: 1px dashed rgba(212, 175, 55, 0.28);
-      border-radius: 50%;
-      animation: sajuSpin 18s linear infinite;
-    }
-
-    .weapon-stage::after {
-      inset: 86px;
-      border-color: rgba(255, 255, 255, 0.12);
-      animation-duration: 12s;
-      animation-direction: reverse;
-    }
-
-    .weapon-core {
-      position: relative;
-      z-index: 2;
-      width: min(250px, 70%);
-      aspect-ratio: 1;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(212, 175, 55, 0.38);
-      border-radius: 8px;
-      background:
-        linear-gradient(145deg, rgba(255, 240, 170, 0.28), rgba(212, 175, 55, 0.08)),
-        rgba(0, 0, 0, 0.34);
-      transform: rotate(45deg);
-      box-shadow: 0 0 70px rgba(212, 175, 55, 0.28), inset 0 0 50px rgba(255, 255, 255, 0.08);
-      transition: transform 600ms cubic-bezier(.2,.9,.2,1), box-shadow 600ms ease;
-    }
-
-    .weapon-core strong {
-      display: block;
-      transform: rotate(-45deg);
-      color: #fff7d0;
-      font-size: 30px;
-      line-height: 1.12;
-      text-align: center;
-    }
-
-    .saju-live-experience.weapon-revealed .weapon-core {
-      transform: rotate(45deg) scale(1.08);
-      box-shadow: 0 0 110px rgba(212, 175, 55, 0.58), inset 0 0 70px rgba(255, 255, 255, 0.16);
-    }
-
-    .weapon-caption {
-      position: absolute;
-      z-index: 3;
-      left: 18px;
-      right: 18px;
-      bottom: 18px;
-      padding: 16px;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.42);
-      backdrop-filter: blur(12px);
-    }
-
-    .weapon-caption h3 {
-      margin: 0 0 6px;
-      color: #d4af37;
-      font-size: 18px;
-    }
-
-    .weapon-caption p {
-      margin: 0;
-      color: rgba(244, 241, 234, 0.76);
-      font-size: 14px;
-    }
-
-    .experience-grid-live {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 22px;
-    }
-
-    .experience-module {
-      min-height: 220px;
-      padding: 18px;
-      border: 1px solid rgba(212, 175, 55, 0.16);
-      border-radius: 8px;
-      background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
-        rgba(255, 255, 255, 0.035);
-      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
-    }
-
-    .experience-module:hover {
-      transform: translateY(-3px);
-      border-color: rgba(212, 175, 55, 0.34);
-      background:
-        linear-gradient(145deg, rgba(212, 175, 55, 0.1), rgba(255, 255, 255, 0.025)),
-        rgba(255, 255, 255, 0.045);
-    }
-
-    .module-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      color: #d4af37;
-      font-size: 12px;
-      font-weight: 950;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .module-label::before {
-      content: "";
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #d4af37;
-      box-shadow: 0 0 16px rgba(212, 175, 55, 0.9);
-    }
-
-    .experience-module h3 {
-      margin: 0 0 8px;
-      color: #fff8df;
-      font-size: 22px;
-    }
-
-    .experience-module p {
-      margin: 0;
-      color: rgba(244, 241, 234, 0.72);
-      font-size: 14px;
-    }
-
-    .map-path {
-      display: grid;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .map-node {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.22);
-      color: rgba(244, 241, 234, 0.82);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .map-node strong { color: #fff8df; }
-    .map-node span { color: #d4af37; }
-
-    .quest-clear {
-      margin-top: 16px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .xp-bar {
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-    }
-
-    .xp-bar i {
-      display: block;
-      width: 42%;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, #d4af37, #fff1a8);
-      transition: width 450ms ease;
-    }
-
-    .saju-live-experience.quest-done .xp-bar i { width: 82%; }
-
-    .quest-clear button {
-      min-height: 38px;
-      border: 1px solid rgba(212, 175, 55, 0.25);
-      border-radius: 8px;
-      color: #0b0b0b;
-      background: #d4af37;
-      font-weight: 950;
-      cursor: pointer;
-    }
-
-    .skill-tree {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 9px;
-      margin-top: 16px;
-    }
-
-    .skill-tree span {
-      min-height: 46px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(212, 175, 55, 0.16);
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.18);
-      color: rgba(244, 241, 234, 0.84);
-      font-size: 12px;
-      font-weight: 900;
-      text-align: center;
-    }
-
-    .storybook {
-      margin-top: 16px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
-
-    .storybook span {
-      min-height: 58px;
-      padding: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.18));
-      color: rgba(244, 241, 234, 0.82);
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .guild-stack {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    .guild-stack span {
-      padding: 10px;
-      border-radius: 8px;
-      color: #fff8df;
-      background: rgba(212, 175, 55, 0.12);
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .daily-strip {
-      margin-top: 22px;
-      padding: 16px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      align-items: center;
-      border: 1px solid rgba(212, 175, 55, 0.16);
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.24);
-    }
-
-    .daily-strip strong {
-      color: #fff8df;
-      font-size: 18px;
-    }
-
-    .daily-strip p {
-      margin: 4px 0 0;
-      color: rgba(244, 241, 234, 0.72);
-    }
-
-    .daily-strip a {
-      min-height: 42px;
-      display: inline-grid;
-      place-items: center;
-      padding: 0 16px;
-      border-radius: 8px;
-      color: #0b0b0b;
-      background: #d4af37;
-      font-weight: 950;
-    }
-
-    @keyframes sajuSpin {
-      to { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 980px) {
-      .saju-live-head,
-      .experience-grid-live,
-      .daily-strip {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .saju-live-experience {
-        width: min(100% - 28px, 1180px);
-        padding: 18px;
-      }
-
-      .weapon-stage {
-        min-height: 320px;
-      }
-
-      .storybook,
-      .skill-tree,
-      .guild-stack {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
   </style>
 </head>
-<body class="sajuwar-product-home">
+<body>
   <div class="app" id="top">
     <header class="topbar">
-      <a class="brand" href="#top" aria-label="SAJU WAR 홈">
+      <a class="brand" href="#top" aria-label="사주전쟁 홈">
         <span class="brand-mark">SW</span>
-        <span>SAJU WAR</span>
+        <span>쭈쌤의 사주전쟁</span>
       </a>
-      <nav class="nav" aria-label="SAJU WAR 주요 메뉴">
-        <a href="#report">AI Report</a>
-        <a href="#content-map">Strategy Map</a>
-        <a href="#free-play">Quest</a>
-        <a href="#premium">Premium</a>
-        <a href="#consulting">War Room</a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="#report">무료 분석</a>
+        <a href="#content-map">메뉴</a>
+        <a href="#consulting">상담 신청</a>
+        <a href="#premium">유료 해석</a>
         <a href="/payment.html">결제</a>
-        <a href="/mypage.html">내 작전실</a>
       </nav>
     </header>
 
-    <section class="saju-live-experience" id="experience" aria-labelledby="experience-title">
-      <div class="saju-live-head">
-        <div>
-          <p class="saju-live-kicker">EXPERIENCE BIBLE IS NOW LIVE</p>
-          <h2 id="experience-title">사주를 보는 곳이 아니라, <span>내 인생을 탐험하는 작전실</span></h2>
-          <p class="saju-live-copy">
-            SAJU WAR는 생년월일 입력을 캐릭터 생성으로, 리포트를 인생 스토리북으로,
-            오늘의 운세를 성장 퀘스트로 바꿉니다. 사용자는 결과를 소비하는 것이 아니라
-            자신의 무기와 다음 선택을 발견합니다.
-          </p>
-          <div class="saju-live-actions">
-            <button type="button" id="weaponRevealButton">Weapon 공개 연출 보기</button>
-            <a class="ghost" href="#sajuForm">내 무기 분석 시작</a>
-            <a class="ghost" href="#content-map">Strategy Map 보기</a>
-          </div>
-        </div>
-
-        <div class="weapon-stage" aria-label="Weapon Reveal 미리보기">
-          <div class="weapon-core"><strong>YOUR<br>WEAPON</strong></div>
-          <div class="weapon-caption">
-            <h3 id="weaponCaptionTitle">Weapon Reveal 대기 중</h3>
-            <p id="weaponCaptionText">버튼을 누르면 금빛 입자, 카드 반전, 빛 확산의 감정 곡선으로 사용자의 첫 무기가 공개됩니다.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="experience-grid-live">
-        <article class="experience-module">
-          <span class="module-label">Strategy Map</span>
-          <h3>대운표가 아니라 인생 World Map</h3>
-          <p>현재 위치, 다음 지역, 도전, 보상, 추천 행동을 탐험하듯 이해합니다.</p>
-          <div class="map-path">
-            <div class="map-node"><strong>현재 위치</strong><span>자기 이해</span></div>
-            <div class="map-node"><strong>다음 지역</strong><span>관계 전략</span></div>
-            <div class="map-node"><strong>보상</strong><span>선택 명료도 +15</span></div>
-          </div>
-        </article>
-
-        <article class="experience-module">
-          <span class="module-label">Daily Quest</span>
-          <h3>할 일이 아니라 오늘의 성장 미션</h3>
-          <p>작은 행동을 완료하면 Mission Clear, XP, Level, Reward가 즉시 연결됩니다.</p>
-          <div class="quest-clear">
-            <div class="xp-bar" aria-label="XP 진행률"><i></i></div>
-            <button type="button" id="questClearButton">Mission Clear</button>
-            <p id="questState">Level 3 · XP 420 / 1000</p>
-          </div>
-        </article>
-
-        <article class="experience-module">
-          <span class="module-label">Academy</span>
-          <h3>강의가 아니라 Skill Tree</h3>
-          <p>생활명리, 십성, 육친, 용신, 대운을 스킬처럼 배우고 칭호와 수료증을 얻습니다.</p>
-          <div class="skill-tree">
-            <span>생활명리</span>
-            <span>십성</span>
-            <span>용신</span>
-            <span>대운</span>
-            <span>사례분석</span>
-            <span>Certificate</span>
-          </div>
-        </article>
-
-        <article class="experience-module">
-          <span class="module-label">AI Report</span>
-          <h3>리포트가 아니라 인생 스토리북</h3>
-          <p>책장을 넘기듯 무기, 반복 패턴, 관계, 커리어, 오늘의 행동을 챕터로 읽습니다.</p>
-          <div class="storybook">
-            <span>Chapter 1<br>무기</span>
-            <span>Chapter 2<br>전장</span>
-            <span>Chapter 3<br>전략</span>
-            <span>Chapter 4<br>행동</span>
-          </div>
-        </article>
-
-        <article class="experience-module">
-          <span class="module-label">AI Chat</span>
-          <h3>챗봇이 아니라 작전 회의</h3>
-          <p>AI는 단정하지 않고 질문, 교육, 코칭, 선택지, 다음 행동으로 대화를 이끕니다.</p>
-          <div class="map-path">
-            <div class="map-node"><strong>질문</strong><span>상황 정리</span></div>
-            <div class="map-node"><strong>해석</strong><span>현대 언어 번역</span></div>
-            <div class="map-node"><strong>Action</strong><span>다음 1수</span></div>
-          </div>
-        </article>
-
-        <article class="experience-module">
-          <span class="module-label">Guild Community</span>
-          <h3>게시판이 아니라 함께 성장하는 Guild</h3>
-          <p>랭킹, 칭호, 명예의 전당, 스터디, 사례 연구, 멘토링이 성장 루프로 연결됩니다.</p>
-          <div class="guild-stack">
-            <span>이번 주 전략가</span>
-            <span>사례 분석가</span>
-            <span>연속 출석</span>
-            <span>명예의 전당</span>
-          </div>
-        </article>
-      </div>
-
-      <div class="daily-strip">
-        <div>
-          <strong>오늘의 전략: 완벽한 답보다 작은 실행을 먼저 선택하세요.</strong>
-          <p>오늘의 AI 브리핑, Quest, 성장 기록이 매일 다시 돌아올 이유를 만듭니다.</p>
-        </div>
-        <a href="#free-play">오늘의 Quest 열기</a>
-      </div>
-    </section>
-
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">AI LIFE STRATEGY PLATFORM</p>
-        <h1 id="hero-title">Find Your Weapon.</h1>
+        <p class="eyebrow">무료 AI 사주 전략 카드</p>
+        <h1 id="hero-title">쭈쌤의 사주전쟁</h1>
         <p class="hero-manifesto">
-          사주는 미래가 아니라 <mark>당신의 선택을 설계하는 전략 지도</mark>입니다.
+          생년월일만 넣으면<br><mark>내 사주 무기</mark>가 바로 열립니다.
         </p>
         <p class="lead">
-          SAJU WAR는 사주를 공포나 예언으로 소비하지 않습니다. AI 전략가가 당신의 기질, 반복 패턴,
-          관계와 커리어의 전장을 읽고 오늘 실행할 수 있는 다음 전략으로 바꿉니다.
+          긴 풀이 대신 강점, 주의점, 오늘의 행동을 카드처럼 짧게 보여드립니다.
         </p>
-        <div class="hero-actions" aria-label="SAJU WAR 주요 행동">
-          <a href="#report">내 무기 찾기</a>
-          <a class="secondary-link" href="#content-map">작전실 둘러보기</a>
+        <div class="hero-actions" aria-label="주요 행동">
+          <a href="#sajuForm">무료 분석 시작</a>
+          <a class="secondary-link" href="#content-map">메뉴 한눈에 보기</a>
         </div>
-        <div class="proof-strip" aria-label="SAJU WAR 경험 원칙">
+        <div class="proof-strip" aria-label="사주전쟁 차별점">
           <article class="proof-card">
-            <strong>Weapon</strong>
-            당신의 사주에서 타고난 강점과 반복되는 선택 패턴을 하나의 무기 카드로 정리합니다.
+            <strong>1. 입력</strong>
+            이름과 생년월일
           </article>
           <article class="proof-card">
-            <strong>Strategy</strong>
-            운명을 단정하지 않고 커리어, 관계, 돈, 학습의 다음 선택지를 비교합니다.
+            <strong>2. 무기</strong>
+            타고난 강점
           </article>
           <article class="proof-card">
-            <strong>Quest</strong>
-            오늘 바로 실행할 수 있는 작은 미션으로 통찰을 행동으로 바꿉니다.
+            <strong>3. 전략</strong>
+            관계·돈·일 선택지
           </article>
           <article class="proof-card">
-            <strong>War Room</strong>
-            중요한 선택 앞에서는 AI와 전문가가 함께 최종 전략 회의를 준비합니다.
+            <strong>4. 행동</strong>
+            오늘 할 일 하나
           </article>
         </div>
       </div>
 
       <div class="hero-map" aria-hidden="true">
-        <div class="pillar p1">나의<br>무기</div>
-        <div class="pillar p2">현재<br>전장</div>
-        <div class="pillar p3">AI<br>전략가</div>
-        <div class="pillar p4">다음<br>선택</div>
+        <div class="pillar p1">기본</div>
+        <div class="pillar p2">환경</div>
+        <div class="pillar p3">나</div>
+        <div class="pillar p4">미래</div>
         <div class="core"></div>
         <div class="item i1"></div>
         <div class="item i2"></div>
@@ -3781,12 +2999,12 @@
       </div>
     </section>
 
-    <section class="input-band" aria-label="SAJU WAR 무기 분석 입력">
+    <section class="input-band" aria-label="사주 입력">
       <form class="panel birth-panel" id="sajuForm">
         <div class="field-grid">
           <label>
-            이름 또는 닉네임
-            <input id="name" autocomplete="name" placeholder="작전실에서 사용할 이름" />
+            이름
+            <input id="name" autocomplete="name" placeholder="이름을 입력하세요" />
           </label>
           <label>
             생년월일
@@ -3819,41 +3037,18 @@
           </label>
         </div>
         <div class="button-row">
-          <button type="submit">무료 Weapon 분석 시작</button>
-          <button class="secondary" type="button" onclick="openPaidReport()">Premium Report 열기</button>
+          <button type="submit">무료 분석 시작</button>
+          <button class="secondary" type="button" onclick="openPaidReport()">결제하고 전체보기</button>
           <button class="secondary" type="button" onclick="downloadPDF()">PDF 저장</button>
         </div>
       </form>
     </section>
 
-    <section class="sajuwar-experience-rail" aria-label="SAJU WAR 핵심 경험">
-      <article class="sajuwar-experience-card">
-        <span>1</span>
-        <h3>Weapon Reveal</h3>
-        <p>입력은 회원가입 폼이 아니라 당신의 첫 무기를 여는 의식입니다.</p>
-      </article>
-      <article class="sajuwar-experience-card">
-        <span>2</span>
-        <h3>AI Report</h3>
-        <p>긴 운세 풀이가 아니라 강점, 취약점, 전장, 행동 전략을 담은 작전 지도입니다.</p>
-      </article>
-      <article class="sajuwar-experience-card">
-        <span>3</span>
-        <h3>Daily Quest</h3>
-        <p>오늘 할 수 있는 5분짜리 행동으로 선택 능력을 훈련합니다.</p>
-      </article>
-      <article class="sajuwar-experience-card">
-        <span>4</span>
-        <h3>Strategy Map</h3>
-        <p>커리어, 관계, 돈, 학습의 현재 위치와 다음 경로를 하나의 지도로 봅니다.</p>
-      </article>
-    </section>
-
     <main class="content-band" id="report">
       <div class="section-head">
-        <p class="eyebrow">AI REPORT</p>
-        <h2>버튼을 누르면 당신의 첫 작전 지도가 열립니다</h2>
-        <p>무료 분석은 Primary Weapon과 현재 전장의 핵심 신호를 먼저 보여줍니다. Premium Report는 커리어, 관계, 돈, 올해의 흐름과 30일 실행 전략까지 확장됩니다.</p>
+        <p class="eyebrow">무료 분석</p>
+        <h2>결과는 바로 여기에서 확인하세요</h2>
+        <p>먼저 핵심만 보여드리고, 더 깊은 흐름은 유료 리포트와 상담으로 이어집니다.</p>
       </div>
       <div id="result" class="report-stack">
         <div class="box report-guide">
@@ -3867,24 +3062,24 @@
           </div>
           <div>
             <p class="eyebrow">무료 리포트 안내</p>
-            <h2 class="section-title">버튼을 누르면 이 자리에서 결과가 열립니다</h2>
-            <p class="small">스크롤을 많이 내리지 않아도 바로 확인할 수 있도록, 리포트 영역을 입력창 바로 아래에 배치했습니다. 무료 리포트는 원국의 큰 전장과 잠재 아이템의 입구를 먼저 보여줍니다.</p>
+            <h2 class="section-title">입력하면 첫 전략 카드가 열립니다</h2>
+            <p class="small">사주의 큰 흐름을 길게 설명하기보다, 지금 볼 핵심만 먼저 정리합니다.</p>
             <div class="guide-grid" style="margin-top:18px">
               <article class="guide-card">
-                <strong>1. 원국 전장</strong>
-                <p>연월일시 네 기둥이 어떤 힘으로 부딪히는지 먼저 봅니다.</p>
+                <strong>1. 나의 무기</strong>
+                <p>반복되는 강점과 패턴</p>
               </article>
               <article class="guide-card">
-                <strong>2. 지장간 아이템</strong>
-                <p>겉으로 약해 보여도 안쪽에 숨어 있는 재능과 돈맥을 찾습니다.</p>
+                <strong>2. 관계 전략</strong>
+                <p>끌림과 충돌 포인트</p>
               </article>
               <article class="guide-card">
-                <strong>3. 대운 스위치</strong>
-                <p>운이 켜질 때 어떤 아이템이 밖으로 나올 수 있는지 연결합니다.</p>
+                <strong>3. 올해 흐름</strong>
+                <p>움직이면 좋은 타이밍</p>
               </article>
               <article class="guide-card">
-                <strong>4. 세운 타이밍</strong>
-                <p>올해 어떤 행동을 하면 전장이 움직이는지 미리 봅니다.</p>
+                <strong>4. 오늘 행동</strong>
+                <p>바로 실행할 한 가지</p>
               </article>
             </div>
           </div>
@@ -3894,77 +3089,77 @@
 
     <section class="content-band" id="content-map">
       <div class="section-head">
-        <p class="eyebrow">STRATEGY MAP</p>
-        <h2>사주 사이트가 아니라 당신의 인생 작전실</h2>
-        <p>SAJU WAR의 모든 기능은 하나의 흐름으로 연결됩니다. Weapon을 발견하고, Report로 이해하고, Quest로 실행하고, Academy에서 배우고, War Room에서 중요한 선택을 정교화합니다.</p>
+        <p class="eyebrow">메뉴</p>
+        <h2>원하는 결과로 바로 이동하세요</h2>
+        <p>무료 분석, 궁합, 이름, 상담, 유료 리포트를 한 화면에서 고릅니다.</p>
       </div>
 
       <div class="grid3">
         <a class="card menu-link menu-free" href="#report">
           <span class="menu-art art-war" aria-hidden="true"><i>전장</i></span>
           <span class="menu-kicker">무료</span>
-          <h3>무료 전장 리포트</h3>
-          <p>원국의 기본 전장, 지장간 아이템, 대운 스위치, 세운 타이밍을 먼저 확인합니다.</p>
+          <h3>무료 분석</h3>
+          <p>내 사주의 대표 무기와 오늘의 포인트</p>
         </a>
         <a class="card menu-link menu-free" href="#free-play">
           <span class="menu-art art-today" aria-hidden="true"><i>오늘</i></span>
           <span class="menu-kicker">무료</span>
           <h3>오늘의 운세</h3>
-          <p>오늘 꺼내면 좋은 아이템, 조심할 전장, 바로 실행할 행동 카드를 가볍게 봅니다.</p>
+          <p>오늘 꺼낼 카드와 조심할 흐름</p>
         </a>
         <a class="card menu-link menu-free" href="#free-play">
           <span class="menu-art art-love" aria-hidden="true"><i>연애</i></span>
           <span class="menu-kicker">무료</span>
           <h3>오늘의 연애 무기</h3>
-          <p>오늘 써야 할 말투, 매력 포인트, 피해야 할 관계 패턴을 짧고 재미있게 확인합니다.</p>
+          <p>말투, 거리감, 매력 포인트</p>
         </a>
         <a class="card menu-link menu-free" href="#free-play">
           <span class="menu-art art-match" aria-hidden="true"><i>궁합</i></span>
           <span class="menu-kicker">무료</span>
-          <h3>간단 궁합 스파크</h3>
-          <p>두 사람의 관계 온도와 오늘의 대화 전략을 무료로 빠르게 뽑아봅니다.</p>
+          <h3>간단 궁합</h3>
+          <p>두 사람의 온도와 대화 전략</p>
         </a>
         <a class="card menu-link menu-free" href="#naming">
           <span class="menu-art art-name" aria-hidden="true"><i>이름</i></span>
           <span class="menu-kicker">무료</span>
-          <h3>내 이름 전투력 점수</h3>
-          <p>이름의 소리, 의미, 브랜드감, 실행력을 점수로 보고 이름의 무기를 확인합니다.</p>
+          <h3>이름 점수</h3>
+          <p>이름의 인상과 쓰임새</p>
         </a>
         <a class="card menu-link menu-action" href="#naming-apply">
           <span class="menu-art art-apply" aria-hidden="true"><i>작명</i></span>
           <span class="menu-kicker">신청</span>
-          <h3>쭈쌤 작명 신청</h3>
-          <p>아기 이름, 개명, 예명, 브랜드명까지 사주전쟁 세계관으로 신청서를 만듭니다.</p>
+          <h3>작명 신청</h3>
+          <p>아기 이름, 개명, 예명, 브랜드명</p>
         </a>
         <a class="card menu-link menu-paid" href="#premium">
           <span class="menu-art art-money" aria-hidden="true"><i>돈</i></span>
           <span class="menu-kicker">유료</span>
-          <h3>재물 아이템 해석</h3>
-          <p>돈이 약해 보여도 지장간과 운의 스위치가 맞을 때 꺼낼 수 있는 재물 회로를 봅니다.</p>
+          <h3>재물 해석</h3>
+          <p>돈 흐름과 기회 타이밍</p>
         </a>
         <a class="card menu-link menu-paid" href="#premium">
           <span class="menu-art art-career" aria-hidden="true"><i>일</i></span>
           <span class="menu-kicker">유료</span>
-          <h3>직업·사업 전장</h3>
-          <p>나에게 맞는 일 방식, 브랜드 방향, 사업으로 꺼낼 수 있는 아이템을 심화 리포트로 연결합니다.</p>
+          <h3>직업·사업</h3>
+          <p>일 방식과 브랜드 방향</p>
         </a>
         <a class="card menu-link menu-paid" href="#premium">
           <span class="menu-art art-time" aria-hidden="true"><i>운</i></span>
           <span class="menu-kicker">유료</span>
-          <h3>대운·세운 스위치</h3>
-          <p>언제 움직여야 운이 열리는지, 올해와 앞으로의 타이밍을 전장 지도처럼 확인합니다.</p>
+          <h3>대운·세운</h3>
+          <p>움직여야 할 시기</p>
         </a>
         <a class="card menu-link menu-action" href="#consulting">
           <span class="menu-art art-career" aria-hidden="true"><i>상담</i></span>
           <span class="menu-kicker">신청</span>
-          <h3>쭈쌤 사주 상담 신청</h3>
-          <p>세운·월운, 직업, 돈, 관계, 궁합, 작명까지 궁금한 주제를 상담 신청서로 정리합니다.</p>
+          <h3>상담 신청</h3>
+          <p>직업, 돈, 관계, 궁합, 작명</p>
         </a>
         <a class="card menu-link menu-paid" href="#compatibility-paid">
           <span class="menu-art art-match" aria-hidden="true"><i>심화</i></span>
           <span class="menu-kicker">유료</span>
-          <h3>자세한 궁합 신청</h3>
-          <p>두 사람의 원국, 지장간 아이템, 충돌 지점, 세운·월운 관계 타이밍을 깊게 봅니다.</p>
+          <h3>자세한 궁합</h3>
+          <p>충돌 지점과 관계 타이밍</p>
         </a>
       </div>
     </section>
@@ -6322,306 +5517,6 @@
       event.preventDefault();
       analyze();
     });
-  </script>
-  <script>
-    (() => {
-      const setText = (selector, text) => {
-        const node = document.querySelector(selector);
-        if (node) node.textContent = text;
-      };
-
-      const setHTML = (selector, html) => {
-        const node = document.querySelector(selector);
-        if (node) node.innerHTML = html;
-      };
-
-      document.documentElement.lang = "ko";
-      document.title = "쭈쌤의 사주 전쟁 | 무료 AI 사주 분석";
-      document.body.classList.add("sajuwar-product-home");
-
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute(
-          "content",
-          "생년월일로 나의 사주 무기와 오늘의 전략을 확인하세요. 무료 AI 사주 분석, 궁합, 작명, 프리미엄 리포트까지 한 번에."
-        );
-      }
-
-      setHTML(".brand", '<span class="brand-mark">SW</span><span>SAJU WAR</span>');
-
-      const nav = document.querySelector(".nav");
-      if (nav) {
-        nav.setAttribute("aria-label", "SAJU WAR 주요 메뉴");
-        nav.innerHTML = `
-          <a href="#report">AI Report</a>
-          <a href="#content-map">Strategy Map</a>
-          <a href="#free-play">Quest</a>
-          <a href="#premium">Premium</a>
-          <a href="#consulting">War Room</a>
-          <a href="/payment.html">결제</a>
-          <a href="/mypage.html">내 작전실</a>
-        `;
-      }
-
-      setText(".hero .eyebrow", "AI LIFE STRATEGY PLATFORM");
-      setText("#hero-title", "Find Your Weapon.");
-      setHTML(
-        ".hero-manifesto",
-        '사주는 미래가 아니라 <mark>당신의 선택을 설계하는 전략 지도</mark>입니다.'
-      );
-      setText(
-        ".lead",
-        "SAJU WAR는 사주를 공포나 예언으로 소비하지 않습니다. AI 전략가가 당신의 기질, 반복 패턴, 관계와 커리어의 전장을 읽고 오늘 실행할 수 있는 다음 전략으로 바꿉니다."
-      );
-
-      const heroActions = document.querySelector(".hero-actions");
-      if (heroActions) {
-        heroActions.setAttribute("aria-label", "SAJU WAR 주요 행동");
-        heroActions.innerHTML = `
-          <a href="#report">내 무기 찾기</a>
-          <a class="secondary-link" href="#content-map">작전실 둘러보기</a>
-        `;
-      }
-
-      const proofStrip = document.querySelector(".proof-strip");
-      if (proofStrip) {
-        proofStrip.setAttribute("aria-label", "SAJU WAR 경험 원칙");
-        proofStrip.innerHTML = `
-          <article class="proof-card">
-            <strong>Weapon</strong>
-            당신의 사주에서 타고난 강점과 반복되는 선택 패턴을 하나의 무기 카드로 정리합니다.
-          </article>
-          <article class="proof-card">
-            <strong>Strategy</strong>
-            운명을 단정하지 않고 커리어, 관계, 돈, 학습의 다음 선택지를 비교합니다.
-          </article>
-          <article class="proof-card">
-            <strong>Quest</strong>
-            오늘 바로 실행할 수 있는 작은 미션으로 통찰을 행동으로 바꿉니다.
-          </article>
-          <article class="proof-card">
-            <strong>War Room</strong>
-            중요한 선택 앞에서는 AI와 전문가가 함께 최종 전략 회의를 준비합니다.
-          </article>
-        `;
-      }
-
-      const pillars = [
-        ["나의<br>무기", ".p1"],
-        ["현재<br>전장", ".p2"],
-        ["AI<br>전략가", ".p3"],
-        ["다음<br>선택", ".p4"]
-      ];
-      pillars.forEach(([html, selector]) => setHTML(selector, html));
-
-      const form = document.querySelector("#sajuForm");
-      if (form) {
-        form.setAttribute("aria-label", "SAJU WAR 무기 분석 입력");
-        const labels = form.querySelectorAll("label");
-        const labelText = ["이름 또는 닉네임", "생년월일", "태어난 시간", "기준 / 성별"];
-        labels.forEach((label, index) => {
-          if (labelText[index]) {
-            label.childNodes[0].textContent = `${labelText[index]} `;
-          }
-        });
-        const nameInput = document.getElementById("name");
-        if (nameInput) nameInput.placeholder = "작전실에서 사용할 이름";
-        const submit = form.querySelector('button[type="submit"]');
-        if (submit) submit.textContent = "무료 Weapon 분석 시작";
-        const buttons = form.querySelectorAll(".button-row button");
-        if (buttons[1]) buttons[1].textContent = "Premium Report 열기";
-        if (buttons[2]) buttons[2].textContent = "PDF 저장";
-      }
-
-      const inputBand = document.querySelector(".input-band");
-      if (inputBand && !document.querySelector(".sajuwar-experience-rail")) {
-        inputBand.insertAdjacentHTML(
-          "afterend",
-          `
-          <section class="sajuwar-experience-rail" aria-label="SAJU WAR 핵심 경험">
-            <article class="sajuwar-experience-card">
-              <span>1</span>
-              <h3>Weapon Reveal</h3>
-              <p>입력은 회원가입 폼이 아니라 당신의 첫 무기를 여는 의식입니다.</p>
-            </article>
-            <article class="sajuwar-experience-card">
-              <span>2</span>
-              <h3>AI Report</h3>
-              <p>긴 운세 풀이가 아니라 강점, 취약점, 전장, 행동 전략을 담은 작전 지도입니다.</p>
-            </article>
-            <article class="sajuwar-experience-card">
-              <span>3</span>
-              <h3>Daily Quest</h3>
-              <p>오늘 할 수 있는 5분짜리 행동으로 선택 능력을 훈련합니다.</p>
-            </article>
-            <article class="sajuwar-experience-card">
-              <span>4</span>
-              <h3>Strategy Map</h3>
-              <p>커리어, 관계, 돈, 학습의 현재 위치와 다음 경로를 하나의 지도로 봅니다.</p>
-            </article>
-          </section>
-          `
-        );
-      }
-
-      setText("#report .section-head .eyebrow", "AI REPORT");
-      setText("#report .section-head h2", "버튼을 누르면 당신의 첫 작전 지도가 열립니다");
-      setText(
-        "#report .section-head p",
-        "무료 분석은 Primary Weapon과 현재 전장의 핵심 신호를 먼저 보여줍니다. Premium Report는 커리어, 관계, 돈, 올해의 흐름과 30일 실행 전략까지 확장됩니다."
-      );
-
-      setText("#content-map .section-head .eyebrow", "STRATEGY MAP");
-      setText("#content-map .section-head h2", "사주 사이트가 아니라 당신의 인생 작전실");
-      setText(
-        "#content-map .section-head p",
-        "SAJU WAR의 모든 기능은 하나의 흐름으로 연결됩니다. Weapon을 발견하고, Report로 이해하고, Quest로 실행하고, Academy에서 배우고, War Room에서 중요한 선택을 정교화합니다."
-      );
-    })();
-
-    (function bootSajuExperienceLayer() {
-      const shell = document.querySelector(".saju-live-experience");
-      const weaponButton = document.getElementById("weaponRevealButton");
-      const questButton = document.getElementById("questClearButton");
-      const questState = document.getElementById("questState");
-      const weaponTitle = document.getElementById("weaponCaptionTitle");
-      const weaponText = document.getElementById("weaponCaptionText");
-
-      if (weaponButton && shell) {
-        weaponButton.addEventListener("click", () => {
-          shell.classList.add("weapon-revealed");
-          if (weaponTitle) weaponTitle.textContent = "Weapon Revealed · 선택을 설계하는 사람";
-          if (weaponText) {
-            weaponText.textContent = "당신의 무기는 미래를 맞히는 힘이 아니라, 복잡한 상황에서 다음 선택을 선명하게 만드는 전략 감각입니다.";
-          }
-        });
-      }
-
-      if (questButton && shell) {
-        questButton.addEventListener("click", () => {
-          shell.classList.add("quest-done");
-          if (questState) questState.textContent = "Mission Clear · Level 3 · XP 820 / 1000 · Reward: 선택 명료도 +15";
-        });
-      }
-    })();
-
-    (function linkFullStrategyRoom() {
-      const nav = document.querySelector(".nav");
-      if (nav && !nav.querySelector('a[href="/strategy-room.html"]')) {
-        nav.insertAdjacentHTML("afterbegin", '<a href="/strategy-room.html">Strategy Room</a>');
-      }
-
-      const actions = document.querySelector(".saju-live-actions");
-      if (actions && !actions.querySelector('a[href="/strategy-room.html"]')) {
-        actions.insertAdjacentHTML("afterbegin", '<a class="ghost" href="/strategy-room.html">Strategy Room 입장</a>');
-      }
-    })();
-  </script>
-  <script>
-    (function applyKoreanFirstHomeLabels() {
-      const setText = (selector, text) => {
-        const node = document.querySelector(selector);
-        if (node) node.textContent = text;
-      };
-      const setHTML = (selector, html) => {
-        const node = document.querySelector(selector);
-        if (node) node.innerHTML = html;
-      };
-
-      document.documentElement.lang = "ko";
-      document.title = "쭈쌤의 사주전쟁 | 무료 AI 사주 분석";
-
-      setHTML(".brand", '<span class="brand-mark">쭈</span><span>쭈쌤의 사주전쟁</span>');
-
-      const nav = document.querySelector(".nav");
-      if (nav) {
-        nav.setAttribute("aria-label", "쭈쌤의 사주전쟁 주요 메뉴");
-        nav.innerHTML = `
-          <a href="/strategy-room.html">작전실</a>
-          <a href="#report">AI 리포트</a>
-          <a href="#content-map">전략 지도</a>
-          <a href="#free-play">오늘의 퀘스트</a>
-          <a href="#premium">프리미엄</a>
-          <a href="#consulting">상담/작전회의</a>
-          <a href="/payment.html">결제</a>
-          <a href="/mypage.html">내 작전실</a>
-        `;
-      }
-
-      setText(".saju-live-kicker", "AI 사주 작전실 오픈");
-      setHTML("#experience-title", '사주를 보는 곳이 아니라, <span>내 인생을 탐험하는 작전실</span>');
-      setText(
-        ".saju-live-copy",
-        "쭈쌤의 사주전쟁은 생년월일 입력을 캐릭터 생성으로, 리포트를 인생 스토리북으로, 오늘의 운세를 성장 퀘스트로 바꿉니다. 사용자는 결과를 소비하는 것이 아니라 자신의 무기와 다음 선택을 발견합니다."
-      );
-
-      const actions = document.querySelector(".saju-live-actions");
-      if (actions) {
-        actions.innerHTML = `
-          <a class="ghost" href="/strategy-room.html">작전실 입장</a>
-          <button type="button" id="weaponRevealButtonKo">무기 공개 연출 보기</button>
-          <a class="ghost" href="#sajuForm">내 무기 분석 시작</a>
-          <a class="ghost" href="#content-map">전략 지도 보기</a>
-        `;
-      }
-
-      const weaponButton = document.getElementById("weaponRevealButtonKo");
-      if (weaponButton) {
-        weaponButton.addEventListener("click", () => {
-          document.querySelector(".saju-live-experience")?.classList.add("weapon-revealed");
-          setText("#weaponCaptionTitle", "무기 공개 완료 · 선택을 설계하는 사람");
-          setText(
-            "#weaponCaptionText",
-            "당신의 무기는 미래를 맞히는 말이 아니라 복잡한 상황에서 다음 선택을 선명하게 만드는 전략 감각입니다."
-          );
-        });
-      }
-
-      const questButton = document.getElementById("questClearButton");
-      if (questButton) {
-        questButton.textContent = "미션 완료";
-        questButton.addEventListener("click", () => {
-          setText("#questState", "미션 완료 · 레벨 3 · 경험치 820 / 1000 · 보상: 선택 명료도 +15");
-        });
-      }
-
-      setHTML(".weapon-core strong", "나의<br>무기");
-      setText("#weaponCaptionTitle", "무기 공개 대기 중");
-      setText("#weaponCaptionText", "버튼을 누르면 금빛 입자, 카드 반전, 빛 확산과 함께 사용자의 첫 무기가 공개됩니다.");
-
-      const labels = document.querySelectorAll(".module-label");
-      const labelText = ["전략 지도", "오늘의 성장 미션", "스킬 아카데미", "AI 리포트", "AI 전략 회의", "성장 길드"];
-      labels.forEach((label, index) => {
-        if (labelText[index]) label.textContent = labelText[index];
-      });
-
-      setText(".hero .eyebrow", "AI 사주 전략 플랫폼");
-      setText("#hero-title", "당신에게도 무기가 있습니다");
-      setText(
-        ".lead",
-        "쭈쌤의 사주전쟁은 사주를 공포의 예언으로 소비하지 않습니다. AI 전략가가 당신의 기질, 반복 패턴, 관계와 커리어의 현장을 읽고 오늘 실행할 수 있는 다음 전략으로 바꿉니다."
-      );
-
-      const heroActions = document.querySelector(".hero-actions");
-      if (heroActions) {
-        heroActions.setAttribute("aria-label", "쭈쌤의 사주전쟁 주요 행동");
-        heroActions.innerHTML = `
-          <a href="#report">내 무기 찾기</a>
-          <a class="secondary-link" href="#content-map">전략 지도 보기</a>
-        `;
-      }
-
-      const proofStrip = document.querySelector(".proof-strip");
-      if (proofStrip) {
-        proofStrip.setAttribute("aria-label", "쭈쌤의 사주전쟁 경험 가치");
-        proofStrip.innerHTML = `
-          <article class="proof-card"><strong>무기</strong>사주에서 타고난 강점과 반복되는 선택 패턴을 하나의 무기 카드로 정리합니다.</article>
-          <article class="proof-card"><strong>전략</strong>운명을 단정하지 않고 커리어, 관계, 돈, 학습의 다음 선택지를 비교합니다.</article>
-          <article class="proof-card"><strong>퀘스트</strong>오늘 바로 실행할 수 있는 작은 성장 미션으로 통찰을 행동으로 바꿉니다.</article>
-          <article class="proof-card"><strong>작전회의</strong>중요한 선택 앞에서는 AI와 전문가가 함께 최종 전략 회의를 준비합니다.</article>
-        `;
-      }
-    })();
   </script>
 </body>
 </html>
