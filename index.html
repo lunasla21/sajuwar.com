@@ -2225,15 +2225,29 @@
 
     .hero-map {
       background:
-        linear-gradient(180deg, rgba(5, 9, 19, 0.04), rgba(5, 9, 19, 0.48)),
-        url("assets/premium-battlefield-command.webp") center/cover;
+        linear-gradient(180deg, rgba(5, 9, 19, 0.72), rgba(5, 9, 19, 0.88));
       border-color: rgba(212, 175, 55, 0.36);
-      box-shadow: inset 0 0 120px rgba(5, 9, 19, 0.56), 0 24px 70px rgba(0, 0, 0, 0.34);
+      padding: 14px;
+      box-shadow: inset 0 0 90px rgba(5, 9, 19, 0.42), 0 24px 70px rgba(0, 0, 0, 0.34);
     }
 
     .hero-map::before,
     .hero-map::after {
-      border-color: rgba(249, 215, 126, 0.25);
+      display: none;
+    }
+
+    .hero-poster {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      min-height: 390px;
+      display: block;
+      border: 1px solid rgba(249, 215, 126, 0.42);
+      border-radius: 8px;
+      object-fit: cover;
+      object-position: center top;
+      box-shadow: 0 22px 56px rgba(0, 0, 0, 0.42);
     }
 
     .pillar {
@@ -2895,7 +2909,8 @@
       .premium-war-shell { padding: 12px; }
       .war-hero { min-height: auto; padding: 16px; }
       .war-mini-row { grid-template-columns: 78px 1fr 38px; }
-      .hero-map { min-height: 360px; }
+      .hero-map { min-height: auto; }
+      .hero-poster { min-height: 520px; }
       .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid, .upgrade-points, .paid-lock-grid, .proof-strip { grid-template-columns: 1fr; }
       .report-visual { min-height: 260px; }
       .button-row { grid-template-columns: 1fr; }
@@ -2924,7 +2939,7 @@
       .hero { padding: 28px 18px 30px; min-height: auto; }
       h1 { font-size: 42px; }
       .hero-manifesto { font-size: 30px; }
-      .hero-map { min-height: 310px; }
+      .hero-poster { min-height: 430px; }
       .input-band { margin-top: 18px; }
       .content-band { margin-bottom: 58px; }
       .box { padding: 18px; }
@@ -2985,17 +3000,8 @@
         </div>
       </div>
 
-      <div class="hero-map" aria-hidden="true">
-        <div class="pillar p1">기본</div>
-        <div class="pillar p2">환경</div>
-        <div class="pillar p3">나</div>
-        <div class="pillar p4">미래</div>
-        <div class="core"></div>
-        <div class="item i1"></div>
-        <div class="item i2"></div>
-        <div class="item i3"></div>
-        <div class="switch s1"></div>
-        <div class="switch s2"></div>
+      <div class="hero-map" aria-label="2026 생활명리 핵심 세운 분석 신판 소개">
+        <img class="hero-poster" src="assets/life-myeongri-2026.jpg" alt="2026 신판 소개 생활명리 핵심 세운 분석" />
       </div>
     </section>
 
