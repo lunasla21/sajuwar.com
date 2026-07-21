@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI 작전실 | 쭈쌤의 사주 전쟁</title>
-  <meta name="description" content="나의 사주 무기, Strategy Map, Quest, Academy, AI 전략 회의를 한 곳에서 확인하는 쭈쌤의 사주 전쟁 작전실입니다." />
+  <title>선택이 좋은 사주로 가는 길 | 쭈쌤의 사주전쟁</title>
+  <meta name="description" content="좋은 사주와 나쁜 사주가 있어도, 우리에게는 선택이 있습니다. 오늘의 선택으로 더 좋은 사주를 만들어가는 쭈쌤의 사주전쟁입니다." />
   <style>
     :root {
       color-scheme: dark;
@@ -135,6 +135,25 @@
       max-width: 780px;
       color: var(--muted);
       font-size: clamp(17px, 2vw, 22px);
+    }
+
+    .hero-belief {
+      max-width: 760px;
+      margin: 0 0 22px;
+      color: #fff9e8;
+      font-size: clamp(24px, 3.4vw, 44px);
+      font-weight: 950;
+      line-height: 1.22;
+      word-break: keep-all;
+    }
+
+    .hero-belief mark {
+      color: #090909;
+      background: linear-gradient(90deg, var(--gold2), var(--gold));
+      border-radius: 5px;
+      padding: 0 8px 3px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
     }
 
     .hero-actions,
@@ -602,17 +621,14 @@
     <div class="topbar-inner">
       <a class="brand" href="/">
         <span class="brand-mark">SW</span>
-        <span>SAJU WAR Strategy Room</span>
+        <span>쭈쌤의 사주전쟁</span>
       </a>
-      <nav class="nav" aria-label="작전실 메뉴">
-        <a href="#onboarding">Onboarding</a>
-        <a href="#dashboard">Dashboard</a>
-        <a href="#map">Strategy Map</a>
-        <a href="#quests">Quest</a>
-        <a href="#academy">Academy</a>
-        <a href="#chat">AI Chat</a>
-        <a href="#guild">Guild</a>
-        <a href="#settings">Settings</a>
+      <nav class="nav" aria-label="사주전쟁 메뉴">
+        <a href="#onboarding">내 선택 시작</a>
+        <a href="#dashboard">오늘 카드</a>
+        <a href="#map">전략 지도</a>
+        <a href="#chat">AI 상담</a>
+        <a href="#premium">깊은 해석</a>
       </nav>
     </div>
   </header>
@@ -620,16 +636,19 @@
   <main class="shell">
     <section class="hero" id="top">
       <div>
-        <p class="kicker">AI LIFE STRATEGY PLATFORM</p>
-        <h1>작전실에 입장했습니다.</h1>
+        <p class="kicker">SAJU WAR MESSAGE</p>
+        <h1>좋은 사주로 가는 길은 선택입니다.</h1>
+        <p class="hero-belief">
+          세상에는 좋은 사주도, 나쁜 사주도 있습니다.<br>
+          하지만 우리에겐 <mark>선택</mark>이 있습니다.
+        </p>
         <p class="hero-copy">
-          이 페이지는 문서화만 되어 있던 SAJU WAR의 핵심 경험을 실제 사이트에서 체험하도록 만든 작전실 MVP입니다.
-          사용자는 생년월일을 입력하는 것이 아니라 캐릭터를 생성하고, Weapon을 공개하고, Strategy Map을 열고,
-          Quest를 완료하며, Academy와 Guild에서 성장합니다.
+          사주는 결론이 아니라 출발점입니다. 지금의 선택을 이해하고 바꾸는 순간,
+          우리는 더 좋은 사주로 가는 길을 직접 만들 수 있습니다.
         </p>
         <div class="hero-actions">
-          <a class="button" href="#onboarding">내 캐릭터 생성</a>
-          <button class="button secondary" type="button" id="quickReveal">Weapon 바로 공개</button>
+          <a class="button" href="#onboarding">내 선택 시작</a>
+          <button class="button secondary" type="button" id="quickReveal">나의 무기 보기</button>
           <a class="button secondary" href="/">홈으로 돌아가기</a>
         </div>
       </div>
@@ -1365,33 +1384,34 @@
 
       function apply() {
         document.documentElement.lang = "ko";
-        document.title = "AI 작전실 | 쭈쌤의 사주전쟁";
-        setAttr('meta[name="description"]', "content", "나의 사주 무기, 전략 지도, 오늘의 퀘스트, 아카데미, AI 전략 회의를 한 곳에서 확인하는 쭈쌤의 사주전쟁 작전실입니다.");
+        document.title = "선택이 좋은 사주로 가는 길 | 쭈쌤의 사주전쟁";
+        setAttr('meta[name="description"]', "content", "좋은 사주와 나쁜 사주가 있어도, 우리에게는 선택이 있습니다. 오늘의 선택으로 더 좋은 사주를 만들어가는 쭈쌤의 사주전쟁입니다.");
 
-        setHTML(".brand", '<span class="brand-mark">쭈</span><span>쭈쌤의 사주전쟁 작전실</span>');
+        setHTML(".brand", '<span class="brand-mark">쭈</span><span>쭈쌤의 사주전쟁</span>');
         const nav = document.querySelector(".nav");
         if (nav) {
-          nav.setAttribute("aria-label", "작전실 메뉴");
+          nav.setAttribute("aria-label", "사주전쟁 메뉴");
           nav.innerHTML = `
-            <a href="#onboarding">캐릭터 생성</a>
-            <a href="#dashboard">대시보드</a>
+            <a href="#onboarding">내 선택 시작</a>
+            <a href="#dashboard">오늘 카드</a>
             <a href="#map">전략 지도</a>
-            <a href="#quests">퀘스트</a>
-            <a href="#academy">아카데미</a>
             <a href="#chat">AI 상담</a>
-            <a href="#guild">길드</a>
-            <a href="#settings">설정</a>
+            <a href="#premium">깊은 해석</a>
           `;
         }
 
-        setText(".kicker", "AI 사주 전략 플랫폼");
-        setText(".hero h1", "작전실에 입장했습니다.");
+        setText(".kicker", "SAJU WAR MESSAGE");
+        setText(".hero h1", "좋은 사주로 가는 길은 선택입니다.");
+        setHTML(
+          ".hero-belief",
+          "세상에는 좋은 사주도, 나쁜 사주도 있습니다.<br>하지만 우리에겐 <mark>선택</mark>이 있습니다."
+        );
         setText(
           ".hero-copy",
-          "쭈쌤의 사주전쟁은 생년월일 입력을 캐릭터 생성으로, 무기 공개를 자기 이해의 순간으로, 전략 지도를 다음 선택의 길잡이로 바꿉니다. 사용자는 사주 결과를 소비하는 것이 아니라 자신의 인생 전략을 직접 탐험합니다."
+          "사주는 결론이 아니라 출발점입니다. 지금의 선택을 이해하고 바꾸는 순간, 우리는 더 좋은 사주로 가는 길을 직접 만들 수 있습니다."
         );
-        setText('.hero-actions a[href="#onboarding"]', "내 캐릭터 생성");
-        setText("#quickReveal", "무기 바로 공개");
+        setText('.hero-actions a[href="#onboarding"]', "내 선택 시작");
+        setText("#quickReveal", "나의 무기 보기");
         setText('.hero-actions a[href="/"]', "홈으로 돌아가기");
 
         const weaponStage = document.querySelector("#weaponStage");
