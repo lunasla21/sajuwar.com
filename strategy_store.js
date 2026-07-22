@@ -165,8 +165,12 @@ function createStrategyStore(baseDir) {
       name: String(profile.name || user.name || "전략가").trim(),
       birth: String(profile.birth || "").trim(),
       time: String(profile.time || "").trim(),
+      gender: String(profile.gender || "female").trim(),
+      calendarType: String(profile.calendarType || "solar").trim(),
       focus: String(profile.focus || "career").trim(),
       focusLabel: String(profile.focusLabel || "커리어").trim(),
+      reality: String(profile.reality || "").trim(),
+      goal: String(profile.goal || "").trim(),
     };
     const state = getState(user);
     state.profile = cleanProfile;

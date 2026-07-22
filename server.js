@@ -1197,27 +1197,127 @@ app.get("/api/report", (req, res) => {
   res.json({ ok: true, message: "report access granted" });
 });
 
-function fallbackStrategyReply(message) {
+function getSeasonFromMonthBranch(branch) {
+  const seasonMap = {
+    "寅": "봄 초입",
+    "卯": "봄 중심",
+    "辰": "봄에서 여름으로 넘어가는 환절",
+    "巳": "여름 초입",
+    "午": "여름 중심",
+    "未": "여름에서 가을로 넘어가는 환절",
+    "申": "가을 초입",
+    "酉": "가을 중심",
+    "戌": "가을에서 겨울로 넘어가는 환절",
+    "亥": "겨울 초입",
+    "子": "겨울 중심",
+    "丑": "겨울에서 봄으로 넘어가는 환절",
+  };
+  return seasonMap[branch] || "월지 확인 필요";
+}
+
+function countChartElements(pillars = {}) {
+  const counts = { "목": 0, "화": 0, "토": 0, "금": 0, "수": 0 };
+  ["year", "month", "day", "hour"].forEach((key) => {
+    const pillar = pillars[key] || "";
+    const stem = pillar[0];
+    const branch = pillar[1];
+    const stemEl = stemElement[stem];
+    const branchEl = branchElement[branch];
+    if (stemEl) counts[stemEl] += 1;
+    if (branchEl) counts[branchEl] += 1;
+    (hiddenStems[branch] || []).forEach((hidden) => {
+      const hiddenEl = stemElement[hidden];
+      if (hiddenEl) counts[hiddenEl] += 0.5;
+    });
+  });
+  return counts;
+}
+
+function summarizeElementBalance(counts = {}) {
+  const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const strong = entries.filter(([, value]) => value >= entries[0]?.[1]).map(([key]) => key);
+  const weak = entries.filter(([, value]) => value <= entries[entries.length - 1]?.[1]).map(([key]) => key);
+  return {
+    counts,
+    strong: strong.join(", "),
+    weak: weak.join(", "),
+  };
+}
+
+function buildStrategyRoomChart(profile = {}) {
+  if (!profile.birth || !profile.time) return null;
+  try {
+    const [year, month, day] = String(profile.birth).split("-");
+    const [hour, minute] = String(profile.time).split(":");
+    if (!year || !month || !day || !hour) return null;
+    const pillarsRaw = getSaju(year, month, day, hour, minute || "0", profile.calendarType || "solar");
+    const pillars = {
+      year: pillarsRaw.year,
+      month: pillarsRaw.month,
+      day: pillarsRaw.day,
+      hour: pillarsRaw.hour,
+      solarDate: pillarsRaw.solarDate,
+    };
+    const dayMaster = pillars.day[0];
+    const monthBranch = pillars.month[1];
+    const daewoon = makeDaewoon(pillarsRaw.eightChar, profile.gender || "female");
+    const sewoon = makeSewoon(new Date().getFullYear());
+    return {
+      pillars,
+      dayMaster,
+      dayMasterElement: stemElement[dayMaster] || "",
+      season: getSeasonFromMonthBranch(monthBranch),
+      hiddenSummary: makeHiddenItemSummary(pillars),
+      elementBalance: summarizeElementBalance(countChartElements(pillars)),
+      daewoon,
+      sewoon,
+    };
+  } catch (error) {
+    return { error: error.message };
+  }
+}
+
+function fallbackStrategyReply(message, state = {}) {
   const text = String(message || "");
   const risky = /죽|자살|폭력|의료|투자|법률|소송|우울|극단|학대|중독/.test(text);
   if (risky) {
-    return "이 주제는 안전이 먼저입니다. 저는 명리로 미래를 단정하지 않겠습니다. 지금 위험하거나 급박하다면 즉시 주변 사람, 전문가, 긴급 지원 기관의 도움을 받아주세요. 오늘의 Action은 혼자 판단하지 않고 신뢰할 수 있는 사람에게 상황을 공유하는 것입니다.";
+    return "[현실 분석]\n이 주제는 안전이 먼저입니다. 명리로 급박한 위험을 판단하거나 미래를 단정하지 않겠습니다. 지금 위험하거나 급박하다면 즉시 주변 사람, 전문가, 긴급 지원 기관의 도움을 받아주세요.\n\n[전략 제안]\n혼자 결론 내리지 말고 신뢰할 수 있는 사람에게 현재 상황을 공유하세요.\n\n[오늘의 퀘스트]\n오늘 안에 믿을 수 있는 사람 1명에게 현재 상황을 문자로 알리기.";
   }
-  return "미래를 단정하기보다 현재 패턴을 정리해보겠습니다. 선택지는 세 가지입니다. 1. 바로 결정하지 않고 기준을 적는다. 2. 감정과 사실을 분리한다. 3. 작은 실험으로 확인한다. 오늘의 Action은 이 선택에서 가장 두려운 이유 한 가지와 가장 원하는 결과 한 가지를 적는 것입니다.";
+  const profile = state.profile || {};
+  const chart = buildStrategyRoomChart(profile);
+  const chartLine = chart && !chart.error
+    ? `원국은 년주 ${chart.pillars.year}, 월주 ${chart.pillars.month}, 일주 ${chart.pillars.day}, 시주 ${chart.pillars.hour}입니다. 일간은 ${chart.dayMaster}(${chart.dayMasterElement})이고, 월지는 ${chart.pillars.month[1]}로 ${chart.season}의 흐름입니다.`
+    : "생년월일시가 부족해서 원국 판단은 보류합니다. 상담 전에 생년월일, 태어난 시간, 성별, 양/음력을 입력해야 합니다.";
+  const realityLine = profile.reality || profile.goal
+    ? `입력된 현실은 "${profile.reality || "미입력"}", 원하는 결과는 "${profile.goal || "미입력"}"입니다.`
+    : "현실 정보가 아직 부족합니다. 현재 직업/상황, 선택지, 원하는 결과를 확인해야 조언의 정확도가 올라갑니다.";
+  return `[사주 분석]\n${chartLine}\n\n[현실 분석]\n${realityLine}\n\n[전략 제안]\n지금은 결론을 단정하기보다 사주에서 보이는 성향과 실제 조건을 분리해 판단해야 합니다. 선택지는 1. 바로 결정하지 않고 기준을 적기, 2. 감정과 사실을 분리하기, 3. 작은 실험으로 확인하기입니다.\n\n[확인 질문]\n1. 지금 고민에서 실제 선택지는 무엇과 무엇입니까?\n2. 가장 두려운 손실은 무엇입니까?\n3. 3개월 뒤 원하는 결과는 무엇입니까?\n\n[오늘의 퀘스트]\n오늘 밤 10시까지 이 선택에서 가장 두려운 이유 1가지와 가장 원하는 결과 1가지를 각각 한 문장으로 적기.`;
 }
 
 async function buildStrategyReply(user, state, message) {
   const safeMessage = String(message || "").trim();
-  if (!client) return fallbackStrategyReply(safeMessage);
+  if (!client) return fallbackStrategyReply(safeMessage, state);
   const profile = state.profile || {};
   const weapon = state.weapon || {};
+  const chart = buildStrategyRoomChart(profile);
   const completion = await createChatCompletionWithTimeout({
     model: process.env.SAJUWAR_CHAT_MODEL || "gpt-4o-mini",
     messages: [
       {
         role: "system",
         content:
-          "You are SAJU WAR AI Strategist. You are not a fortune teller. Never assert fixed destiny. Never use fear. Always provide options, reasons, and one small Action. Follow HYUNMYUNG METHOD: translate saju into modern life strategy, preserve user autonomy, and end with action. For medical, legal, investment, self-harm, violence, abuse, addiction, severe depression, or urgent safety topics, do not provide definitive advice; recommend appropriate professional or emergency help.",
+          [
+            "너는 쭈쌤의 사주전쟁 상담 에이전트다. 챗봇처럼 행동하지 말고 사주명리 기반 라이프 전략가처럼 답한다.",
+            "목적은 점괘가 아니라 자기 이해, 좋은 결정, 실행, 회고, 성장이다.",
+            "운명을 단정하지 말고, 불안을 자극하지 말고, 사용자의 책임 있는 선택을 돕는다.",
+            "중요한 조언 전에는 현실 정보가 부족하면 질문을 먼저 한다. 사주에서 보이는 것, 현실에서 확인된 것, 확인이 필요한 것을 절대 섞지 않는다.",
+            "답변은 반드시 한국어로 작성하고 다음 제목을 이 순서로 사용한다: [사주 분석], [현실 분석], [전략 제안], [오늘의 퀘스트]. 필요한 경우 [확인 질문]을 [전략 제안] 앞에 둔다.",
+            "사주 분석에는 원국, 년주, 월주, 일주, 시주, 일간, 월지 계절, 오행 균형, 지장간, 대운, 세운을 반영한다. 제공되지 않은 정보는 사실처럼 말하지 않는다.",
+            "현실 분석에는 사용자가 입력한 직업, 돈, 관계, 가족, 건강, 사업, 목표 정보를 근거로 쓴다. 부족한 현실 정보는 질문으로 남긴다.",
+            "전략 제안은 선택지, 조건, 위험, 실행 순서로 정리한다. 결혼, 이혼, 퇴사, 투자, 의료 판단을 대신 결정하지 않는다.",
+            "오늘의 퀘스트는 작고, 구체적이고, 측정 가능해야 하며 마감시간과 성공 기준을 포함한다.",
+            "의료, 법률, 투자, 자해, 폭력, 학대, 중독, 심각한 우울 등 고위험 주제는 전문가 또는 긴급 도움을 우선 안내한다.",
+          ].join("\n"),
       },
       {
         role: "user",
@@ -1225,15 +1325,17 @@ async function buildStrategyReply(user, state, message) {
           user: { name: user.name },
           profile,
           weapon,
+          chart,
           level: state.level,
           xp: state.xp,
+          recentMemory: (state.chat || []).slice(-8),
           question: safeMessage,
         }),
       },
     ],
     temperature: 0.5,
   });
-  return completion.choices?.[0]?.message?.content?.trim() || fallbackStrategyReply(safeMessage);
+  return completion.choices?.[0]?.message?.content?.trim() || fallbackStrategyReply(safeMessage, state);
 }
 
 app.get("/api/strategy-room/state", (req, res) => {

@@ -374,6 +374,10 @@
       gap: 12px;
     }
 
+    .form-grid .wide {
+      grid-column: 1 / -1;
+    }
+
     label {
       display: grid;
       gap: 7px;
@@ -709,6 +713,18 @@
             <label>작전실 이름 <input id="profileName" placeholder="예: 현명한 전략가" autocomplete="name" /></label>
             <label>생년월일 <input id="profileBirth" type="date" /></label>
             <label>태어난 시간 <input id="profileTime" type="time" /></label>
+            <label>성별
+              <select id="profileGender">
+                <option value="female">여성</option>
+                <option value="male">남성</option>
+              </select>
+            </label>
+            <label>달력
+              <select id="profileCalendarType">
+                <option value="solar">양력</option>
+                <option value="lunar">음력</option>
+              </select>
+            </label>
             <label>현재 고민
               <select id="profileFocus">
                 <option value="career">커리어</option>
@@ -717,6 +733,12 @@
                 <option value="study">공부와 성장</option>
                 <option value="business">사업</option>
               </select>
+            </label>
+            <label class="wide">현실 상황
+              <textarea id="profileReality" placeholder="예: 현재 직장 3년 차이고, 이직 제안을 받았지만 연봉과 안정성 사이에서 고민 중입니다."></textarea>
+            </label>
+            <label class="wide">원하는 결과
+              <textarea id="profileGoal" placeholder="예: 3개월 안에 이직 여부를 정하고, 후회가 적은 선택 기준을 세우고 싶습니다."></textarea>
             </label>
           </div>
           <div class="button-row">
@@ -833,11 +855,12 @@
         </div>
         <article class="war-card module">
           <span class="tag">AI Constitution Guardrail</span>
-          <h3>AI는 선택을 돕는 전략가입니다</h3>
+          <h3>쭈쌤의 사주전쟁 상담 원칙</h3>
           <ul>
-            <li>미래를 단정하지 않습니다.</li>
-            <li>선택지와 이유를 함께 제공합니다.</li>
-            <li>항상 다음 Action으로 끝납니다.</li>
+            <li>생년월일시로 원국과 만세력을 먼저 확인합니다.</li>
+            <li>[사주 분석], [현실 분석], [전략 제안]을 분리합니다.</li>
+            <li>중요한 판단은 추가 질문으로 현실을 확인합니다.</li>
+            <li>항상 작고 측정 가능한 오늘의 퀘스트로 끝납니다.</li>
             <li>의료, 법률, 투자 등 고위험 판단은 전문가 도움을 안내합니다.</li>
           </ul>
         </article>
@@ -1170,7 +1193,7 @@
       const root = document.getElementById("chatWindow");
       const messages = state.chat && state.chat.length
         ? state.chat.map((item) => `<div class="bubble ${item.role === "user" ? "user" : ""}">${escapeHtml(item.content)}</div>`).join("")
-        : `<div class="bubble">작전실에 오신 것을 환영합니다. 저는 미래를 단정하지 않고, 상황을 정리하고 선택지를 함께 세우는 AI Strategist입니다.</div>`;
+        : `<div class="bubble">쭈쌤의 사주전쟁 상담실입니다. 생년월일시와 현실 상황을 기준으로 [사주 분석], [현실 분석], [전략 제안]을 분리해 정리합니다.</div>`;
       root.innerHTML = messages;
       root.scrollTop = root.scrollHeight;
     }
@@ -1178,9 +1201,16 @@
     function aiReply(text) {
       const risky = /죽|자살|폭력|의료|투자|법률|소송|우울|극단/.test(text);
       if (risky) {
-        return "이 주제는 안전이 먼저입니다. 저는 명리로 단정하지 않겠습니다. 지금 위험하거나 급박하다면 즉시 주변 사람, 전문가, 긴급 지원 기관의 도움을 받아주세요. 오늘의 Action은 혼자 판단하지 않고 신뢰할 수 있는 사람에게 상황을 공유하는 것입니다.";
+        return "[현실 분석]\n이 주제는 안전이 먼저입니다. 명리로 급박한 위험을 판단하거나 미래를 단정하지 않겠습니다. 지금 위험하거나 급박하다면 즉시 주변 사람, 전문가, 긴급 지원 기관의 도움을 받아주세요.\n\n[전략 제안]\n혼자 결론 내리지 말고 신뢰할 수 있는 사람에게 현재 상황을 공유하세요.\n\n[오늘의 퀘스트]\n오늘 안에 믿을 수 있는 사람 1명에게 현재 상황을 문자로 알리기.";
       }
-      return "미래를 단정하기보다 현재 패턴을 정리해보겠습니다. 선택지는 세 가지입니다. 1. 바로 결정하지 않고 기준을 적는다. 2. 감정과 사실을 분리한다. 3. 작은 실험으로 확인한다. 오늘의 Action은 이 선택에서 가장 두려운 이유 한 가지와 가장 원하는 결과 한 가지를 적는 것입니다.";
+      const profile = state.profile || {};
+      const sajuLine = profile.birth && profile.time
+        ? `${profile.birth} ${profile.time} 기준으로 서버 상담에서는 원국, 지장간, 대운, 세운까지 계산해 판단합니다.`
+        : "생년월일시가 부족해서 원국 판단은 보류합니다. 상담 전에 생년월일, 태어난 시간, 성별, 양/음력을 입력해야 합니다.";
+      const realityLine = profile.reality || profile.goal
+        ? `입력된 현실은 "${profile.reality || "미입력"}", 원하는 결과는 "${profile.goal || "미입력"}"입니다.`
+        : "현실 정보가 아직 부족합니다. 현재 직업/상황, 선택지, 원하는 결과를 확인해야 합니다.";
+      return `[사주 분석]\n${sajuLine}\n\n[현실 분석]\n${realityLine}\n\n[확인 질문]\n1. 지금 고민에서 실제 선택지는 무엇과 무엇입니까?\n2. 가장 두려운 손실은 무엇입니까?\n3. 3개월 뒤 원하는 결과는 무엇입니까?\n\n[전략 제안]\n오늘은 결론보다 판단 기준을 먼저 세우세요. 감정, 사실, 조건을 분리한 뒤 작은 실험으로 확인하는 쪽이 안전합니다.\n\n[오늘의 퀘스트]\n오늘 밤 10시까지 이 선택에서 가장 두려운 이유 1가지와 가장 원하는 결과 1가지를 각각 한 문장으로 적기.`;
     }
 
     async function sendChat() {
@@ -1269,8 +1299,12 @@
         name: document.getElementById("profileName").value.trim() || "전략가",
         birth: document.getElementById("profileBirth").value,
         time: document.getElementById("profileTime").value,
+        gender: document.getElementById("profileGender").value,
+        calendarType: document.getElementById("profileCalendarType").value,
         focus: focus.value,
-        focusLabel: focus.options[focus.selectedIndex].textContent
+        focusLabel: focus.options[focus.selectedIndex].textContent,
+        reality: document.getElementById("profileReality").value.trim(),
+        goal: document.getElementById("profileGoal").value.trim()
       };
       if (serverBacked) {
         try {
@@ -1300,7 +1334,17 @@
 
     document.getElementById("quickReveal").addEventListener("click", async () => {
       if (!state.profile) {
-        state.profile = { name: "전략가", birth: "", time: "", focus: "career", focusLabel: "커리어" };
+        state.profile = {
+          name: "전략가",
+          birth: "",
+          time: "",
+          gender: "female",
+          calendarType: "solar",
+          focus: "career",
+          focusLabel: "커리어",
+          reality: "",
+          goal: ""
+        };
       }
       if (serverBacked) {
         try {
