@@ -1594,6 +1594,60 @@
       margin-bottom: 0;
     }
 
+    .daily-luck-panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .daily-luck-header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid rgba(242, 219, 141, 0.16);
+      background:
+        linear-gradient(135deg, rgba(242, 219, 141, 0.1), rgba(55, 173, 142, 0.06)),
+        rgba(255, 252, 244, 0.04);
+    }
+
+    .daily-luck-seal {
+      display: grid;
+      place-items: center;
+      width: 86px;
+      height: 86px;
+      border: 1px solid rgba(242, 219, 141, 0.34);
+      color: var(--gold);
+      font-size: 30px;
+      font-weight: 950;
+      background: rgba(255, 252, 244, 0.06);
+      box-shadow: inset 0 0 32px rgba(242, 219, 141, 0.08);
+    }
+
+    .daily-luck-header h3 {
+      margin-bottom: 6px;
+      color: var(--gold);
+      font-size: 24px;
+    }
+
+    .daily-luck-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .daily-luck-mini {
+      padding: 14px;
+      border: 1px solid rgba(242, 219, 141, 0.14);
+      background: rgba(0, 0, 0, 0.16);
+    }
+
+    .daily-luck-mini strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--gold);
+    }
+
     .battle-loading {
       min-height: 460px;
       display: grid;
@@ -2982,7 +3036,7 @@
       .war-mini-row { grid-template-columns: 78px 1fr 38px; }
       .hero-map { min-height: auto; }
       .hero-poster { min-height: 520px; }
-      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid, .upgrade-points, .paid-lock-grid { grid-template-columns: 1fr; }
+      .field-grid, .grid2, .grid3, .free-tools, .report-guide, .guide-grid, .reading-grid, .daily-luck-grid, .upgrade-points, .paid-lock-grid { grid-template-columns: 1fr; }
       .report-visual { min-height: 260px; }
       .button-row { grid-template-columns: 1fr; }
       .topbar {
@@ -3018,6 +3072,8 @@
       .gan, .ji { font-size: 27px; }
       .premium-grid { grid-template-columns: 1fr; }
       .mini-row { grid-template-columns: 1fr; }
+      .daily-luck-header { grid-template-columns: 1fr; }
+      .daily-luck-seal { width: 74px; height: 74px; font-size: 25px; }
     }
   </style>
 </head>
@@ -4811,7 +4867,7 @@
         <section class="box">
           <p class="eyebrow">무료 공개 범위</p>
           <h2 class="section-title">${name}님의 원국 입구 해석</h2>
-          <p class="small">무료 리포트에서는 원국의 뼈대와 일간 캐릭터, 가장 강하게 반복되는 기운까지만 먼저 보여드립니다. 지장간 아이템부터는 유료 리포트에서 열립니다.</p>
+          <p class="small">원국의 뼈대와 일간 캐릭터, 가장 강하게 반복되는 기운을 먼저 보여드립니다. 지장간 아이템부터는 심화 리포트에서 열립니다.</p>
           <div class="reading-grid">
             <article class="reading-card">
               <div class="reading-art origin" aria-hidden="true"><i>원국</i></div>
@@ -4864,22 +4920,22 @@
         <section class="box">
           <p class="eyebrow">무료 맛보기 확장</p>
           <h2 class="section-title">${name}님의 사주 구조 미리보기</h2>
-          <p class="small">무료 리포트에서는 SAJUWAR 판단 순서에 맞춰 원국의 겉 구조, 계절감, 강약의 방향, 올해 기운의 첫 인상까지 넓게 보여드립니다. 다만 실제 핵심인 지장간의 작용, 십성 관계, 대운·세운의 구체적 사건화, 돈·일·관계 전략은 유료 리포트에서만 깊게 열립니다.</p>
+          <p class="small">SAJUWAR 판단 순서에 맞춰 원국의 겉 구조, 계절감, 강약의 방향, 올해 기운의 첫 인상까지 넓게 보여드립니다. 실제 핵심인 지장간의 작용, 십성 관계, 대운·세운의 구체적 사건화, 돈·일·관계 전략은 심화 리포트에서 깊게 열립니다.</p>
           <div class="reading-grid">
             <article class="reading-card">
               <div class="free-card-art free-art-manse photo-art" aria-hidden="true"><i>원국</i></div>
               <strong>겉으로 드러난 네 기둥</strong>
-              <p>연간 ${renderElementGlyph(yearGan)}, 일간 ${renderElementGlyph(dayGan)}, 월지 ${renderElementGlyph(monthJi)}, 시지 ${renderElementGlyph(hourJi)}의 배치를 먼저 봅니다. 무료에서는 이 배열이 어떤 분위기를 만들고, 내가 어떤 자리에서 힘을 쓰기 쉬운지 입구를 잡아드립니다.</p>
+              <p>연간 ${renderElementGlyph(yearGan)}, 일간 ${renderElementGlyph(dayGan)}, 월지 ${renderElementGlyph(monthJi)}, 시지 ${renderElementGlyph(hourJi)}의 배치를 먼저 봅니다. 이 배열이 어떤 분위기를 만들고, 내가 어떤 자리에서 힘을 쓰기 쉬운지 입구를 잡아드립니다.</p>
             </article>
             <article class="reading-card">
               <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>계절</i></div>
               <strong>월지로 보는 계절감</strong>
-              <p>월지는 사주의 온도와 배경입니다. ${renderElementGlyph(monthJi)} 기운이 깔린 환경에서는 내가 빠르게 반응하는 지점과 에너지가 소모되는 지점이 함께 생깁니다. 무료에서는 큰 방향만 보고, 유료에서는 이 계절이 십성과 지장간을 통해 어떻게 현실 문제로 이어지는지 풉니다.</p>
+              <p>월지는 사주의 온도와 배경입니다. ${renderElementGlyph(monthJi)} 기운이 깔린 환경에서는 내가 빠르게 반응하는 지점과 에너지가 소모되는 지점이 함께 생깁니다. 큰 방향을 먼저 보고, 심화에서는 이 계절이 십성과 지장간을 통해 어떻게 현실 문제로 이어지는지 풉니다.</p>
             </article>
             <article class="reading-card">
               <div class="free-card-art free-art-color photo-art" aria-hidden="true"><i>균형</i></div>
               <strong>오행 균형 힌트</strong>
-              <p>현재 원국에서 가장 두드러지는 기운은 ${strongElement}, 상대적으로 보강이 필요한 기운은 ${weakElement} 쪽입니다. 강한 기운은 장점이지만 과하면 고집, 피로, 관계의 오해로도 나타납니다. 무료에서는 균형의 방향을 보여주고, 유료에서는 무엇을 언제 보완해야 하는지 구체화합니다.</p>
+              <p>현재 원국에서 가장 두드러지는 기운은 ${strongElement}, 상대적으로 보강이 필요한 기운은 ${weakElement} 쪽입니다. 강한 기운은 장점이지만 과하면 고집, 피로, 관계의 오해로도 나타납니다. 균형의 방향을 먼저 보여주고, 심화에서는 무엇을 언제 보완해야 하는지 구체화합니다.</p>
             </article>
             <article class="reading-card">
               <div class="free-card-art free-art-item photo-art" aria-hidden="true"><i>숨은</i></div>
@@ -4889,7 +4945,7 @@
           </div>
           <article class="guide-card" style="margin-top:14px">
             <strong>올해 흐름 맛보기</strong>
-            <p>${firstYearLuck ? `${firstYearLuck.year}년 ${renderGanji(firstYearLuck.ganji)}의 흐름은 ${firstYearLuck.theme} 쪽으로 먼저 움직입니다. 무료에서는 올해의 분위기만 보여드리고, 실제로 어떤 달과 상황에서 움직이면 좋은지는 유료 리포트에서 대운·세운과 연결해 정리합니다.` : "올해 흐름은 원국의 강약과 지장간이 만날 때 실제 사건으로 드러납니다. 무료에서는 큰 분위기를 보고, 유료에서는 행동 타이밍까지 확인합니다."}</p>
+            <p>${firstYearLuck ? `${firstYearLuck.year}년 ${renderGanji(firstYearLuck.ganji)}의 흐름은 ${firstYearLuck.theme} 쪽으로 먼저 움직입니다. 올해의 분위기를 먼저 잡고, 실제로 어떤 달과 상황에서 움직이면 좋은지는 심화 리포트에서 대운·세운과 연결해 정리합니다.` : "올해 흐름은 원국의 강약과 지장간이 만날 때 실제 사건으로 드러납니다. 큰 분위기를 보고, 심화 리포트에서 행동 타이밍까지 확인합니다."}</p>
           </article>
         </section>
       `;
@@ -4913,19 +4969,19 @@
         : "지장간은 심화 리포트에서 세밀하게 확인";
       const items = [
         ["1. 원국", `${name}님의 원국은 년주 ${renderGanji(pillars.year)}, 월주 ${renderGanji(pillars.month)}, 일주 ${renderGanji(pillars.day)}, 시주 ${renderGanji(pillars.hour)}입니다. 일간 ${renderElementGlyph(dayGan)}을 중심에 두고 월지 ${renderElementGlyph(monthJi)}가 만든 계절과 환경을 먼저 봅니다. 연간 ${renderElementGlyph(yearGan)}은 바깥에서 보이는 첫 인상, 시지 ${renderElementGlyph(hourJi)}는 앞으로 꺼내 쓸 가능성으로 읽습니다.`],
-        ["2. 계절과 강약", `현재 원국에서 가장 두드러지는 기운은 ${strongElement}, 보강이 필요한 기운은 ${weakElement} 쪽입니다. 강한 기운은 장점이지만 과하면 말투, 속도, 관계 반응에서 오해가 생길 수 있습니다. 무료에서는 큰 방향을 먼저 잡고, 심화 리포트에서는 십성과 지장간으로 왜 그런 반응이 생기는지 풉니다.`],
-        ["3. 지장간 힌트", `${hiddenHint}. 숨은 기운은 겉으로 바로 보이지 않지만 돈, 직업, 관계, 선택 습관에 실제로 영향을 줍니다. 무료에서는 원국 안에 어떤 보조 카드가 숨어 있는지만 보여주고, 심화에서는 이 기운이 어느 대운·세운에서 켜지는지 연결합니다.`],
-        ["4. 대운", "대운은 10년 단위로 삶의 배경이 바뀌는 흐름입니다. 무료에서는 대운 시작 정보와 큰 방향만 보여드립니다. 직업을 바꿔도 되는지, 사업을 키워도 되는지, 관계의 흐름이 언제 바뀌는지는 대운과 원국을 함께 대입해야 정확도가 올라갑니다."],
-        ["5. 세운", firstYearLuck ? `${firstYearLuck.year}년 ${renderGanji(firstYearLuck.ganji)} 세운은 ${firstYearLuck.theme} 쪽으로 먼저 움직입니다. 세운은 올해 어떤 일이 사건으로 올라오기 쉬운지를 보는 기준입니다. 무료에서는 올해의 첫 인상만 열고, 심화에서는 월운과 실제 선택지까지 연결합니다.` : "세운은 올해 실제 사건으로 올라오기 쉬운 기운입니다. 무료에서는 올해의 첫 인상을 먼저 보여드립니다."],
+        ["2. 계절과 강약", `현재 원국에서 가장 두드러지는 기운은 ${strongElement}, 보강이 필요한 기운은 ${weakElement} 쪽입니다. 강한 기운은 장점이지만 과하면 말투, 속도, 관계 반응에서 오해가 생길 수 있습니다. 여기서는 큰 방향을 먼저 잡고, 심화 리포트에서는 십성과 지장간으로 왜 그런 반응이 생기는지 풉니다.`],
+        ["3. 지장간 힌트", `${hiddenHint}. 숨은 기운은 겉으로 바로 보이지 않지만 돈, 직업, 관계, 선택 습관에 실제로 영향을 줍니다. 원국 안에 어떤 보조 카드가 숨어 있는지 먼저 잡고, 심화에서는 이 기운이 어느 대운·세운에서 켜지는지 연결합니다.`],
+        ["4. 대운", "대운은 10년 단위로 삶의 배경이 바뀌는 흐름입니다. 여기서는 대운 시작 정보와 큰 방향을 먼저 봅니다. 직업을 바꿔도 되는지, 사업을 키워도 되는지, 관계의 흐름이 언제 바뀌는지는 대운과 원국을 함께 대입해야 정확도가 올라갑니다."],
+        ["5. 세운", firstYearLuck ? `${firstYearLuck.year}년 ${renderGanji(firstYearLuck.ganji)} 세운은 ${firstYearLuck.theme} 쪽으로 먼저 움직입니다. 세운은 올해 어떤 일이 사건으로 올라오기 쉬운지를 보는 기준입니다. 올해의 첫 인상을 잡고, 심화에서는 월운과 실제 선택지까지 연결합니다.` : "세운은 올해 실제 사건으로 올라오기 쉬운 기운입니다. 올해의 첫 인상을 먼저 봅니다."],
         ["6. 월운과 일진", dailyGanji ? `월운은 세운 안에서 실제 상황이 열리는 달의 흐름이고, 오늘 ${dailyLuck.date}의 일진은 ${renderGanji(dailyGanji)}입니다. 오늘의 천간 ${renderElementGlyph(dailyStem)}과 지지 ${renderElementGlyph(dailyBranch)}를 원국에 대입해 말, 연락, 계약, 이동, 집중 방향을 잡습니다.` : "월운은 세운 안에서 실제 상황이 열리는 달의 흐름이고, 일진은 하루 단위로 원국에 들어오는 기운입니다."],
-        ["7. 날짜 판단", "계약·매매·취업·시험·발표·결혼·택일·소송·궁합·동업은 같은 방식으로 보지 않습니다. 목적에 따라 재성, 관성, 인성, 식상, 일지, 월지, 합충형파를 다르게 봅니다. 무료에서는 기준을 보여주고, 실제 날짜 후보가 있을 때 심화 질문에서 더 구체적으로 판단합니다."],
+        ["7. 날짜 판단", "계약·매매·취업·시험·발표·결혼·택일·소송·궁합·동업은 같은 방식으로 보지 않습니다. 목적에 따라 재성, 관성, 인성, 식상, 일지, 월지, 합충형파를 다르게 봅니다. 실제 날짜 후보가 있을 때는 심화 질문에서 더 구체적으로 판단할 수 있습니다."],
       ];
 
       return `
         <section class="box">
-          <p class="eyebrow">무료 핵심 리포트</p>
+          <p class="eyebrow">핵심 리포트</p>
           <h2 class="section-title">${name}님의 사주 구조 정리</h2>
-          <p class="small">무료 리포트는 한눈에 읽히도록 원국, 계절, 지장간 힌트, 대운, 세운, 월운·일진, 날짜 판단 기준 순서로 정리했습니다. 결론을 단정하기보다 “어떤 기준으로 봐야 하는지”를 먼저 보여드립니다.</p>
+          <p class="small">원국, 계절, 지장간 힌트, 대운, 세운, 월운·일진, 날짜 판단 기준 순서로 정리했습니다. 결론을 단정하기보다 “어떤 기준으로 봐야 하는지”를 먼저 보여드립니다.</p>
           <ol class="free-report-flow">
             ${items.map(([title, body]) => `
               <li>
@@ -4950,30 +5006,27 @@
         ? "오늘은 내 기운과 비슷한 흐름이 들어와 자기 주장이 강해지기 쉽습니다. 중요한 말은 짧게 정리하는 편이 좋습니다."
         : "오늘은 내 원국과 다른 기운이 들어와 평소와 다른 방식의 선택을 요구할 수 있습니다. 즉흥 결정보다 확인 질문을 먼저 쓰는 편이 좋습니다.";
       return `
-        <section class="box">
-          <p class="eyebrow">오늘 일진 무료 공개</p>
-          <h2 class="section-title">${name}님의 오늘 일진: ${renderGanji(dailyLuck.ganji)}</h2>
-          <p class="small">${dailyLuck.date} 기준 오늘의 일진입니다. 일진은 하루 단위로 원국에 들어오는 기운이라, 큰 결론보다 오늘의 말, 연락, 계약, 이동, 집중 방향을 잡는 데 씁니다.</p>
-          <div class="reading-grid">
-            <article class="reading-card">
-              <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>일진</i></div>
-              <strong>오늘 천간: ${renderElementGlyph(dailyStem)} · ${dailyStemElement}</strong>
-              <p>${themeMap[dailyStemElement] || "오늘의 천간"} 기운이 겉으로 드러나는 말과 행동에 영향을 줍니다. 오늘은 먼저 드러나는 태도와 첫 문장을 조심해서 쓰는 날입니다.</p>
+        <section class="box daily-luck-panel">
+          <p class="eyebrow">오늘의 일진</p>
+          <div class="daily-luck-header">
+            <div class="daily-luck-seal">${renderGanji(dailyLuck.ganji)}</div>
+            <div>
+              <h3>${name}님의 ${dailyLuck.date} 일진</h3>
+              <p class="small">하루 단위로 원국에 들어오는 기운입니다. 큰 결론을 단정하기보다 말, 연락, 계약, 이동, 집중 방향을 잡는 기준으로 씁니다.</p>
+            </div>
+          </div>
+          <div class="daily-luck-grid">
+            <article class="daily-luck-mini">
+              <strong>천간 ${renderElementGlyph(dailyStem)} · ${dailyStemElement}</strong>
+              <p>${themeMap[dailyStemElement] || "오늘의 천간"} 기운이 겉으로 드러나는 말과 행동에 영향을 줍니다.</p>
             </article>
-            <article class="reading-card">
-              <div class="free-card-art free-art-color photo-art" aria-hidden="true"><i>지지</i></div>
-              <strong>오늘 지지: ${renderElementGlyph(dailyBranch)} · ${dailyBranchElement}</strong>
-              <p>${themeMap[dailyBranchElement] || "오늘의 지지"} 기운이 실제 환경과 사람 반응에 깔립니다. 일정, 만남, 돈 이야기의 분위기를 이 지지로 먼저 봅니다.</p>
+            <article class="daily-luck-mini">
+              <strong>지지 ${renderElementGlyph(dailyBranch)} · ${dailyBranchElement}</strong>
+              <p>${themeMap[dailyBranchElement] || "오늘의 지지"} 기운이 실제 환경과 사람 반응에 깔립니다.</p>
             </article>
-            <article class="reading-card">
-              <div class="free-card-art free-art-item photo-art" aria-hidden="true"><i>대입</i></div>
-              <strong>원국 대입 포인트</strong>
-              <p>${tone}</p>
-            </article>
-            <article class="reading-card">
-              <div class="free-card-art free-art-manse photo-art" aria-hidden="true"><i>행동</i></div>
-              <strong>오늘의 작은 선택</strong>
-              <p>계약·연락·지원·상담처럼 결과가 남는 일은 감정으로 바로 움직이지 말고, 목적과 조건을 한 줄로 적은 뒤 진행하세요.</p>
+            <article class="daily-luck-mini">
+              <strong>오늘의 적용</strong>
+              <p>${tone} 결과가 남는 일은 목적과 조건을 한 줄로 적은 뒤 진행하세요.</p>
             </article>
           </div>
         </section>
