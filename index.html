@@ -1517,6 +1517,19 @@
       background: radial-gradient(circle, rgba(255, 226, 146, 0.72), rgba(255, 252, 244, 0.5));
     }
 
+    .score-ring span {
+      display: grid;
+      gap: 2px;
+      text-align: center;
+      line-height: 1.05;
+    }
+
+    .score-ring small {
+      color: rgba(99, 65, 27, 0.72);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
     .fortune-list {
       display: grid;
       gap: 10px;
@@ -5049,7 +5062,7 @@
       ], seed + 13);
 
       result.innerHTML = `
-        <div class="score-ring">${score}</div>
+        <div class="score-ring"><span><small>오늘 운세 지수</small>${score}점</span></div>
         <h3>${name}님의 오늘 아이템: ${item[0]}</h3>
         <p>${item[1]}</p>
         <ul class="fortune-list">
