@@ -1,6 +1,6 @@
 # Decision Priority Dataset
 
-Master Rule끼리 충돌할 때 어떤 판단을 먼저 적용할지 정리한 현명역학원 판단 우선순위 데이터셋이다.
+Master Rule끼리 충돌할 때 어떤 판단을 먼저 적용할지 정리한 SAJUWAR 판단 우선순위 데이터셋이다.
 
 ## Prompt Order
 

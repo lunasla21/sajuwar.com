@@ -1,10 +1,10 @@
 # Master Rule Dataset
 
-77개 Golden Brain case에서 반복되는 판단 규칙을 통합한 현명역학원 Master Rule Dataset이다.
+77개 Golden Brain case에서 반복되는 판단 규칙을 통합한 SAJUWAR Master Rule Dataset이다.
 
 ## Priority
 
-Prompt Builder는 답변 생성 시 Case보다 Master Rule을 우선 참고한다.
+Prompt Builder는 답변 생성 시 Case보다 Master Rule을 우선 활용한다.
 
 1. Master Rule Dataset
 2. Golden Brain Case

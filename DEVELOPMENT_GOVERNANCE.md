@@ -35,7 +35,7 @@ Commit / Push
 - Knowledge Bible
 - Experience Bible
 - Lore Bible
-- HYUNMYUNG METHOD
+- SAJUWAR METHOD
 
 ## Review Rule
 
@@ -48,7 +48,7 @@ Commit / Push
 1. 어떤 문서와 충돌하는지 명시한다.
 2. 왜 충돌인지 사용자 경험과 브랜드 철학 기준으로 설명한다.
 3. 기능 수정으로 해결 가능한지 판단한다.
-4. 기능 수정으로 해결할 수 없으면 Bible 또는 HYUNMYUNG METHOD 수정안을 먼저 제안한다.
+4. 기능 수정으로 해결할 수 없으면 Bible 또는 SAJUWAR METHOD 수정안을 먼저 제안한다.
 5. 수정 방향이 확정된 후 개발한다.
 
 ## Core Question

@@ -1,10 +1,10 @@
 # SAJU WAR EXPERIENCE BIBLE
 
-**Document Type:** Experience Bible / Emotional UX Operating System  
-**Project:** SAJU WAR  
-**Category:** AI Life Strategy Platform  
-**Version:** 1.0  
-**Authority:** This document governs the emotional, cinematic, interaction, sound, motion, game-feel, and retention experience of SAJU WAR.  
+**Document Type:** Experience Bible / Emotional UX Operating System
+**Project:** SAJU WAR
+**Category:** AI Life Strategy Platform
+**Version:** 1.0
+**Authority:** This document governs the emotional, cinematic, interaction, sound, motion, game-feel, and retention experience of SAJU WAR.
 
 ---
 
@@ -12,8 +12,8 @@
 
 SAJU WAR는 기능을 만드는 프로젝트가 아니다. SAJU WAR는 사용자가 자신의 인생을 탐험하도록 만드는 경험이다.
 
-사용자가 "사주를 봤다"고 느끼면 실패다.  
-사용자가 "내 인생의 지도를 열었다"고 느끼면 성공이다.  
+사용자가 "사주를 봤다"고 느끼면 실패다.
+사용자가 "내 인생의 지도를 열었다"고 느끼면 성공이다.
 사용자가 "내 무기를 발견했다"고 느끼면 SAJU WAR가 시작된 것이다.
 
 SAJU WAR의 경험 설계는 다음 기준을 따른다.
@@ -137,8 +137,8 @@ SAJU WAR의 전체 감정 곡선:
 
 사용자는 의심을 가지고 들어온다.
 
-"또 사주 사이트인가?"  
-"AI가 뭘 안다고?"  
+"또 사주 사이트인가?"
+"AI가 뭘 안다고?"
 "불안하게 만들고 결제시키는 곳 아닌가?"
 
 첫 화면은 이 의심을 3초 안에 멈춰 세워야 한다.
@@ -180,7 +180,7 @@ SAJU WAR의 전체 감정 곡선:
 
 이 순간은 SAJU WAR의 첫 번째 마법이다.
 
-사용자가 "와..."라고 느껴야 한다.  
+사용자가 "와..."라고 느껴야 한다.
 단, 과장된 카지노식 보상이 아니라 조용하고 깊은 공개여야 한다.
 
 목표 감정:

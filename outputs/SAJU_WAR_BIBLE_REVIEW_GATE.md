@@ -1,7 +1,7 @@
 # SAJU WAR Eight-Document Review Gate
 
-**Document Type:** Product Governance Rule  
-**Applies To:** All new SAJU WAR features, UI changes, AI behavior changes, content systems, monetization flows, backend architecture changes, community policies, marketing language, education products, and lore extensions  
+**Document Type:** Product Governance Rule
+**Applies To:** All new SAJU WAR features, UI changes, AI behavior changes, content systems, monetization flows, backend architecture changes, community policies, marketing language, education products, and lore extensions
 **Priority:** Above feature specs, prompts, UI tickets, implementation tasks, and temporary experiments
 
 ---
@@ -12,7 +12,7 @@
 
 충돌이 발견되면 개발을 즉시 진행하지 않는다.
 
-먼저 어떤 문서의 어떤 원칙과 충돌하는지 명확히 기록하고, Bible 수정안, HYUNMYUNG METHOD 수정안, 또는 기능 수정안을 먼저 제안한 뒤 승인된 방향으로 개발한다.
+먼저 어떤 문서의 어떤 원칙과 충돌하는지 명확히 기록하고, Bible 수정안, SAJUWAR METHOD 수정안, 또는 기능 수정안을 먼저 제안한 뒤 승인된 방향으로 개발한다.
 
 ---
 
@@ -20,29 +20,29 @@
 
 SAJU WAR의 제품 판단은 아래 8개 문서를 기준으로 한다.
 
-1. **Brand Bible**  
+1. **Brand Bible**
    SAJU WAR가 어떤 브랜드 철학과 약속을 가져야 하는지 정의한다.
 
-2. **Master Plan**  
+2. **Master Plan**
    SAJU WAR가 장기적으로 어떤 사업, 플랫폼, 생태계로 성장해야 하는지 정의한다.
 
-3. **Product Bible**  
+3. **Product Bible**
    각 페이지가 어떤 경험, 감정, UX Flow, UI 구조, AI 역할, 기술 구조로 구현되어야 하는지 정의한다.
 
-4. **AI Constitution**  
+4. **AI Constitution**
    모든 AI 기능이 반드시 지켜야 하는 성격, 말투, 안전 원칙, 금지 표현, 코칭 철학을 정의한다.
 
-5. **Knowledge Bible**  
+5. **Knowledge Bible**
    SAJU WAR만의 명리 해석 체계, 현대 언어 번역, 실생활 적용 방식, AI 지식 기준을 정의한다.
 
-6. **Experience Bible**  
+6. **Experience Bible**
    사용자가 기능을 소비하는 것이 아니라 자신의 인생을 탐험한다고 느끼게 만드는 감정 곡선, 연출, 사운드, 모션, 게임적 경험을 정의한다.
 
-7. **Lore Bible**  
+7. **Lore Bible**
    SAJU WAR의 세계관, 작전실, 무기, Strategy Map, Quest, Guild, AI Strategist, 상징, 언어 체계를 정의한다.
 
-8. **HYUNMYUNG METHOD**  
-   현명역학원의 해석 철학, 상담 철학, 교육 철학, AI 철학, 금지 해석, 현대 번역 원칙, Action 중심 원칙을 정의한다.
+8. **SAJUWAR METHOD**
+   SAJUWAR의 해석 철학, 상담 철학, 교육 철학, AI 철학, 금지 해석, 현대 번역 원칙, Action 중심 원칙을 정의한다.
 
 ---
 
@@ -94,7 +94,7 @@ SAJU WAR의 제품 판단은 아래 8개 문서를 기준으로 한다.
 - 상징, 용어, 화면 연출이 SAJU WAR Universe와 일관되는가?
 - 기존 사주 용어를 Lore 언어로 충분히 번역했는가?
 
-### 3.7 HYUNMYUNG METHOD Check
+### 3.7 SAJUWAR METHOD Check
 
 - 해석이 운명 단정이 아니라 현명한 선택으로 이어지는가?
 - 상담 또는 AI 응답이 사용자의 자율성을 존중하는가?
@@ -124,7 +124,7 @@ SAJU WAR의 제품 판단은 아래 8개 문서를 기준으로 한다.
 
 페이지의 존재 이유, 감정 흐름, UX Flow, AI 역할, 세계관 언어와 어긋난다. 개발 전에 기능 설계를 수정해야 한다.
 
-### Level 3: Brand, AI Safety, or HYUNMYUNG METHOD Conflict
+### Level 3: Brand, AI Safety, or SAJUWAR METHOD Conflict
 
 공포 마케팅, 운명 단정, 불안 결제, 위험 조언, 기존 사주 사이트화, 사용자 자율성 침해가 포함된다. 개발을 중단하고 문서 수정안 또는 기능 철회안을 먼저 제안한다.
 
@@ -147,7 +147,7 @@ Reviewed Documents:
 - Knowledge Bible:
 - Experience Bible:
 - Lore Bible:
-- HYUNMYUNG METHOD:
+- SAJUWAR METHOD:
 
 Conflict Level:
 

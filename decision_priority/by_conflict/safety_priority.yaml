@@ -5,7 +5,7 @@ priorities:
     rule_a: "단정 결론"
     rule_b: "예외 조건"
     priority: "예외 조건 > 단정 결론"
-    reason: "현명역학원 상담은 결론보다 선택권과 조절 가능성을 남겨야 한다."
+    reason: "SAJUWAR 상담은 결론보다 선택권과 조절 가능성을 남겨야 한다."
     override_condition: "Master Rule이 강한 결론을 내도 exceptions가 현재 상황에 해당하면 단정을 낮춘다."
     exception: "위험 회피가 긴급한 경우에는 명확한 금지 조언을 한다."
     related_master_rules:

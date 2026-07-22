@@ -1,6 +1,6 @@
-# Hyunmyung Brain Prompt Order
+# SAJUWAR Brain Prompt Order
 
-SAJUWAR의 목표는 사례를 복사하는 것이 아니라 현명역학원의 사고방식을 재현하는 것이다.
+SAJUWAR의 목표는 사례를 복사하는 것이 아니라 SAJUWAR의 사고방식을 재현하는 것이다.
 
 새로운 기능을 만들지 않는다. Golden Dataset을 지식 구조로 사용한다.
 
@@ -18,7 +18,7 @@ AI는 답변 생성 시 다음 순서를 따른다.
 
 ## Rule
 
-`Master Rule Dataset`은 77개 case에서 반복 추출된 현명역학원의 공통 판단 규칙이다.
+`Master Rule Dataset`은 77개 case에서 반복 추출된 SAJUWAR의 공통 판단 규칙이다.
 
 AI는 Case를 먼저 복사하지 않는다. 먼저 `master_rules/`에서 현재 질문과 가장 가까운 rule을 찾고, 그 rule의 `if`, `then`, `because`, `exceptions`, `priority`를 답변의 사고 순서로 사용한다.
 
@@ -26,9 +26,9 @@ AI는 Case를 먼저 복사하지 않는다. 먼저 `master_rules/`에서 현재
 
 AI는 관련 Master Rule을 찾은 뒤 반드시 `decision_priority/`를 적용한다. 충돌하는 rule이 있으면 `priority`, `reason`, `override_condition`, `exception`, `confidence`에 따라 최종 판단 순서를 정한다.
 
-`Golden Brain Case`는 Master Rule을 적용할 때 참고하는 사례 기반 보조 데이터다.
+`Golden Brain Case`는 Master Rule을 적용할 때 활용하는 사례 기반 보조 데이터다.
 
-`Review Dataset`은 현명역학원이 수정/승인한 표현 기준이다.
+`Review Dataset`은 SAJUWAR이 수정/승인한 표현 기준이다.
 
 `RAG`와 `Knowledge Rule`은 위 기준을 보조한다.
 
