@@ -520,6 +520,18 @@ function getSaju(year, month, day, hour, minute, calendarType = "solar") {
   };
 }
 
+function normalizeDateTimeParts(birth, time) {
+  const [year, month, day] = String(birth || "").split("-");
+  const [hour, minute] = String(time || "").split(":");
+  return {
+    year: String(year || "").padStart(4, "0"),
+    month: String(month || "").padStart(2, "0"),
+    day: String(day || "").padStart(2, "0"),
+    hour: String(hour || "0").padStart(2, "0"),
+    minute: String(minute || "0").padStart(2, "0"),
+  };
+}
+
 function makeDaewoon(eightChar, gender) {
   try {
     const genderCode = gender === "male" ? 1 : 0;
@@ -709,8 +721,7 @@ async function handleAnalyze(req, res) {
         });
       }
     }
-    const [year, month, day] = birth.split("-");
-    const [hour, minute] = time.split(":");
+    const { year, month, day, hour, minute } = normalizeDateTimeParts(birth, time);
 
     const pillarsRaw = getSaju(year, month, day, hour, minute, safeCalendar);
     const daewoon = makeDaewoon(pillarsRaw.eightChar, gender);
@@ -1040,8 +1051,7 @@ function handleManse(req, res) {
     }
 
     const safeCalendar = calendarType || "solar";
-    const [year, month, day] = birth.split("-");
-    const [hour, minute] = time.split(":");
+    const { year, month, day, hour, minute } = normalizeDateTimeParts(birth, time);
     const pillarsRaw = getSaju(year, month, day, hour, minute || "0", safeCalendar);
     const pillars = {
       year: pillarsRaw.year,
@@ -1247,8 +1257,7 @@ function summarizeElementBalance(counts = {}) {
 function buildStrategyRoomChart(profile = {}) {
   if (!profile.birth || !profile.time) return null;
   try {
-    const [year, month, day] = String(profile.birth).split("-");
-    const [hour, minute] = String(profile.time).split(":");
+    const { year, month, day, hour, minute } = normalizeDateTimeParts(profile.birth, profile.time);
     if (!year || !month || !day || !hour) return null;
     const pillarsRaw = getSaju(year, month, day, hour, minute || "0", profile.calendarType || "solar");
     const pillars = {

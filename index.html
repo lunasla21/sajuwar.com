@@ -3822,6 +3822,16 @@
       return developerModeAvailable && developerModeOn && developerAdminKey;
     }
 
+    function buildAnalyzeHeaders(forcePaid) {
+      const headers = { "Content-Type": "application/json" };
+      if (forcePaid && accessToken) headers.Authorization = `Bearer ${String(accessToken).trim()}`;
+      if (hasDeveloperAccess()) {
+        const cleanAdminKey = String(developerAdminKey || "").replace(/[\r\n]/g, "").trim();
+        if (cleanAdminKey) headers["x-sajuwar-admin-key"] = cleanAdminKey;
+      }
+      return headers;
+    }
+
     async function refreshPurchaseAccess() {
       if (!accessToken) {
         isPaid = false;
@@ -4959,19 +4969,15 @@
       try {
         const response = await fetch("/analyze", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            ...(forcePaid && accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-            ...(hasDeveloperAccess() ? { "x-sajuwar-admin-key": developerAdminKey } : {})
-          },
+          headers: buildAnalyzeHeaders(forcePaid),
           body: JSON.stringify({
             name,
             calendarType,
-            birth: `${year}-${month}-${day}`,
-            time: `${hour}:${minute}`,
+            birth: `${year}-${pad(month)}-${pad(day)}`,
+            time: `${pad(hour)}:${pad(minute)}`,
             gender,
             paidReport: Boolean(forcePaid && canViewPaidReport()),
-            developerMode: hasDeveloperAccess()
+            developerMode: Boolean(hasDeveloperAccess())
           })
         });
 
