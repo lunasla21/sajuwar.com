@@ -691,6 +691,20 @@
       gap: 12px;
     }
 
+    .premium-question-box {
+      display: grid;
+      gap: 12px;
+    }
+
+    .premium-question-box textarea {
+      min-height: 120px;
+    }
+
+    .premium-question-answer {
+      white-space: pre-wrap;
+      line-height: 1.9;
+    }
+
     .war-visual-card {
       position: relative;
       overflow: hidden;
@@ -3692,6 +3706,7 @@
     let developerReviewCounter = 0;
     const developerReviewParagraphs = {};
     let lastFullResult = "";
+    let lastPremiumContext = null;
     let loadingTimer = null;
     const accessParams = new URLSearchParams(window.location.search);
     const accessToken = accessParams.get("token") || localStorage.getItem("sajuwar_auth_token") || "";
@@ -4514,6 +4529,25 @@
       `;
     }
 
+    function renderPremiumQuestionBox(name) {
+      return `
+        <section class="war-panel premium-question-box" id="premium-question">
+          <div class="war-panel-head">
+            <h3>프리미엄 리포트 질문하기</h3>
+            <span class="badge">premium Q&A</span>
+          </div>
+          <p class="small">리포트를 본 뒤 더 궁금한 내용을 바로 물어보세요. 월운, 일진, 계약일, 부동산 매매일, 취업, 시험합격과 발표일, 결혼시기, 택일, 이사, 소송, 궁합, 수술일, 동업 질문까지 리포트 기준으로 이어서 답합니다.</p>
+          <textarea id="premiumQuestionInput" placeholder="예: 2026년 하반기에 이직해도 될까요? 계약일 후보가 8월 3일, 8월 11일인데 어느 쪽이 나을까요?"></textarea>
+          <div class="button-row">
+            <button type="button" onclick="askPremiumQuestion()">질문 답변 받기</button>
+          </div>
+          <div class="fortune-result premium-question-answer" id="premiumQuestionResult">
+            ${escapeHtml(name)}님의 프리미엄 리포트 내용을 기준으로 후속 질문에 답변합니다.
+          </div>
+        </section>
+      `;
+    }
+
     function buildFinalActionMessage(name, context) {
       const { report, dayGan, strongElement, hiddenItems, daewoonList, sewoonList } = context;
       const firstYear = sewoonList[0] || null;
@@ -4664,6 +4698,8 @@
             </div>
             ${renderPremiumReportCards(report, { name, strongElement, dayGan, hiddenItems, sewoonList })}
           </section>
+
+          ${renderPremiumQuestionBox(name)}
 
           <section class="war-final-card">
             <div class="war-final-emblem" aria-hidden="true">
@@ -5037,6 +5073,46 @@
       }
     }
 
+    async function askPremiumQuestion() {
+      const input = document.getElementById("premiumQuestionInput");
+      const result = document.getElementById("premiumQuestionResult");
+      const question = input ? input.value.trim() : "";
+      if (!question) {
+        showToast("질문 내용을 입력해주세요.");
+        return;
+      }
+      if (!canViewPaidReport() || !accessToken) {
+        showToast("프리미엄 리포트 결제 후 질문할 수 있습니다.");
+        return;
+      }
+      if (!lastPremiumContext) {
+        showToast("먼저 프리미엄 리포트를 열어주세요.");
+        return;
+      }
+
+      result.textContent = "프리미엄 리포트와 원국 데이터를 기준으로 답변을 정리하고 있습니다.";
+      try {
+        const response = await fetch("/api/premium-report/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${String(accessToken).trim()}`,
+          },
+          body: JSON.stringify({
+            ...lastPremiumContext,
+            question,
+          }),
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || "프리미엄 질문 답변에 실패했습니다.");
+        result.textContent = data.reply || "답변이 비어 있습니다.";
+        showToast("프리미엄 질문 답변이 준비되었습니다.");
+      } catch (error) {
+        result.textContent = `답변 오류: ${error.message}`;
+        showToast("프리미엄 질문 답변을 다시 시도해주세요.");
+      }
+    }
+
     async function analyze(forcePaid = false) {
       const name = document.getElementById("name").value.trim();
       const calendarType = document.getElementById("calendarType").value;
@@ -5079,6 +5155,18 @@
         }
 
         const report = cleanText(data.result);
+        if (forcePaid && canViewPaidReport()) {
+          lastPremiumContext = {
+            profile: { name, birth: `${year}-${pad(month)}-${pad(day)}`, time: `${pad(hour)}:${pad(minute)}`, gender, calendarType },
+            report,
+            pillars: data.pillars,
+            daewoon: data.daewoon,
+            sewoon: data.sewoon,
+            dailyLuck: data.dailyLuck,
+          };
+        } else {
+          lastPremiumContext = null;
+        }
         const fullHTML = `
           ${renderPremiumWarDashboard(name, data, report)}
           ${renderDeveloperDebugPanel(data.developer_debug)}

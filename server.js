@@ -1253,6 +1253,90 @@ app.get("/api/report", (req, res) => {
   res.json({ ok: true, message: "report access granted" });
 });
 
+app.post("/api/premium-report/chat", async (req, res) => {
+  try {
+    const user = requireLogin(req, res);
+    if (!user) return;
+    if (!orderStore.hasPurchase({ user_id: user.id, product_id: "premium_report" })) {
+      return res.status(403).json({ error: PURCHASE_REQUIRED_MESSAGE });
+    }
+    markProductAccess(req, "premium_report", "chat");
+    const reply = await buildPremiumReportQuestionReply(user, req.body || {});
+    res.json({ reply });
+  } catch (error) {
+    res.status(error.status || 500).json({ error: error.message });
+  }
+});
+
+function fallbackPremiumReportQuestionReply(payload = {}) {
+  const question = String(payload.question || "").trim();
+  const profile = payload.profile || {};
+  const pillars = payload.pillars || {};
+  const daewoon = payload.daewoon || {};
+  const sewoon = payload.sewoon || {};
+  const dailyLuck = payload.dailyLuck || {};
+  const firstYear = sewoon.list?.[0];
+  const currentDaewoon = daewoon.list?.[0];
+  return [
+    "[리포트 근거]",
+    `입력된 원국은 년주 ${pillars.year || "-"}, 월주 ${pillars.month || "-"}, 일주 ${pillars.day || "-"}, 시주 ${pillars.hour || "-"}입니다. ${currentDaewoon ? `현재 확인 가능한 대운 흐름은 ${currentDaewoon.startAge}세-${currentDaewoon.endAge}세 ${currentDaewoon.ganji} 구간입니다.` : "대운 정보는 리포트 계산값을 다시 확인해야 합니다."} ${firstYear ? `세운은 ${firstYear.year}년 ${firstYear.ganji} 흐름부터 봅니다.` : ""} ${dailyLuck.ganji ? `오늘 일진은 ${dailyLuck.date} ${dailyLuck.ganji}입니다.` : ""}`,
+    "",
+    "[질문 판단]",
+    question
+      ? `질문은 "${question}"입니다. 이 질문은 원국만으로 단정하지 않고, 대운의 배경, 세운의 사건화, 월운과 일진의 실행 타이밍을 나누어 봐야 합니다.`
+      : "질문이 비어 있어 판단을 시작할 수 없습니다.",
+    "",
+    "[확인 필요]",
+    "계약·매매·이사·수술·시험·발표·결혼·궁합·동업처럼 날짜가 중요한 질문은 후보 날짜, 상대방 생년월일시, 실제 선택지를 함께 확인해야 합니다.",
+    "",
+    "[실행 제안]",
+    `${profile.name || "고객"}님은 먼저 질문을 한 문장으로 좁히고, 가능한 날짜나 선택지 2-3개를 적어 다시 물어보세요. 그러면 원국과 세운, 월운, 일진을 대입해 더 구체적으로 정리할 수 있습니다.`,
+  ].join("\n");
+}
+
+async function buildPremiumReportQuestionReply(user, payload = {}) {
+  const question = String(payload.question || "").trim();
+  if (!question) {
+    const error = new Error("question is required");
+    error.status = 400;
+    throw error;
+  }
+  if (!client) return fallbackPremiumReportQuestionReply(payload);
+  const completion = await createChatCompletionWithTimeout({
+    model: process.env.SAJUWAR_CHAT_MODEL || "gpt-4o-mini",
+    messages: [
+      {
+        role: "system",
+        content: [
+          "너는 SAJUWAR 프리미엄 리포트 후속 상담 에이전트다.",
+          "고객이 이미 받은 프리미엄 리포트와 원국, 대운, 세운, 일진 데이터를 근거로 질문에 답한다.",
+          "답변 가능 범위는 원국, 대운, 세운, 월운, 일진, 계약일, 부동산 매매일, 취업, 시험합격과 발표일, 결혼시기, 택일, 이사, 소송, 궁합, 수술일, 동업, 기타 중요한 선택이다.",
+          "절대 운명을 단정하지 않는다. 날짜 선택도 보조 판단이며 현실 조건, 계약서, 전문가 판단을 우선한다고 안내한다.",
+          "상대방 사주가 필요한 질문은 상대방 생년월일시가 필요하다고 분명히 말한다.",
+          "후보 날짜가 필요한 질문은 후보 날짜 2-3개를 달라고 요청한다.",
+          "답변 형식은 반드시 [리포트 근거], [질문 판단], [확인 필요], [실행 제안] 순서로 작성한다.",
+          "의료, 법률, 투자, 자해, 폭력, 학대, 중독, 심각한 우울 등 고위험 주제는 전문가 또는 긴급 도움을 우선 안내한다.",
+        ].join("\n"),
+      },
+      {
+        role: "user",
+        content: JSON.stringify({
+          user: { id: user.id, name: user.name },
+          profile: payload.profile || {},
+          pillars: payload.pillars || {},
+          daewoon: payload.daewoon || {},
+          sewoon: payload.sewoon || {},
+          dailyLuck: payload.dailyLuck || {},
+          premiumReport: String(payload.report || "").slice(0, 24000),
+          question,
+        }),
+      },
+    ],
+    temperature: 0.45,
+  });
+  return completion.choices?.[0]?.message?.content?.trim() || fallbackPremiumReportQuestionReply(payload);
+}
+
 function getSeasonFromMonthBranch(branch) {
   const seasonMap = {
     "寅": "봄 초입",
