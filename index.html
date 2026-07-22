@@ -5149,7 +5149,7 @@
       const score = 57 + (seed % 41);
 
       result.innerHTML = `
-        <div class="score-ring">${score}</div>
+        <div class="score-ring"><span><small>일일 운세 지수</small>${score}점</span></div>
         <h3>${name}님의 오늘 작전</h3>
         <ul class="fortune-list">
           <li>공격 카드: ${attack}</li>
@@ -5249,7 +5249,7 @@
       ], seed + 23);
 
       result.innerHTML = `
-        <div class="score-ring">${score}</div>
+        <div class="score-ring"><span><small>연애 무기 지수</small>${score}점</span></div>
         <h3>${name}님의 오늘 연애 무기: ${weapon[0]}</h3>
         <p>${weapon[1]}</p>
         <ul class="fortune-list">
@@ -5294,7 +5294,7 @@
       ], gap + 9);
 
       result.innerHTML = `
-        <div class="score-ring">${score}</div>
+        <div class="score-ring"><span><small>궁합 지수</small>${score}점</span></div>
         <h3>${nameA} × ${nameB}: ${chemistry[0]} 궁합</h3>
         <p>${chemistry[1]}</p>
         <ul class="fortune-list">
@@ -5341,7 +5341,7 @@
       ], seed + 7);
 
       result.innerHTML = `
-        <div class="score-ring">${total}</div>
+        <div class="score-ring"><span><small>이름 지수</small>${total}점</span></div>
         <h3>${name}님의 이름 무기: ${weapon[0]}</h3>
         <p>${weapon[1]}</p>
         <ul class="fortune-list">
