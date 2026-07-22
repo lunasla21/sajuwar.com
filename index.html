@@ -3741,6 +3741,14 @@
       "수": "배우고 연결하고 흐름을 읽는 힘"
     };
 
+    const themeMap = {
+      "목": "성장, 시작, 기획, 교육, 확장",
+      "화": "표현, 노출, 인기, 콘텐츠, 홍보",
+      "토": "현실화, 정리, 기반, 축적, 안정",
+      "금": "결단, 기술, 구조화, 계약, 결과",
+      "수": "정보, 이동, 유통, 학습, 지혜"
+    };
+
     function pad(n) { return String(n).padStart(2, "0"); }
 
     function fillOptions() {
@@ -4826,6 +4834,87 @@
       `;
     }
 
+    function renderFreeMethodChecklist(name, pillars, sewoon, dailyLuck) {
+      const dayGan = splitPillar(pillars.day).gan;
+      const monthJi = splitPillar(pillars.month).ji;
+      const firstYearLuck = sewoon && sewoon.list && sewoon.list[0] ? sewoon.list[0] : null;
+      const dailyGanji = dailyLuck?.ganji || "";
+      const dailyStem = dailyLuck?.stem || splitPillar(dailyGanji).gan;
+      const dailyBranch = dailyLuck?.branch || splitPillar(dailyGanji).ji;
+      const items = [
+        ["1. 원국", `${name}님의 년주·월주·일주·시주를 먼저 세워 전체 구조를 봅니다. 일간 ${renderElementGlyph(dayGan)}을 중심에 두고 월지 ${renderElementGlyph(monthJi)}가 만든 계절과 환경을 함께 읽습니다.`],
+        ["2. 대운", "무료에서는 대운 시작 정보와 큰 흐름만 보여드립니다. 어느 10년 운에서 방향이 바뀌는지는 유료 리포트에서 직업·재물·관계와 연결해 자세히 풉니다."],
+        ["3. 세운", firstYearLuck ? `${firstYearLuck.year}년 ${renderGanji(firstYearLuck.ganji)} 세운을 원국에 대입해 올해 어떤 기운이 먼저 움직이는지 봅니다.` : "올해 세운을 원국과 대입해 올해 먼저 움직이는 기운을 봅니다."],
+        ["4. 월운", "월운은 세운 안에서 실제 상황이 열리는 달의 흐름입니다. 무료에서는 분석 기준을 안내하고, 구체적인 월별 판단은 유료 리포트에서 확장합니다."],
+        ["5. 일진", dailyGanji ? `오늘 ${dailyLuck.date}의 일진은 ${renderGanji(dailyGanji)}입니다. 오늘의 천간 ${renderElementGlyph(dailyStem)}과 지지 ${renderElementGlyph(dailyBranch)}를 원국과 대입해 하루의 행동 포인트를 봅니다.` : "오늘 일진을 원국과 대입해 하루의 행동 포인트를 봅니다."],
+        ["6. 계약·매매", "계약일은 재성, 인수, 관성이 함께 움직이는 날을 우선 봅니다. 무료에서는 원리만 열고 실제 날짜 선택은 상담 또는 유료 분석으로 연결됩니다."],
+        ["7. 취업·직업", "취업은 세운과 월운에서 관성·인성·재성이 어떻게 작동하는지 봅니다. 무료에서는 올해 방향성만 먼저 확인합니다."],
+        ["8. 시험·합격", "시험은 인성과 관성의 흐름, 발표일의 일진을 함께 봅니다. 무료에서는 준비 리듬과 주의할 기운을 중심으로 안내합니다."],
+        ["9. 결혼·관계", "결혼 시기는 배우자궁, 관성/재성, 세운·월운의 합충을 함께 봅니다. 무료에서는 관계의 큰 온도만 열어둡니다."],
+        ["10. 택일", "택일은 목적에 따라 기준이 달라집니다. 결혼, 이사, 계약, 수술, 동업은 서로 보는 글자와 피해야 할 충이 다릅니다."],
+        ["11. 소송·분쟁", "소송은 관성과 인성, 재성의 합이 되는 흐름과 충돌이 커지는 흐름을 나누어 봅니다. 무료에서는 단정하지 않고 주의 방향만 안내합니다."],
+        ["12. 궁합·동업", "상대방의 사주가 함께 필요합니다. 궁합과 동업은 중첩되는 월운과 서로의 원국 충합을 함께 봅니다."],
+      ];
+
+      return `
+        <section class="box">
+          <p class="eyebrow">무료 분석 순서</p>
+          <h2 class="section-title">${name}님의 무료 분석 흐름</h2>
+          <p class="small">무료 리포트에서도 원국, 대운, 세운, 오늘 일진까지 먼저 열어드립니다. 계약·취업·시험·결혼·택일처럼 날짜 판단이 필요한 항목은 기준을 보여주고, 세밀한 월운·택일은 심화 분석으로 이어집니다.</p>
+          <div class="reading-grid">
+            ${items.map(([title, body]) => `
+              <article class="reading-card">
+                <strong>${title}</strong>
+                <p>${body}</p>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderFreeDailyLuckCard(name, pillars, dailyLuck) {
+      if (!dailyLuck || !dailyLuck.ganji) return "";
+      const dayGan = splitPillar(pillars.day).gan;
+      const dailyStem = dailyLuck.stem || splitPillar(dailyLuck.ganji).gan;
+      const dailyBranch = dailyLuck.branch || splitPillar(dailyLuck.ganji).ji;
+      const myElement = elementMap[dayGan] || "";
+      const dailyStemElement = dailyLuck.stemElement || elementMap[dailyStem] || "";
+      const dailyBranchElement = dailyLuck.branchElement || elementMap[dailyBranch] || "";
+      const tone = dailyStemElement === myElement
+        ? "오늘은 내 기운과 비슷한 흐름이 들어와 자기 주장이 강해지기 쉽습니다. 중요한 말은 짧게 정리하는 편이 좋습니다."
+        : "오늘은 내 원국과 다른 기운이 들어와 평소와 다른 방식의 선택을 요구할 수 있습니다. 즉흥 결정보다 확인 질문을 먼저 쓰는 편이 좋습니다.";
+      return `
+        <section class="box">
+          <p class="eyebrow">오늘 일진 무료 공개</p>
+          <h2 class="section-title">${name}님의 오늘 일진: ${renderGanji(dailyLuck.ganji)}</h2>
+          <p class="small">${dailyLuck.date} 기준 오늘의 일진입니다. 일진은 하루 단위로 원국에 들어오는 기운이라, 큰 결론보다 오늘의 말, 연락, 계약, 이동, 집중 방향을 잡는 데 씁니다.</p>
+          <div class="reading-grid">
+            <article class="reading-card">
+              <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>일진</i></div>
+              <strong>오늘 천간: ${renderElementGlyph(dailyStem)} · ${dailyStemElement}</strong>
+              <p>${themeMap[dailyStemElement] || "오늘의 천간"} 기운이 겉으로 드러나는 말과 행동에 영향을 줍니다. 오늘은 먼저 드러나는 태도와 첫 문장을 조심해서 쓰는 날입니다.</p>
+            </article>
+            <article class="reading-card">
+              <div class="free-card-art free-art-color photo-art" aria-hidden="true"><i>지지</i></div>
+              <strong>오늘 지지: ${renderElementGlyph(dailyBranch)} · ${dailyBranchElement}</strong>
+              <p>${themeMap[dailyBranchElement] || "오늘의 지지"} 기운이 실제 환경과 사람 반응에 깔립니다. 일정, 만남, 돈 이야기의 분위기를 이 지지로 먼저 봅니다.</p>
+            </article>
+            <article class="reading-card">
+              <div class="free-card-art free-art-item photo-art" aria-hidden="true"><i>대입</i></div>
+              <strong>원국 대입 포인트</strong>
+              <p>${tone}</p>
+            </article>
+            <article class="reading-card">
+              <div class="free-card-art free-art-manse photo-art" aria-hidden="true"><i>행동</i></div>
+              <strong>오늘의 작은 선택</strong>
+              <p>계약·연락·지원·상담처럼 결과가 남는 일은 감정으로 바로 움직이지 말고, 목적과 조건을 한 줄로 적은 뒤 진행하세요.</p>
+            </article>
+          </div>
+        </section>
+      `;
+    }
+
     function renderPaidLockFromJijanggan(name) {
       return `
         <section class="box upgrade-callout" id="premium">
@@ -5003,6 +5092,8 @@
           ${renderPillars(data.pillars)}
           ${renderFreeIntroCards(name, data.pillars)}
           ${renderFreePreviewGuide(name, data.pillars, data.sewoon)}
+          ${renderFreeMethodChecklist(name, data.pillars, data.sewoon, data.dailyLuck)}
+          ${renderFreeDailyLuckCard(name, data.pillars, data.dailyLuck)}
           ${renderFreeReadingCards(name, data.pillars, data.sewoon)}
           ${renderPaidLockFromJijanggan(name)}
         `;

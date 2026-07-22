@@ -594,6 +594,47 @@ function makeSewoon(startYear = new Date().getFullYear()) {
   };
 }
 
+function getKoreaDateParts(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  return {
+    year: parts.find((part) => part.type === "year")?.value || String(date.getFullYear()),
+    month: parts.find((part) => part.type === "month")?.value || String(date.getMonth() + 1).padStart(2, "0"),
+    day: parts.find((part) => part.type === "day")?.value || String(date.getDate()).padStart(2, "0"),
+  };
+}
+
+function makeDailyLuck(date = new Date()) {
+  const { year, month, day } = getKoreaDateParts(date);
+  const pillarsRaw = getSaju(year, month, day, "12", "00", "solar");
+  const pillars = {
+    year: pillarsRaw.year,
+    month: pillarsRaw.month,
+    day: pillarsRaw.day,
+    hour: pillarsRaw.hour,
+    solarDate: pillarsRaw.solarDate,
+  };
+  const dayStem = pillars.day[0];
+  const dayBranch = pillars.day[1];
+  const stemEl = stemElement[dayStem] || "";
+  const branchEl = branchElement[dayBranch] || "";
+  return {
+    date: pillars.solarDate,
+    ganji: pillars.day,
+    stem: dayStem,
+    branch: dayBranch,
+    stemElement: stemEl,
+    branchElement: branchEl,
+    theme: `${themeMap[stemEl] || "오늘의 천간"} / ${themeMap[branchEl] || "오늘의 지지"}`,
+    pillars,
+    hiddenSummary: makeHiddenItemSummary(pillars),
+  };
+}
+
 function makeHiddenItemSummary(pillars) {
   const keys = ["year", "month", "day", "hour"];
   const labels = { year: "년주", month: "월주", day: "일주", hour: "시주" };
@@ -726,6 +767,7 @@ async function handleAnalyze(req, res) {
     const pillarsRaw = getSaju(year, month, day, hour, minute, safeCalendar);
     const daewoon = makeDaewoon(pillarsRaw.eightChar, gender);
     const sewoon = makeSewoon(new Date().getFullYear());
+    const dailyLuck = makeDailyLuck();
 
     const pillars = {
       year: pillarsRaw.year,
@@ -771,6 +813,7 @@ async function handleAnalyze(req, res) {
       `원국: ${pillars.year}, ${pillars.month}, ${pillars.day}, ${pillars.hour}`,
       `대운: ${daewoon.startInfo}`,
       `세운: ${sewoon.startInfo}`,
+      `일진: ${dailyLuck.date} ${dailyLuck.ganji}`,
     ].join("\n");
     const sources = [
       {
@@ -789,6 +832,7 @@ async function handleAnalyze(req, res) {
         pillars,
         daewoon,
         sewoon,
+        dailyLuck,
         calendarType: safeCalendar,
       });
     }
@@ -800,6 +844,7 @@ async function handleAnalyze(req, res) {
         pillars,
         daewoon,
         sewoon,
+        dailyLuck,
         calendarType: safeCalendar,
       };
       if (developerPreview) {
@@ -1012,6 +1057,7 @@ SAJUWAR 해석 원칙:
       pillars,
       daewoon,
       sewoon,
+      dailyLuck,
       calendarType: safeCalendar,
     };
     if (gptFallbackReason) {
