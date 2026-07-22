@@ -1569,6 +1569,31 @@
       transform: rotate(45deg);
     }
 
+    .free-report-flow {
+      display: grid;
+      gap: 14px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .free-report-flow li {
+      padding: 16px;
+      border: 1px solid rgba(242, 219, 141, 0.14);
+      background: rgba(255, 252, 244, 0.05);
+    }
+
+    .free-report-flow strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-size: 20px;
+    }
+
+    .free-report-flow p {
+      margin-bottom: 0;
+    }
+
     .battle-loading {
       min-height: 460px;
       display: grid;
@@ -4870,41 +4895,45 @@
       `;
     }
 
-    function renderFreeMethodChecklist(name, pillars, sewoon, dailyLuck) {
+    function renderFreeStructuredReport(name, pillars, sewoon, dailyLuck) {
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const [weakElement] = getWeakest(stats);
       const dayGan = splitPillar(pillars.day).gan;
       const monthJi = splitPillar(pillars.month).ji;
+      const yearGan = splitPillar(pillars.year).gan;
+      const hourJi = splitPillar(pillars.hour).ji;
       const firstYearLuck = sewoon && sewoon.list && sewoon.list[0] ? sewoon.list[0] : null;
       const dailyGanji = dailyLuck?.ganji || "";
       const dailyStem = dailyLuck?.stem || splitPillar(dailyGanji).gan;
       const dailyBranch = dailyLuck?.branch || splitPillar(dailyGanji).ji;
+      const hiddenItems = getHiddenItems(pillars);
+      const hiddenHint = hiddenItems.length
+        ? hiddenItems.slice(0, 4).map((item) => `${pillarLabel[item.pillar]} ${renderElementGlyph(item.stem)}`).join(" · ")
+        : "지장간은 심화 리포트에서 세밀하게 확인";
       const items = [
-        ["1. 원국", `${name}님의 년주·월주·일주·시주를 먼저 세워 전체 구조를 봅니다. 일간 ${renderElementGlyph(dayGan)}을 중심에 두고 월지 ${renderElementGlyph(monthJi)}가 만든 계절과 환경을 함께 읽습니다.`],
-        ["2. 대운", "무료에서는 대운 시작 정보와 큰 흐름만 보여드립니다. 어느 10년 운에서 방향이 바뀌는지는 유료 리포트에서 직업·재물·관계와 연결해 자세히 풉니다."],
-        ["3. 세운", firstYearLuck ? `${firstYearLuck.year}년 ${renderGanji(firstYearLuck.ganji)} 세운을 원국에 대입해 올해 어떤 기운이 먼저 움직이는지 봅니다.` : "올해 세운을 원국과 대입해 올해 먼저 움직이는 기운을 봅니다."],
-        ["4. 월운", "월운은 세운 안에서 실제 상황이 열리는 달의 흐름입니다. 무료에서는 분석 기준을 안내하고, 구체적인 월별 판단은 유료 리포트에서 확장합니다."],
-        ["5. 일진", dailyGanji ? `오늘 ${dailyLuck.date}의 일진은 ${renderGanji(dailyGanji)}입니다. 오늘의 천간 ${renderElementGlyph(dailyStem)}과 지지 ${renderElementGlyph(dailyBranch)}를 원국과 대입해 하루의 행동 포인트를 봅니다.` : "오늘 일진을 원국과 대입해 하루의 행동 포인트를 봅니다."],
-        ["6. 계약·매매", "계약일은 재성, 인수, 관성이 함께 움직이는 날을 우선 봅니다. 무료에서는 원리만 열고 실제 날짜 선택은 상담 또는 유료 분석으로 연결됩니다."],
-        ["7. 취업·직업", "취업은 세운과 월운에서 관성·인성·재성이 어떻게 작동하는지 봅니다. 무료에서는 올해 방향성만 먼저 확인합니다."],
-        ["8. 시험·합격", "시험은 인성과 관성의 흐름, 발표일의 일진을 함께 봅니다. 무료에서는 준비 리듬과 주의할 기운을 중심으로 안내합니다."],
-        ["9. 결혼·관계", "결혼 시기는 배우자궁, 관성/재성, 세운·월운의 합충을 함께 봅니다. 무료에서는 관계의 큰 온도만 열어둡니다."],
-        ["10. 택일", "택일은 목적에 따라 기준이 달라집니다. 결혼, 이사, 계약, 수술, 동업은 서로 보는 글자와 피해야 할 충이 다릅니다."],
-        ["11. 소송·분쟁", "소송은 관성과 인성, 재성의 합이 되는 흐름과 충돌이 커지는 흐름을 나누어 봅니다. 무료에서는 단정하지 않고 주의 방향만 안내합니다."],
-        ["12. 궁합·동업", "상대방의 사주가 함께 필요합니다. 궁합과 동업은 중첩되는 월운과 서로의 원국 충합을 함께 봅니다."],
+        ["1. 원국", `${name}님의 원국은 년주 ${renderGanji(pillars.year)}, 월주 ${renderGanji(pillars.month)}, 일주 ${renderGanji(pillars.day)}, 시주 ${renderGanji(pillars.hour)}입니다. 일간 ${renderElementGlyph(dayGan)}을 중심에 두고 월지 ${renderElementGlyph(monthJi)}가 만든 계절과 환경을 먼저 봅니다. 연간 ${renderElementGlyph(yearGan)}은 바깥에서 보이는 첫 인상, 시지 ${renderElementGlyph(hourJi)}는 앞으로 꺼내 쓸 가능성으로 읽습니다.`],
+        ["2. 계절과 강약", `현재 원국에서 가장 두드러지는 기운은 ${strongElement}, 보강이 필요한 기운은 ${weakElement} 쪽입니다. 강한 기운은 장점이지만 과하면 말투, 속도, 관계 반응에서 오해가 생길 수 있습니다. 무료에서는 큰 방향을 먼저 잡고, 심화 리포트에서는 십성과 지장간으로 왜 그런 반응이 생기는지 풉니다.`],
+        ["3. 지장간 힌트", `${hiddenHint}. 숨은 기운은 겉으로 바로 보이지 않지만 돈, 직업, 관계, 선택 습관에 실제로 영향을 줍니다. 무료에서는 원국 안에 어떤 보조 카드가 숨어 있는지만 보여주고, 심화에서는 이 기운이 어느 대운·세운에서 켜지는지 연결합니다.`],
+        ["4. 대운", "대운은 10년 단위로 삶의 배경이 바뀌는 흐름입니다. 무료에서는 대운 시작 정보와 큰 방향만 보여드립니다. 직업을 바꿔도 되는지, 사업을 키워도 되는지, 관계의 흐름이 언제 바뀌는지는 대운과 원국을 함께 대입해야 정확도가 올라갑니다."],
+        ["5. 세운", firstYearLuck ? `${firstYearLuck.year}년 ${renderGanji(firstYearLuck.ganji)} 세운은 ${firstYearLuck.theme} 쪽으로 먼저 움직입니다. 세운은 올해 어떤 일이 사건으로 올라오기 쉬운지를 보는 기준입니다. 무료에서는 올해의 첫 인상만 열고, 심화에서는 월운과 실제 선택지까지 연결합니다.` : "세운은 올해 실제 사건으로 올라오기 쉬운 기운입니다. 무료에서는 올해의 첫 인상을 먼저 보여드립니다."],
+        ["6. 월운과 일진", dailyGanji ? `월운은 세운 안에서 실제 상황이 열리는 달의 흐름이고, 오늘 ${dailyLuck.date}의 일진은 ${renderGanji(dailyGanji)}입니다. 오늘의 천간 ${renderElementGlyph(dailyStem)}과 지지 ${renderElementGlyph(dailyBranch)}를 원국에 대입해 말, 연락, 계약, 이동, 집중 방향을 잡습니다.` : "월운은 세운 안에서 실제 상황이 열리는 달의 흐름이고, 일진은 하루 단위로 원국에 들어오는 기운입니다."],
+        ["7. 날짜 판단", "계약·매매·취업·시험·발표·결혼·택일·소송·궁합·동업은 같은 방식으로 보지 않습니다. 목적에 따라 재성, 관성, 인성, 식상, 일지, 월지, 합충형파를 다르게 봅니다. 무료에서는 기준을 보여주고, 실제 날짜 후보가 있을 때 심화 질문에서 더 구체적으로 판단합니다."],
       ];
 
       return `
         <section class="box">
-          <p class="eyebrow">무료 분석 순서</p>
-          <h2 class="section-title">${name}님의 무료 분석 흐름</h2>
-          <p class="small">무료 리포트에서도 원국, 대운, 세운, 오늘 일진까지 먼저 열어드립니다. 계약·취업·시험·결혼·택일처럼 날짜 판단이 필요한 항목은 기준을 보여주고, 세밀한 월운·택일은 심화 분석으로 이어집니다.</p>
-          <div class="reading-grid">
+          <p class="eyebrow">무료 핵심 리포트</p>
+          <h2 class="section-title">${name}님의 사주 구조 정리</h2>
+          <p class="small">무료 리포트는 한눈에 읽히도록 원국, 계절, 지장간 힌트, 대운, 세운, 월운·일진, 날짜 판단 기준 순서로 정리했습니다. 결론을 단정하기보다 “어떤 기준으로 봐야 하는지”를 먼저 보여드립니다.</p>
+          <ol class="free-report-flow">
             ${items.map(([title, body]) => `
-              <article class="reading-card">
+              <li>
                 <strong>${title}</strong>
                 <p>${body}</p>
-              </article>
+              </li>
             `).join("")}
-          </div>
+          </ol>
         </section>
       `;
     }
@@ -5175,14 +5204,11 @@
         const previewHTML = `
           <section class="box">
             <h2 class="section-title">${name}님의 무료 전장 리포트</h2>
-            <p>무료 결과에서는 원국 구성과 일간 캐릭터까지만 먼저 공개합니다. 지장간 아이템 분석부터는 유료 리포트에서 깊게 열립니다.</p>
+            <p>무료 결과에서는 원국 구조, 계절과 강약, 지장간 힌트, 대운·세운·일진의 기본 방향까지 정리합니다. 날짜 선택과 세밀한 월운 판단은 프리미엄 질문에서 이어서 볼 수 있습니다.</p>
           </section>
           ${renderPillars(data.pillars)}
-          ${renderFreeIntroCards(name, data.pillars)}
-          ${renderFreePreviewGuide(name, data.pillars, data.sewoon)}
-          ${renderFreeMethodChecklist(name, data.pillars, data.sewoon, data.dailyLuck)}
+          ${renderFreeStructuredReport(name, data.pillars, data.sewoon, data.dailyLuck)}
           ${renderFreeDailyLuckCard(name, data.pillars, data.dailyLuck)}
-          ${renderFreeReadingCards(name, data.pillars, data.sewoon)}
           ${renderPaidLockFromJijanggan(name)}
         `;
 

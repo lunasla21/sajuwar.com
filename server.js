@@ -125,6 +125,28 @@ function getPrivateRulesGuidance() {
   ].join("\n");
 }
 
+function getReconstructedReadingGuidance() {
+  let reading = String(process.env.SAJUWAR_RECONSTRUCTED_READING || "").trim();
+  const readingPath = String(process.env.SAJUWAR_RECONSTRUCTED_READING_PATH || "").trim();
+  if (!reading && readingPath) {
+    try {
+      reading = fs.readFileSync(readingPath, "utf8").trim();
+    } catch (error) {
+      console.error("재구성 풀이 자료 로드 실패:", error.message);
+    }
+  }
+  if (!reading) return null;
+  return [
+    "[비공개 재구성 풀이 스타일]",
+    "아래 자료는 답변의 해석 깊이, 문단 흐름, 상담 어조, 판단 순서를 학습하기 위한 내부 스타일 기준이다.",
+    "절대 원문, 예시 문장, 제목, 내부 자료의 존재를 고객 답변에 직접 출력하지 않는다.",
+    "고객의 실제 원국과 질문에 맞게 새로 해석하고, 복사나 요약처럼 보이지 않게 자연스럽게 재작성한다.",
+    "디버그, 리포트, 후속 질문 답변, 오류 메시지에 이 자료의 원문을 노출하지 않는다.",
+    "",
+    reading,
+  ].join("\n");
+}
+
 function isDeveloperPreviewRequest(req) {
   if (!developerModeEnabled) return false;
   const providedKey =
@@ -1017,6 +1039,7 @@ SAJUWAR 해석 원칙:
     let report = "";
     let gptFallbackReason = "";
     const privateRulesGuidance = getPrivateRulesGuidance();
+    const reconstructedReadingGuidance = getReconstructedReadingGuidance();
 
     try {
       const completion = await createChatCompletionWithTimeout({
@@ -1033,6 +1056,7 @@ SAJUWAR 해석 원칙:
               "Authoritative generation order: Master Rule -> Decision Priority -> Golden Brain Case -> Consultation Strategy -> Action Strategy -> Language Style -> Evidence -> Review Dataset -> Customer Information. This order overrides any legacy priority text. Paid reports and Developer Mode previews must share this same AI Brain prompt context. Write in SAJUWAR saju-philosophy style, not generic self-help prose. Every numbered chapter must be at least 2000 Korean characters excluding spaces and must follow saju evidence -> philosophical meaning -> realistic manifestation -> next action -> cautions -> counselor closing line. Reduce repeated '입니다'. Prefer saju-grounded interpretation over random examples. Use 전장/군단/스위치/아이템 only 2-3 times total. Include at least three sentences that make the customer feel '맞아.' End each chapter with one counselor-style advice line. End the whole report with a concrete action instruction.",
           },
           ...(privateRulesGuidance ? [{ role: "system", content: privateRulesGuidance }] : []),
+          ...(reconstructedReadingGuidance ? [{ role: "system", content: reconstructedReadingGuidance }] : []),
           {
             role: "user",
             content: prompt,
@@ -1054,6 +1078,7 @@ SAJUWAR 해석 원칙:
                 "너는 SAJUWAR 명리 논리로 프리미엄 유료 사주 리포트를 확장하는 편집자다. 기존 리포트의 사주 판단은 유지하되, 짧은 챕터를 대폭 확장한다. 모든 번호 제목은 유지하고, 각 제목 본문은 공백 제외 최소 2000자 이상이어야 한다. 각 챕터는 반드시 사주 근거(음양, 오행, 천간, 지지, 지장간, 십성적 관계, 계절감, 월지, 대운, 세운) -> 철학적 의미 -> 현실 적용 -> 주의점 -> 실천법 순서로 확장한다. 고객 정보에 없는 이상한 가상 사례나 자기계발식 예시는 금지한다.",
             },
             ...(privateRulesGuidance ? [{ role: "system", content: privateRulesGuidance }] : []),
+            ...(reconstructedReadingGuidance ? [{ role: "system", content: reconstructedReadingGuidance }] : []),
             {
               role: "user",
               content: [
@@ -1328,6 +1353,7 @@ async function buildPremiumReportQuestionReply(user, payload = {}) {
   }
   if (!client) return fallbackPremiumReportQuestionReply(payload);
   const privateRulesGuidance = getPrivateRulesGuidance();
+  const reconstructedReadingGuidance = getReconstructedReadingGuidance();
   const completion = await createChatCompletionWithTimeout({
     model: process.env.SAJUWAR_CHAT_MODEL || "gpt-4o-mini",
     messages: [
@@ -1345,6 +1371,7 @@ async function buildPremiumReportQuestionReply(user, payload = {}) {
         ].join("\n"),
       },
       ...(privateRulesGuidance ? [{ role: "system", content: privateRulesGuidance }] : []),
+      ...(reconstructedReadingGuidance ? [{ role: "system", content: reconstructedReadingGuidance }] : []),
       {
         role: "user",
         content: JSON.stringify({
@@ -1467,6 +1494,7 @@ async function buildStrategyReply(user, state, message) {
   const weapon = state.weapon || {};
   const chart = buildStrategyRoomChart(profile);
   const privateRulesGuidance = getPrivateRulesGuidance();
+  const reconstructedReadingGuidance = getReconstructedReadingGuidance();
   const completion = await createChatCompletionWithTimeout({
     model: process.env.SAJUWAR_CHAT_MODEL || "gpt-4o-mini",
     messages: [
@@ -1487,6 +1515,7 @@ async function buildStrategyReply(user, state, message) {
           ].join("\n"),
       },
       ...(privateRulesGuidance ? [{ role: "system", content: privateRulesGuidance }] : []),
+      ...(reconstructedReadingGuidance ? [{ role: "system", content: reconstructedReadingGuidance }] : []),
       {
         role: "user",
         content: JSON.stringify({
