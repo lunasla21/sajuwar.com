@@ -3177,6 +3177,35 @@
         display: none;
       }
 
+      #report .guide-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 14px !important;
+      }
+
+      #report .guide-card {
+        min-height: 66px;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 12px;
+        background:
+          linear-gradient(135deg, rgba(255, 154, 61, 0.13), transparent 44%),
+          linear-gradient(180deg, rgba(15, 32, 49, 0.94), rgba(8, 17, 31, 0.97));
+        border-color: rgba(255, 154, 61, 0.28);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      #report .guide-card strong {
+        margin-bottom: 0;
+        font-size: 14px;
+        line-height: 1.24;
+      }
+
+      #report .guide-card p {
+        display: none;
+      }
+
       #consulting .premium-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
