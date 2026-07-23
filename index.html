@@ -3118,6 +3118,64 @@
       .mini-row { grid-template-columns: 1fr; }
       .daily-luck-header { grid-template-columns: 1fr; }
       .daily-luck-seal { width: 74px; height: 74px; font-size: 25px; }
+
+      #content-map .section-head {
+        margin-bottom: 14px;
+      }
+
+      #content-map .section-head h2 {
+        font-size: 32px;
+      }
+
+      #content-map .section-head p:last-child {
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      #content-map .grid3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      #content-map .menu-link {
+        min-height: 74px;
+        grid-template-columns: 34px minmax(0, 1fr);
+        grid-template-areas:
+          "icon tag"
+          "icon title";
+        gap: 3px 9px;
+        align-items: center;
+        padding: 9px;
+        border-radius: 12px;
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      #content-map .menu-art,
+      #content-map .menu-art i {
+        width: 34px;
+        height: 34px;
+        font-size: 10px;
+      }
+
+      #content-map .menu-art {
+        margin: 0;
+      }
+
+      #content-map .menu-kicker {
+        padding: 2px 7px;
+        font-size: 10px;
+      }
+
+      #content-map .menu-link h3 {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.22;
+      }
+
+      #content-map .menu-link p,
+      #content-map .menu-link::after {
+        display: none;
+      }
     }
   </style>
 </head>
