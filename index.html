@@ -3061,6 +3061,38 @@
       line-height: 1.28;
     }
 
+    /* Baseline readability boost for older mobile visitors. */
+    p,
+    li,
+    label,
+    .small,
+    .lead,
+    .card p,
+    .guide-card p,
+    .reading-card p,
+    .premium-item p,
+    .fortune-result p,
+    .fortune-result li {
+      color: #fff0cf;
+      font-size: 16px;
+      line-height: 1.76;
+    }
+
+    .small {
+      font-size: 16px;
+    }
+
+    .box,
+    .card,
+    .panel,
+    .guide-card,
+    .reading-card,
+    .premium-item,
+    .fortune-result,
+    .paid-lock-card {
+      border-color: rgba(249, 215, 126, 0.3);
+    }
+
     .readability-toggle {
       flex: 0 0 auto;
       min-height: 38px;
@@ -3086,7 +3118,7 @@
 
     body.readability-mode {
       color: #fff8e6;
-      font-size: 17px;
+      font-size: 18px;
       line-height: 1.78;
     }
 
@@ -3117,7 +3149,7 @@
     body.readability-mode .fortune-result p,
     body.readability-mode .fortune-result li {
       color: #fff3d7;
-      font-size: 17px;
+      font-size: 18px;
       line-height: 1.82;
     }
 
@@ -6302,8 +6334,9 @@
     }
 
     if (readabilityToggle) {
-      const savedReadabilityMode = localStorage.getItem("sajuwar_readability_mode") === "true";
-      setReadabilityMode(savedReadabilityMode);
+      const savedReadabilityMode = localStorage.getItem("sajuwar_readability_mode");
+      const shouldEnableReadabilityMode = savedReadabilityMode === null || savedReadabilityMode === "true";
+      setReadabilityMode(shouldEnableReadabilityMode);
       readabilityToggle.addEventListener("click", () => {
         const enabled = !document.body.classList.contains("readability-mode");
         setReadabilityMode(enabled);
