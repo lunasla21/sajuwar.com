@@ -3202,6 +3202,172 @@
       </div>
     </main>
 
+    <section class="content-band" id="choice-consult">
+      <div class="section-head">
+        <p class="eyebrow">맞춤 사주 상담</p>
+        <h2>선택에 따라 답이 달라지는 사주 상담 툴</h2>
+        <p>같은 사주라도 고민이 직업인지, 돈인지, 관계인지에 따라 봐야 할 육친과 운이 달라집니다. 지금 상황과 선택지를 고르면 무료로 1차 방향을 정리하고, 마지막 핵심 판단은 유료 리포트에서 이어집니다.</p>
+      </div>
+
+      <div class="grid2">
+        <article class="box">
+          <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>선택</i></div>
+          <h2 class="section-title">내 선택지 넣기</h2>
+          <p class="small">생년월일과 현실 선택지를 넣으면 원국의 강한 기운, 부족한 기운, 지금 봐야 할 상담 축을 기준으로 답을 다르게 보여드립니다.</p>
+          <div class="mini-form">
+            <div class="mini-row">
+              <label>
+                이름
+                <input id="choiceName" placeholder="이름" />
+              </label>
+              <label>
+                생년월일
+                <input id="choiceBirth" type="date" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                태어난 시간
+                <input id="choiceTime" type="time" />
+              </label>
+              <label>
+                상담 주제
+                <select id="choiceTopic">
+                  <option value="career">직업·이직</option>
+                  <option value="money">재물·투자</option>
+                  <option value="relationship">연애·관계</option>
+                  <option value="business">사업·확장</option>
+                  <option value="study">공부·시험</option>
+                </select>
+              </label>
+            </div>
+            <label>
+              현재 선택지
+              <select id="choiceOption">
+                <option value="start">새로 시작한다</option>
+                <option value="hold">현재 흐름을 유지한다</option>
+                <option value="stop">정리하거나 멈춘다</option>
+                <option value="wait">시기를 보고 기다린다</option>
+              </select>
+            </label>
+            <label>
+              가장 큰 고민
+              <input id="choiceMemo" placeholder="예: 이직할지 버틸지, 투자할지 말지, 연락할지 말지" />
+            </label>
+            <button type="button" onclick="makeChoiceConsultation()">맞춤 상담 보기</button>
+          </div>
+        </article>
+
+        <article class="box">
+          <h2 class="section-title">선택형 상담 결과</h2>
+          <p class="small">무료 결과는 방향을 잡는 용도입니다. 실제 결론은 원국, 대운, 세운, 월운이 같은 방향을 보는지 확인해야 합니다.</p>
+          <div class="fortune-result" id="choiceConsultResult">
+            <h3>맞춤 상담 대기 중</h3>
+            <p class="small">정보를 넣으면 선택지별 1차 풀이와 유료에서 확인할 핵심 포인트가 나옵니다.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-band" id="consulting">
+      <div class="section-head">
+        <p class="eyebrow">상담 신청</p>
+        <h2>세운·월운까지 묻는 쭈쌤 사주 상담</h2>
+        <p>프리미엄 리포트보다 더 자세한 내용이 필요하면 상담 신청서를 먼저 정리해보세요. 직업, 재물, 관계, 궁합, 작명, 강의 문의까지 한 번에 적을 수 있습니다.</p>
+      </div>
+
+      <div class="grid2">
+        <article class="box">
+          <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>상담</i></div>
+          <h2 class="section-title">사주 상담 신청서</h2>
+          <p class="small">내 사주의 원국 구조와 대운·세운 타이밍을 중심으로 상담 주제를 정리합니다.</p>
+          <div class="mini-form">
+            <div class="mini-row">
+              <label>
+                신청자
+                <input id="consultName" placeholder="신청자 이름" />
+              </label>
+              <label>
+                연락처
+                <input id="consultContact" placeholder="휴대폰 또는 이메일" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                생년월일
+                <input id="consultBirth" type="date" />
+              </label>
+              <label>
+                태어난 시간
+                <input id="consultTime" type="time" />
+              </label>
+            </div>
+            <div class="mini-row">
+              <label>
+                상담 주제
+                <select id="consultTopic">
+                  <option value="세운·월운 타이밍">세운·월운 타이밍</option>
+                  <option value="직업·사업 방향">직업·사업 방향</option>
+                  <option value="재물·돈 흐름">재물·돈 흐름</option>
+                  <option value="연애·궁합">연애·궁합</option>
+                  <option value="작명·개명">작명·개명</option>
+                  <option value="사주강의·교육">사주강의·교육</option>
+                </select>
+              </label>
+              <label>
+                보고 싶은 시기
+                <input id="consultPeriod" placeholder="예: 2026년 7월, 하반기, 올해" />
+              </label>
+            </div>
+            <label>
+              상담 메모
+              <input id="consultMemo" placeholder="궁금한 상황, 고민, 원하는 상담 방향" />
+            </label>
+            <button type="button" onclick="makeConsultApplication()">상담 신청서 만들기</button>
+          </div>
+        </article>
+
+        <article class="box">
+          <h2 class="section-title">상담에서 깊게 보는 것</h2>
+          <p class="small">무료 운세는 입구이고, 상담은 실제 선택을 위한 지도입니다. 어떤 달에 움직일지, 무엇을 조심해야 하는지까지 구체적으로 봅니다.</p>
+          <div class="premium-grid">
+            <article class="premium-item">
+              <span>세운</span>
+              <div>
+                <strong>올해의 큰 흐름</strong>
+                <p>올해 어떤 사건과 기회가 열리는지 봅니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>월운</span>
+              <div>
+                <strong>움직일 달</strong>
+                <p>어느 월에 시작, 계약, 관계, 돈 흐름이 유리한지 봅니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>원국</span>
+              <div>
+                <strong>내 사주의 보완점</strong>
+                <p>부족한 오행과 과한 기운을 조절하는 행동을 찾습니다.</p>
+              </div>
+            </article>
+            <article class="premium-item">
+              <span>연결</span>
+              <div>
+                <strong>강의·궁합·작명</strong>
+                <p>필요한 경우 교육, 궁합, 작명 방향까지 이어갑니다.</p>
+              </div>
+            </article>
+          </div>
+          <div class="fortune-result" id="consultResult">
+            <h3>상담 신청 대기 중</h3>
+            <p class="small">신청서를 만들면 상담에 필요한 핵심 정보가 정리됩니다.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section class="content-band" id="content-map">
       <div class="section-head">
         <p class="eyebrow">메뉴</p>
@@ -3558,172 +3724,6 @@
           <div class="fortune-result" id="paidMatchResult">
             <h3>유료 궁합 신청 대기 중</h3>
             <p class="small">신청서를 만들면 상담/결제 연결에 필요한 핵심 정보가 정리됩니다.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="content-band" id="choice-consult">
-      <div class="section-head">
-        <p class="eyebrow">맞춤 사주 상담</p>
-        <h2>선택에 따라 답이 달라지는 사주 상담 툴</h2>
-        <p>같은 사주라도 고민이 직업인지, 돈인지, 관계인지에 따라 봐야 할 육친과 운이 달라집니다. 지금 상황과 선택지를 고르면 무료로 1차 방향을 정리하고, 마지막 핵심 판단은 유료 리포트에서 이어집니다.</p>
-      </div>
-
-      <div class="grid2">
-        <article class="box">
-          <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>선택</i></div>
-          <h2 class="section-title">내 선택지 넣기</h2>
-          <p class="small">생년월일과 현실 선택지를 넣으면 원국의 강한 기운, 부족한 기운, 지금 봐야 할 상담 축을 기준으로 답을 다르게 보여드립니다.</p>
-          <div class="mini-form">
-            <div class="mini-row">
-              <label>
-                이름
-                <input id="choiceName" placeholder="이름" />
-              </label>
-              <label>
-                생년월일
-                <input id="choiceBirth" type="date" />
-              </label>
-            </div>
-            <div class="mini-row">
-              <label>
-                태어난 시간
-                <input id="choiceTime" type="time" />
-              </label>
-              <label>
-                상담 주제
-                <select id="choiceTopic">
-                  <option value="career">직업·이직</option>
-                  <option value="money">재물·투자</option>
-                  <option value="relationship">연애·관계</option>
-                  <option value="business">사업·확장</option>
-                  <option value="study">공부·시험</option>
-                </select>
-              </label>
-            </div>
-            <label>
-              현재 선택지
-              <select id="choiceOption">
-                <option value="start">새로 시작한다</option>
-                <option value="hold">현재 흐름을 유지한다</option>
-                <option value="stop">정리하거나 멈춘다</option>
-                <option value="wait">시기를 보고 기다린다</option>
-              </select>
-            </label>
-            <label>
-              가장 큰 고민
-              <input id="choiceMemo" placeholder="예: 이직할지 버틸지, 투자할지 말지, 연락할지 말지" />
-            </label>
-            <button type="button" onclick="makeChoiceConsultation()">맞춤 상담 보기</button>
-          </div>
-        </article>
-
-        <article class="box">
-          <h2 class="section-title">선택형 상담 결과</h2>
-          <p class="small">무료 결과는 방향을 잡는 용도입니다. 실제 결론은 원국, 대운, 세운, 월운이 같은 방향을 보는지 확인해야 합니다.</p>
-          <div class="fortune-result" id="choiceConsultResult">
-            <h3>맞춤 상담 대기 중</h3>
-            <p class="small">정보를 넣으면 선택지별 1차 풀이와 유료에서 확인할 핵심 포인트가 나옵니다.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="content-band" id="consulting">
-      <div class="section-head">
-        <p class="eyebrow">상담 신청</p>
-        <h2>세운·월운까지 묻는 쭈쌤 사주 상담</h2>
-        <p>프리미엄 리포트보다 더 자세한 내용이 필요하면 상담 신청서를 먼저 정리해보세요. 직업, 재물, 관계, 궁합, 작명, 강의 문의까지 한 번에 적을 수 있습니다.</p>
-      </div>
-
-      <div class="grid2">
-        <article class="box">
-          <div class="free-card-art free-art-daily photo-art" aria-hidden="true"><i>상담</i></div>
-          <h2 class="section-title">사주 상담 신청서</h2>
-          <p class="small">내 사주의 원국 구조와 대운·세운 타이밍을 중심으로 상담 주제를 정리합니다.</p>
-          <div class="mini-form">
-            <div class="mini-row">
-              <label>
-                신청자
-                <input id="consultName" placeholder="신청자 이름" />
-              </label>
-              <label>
-                연락처
-                <input id="consultContact" placeholder="휴대폰 또는 이메일" />
-              </label>
-            </div>
-            <div class="mini-row">
-              <label>
-                생년월일
-                <input id="consultBirth" type="date" />
-              </label>
-              <label>
-                태어난 시간
-                <input id="consultTime" type="time" />
-              </label>
-            </div>
-            <div class="mini-row">
-              <label>
-                상담 주제
-                <select id="consultTopic">
-                  <option value="세운·월운 타이밍">세운·월운 타이밍</option>
-                  <option value="직업·사업 방향">직업·사업 방향</option>
-                  <option value="재물·돈 흐름">재물·돈 흐름</option>
-                  <option value="연애·궁합">연애·궁합</option>
-                  <option value="작명·개명">작명·개명</option>
-                  <option value="사주강의·교육">사주강의·교육</option>
-                </select>
-              </label>
-              <label>
-                보고 싶은 시기
-                <input id="consultPeriod" placeholder="예: 2026년 7월, 하반기, 올해" />
-              </label>
-            </div>
-            <label>
-              상담 메모
-              <input id="consultMemo" placeholder="궁금한 상황, 고민, 원하는 상담 방향" />
-            </label>
-            <button type="button" onclick="makeConsultApplication()">상담 신청서 만들기</button>
-          </div>
-        </article>
-
-        <article class="box">
-          <h2 class="section-title">상담에서 깊게 보는 것</h2>
-          <p class="small">무료 운세는 입구이고, 상담은 실제 선택을 위한 지도입니다. 어떤 달에 움직일지, 무엇을 조심해야 하는지까지 구체적으로 봅니다.</p>
-          <div class="premium-grid">
-            <article class="premium-item">
-              <span>세운</span>
-              <div>
-                <strong>올해의 큰 흐름</strong>
-                <p>올해 어떤 사건과 기회가 열리는지 봅니다.</p>
-              </div>
-            </article>
-            <article class="premium-item">
-              <span>월운</span>
-              <div>
-                <strong>움직일 달</strong>
-                <p>어느 월에 시작, 계약, 관계, 돈 흐름이 유리한지 봅니다.</p>
-              </div>
-            </article>
-            <article class="premium-item">
-              <span>원국</span>
-              <div>
-                <strong>내 사주의 보완점</strong>
-                <p>부족한 오행과 과한 기운을 조절하는 행동을 찾습니다.</p>
-              </div>
-            </article>
-            <article class="premium-item">
-              <span>연결</span>
-              <div>
-                <strong>강의·궁합·작명</strong>
-                <p>필요한 경우 교육, 궁합, 작명 방향까지 이어갑니다.</p>
-              </div>
-            </article>
-          </div>
-          <div class="fortune-result" id="consultResult">
-            <h3>상담 신청 대기 중</h3>
-            <p class="small">신청서를 만들면 상담에 필요한 핵심 정보가 정리됩니다.</p>
           </div>
         </article>
       </div>
