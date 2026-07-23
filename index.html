@@ -3176,6 +3176,57 @@
       #content-map .menu-link::after {
         display: none;
       }
+
+      #consulting .premium-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin: 14px 0;
+      }
+
+      #consulting .premium-item {
+        min-height: 76px;
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 8px;
+        align-items: center;
+        padding: 10px;
+        border-radius: 12px;
+        background:
+          linear-gradient(135deg, rgba(0, 197, 154, 0.13), transparent 44%),
+          linear-gradient(180deg, rgba(15, 32, 49, 0.95), rgba(8, 17, 31, 0.97));
+        border-color: rgba(0, 197, 154, 0.28);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      #consulting .premium-item span {
+        width: 34px;
+        height: 34px;
+        font-size: 10px;
+      }
+
+      #consulting .premium-item strong {
+        font-size: 14px;
+        line-height: 1.24;
+      }
+
+      #consulting .premium-item p {
+        display: none;
+      }
+
+      #consulting #consultResult {
+        min-height: auto;
+        padding: 14px;
+        border-radius: 12px;
+      }
+
+      #consulting #consultResult h3 {
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      #consulting #consultResult p {
+        font-size: 13px;
+        line-height: 1.55;
+      }
     }
   </style>
 </head>
