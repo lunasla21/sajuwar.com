@@ -4509,6 +4509,7 @@
     let lastFullResult = "";
     let lastPremiumContext = null;
     let loadingTimer = null;
+    let paidEntryMode = false;
     const accessParams = new URLSearchParams(window.location.search);
     const accessToken = accessParams.get("token") || localStorage.getItem("sajuwar_auth_token") || "";
 
@@ -4701,11 +4702,60 @@
     fillOptions();
     initDeveloperPreviewMode();
     refreshPurchaseAccess().then(() => {
-      if (accessParams.get("paid") === "1" && !canViewPaidReport()) {
+      if (accessParams.get("paid") !== "1") return;
+      if (!canViewPaidReport()) {
         const result = document.getElementById("result");
         if (result) result.innerHTML = renderPurchaseRequiredMessage();
+        return;
+      }
+      paidEntryMode = true;
+      const savedProfile = getSavedSajuProfile();
+      if (savedProfile && applySavedSajuProfile(savedProfile)) {
+        analyze(true);
+      } else {
+        showPaidEntryForm();
       }
     });
+
+    function getSavedSajuProfile() {
+      try {
+        return JSON.parse(localStorage.getItem("sajuwar_last_profile") || "null");
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function applySavedSajuProfile(profile) {
+      const [year, month, day] = String(profile?.birth || "").split("-");
+      const [hour, minute] = String(profile?.time || "").split(":");
+      if (!profile?.name || !year || !month || !day || !profile?.gender) return false;
+      document.getElementById("name").value = profile.name;
+      document.getElementById("year").value = year;
+      document.getElementById("month").value = month;
+      document.getElementById("day").value = day;
+      document.getElementById("calendarType").value = profile.calendarType || "solar";
+      document.getElementById("gender").value = profile.gender;
+      document.getElementById("timeUnknown").checked = Boolean(profile.timeUnknown);
+      document.getElementById("hour").value = hour || "12";
+      document.getElementById("minute").value = minute || "00";
+      document.getElementById("hour").disabled = Boolean(profile.timeUnknown);
+      document.getElementById("minute").disabled = Boolean(profile.timeUnknown);
+      return true;
+    }
+
+    function showPaidEntryForm() {
+      const form = document.getElementById("sajuForm");
+      if (!document.getElementById("paidAccessNotice")) {
+        form.insertAdjacentHTML("afterbegin", `
+          <div class="paid-access-notice" id="paidAccessNotice">
+            <strong>구매 확인 완료</strong>
+            <p>결제를 다시 할 필요가 없습니다. 리포트에 사용할 사주 정보만 입력하면 구매한 전체 리포트가 바로 열립니다.</p>
+          </div>
+        `);
+      }
+      form.querySelector('button[type="submit"]').textContent = "구매한 전체 리포트 바로 열기 →";
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
 
     async function initDeveloperPreviewMode() {
       const params = new URLSearchParams(window.location.search);
@@ -5993,7 +6043,14 @@
     async function openPaidReport() {
       await refreshPurchaseAccess();
       if (canViewPaidReport()) {
-        analyze(true);
+        paidEntryMode = true;
+        const savedProfile = getSavedSajuProfile();
+        if (savedProfile) applySavedSajuProfile(savedProfile);
+        if (document.getElementById("name").value.trim()) {
+          analyze(true);
+        } else {
+          showPaidEntryForm();
+        }
         return;
       }
       const result = document.getElementById("result");
@@ -6547,6 +6604,15 @@
         return;
       }
 
+      localStorage.setItem("sajuwar_last_profile", JSON.stringify({
+        name,
+        calendarType,
+        birth: `${year}-${pad(month)}-${pad(day)}`,
+        time: `${pad(hour)}:${pad(minute)}`,
+        timeUnknown,
+        gender,
+      }));
+
       const seed = simpleHash(`${name}${birth}${time}${topic}${option}${memo}`);
       const element = pick(["목", "화", "토", "금", "수"], seed);
       const topicMap = {
@@ -6763,7 +6829,7 @@
 
     document.getElementById("sajuForm").addEventListener("submit", (event) => {
       event.preventDefault();
-      analyze();
+      analyze(paidEntryMode && canViewPaidReport());
     });
 
     const timeUnknownToggle = document.getElementById("timeUnknown");

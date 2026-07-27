@@ -32,6 +32,25 @@ const bankAccount = {
 const orderStore = createOrderStore(__dirname);
 const userStore = createUserStore(__dirname);
 const strategyStore = createStrategyStore(__dirname);
+
+async function notifyAdmin(event, payload = {}) {
+  const webhookUrl = String(process.env.SAJUWAR_ORDER_WEBHOOK_URL || "").trim();
+  if (!webhookUrl) return;
+  try {
+    await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        service: "SAJU WAR",
+        event,
+        occurred_at: new Date().toISOString(),
+        ...payload,
+      }),
+    });
+  } catch (error) {
+    console.error("SAJUWAR admin notification failed:", error.message);
+  }
+}
 const PURCHASE_REQUIRED_MESSAGE = "구매가 완료되지 않았습니다.\n관리자 확인 후 이용 가능합니다.";
 
 app.use(cors());
@@ -1264,6 +1283,14 @@ app.post("/api/orders/bank-transfer", (req, res) => {
       email: user.email,
       phone: user.phone,
     });
+    void notifyAdmin("order_created", {
+      order_id: order.id,
+      product_name: order.product_name,
+      amount: order.amount,
+      user_name: order.user_name,
+      email: order.email,
+      phone: order.phone,
+    });
     res.json({ order, bankAccount });
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message, order: error.order });
@@ -1276,6 +1303,15 @@ app.post("/api/orders/:id/deposit-complete", (req, res) => {
     if (!user) return;
     const order = orderStore.markDepositWaiting(req.params.id, req.body?.depositor_name, user.id);
     if (!order) return res.status(404).json({ error: "order not found" });
+    void notifyAdmin("deposit_reported", {
+      order_id: order.id,
+      product_name: order.product_name,
+      amount: order.amount,
+      user_name: order.user_name,
+      depositor_name: order.depositor_name,
+      email: order.email,
+      phone: order.phone,
+    });
     res.json({ order });
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message });
@@ -1610,6 +1646,11 @@ app.get("/api/admin/orders", (req, res) => {
     purchase: purchases.find((purchase) => purchase.order_id === order.id) || null,
   }));
   res.json({ orders });
+});
+
+app.get("/api/admin/users", (req, res) => {
+  if (!requireAdmin(req, res)) return;
+  res.json({ users: userStore.listPublicUsers() });
 });
 
 app.post("/api/admin/orders/:id/confirm", (req, res) => {

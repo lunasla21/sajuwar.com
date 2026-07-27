@@ -39,7 +39,7 @@
     .secondary { border: 1px solid rgba(137,91,31,.28); color: #6d4310; background: #fffaf0; }
     .danger { color: #8a1d1d; border: 1px solid rgba(138,29,29,.22); background: #ffd6d6; }
     .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
-    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+    .stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
     .stat { padding: 14px; border: 1px solid rgba(113,80,44,.16); background: rgba(255,255,255,.78); }
     .stat strong { display: block; color: #8a5b12; font-size: 13px; }
     .stat b { display: block; margin-top: 4px; font-size: 24px; }
@@ -54,6 +54,11 @@
     .empty { padding: 30px; color: #705642; }
     .actions { display: flex; flex-wrap: wrap; gap: 6px; }
     .small { color: #705642; font-size: 12px; }
+    .admin-alert { display: none; margin-bottom: 14px; padding: 16px; color: #7a1c0b; border: 1px solid #e86a3e; background: #fff0e7; font-weight: 900; }
+    .admin-alert.show { display: block; }
+    .view-tabs { display: flex; gap: 8px; margin: 18px 0 12px; }
+    .view-tabs button.active { color: #fff; background: #b83a1e; }
+    .hidden { display: none !important; }
     @media (max-width: 760px) {
       header { align-items: flex-start; flex-direction: column; }
       .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -84,8 +89,17 @@
       <div class="stat"><strong>입금대기</strong><b id="statWaiting">0</b></div>
       <div class="stat"><strong>승인완료</strong><b id="statConfirmed">0</b></div>
       <div class="stat"><strong>총매출</strong><b id="statRevenue">0원</b></div>
+      <div class="stat"><strong>전체 회원</strong><b id="statUsers">0</b></div>
     </div>
 
+    <div class="admin-alert" id="adminAlert"></div>
+
+    <div class="view-tabs">
+      <button type="button" class="active" id="ordersTab" onclick="showView('orders')">주문·입금 알림</button>
+      <button type="button" class="secondary" id="usersTab" onclick="showView('users')">회원 목록</button>
+    </div>
+
+    <div id="ordersView">
     <div class="toolbar">
       <input id="searchKeyword" placeholder="주문번호, 이름, 이메일 검색" oninput="renderOrders()" />
       <select id="statusFilter" onchange="renderOrders()">
@@ -121,6 +135,30 @@
       </table>
       <div class="empty" id="empty">관리자 키를 입력하고 조회해주세요.</div>
     </div>
+    </div>
+
+    <div class="hidden" id="usersView">
+      <div class="toolbar">
+        <input id="userSearchKeyword" placeholder="회원 이름, 이메일, 연락처 검색" oninput="renderUsers()" />
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>가입일</th>
+              <th>회원명</th>
+              <th>이메일</th>
+              <th>연락처</th>
+              <th>주문 수</th>
+              <th>승인 상품</th>
+              <th>누적 결제</th>
+            </tr>
+          </thead>
+          <tbody id="usersBody"></tbody>
+        </table>
+        <div class="empty" id="usersEmpty">회원 정보를 불러오고 있습니다.</div>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -129,6 +167,7 @@
     const CANCELED = "\ucde8\uc18c";
     let adminKey = localStorage.getItem("sajuwar_admin_key") || "";
     let allOrders = [];
+    let allUsers = [];
     document.getElementById("adminKey").value = new URLSearchParams(location.search).get("adminKey") || adminKey;
 
     function formatMoney(value) { return `${Number(value || 0).toLocaleString("ko-KR")}원`; }
@@ -155,17 +194,21 @@
     }
     async function loadOrders() {
       if (!adminKey) return;
-      const response = await fetch("/api/admin/orders", {
-        headers: { "x-sajuwar-admin-key": adminKey }
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        alert(data.error || "관리자 인증에 실패했습니다.");
+      const headers = { "x-sajuwar-admin-key": adminKey };
+      const [ordersResponse, usersResponse] = await Promise.all([
+        fetch("/api/admin/orders", { headers }),
+        fetch("/api/admin/users", { headers }),
+      ]);
+      const [ordersData, usersData] = await Promise.all([ordersResponse.json(), usersResponse.json()]);
+      if (!ordersResponse.ok || !usersResponse.ok) {
+        alert(ordersData.error || usersData.error || "관리자 인증에 실패했습니다.");
         return;
       }
-      allOrders = data.orders || [];
+      allOrders = ordersData.orders || [];
+      allUsers = usersData.users || [];
       renderStats();
       renderOrders();
+      renderUsers();
     }
     function filteredOrders() {
       const keyword = document.getElementById("searchKeyword").value.trim().toLowerCase();
@@ -193,6 +236,43 @@
       document.getElementById("statWaiting").textContent = waitingCount;
       document.getElementById("statConfirmed").textContent = confirmedOrders.length;
       document.getElementById("statRevenue").textContent = formatMoney(revenue);
+      document.getElementById("statUsers").textContent = allUsers.length;
+      const alertBox = document.getElementById("adminAlert");
+      alertBox.classList.toggle("show", waitingCount > 0);
+      alertBox.textContent = waitingCount > 0
+        ? `새로운 입금 확인 요청이 ${waitingCount}건 있습니다. 주문 목록에서 입금자명과 신청자를 확인해주세요.`
+        : "";
+      document.title = waitingCount > 0 ? `(${waitingCount}) 입금 확인 필요 | SAJU WAR` : "입금확인 관리 | 쭈쌤의 사주 전쟁";
+    }
+    function showView(view) {
+      const usersOpen = view === "users";
+      document.getElementById("ordersView").classList.toggle("hidden", usersOpen);
+      document.getElementById("usersView").classList.toggle("hidden", !usersOpen);
+      document.getElementById("ordersTab").classList.toggle("active", !usersOpen);
+      document.getElementById("usersTab").classList.toggle("active", usersOpen);
+    }
+    function renderUsers() {
+      const keyword = document.getElementById("userSearchKeyword").value.trim().toLowerCase();
+      const users = allUsers
+        .filter((user) => !keyword || [user.name, user.email, user.phone].join(" ").toLowerCase().includes(keyword))
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      document.getElementById("usersEmpty").style.display = users.length ? "none" : "block";
+      document.getElementById("usersBody").innerHTML = users.map((user) => {
+        const orders = allOrders.filter((order) => order.user_id === user.id);
+        const confirmed = orders.filter((order) => order.status === CONFIRMED);
+        const revenue = confirmed.reduce((sum, order) => sum + Number(order.amount || 0), 0);
+        return `
+          <tr>
+            <td>${formatDate(user.created_at)}</td>
+            <td><strong>${escapeHtml(user.name)}</strong></td>
+            <td>${escapeHtml(user.email)}</td>
+            <td>${escapeHtml(user.phone)}</td>
+            <td>${orders.length}건</td>
+            <td>${confirmed.length}건</td>
+            <td>${formatMoney(revenue)}</td>
+          </tr>
+        `;
+      }).join("");
     }
     function renderOrders() {
       const orders = filteredOrders();
@@ -297,6 +377,9 @@
       URL.revokeObjectURL(url);
     }
     if (document.getElementById("adminKey").value) saveKeyAndLoad();
+    setInterval(() => {
+      if (adminKey && document.visibilityState === "visible") loadOrders();
+    }, 30000);
   </script>
 </body>
 </html>

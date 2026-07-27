@@ -130,7 +130,11 @@ function createUserStore(baseDir) {
     return changed;
   }
 
-  return { findByToken, login, logout, signup };
+  function listPublicUsers() {
+    return readUsers().map(publicUser);
+  }
+
+  return { findByToken, listPublicUsers, login, logout, signup };
 }
 
 module.exports = { createUserStore };

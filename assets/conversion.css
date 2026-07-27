@@ -127,6 +127,16 @@ body .birth-panel select:disabled { opacity: .42; }
 body .birth-panel .button-row { margin-top: 26px; }
 body .birth-panel .button-row button:first-child { width: 100%; min-height: 58px; color: #fff; background: linear-gradient(135deg,var(--sw-acid),var(--sw-orange)); box-shadow: 6px 6px 0 rgba(255,255,255,.1); }
 body .birth-panel .button-row .secondary { display: none; }
+body .paid-access-notice {
+  grid-column: 1 / -1;
+  margin-bottom: 24px;
+  padding: 18px;
+  color: #f4f1e8;
+  border: 1px solid rgba(255,75,43,.55);
+  background: rgba(255,75,43,.1);
+}
+body .paid-access-notice strong { color: var(--sw-orange); font-size: 18px; }
+body .paid-access-notice p { margin: 5px 0 0; color: #bbb; font-size: 13px; }
 
 body #report { padding-top: 100px; }
 body #report>.section-head .eyebrow { color: var(--sw-acid); }
