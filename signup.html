@@ -23,9 +23,13 @@
     <label>연락처<input id="phone" autocomplete="tel" /></label>
     <label>비밀번호<input id="password" type="password" autocomplete="new-password" /></label>
     <button type="button" onclick="signup()">가입하기</button>
-    <a href="/login.html">이미 계정이 있어요</a>
+    <a id="loginLink" href="/login.html">이미 계정이 있어요</a>
   </main>
   <script>
+    const requestedReturn = new URLSearchParams(location.search).get("return") || "/payment.html";
+    const safeReturn = requestedReturn.startsWith("/") && !requestedReturn.startsWith("//") ? requestedReturn : "/payment.html";
+    document.getElementById("loginLink").href = `/login.html?return=${encodeURIComponent(safeReturn)}`;
+
     async function signup() {
       const payload = {
         name: document.getElementById("name").value.trim(),
@@ -45,7 +49,7 @@
       }
       localStorage.setItem("sajuwar_auth_token", data.token);
       localStorage.setItem("sajuwar_user", JSON.stringify(data.user));
-      location.href = "/payment.html";
+      location.href = safeReturn;
     }
   </script>
 </body>

@@ -3763,6 +3763,11 @@
               <select id="hour"></select>
               <select id="minute"></select>
             </span>
+            <span class="unknown-time-control">
+              <input id="timeUnknown" type="checkbox" />
+              <span>출생시간을 모릅니다</span>
+            </span>
+            <small class="unknown-time-note">모르는 경우 정오 기준으로 큰 흐름을 분석하며, 세부 타이밍 정확도는 낮아질 수 있습니다.</small>
           </label>
           <label>
             기준 / 성별
@@ -3830,7 +3835,7 @@
       </div>
     </main>
 
-    <section class="strategy-upsell" aria-labelledby="strategy-map-title">
+    <section class="strategy-upsell" id="strategyUpsell" aria-labelledby="strategy-map-title" hidden>
       <div>
         <p class="eyebrow">YOUR NEXT BATTLE</p>
         <h2 id="strategy-map-title">앞으로 10년의<br>전장은 어떻게 움직일까?</h2>
@@ -3838,13 +3843,13 @@
       </div>
       <div class="strategy-price">
         <small>SAJU WAR PREMIUM STRATEGY REPORT</small>
-        <strong>39,800원</strong>
-        <span>PHASE 2 · Strategy Map / PDF</span>
-        <a href="/support">전체 Strategy Map 상담하기 <span>↗</span></a>
+        <strong>39,800원 · 출시 준비 중</strong>
+        <span>구매 가능한 상품이 아닙니다 · Strategy Map / PDF 사전 상담</span>
+        <a href="/support">출시 알림·상담 신청 <span>↗</span></a>
       </div>
     </section>
 
-    <section class="content-band" id="choice-consult">
+    <section class="content-band tool-detail-section" id="choice-consult">
       <div class="section-head">
         <p class="eyebrow">맞춤 사주 상담</p>
         <h2>선택에 따라 답이 달라지는 사주 상담 툴</h2>
@@ -3911,7 +3916,7 @@
       </div>
     </section>
 
-    <section class="content-band" id="consulting">
+    <section class="content-band tool-detail-section" id="consulting">
       <div class="section-head">
         <p class="eyebrow">상담 신청</p>
         <h2>세운·월운까지 묻는 쭈쌤 사주 상담</h2>
@@ -4093,7 +4098,7 @@
       </div>
     </section>
 
-    <section class="content-band" id="free-play">
+    <section class="content-band tool-detail-section" id="free-play">
       <div class="section-head">
         <p class="eyebrow">무료 콘텐츠</p>
         <h2>오늘의 운세, 연애운, 간단 궁합</h2>
@@ -4262,7 +4267,7 @@
         </article>      </div>
     </section>
 
-    <section class="content-band" id="compatibility-paid">
+    <section class="content-band tool-detail-section" id="compatibility-paid">
       <div class="section-head">
         <p class="eyebrow">유료 궁합 신청</p>
         <h2>두 사람의 원국과 관계 충돌을 깊게 봅니다</h2>
@@ -4371,7 +4376,7 @@
       </div>
     </section>
 
-    <section class="content-band" id="naming">
+    <section class="content-band tool-detail-section" id="naming">
       <div class="section-head">
         <p class="eyebrow">이름 콘텐츠</p>
         <h2>내 이름의 점수와 작명 신청</h2>
@@ -4542,6 +4547,84 @@
       "壬": { name: "흐름 아이템", desc: "정보, 유통, 이동, 네트워크, 큰 흐름을 읽는 힘" },
       "癸": { name: "지혜 아이템", desc: "학습, 분석, 상담, 숨은 지식, 조용한 통찰" }
     };
+
+    const stemPolarity = {
+      "甲": "yang", "乙": "yin", "丙": "yang", "丁": "yin", "戊": "yang",
+      "己": "yin", "庚": "yang", "辛": "yin", "壬": "yang", "癸": "yin"
+    };
+    const elementCycle = ["목", "화", "토", "금", "수"];
+    const tenGodCopy = {
+      "비견": "자기 기준을 지키고 동료와 함께 전선을 밀어붙이는 힘",
+      "겁재": "경쟁 속에서 주도권을 잡고 판을 빠르게 뒤집는 힘",
+      "식신": "아이디어를 꾸준히 결과물과 생활의 성과로 만드는 힘",
+      "상관": "정해진 방식에 맞추기보다 새로운 표현과 해답을 만드는 힘",
+      "편재": "돈과 사람의 흐름을 읽고 기회를 빠르게 포착하는 힘",
+      "정재": "자원과 시간을 안정적으로 관리해 결과를 축적하는 힘",
+      "편관": "압박과 위기 속에서 결단하고 목표를 돌파하는 힘",
+      "정관": "원칙과 책임을 바탕으로 신뢰와 지위를 만드는 힘",
+      "편인": "남들이 놓친 신호를 읽고 독창적인 관점을 만드는 힘",
+      "정인": "지식과 경험을 연결해 자신과 타인을 성장시키는 힘"
+    };
+
+    function getTenGod(dayStem, targetStem) {
+      const dayElement = elementMap[dayStem];
+      const targetElement = elementMap[targetStem];
+      if (!dayElement || !targetElement) return "";
+      const samePolarity = stemPolarity[dayStem] === stemPolarity[targetStem];
+      const dayIndex = elementCycle.indexOf(dayElement);
+      const targetIndex = elementCycle.indexOf(targetElement);
+      if (dayElement === targetElement) return samePolarity ? "비견" : "겁재";
+      if ((dayIndex + 1) % 5 === targetIndex) return samePolarity ? "식신" : "상관";
+      if ((dayIndex + 2) % 5 === targetIndex) return samePolarity ? "편재" : "정재";
+      if ((targetIndex + 1) % 5 === dayIndex) return samePolarity ? "편인" : "정인";
+      return samePolarity ? "편관" : "정관";
+    }
+
+    function getPrimaryWeapon(pillars) {
+      const dayStem = splitPillar(pillars.day).gan;
+      const scores = {};
+      const addStem = (stem, weight) => {
+        if (!stem || stem === dayStem) return;
+        const tenGod = getTenGod(dayStem, stem);
+        if (tenGod) scores[tenGod] = (scores[tenGod] || 0) + weight;
+      };
+
+      ["year", "month", "hour"].forEach((key) => addStem(splitPillar(pillars[key]).gan, 3));
+      ["year", "month", "day", "hour"].forEach((key) => {
+        const branch = splitPillar(pillars[key]).ji;
+        (hiddenGan[branch] || []).forEach((stem, index) => addStem(stem, index === 0 ? 2 : 1));
+      });
+
+      const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const name = ranked[0]?.[0] || "비견";
+      return { name, desc: tenGodCopy[name] || "원국의 중심 기운을 현실에서 사용하는 힘" };
+    }
+
+    function renderFreeWeaponCards(name, pillars, sewoon) {
+      const weapon = getPrimaryWeapon(pillars);
+      const stats = getElementStats(pillars);
+      const [strongElement] = getStrongest(stats);
+      const firstYearLuck = sewoon?.list?.[0];
+      return `
+        <section class="free-weapon-grid" aria-label="${name}님의 무료 전략 카드">
+          <article class="box free-weapon-card">
+            <p class="eyebrow">YOUR WEAPON</p>
+            <h3>「${weapon.name}」</h3>
+            <p>${weapon.desc}</p>
+          </article>
+          <article class="box free-weapon-card">
+            <p class="eyebrow">CURRENT BATTLEFIELD</p>
+            <h3>${strongElement} 기운이 주도하는 전장</h3>
+            <p>${elementCopy[strongElement] || "현재 원국에서 반복되는 힘"}을 먼저 현실 행동으로 바꿔야 합니다.</p>
+          </article>
+          <article class="box free-weapon-card locked-card">
+            <p class="eyebrow">TIMING · LOCKED</p>
+            <h3>${firstYearLuck?.year || "다음 세운"}의 Switch</h3>
+            <p>이 무기가 강해지는 구체적인 시기와 영역은 Timing Report에서 열립니다.</p>
+          </article>
+        </section>
+      `;
+    }
 
     const pillarLabel = { year: "년주", month: "월주", day: "일주", hour: "시주" };
     const elementCopy = {
@@ -5944,13 +6027,14 @@
       const year = document.getElementById("year").value;
       const month = document.getElementById("month").value;
       const day = document.getElementById("day").value;
-      const hour = document.getElementById("hour").value;
-      const minute = document.getElementById("minute").value;
+      const timeUnknown = document.getElementById("timeUnknown").checked;
+      const hour = timeUnknown ? "12" : document.getElementById("hour").value;
+      const minute = timeUnknown ? "0" : document.getElementById("minute").value;
       const gender = document.getElementById("gender").value;
       const result = document.getElementById("result");
 
       if (!name || !calendarType || !year || !month || !day || !hour || !minute || !gender) {
-        showToast("이름, 생년월일, 시간, 성별을 모두 입력해주세요.");
+        showToast("이름, 생년월일, 성별과 출생시간을 입력하거나 '시간 모름'을 선택해주세요.");
         return;
       }
 
@@ -5965,6 +6049,7 @@
             calendarType,
             birth: `${year}-${pad(month)}-${pad(day)}`,
             time: `${pad(hour)}:${pad(minute)}`,
+            timeUnknown,
             gender,
             paidReport: Boolean(forcePaid && canViewPaidReport()),
             developerMode: Boolean(hasDeveloperAccess())
@@ -5997,25 +6082,23 @@
           ${renderDeveloperDebugPanel(data.developer_debug)}
         `;
 
-        const weaponName = itemInfo[splitPillar(data.pillars.day).gan]?.name || "중심 Weapon";
-        const weaponDesc = itemInfo[splitPillar(data.pillars.day).gan]?.desc || "원국의 중심 기운을 현실에서 사용하는 힘";
+        const primaryWeapon = getPrimaryWeapon(data.pillars);
         const previewHTML = `
           <section class="box weapon-reveal">
             <p class="eyebrow">WEAPON DISCOVERED</p>
             <p>${name}님의 첫 번째 무기</p>
             <div class="weapon-reveal-mark">${renderElementGlyph(splitPillar(data.pillars.day).gan)}</div>
-            <h2 class="section-title">「${weaponName}」</h2>
-            <p class="weapon-reveal-copy">당신은 <strong>${weaponDesc}</strong>을 가지고 있습니다.</p>
+            <h2 class="section-title">「${primaryWeapon.name}」</h2>
+            <p class="weapon-reveal-copy">당신은 <strong>${primaryWeapon.desc}</strong>을 가지고 있습니다.</p>
             <p>하지만 무기는 가지고 있다고 항상 사용할 수 있는 것이 아닙니다.<br>이 무기가 강하게 작동하는 시기가 따로 있습니다.</p>
           </section>
-          ${renderPillars(data.pillars)}
-          ${renderFreeStructuredReport(name, data.pillars, data.sewoon, data.dailyLuck)}
-          ${renderFreeDailyLuckCard(name, data.pillars, data.dailyLuck)}
+          ${renderFreeWeaponCards(name, data.pillars, data.sewoon)}
           ${renderPaidLockFromJijanggan(name)}
         `;
 
         lastFullResult = fullHTML;
         result.innerHTML = forcePaid && canViewPaidReport() ? fullHTML : previewHTML;
+        document.getElementById("strategyUpsell").hidden = !(forcePaid && canViewPaidReport());
         if (forcePaid && hasDeveloperAccess()) {
           loadReviewHistory();
         }
@@ -6656,6 +6739,45 @@
       event.preventDefault();
       analyze();
     });
+
+    const timeUnknownToggle = document.getElementById("timeUnknown");
+    const hourSelect = document.getElementById("hour");
+    const minuteSelect = document.getElementById("minute");
+    timeUnknownToggle.addEventListener("change", () => {
+      hourSelect.disabled = timeUnknownToggle.checked;
+      minuteSelect.disabled = timeUnknownToggle.checked;
+      if (timeUnknownToggle.checked) {
+        hourSelect.value = "12";
+        minuteSelect.value = "0";
+      }
+    });
+
+    const toolDetailSections = [...document.querySelectorAll(".tool-detail-section")];
+    function openToolSection(target) {
+      if (!target?.classList.contains("tool-detail-section")) return false;
+      toolDetailSections.forEach((section) => {
+        section.hidden = section !== target;
+      });
+      target.hidden = false;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      return true;
+    }
+    toolDetailSections.forEach((section) => { section.hidden = true; });
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const id = link.getAttribute("href")?.slice(1);
+        const target = id ? document.getElementById(id) : null;
+        if (target?.classList.contains("tool-detail-section")) {
+          event.preventDefault();
+          openToolSection(target);
+          history.replaceState(null, "", `#${id}`);
+        }
+      });
+    });
+    const initialToolTarget = document.getElementById(location.hash.slice(1));
+    if (initialToolTarget?.classList.contains("tool-detail-section")) {
+      initialToolTarget.hidden = false;
+    }
 
     const readabilityToggle = document.getElementById("readabilityToggle");
 

@@ -101,6 +101,10 @@ body .birth-panel { max-width: 1040px; margin: 0 auto; padding: 42px; color: #ee
 body .birth-panel::before { content: "당신의 첫 번째 무기를 발견하세요."; display: block; margin-bottom: 28px; color: #f4f1e8; font-size: clamp(28px,4vw,48px); font-weight: 950; letter-spacing: -.05em; }
 body .birth-panel label { color: #aaa; font-size: 12px; }
 body .birth-panel input,body .birth-panel select { color: #eee; border-color: #383838; border-radius: 0; background: #090909; }
+body .unknown-time-control { margin-top: 8px; display: flex; align-items: center; gap: 8px; color: #ddd; cursor: pointer; }
+body .unknown-time-control input { width: 18px; min-height: 18px; height: 18px; accent-color: var(--sw-acid); }
+body .unknown-time-note { margin-top: 3px; color: #777; font-size: 10px; line-height: 1.45; }
+body .birth-panel select:disabled { opacity: .42; }
 body .birth-panel .button-row { margin-top: 26px; }
 body .birth-panel .button-row button:first-child { width: 100%; min-height: 58px; color: #050505; background: var(--sw-acid); box-shadow: 6px 6px 0 rgba(255,255,255,.1); }
 body .birth-panel .button-row .secondary { display: none; }
@@ -154,8 +158,15 @@ body #result .weapon-reveal-mark {
 body #result .weapon-reveal-mark>* { transform: rotate(-45deg); }
 body #result .weapon-reveal h2 { margin-bottom: 14px; font-size: clamp(38px,6vw,62px); }
 body #result .weapon-reveal-copy { max-width: 600px; font-size: 18px; }
+body .free-weapon-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+body #result .free-weapon-card { min-height: 220px; padding: 24px; display: flex; flex-direction: column; }
+body #result .free-weapon-card .eyebrow { color: #777; }
+body #result .free-weapon-card h3 { margin: auto 0 12px; font-size: 24px; }
+body #result .locked-card { border-color: rgba(216,255,56,.42); background: radial-gradient(circle at 80% 10%,rgba(216,255,56,.1),transparent 35%),#151515; }
+body #result .locked-card .eyebrow { color: var(--sw-acid); }
 
 body .strategy-upsell { width: min(1180px,calc(100% - 40px)); margin: 80px auto; padding: clamp(28px,5vw,70px); display: grid; grid-template-columns: 1.1fr .9fr; gap: 60px; align-items: center; border: 1px solid #333; background: radial-gradient(circle at 82% 48%,rgba(216,255,56,.1),transparent 28%),#101010; }
+body .strategy-upsell[hidden],body .tool-detail-section[hidden] { display: none !important; }
 body .strategy-upsell .eyebrow { color: var(--sw-acid); }
 body .strategy-upsell h2 { margin: 18px 0; color: #f4f1e8; font-size: clamp(40px,6vw,78px); line-height: 1; letter-spacing: -.06em; }
 body .strategy-upsell p { color: #999; }
@@ -169,19 +180,22 @@ body .footer h3 { color: #eee; }
   body .topbar { height: 62px; padding: 0 18px; }
   body .nav { display: none; }
   body .readability-toggle { font-size: 11px; min-height: 34px; }
-  body .hero { min-height: calc(100svh - 62px); padding: 58px 20px 34px; display: block; }
+  body .hero { min-height: 555px; padding: 42px 20px 28px; display: block; }
   body .hero::before { background: linear-gradient(180deg,rgba(7,7,7,.9),rgba(7,7,7,.92)),url("hero-saju-war.jpg") center/cover; }
   body .hero::after { width: 360px; right: -190px; top: 48%; opacity: .65; }
-  body .hero h1 { margin-top: 48px; font-size: clamp(62px,20vw,86px); }
+  body .hero h1 { margin-top: 34px; font-size: clamp(58px,18vw,76px); }
   body .hero-manifesto { max-width: 340px; font-size: 20px; }
   body .lead { max-width: 350px; font-size: 13px; }
   body .hero-actions { margin-top: 25px; }
   body .hero-actions a { width: 100%; }
   body .hero-actions a.secondary-link { min-height: 42px; }
   body .journey-strip { grid-template-columns: 1fr 1fr; }
-  body .journey-step { min-height: 120px; border-bottom: 1px solid #aaa; }
+  body .journey-step { min-height: 76px; padding: 12px; border-bottom: 1px solid #aaa; }
+  body .journey-step span { display: none; }
   body .input-band { padding: 78px 18px; }
   body .birth-panel { padding: 30px 18px; }
   body .field-grid { grid-template-columns: 1fr; }
   body .strategy-upsell { grid-template-columns: 1fr; gap: 28px; margin-block: 50px; }
+  body .free-weapon-grid { grid-template-columns: 1fr; }
+  body #result .free-weapon-card { min-height: 175px; }
 }

@@ -72,19 +72,43 @@
     .summary dd { margin: 0; color: #fff7dc; overflow-wrap: anywhere; }
     .hidden { display: none; }
     .notice { padding: 14px 16px; border: 1px solid rgba(242,219,141,.18); color: #d8caa5; background: rgba(242,219,141,.08); }
+    .product-promise { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 20px 0; }
+    .product-promise div { padding: 15px; border: 1px solid rgba(242,219,141,.18); background: rgba(255,255,255,.035); }
+    .product-promise strong { display: block; color: var(--gold); font-size: 12px; }
+    .product-promise span { color: #bcb39f; font-size: 12px; }
+    .auth-gate { margin: 18px 0; padding: 18px; border: 1px solid rgba(242,219,141,.3); background: rgba(242,219,141,.08); }
+    .auth-gate strong { color: #fff7dc; }
+    .auth-actions { display: flex; gap: 8px; }
+    .auth-actions a { flex: 1; }
     @media (max-width: 720px) {
       .grid { grid-template-columns: 1fr; }
       .summary { grid-template-columns: 1fr; }
       .panel { padding: 22px; }
+      .product-promise { grid-template-columns: 1fr; }
+      .auth-actions { flex-direction: column; }
     }
   </style>
 </head>
 <body>
   <main>
     <section class="panel" id="orderFormPanel">
-      <p>무통장입금</p>
-      <h1>상품 신청 후 입금 안내를 확인하세요</h1>
-      <p>신청서를 만들면 주문번호가 생성됩니다. 입금 후 관리자가 확인 버튼을 누르면 마이페이지에서 바로 리포트 또는 강의를 이용할 수 있습니다.</p>
+      <p>WEAPON TIMING REPORT</p>
+      <h1>내 무기가 강해지는 시기를 확인합니다</h1>
+      <p>원국과 현재 대운·세운을 연결해 Weapon이 돈·직업·관계 중 어디에서 발현되는지 확인하는 9,900원 리포트입니다.</p>
+      <div class="product-promise">
+        <div><strong>HIDDEN ITEM</strong><span>지장간에 숨은 보조 능력</span></div>
+        <div><strong>ACTIVATION</strong><span>현재·다음 세운의 활성화 시기</span></div>
+        <div><strong>NEXT MOVE</strong><span>지금 실행할 행동 전략</span></div>
+      </div>
+
+      <div class="auth-gate hidden" id="authGate">
+        <strong>주문 내역과 리포트를 안전하게 보관하기 위해 계정이 필요합니다.</strong>
+        <p>상품 내용을 먼저 확인한 뒤 로그인하거나 1분 회원가입으로 결제를 계속할 수 있습니다.</p>
+        <div class="auth-actions">
+          <a class="button" href="/login.html?return=/payment.html">로그인하고 계속</a>
+          <a class="button secondary" href="/signup.html?return=/payment.html">1분 회원가입</a>
+        </div>
+      </div>
 
       <div class="grid">
         <label>상품
@@ -104,7 +128,7 @@
         <textarea id="application" placeholder="생년월일, 태어난 시간, 상담/리포트 요청 내용을 적어주세요."></textarea>
       </label>
       <div class="actions">
-        <button type="button" onclick="createOrder()">주문 생성하기</button>
+        <button type="button" id="orderButton" onclick="createOrder()">주문 생성하기</button>
         <a class="button secondary" href="/mypage.html">구매내역 보기</a>
       </div>
     </section>
@@ -155,7 +179,9 @@
 
     async function loadMe() {
       if (!authToken) {
-        location.href = "/login.html";
+        document.getElementById("authGate").classList.remove("hidden");
+        document.getElementById("orderButton").textContent = "로그인 후 주문할 수 있습니다";
+        document.getElementById("orderButton").disabled = true;
         return;
       }
       const response = await fetch("/api/auth/me", {
@@ -165,7 +191,9 @@
       if (!response.ok) {
         localStorage.removeItem("sajuwar_auth_token");
         localStorage.removeItem("sajuwar_user");
-        location.href = "/login.html";
+        document.getElementById("authGate").classList.remove("hidden");
+        document.getElementById("orderButton").textContent = "다시 로그인 후 주문할 수 있습니다";
+        document.getElementById("orderButton").disabled = true;
         return;
       }
       authUser = data.user;
@@ -175,6 +203,11 @@
       document.getElementById("buyerName").readOnly = true;
       document.getElementById("buyerEmail").readOnly = true;
       document.getElementById("buyerPhone").readOnly = true;
+      const pendingApplication = sessionStorage.getItem("sajuwar_pending_application");
+      if (pendingApplication) {
+        document.getElementById("application").value = pendingApplication;
+        sessionStorage.removeItem("sajuwar_pending_application");
+      }
     }
 
     async function loadProducts() {
@@ -186,6 +219,10 @@
       select.innerHTML = products.map((product) => (
         `<option value="${product.id}">${product.name} - ${formatMoney(product.amount)}</option>`
       )).join("");
+      const requestedProduct = new URLSearchParams(location.search).get("product");
+      if (requestedProduct && products.some((product) => product.id === requestedProduct)) {
+        select.value = requestedProduct;
+      }
     }
 
     function selectedProduct() {

@@ -21,9 +21,13 @@
     <label>이메일<input id="email" type="email" autocomplete="email" /></label>
     <label>비밀번호<input id="password" type="password" autocomplete="current-password" /></label>
     <button type="button" onclick="login()">로그인</button>
-    <a href="/signup.html">회원가입</a>
+    <a id="signupLink" href="/signup.html">회원가입</a>
   </main>
   <script>
+    const requestedReturn = new URLSearchParams(location.search).get("return") || "/mypage.html";
+    const safeReturn = requestedReturn.startsWith("/") && !requestedReturn.startsWith("//") ? requestedReturn : "/mypage.html";
+    document.getElementById("signupLink").href = `/signup.html?return=${encodeURIComponent(safeReturn)}`;
+
     async function login() {
       const response = await fetch("/api/auth/login", {
         method: "POST",
@@ -40,7 +44,7 @@
       }
       localStorage.setItem("sajuwar_auth_token", data.token);
       localStorage.setItem("sajuwar_user", JSON.stringify(data.user));
-      location.href = "/mypage.html";
+      location.href = safeReturn;
     }
   </script>
 </body>
