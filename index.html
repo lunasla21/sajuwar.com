@@ -3758,6 +3758,11 @@
 
     <section class="input-band" aria-label="사주 입력">
       <form class="panel birth-panel" id="sajuForm">
+        <div class="free-analysis-heading">
+          <p class="eyebrow">FREE REPORT · 무료 분석</p>
+          <h2>생년월일을 입력하고<br>내 사주의 무기를 분석하세요.</h2>
+          <p>무료 리포트를 먼저 확인한 뒤, 구매한 유료 리포트가 아래에 이어집니다.</p>
+        </div>
         <div class="field-grid">
           <label>
             이름
@@ -4759,15 +4764,8 @@
 
     function showPaidEntryForm() {
       const form = document.getElementById("sajuForm");
-      if (!document.getElementById("paidAccessNotice")) {
-        form.insertAdjacentHTML("afterbegin", `
-          <div class="paid-access-notice" id="paidAccessNotice">
-            <strong>구매 확인 완료</strong>
-            <p>결제를 다시 할 필요가 없습니다. 리포트에 사용할 사주 정보만 입력하면 구매한 전체 리포트가 바로 열립니다.</p>
-          </div>
-        `);
-      }
-      form.querySelector('button[type="submit"]').textContent = "구매한 전체 리포트 바로 열기 →";
+      document.getElementById("paidAccessNotice")?.remove();
+      form.querySelector('button[type="submit"]').textContent = "내 사주의 무기 찾기 →";
       form.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
@@ -4878,6 +4876,8 @@
           dailyLuck: data.dailyLuck,
         };
         lastFullResult = `
+          ${renderFreeReportSequence(profile.name || "회원", data, false)}
+          ${renderPaidReportDivider(saved.expires_at)}
           ${renderPremiumWarDashboard(profile.name || "회원", data, report)}
           ${renderDeveloperDebugPanel(data.developer_debug)}
         `;
@@ -5555,6 +5555,35 @@
       `;
     }
 
+    function renderPaidReportDivider(expiresAt = "") {
+      const expiry = expiresAt ? new Date(expiresAt).toLocaleString("ko-KR") : "";
+      return `
+        <section class="paid-report-divider">
+          <p class="eyebrow">PAID REPORT · 구매 리포트</p>
+          <h2>무료 분석 다음으로<br>전체 전략 리포트가 이어집니다.</h2>
+          ${expiry ? `<p>이 저장본은 ${expiry}까지 구매내역에서 다시 열 수 있습니다.</p>` : ""}
+        </section>
+      `;
+    }
+
+    function renderFreeReportSequence(name, data, includePaidPrompt = true) {
+      const primaryWeapon = getPrimaryWeapon(data.pillars);
+      return `
+        <section class="box weapon-reveal">
+          <p class="eyebrow">WEAPON DISCOVERED</p>
+          <p>${name}님의 첫 번째 무기</p>
+          <div class="weapon-reveal-mark">${renderElementGlyph(splitPillar(data.pillars.day).gan)}</div>
+          <h2 class="section-title">「${primaryWeapon.name}」</h2>
+          <p class="weapon-reveal-copy">당신은 <strong>${primaryWeapon.desc}</strong>을 가지고 있습니다.</p>
+          <p class="weapon-basis">${primaryWeapon.basis}</p>
+          <p>하지만 무기는 가지고 있다고 항상 사용할 수 있는 것이 아닙니다.<br>원국의 다른 기운과 대운·세운이 연결될 때 강하게 작동합니다.</p>
+        </section>
+        ${renderPillars(data.pillars)}
+        ${renderFreeWeaponCards(name, data.pillars, data.sewoon)}
+        ${includePaidPrompt ? renderPaidLockFromJijanggan(name) : ""}
+      `;
+    }
+
     function renderPremiumQuestionBox(name) {
       return `
         <section class="war-panel premium-question-box" id="premium-question">
@@ -6208,26 +6237,14 @@
         } else {
           lastPremiumContext = null;
         }
+        const freeReportHTML = renderFreeReportSequence(name, data, false);
         const fullHTML = `
+          ${freeReportHTML}
+          ${renderPaidReportDivider()}
           ${renderPremiumWarDashboard(name, data, report)}
           ${renderDeveloperDebugPanel(data.developer_debug)}
         `;
-
-        const primaryWeapon = getPrimaryWeapon(data.pillars);
-        const previewHTML = `
-          <section class="box weapon-reveal">
-            <p class="eyebrow">WEAPON DISCOVERED</p>
-            <p>${name}님의 첫 번째 무기</p>
-            <div class="weapon-reveal-mark">${renderElementGlyph(splitPillar(data.pillars.day).gan)}</div>
-            <h2 class="section-title">「${primaryWeapon.name}」</h2>
-            <p class="weapon-reveal-copy">당신은 <strong>${primaryWeapon.desc}</strong>을 가지고 있습니다.</p>
-            <p class="weapon-basis">${primaryWeapon.basis}</p>
-            <p>하지만 무기는 가지고 있다고 항상 사용할 수 있는 것이 아닙니다.<br>원국의 다른 기운과 대운·세운이 연결될 때 강하게 작동합니다.</p>
-          </section>
-          ${renderPillars(data.pillars)}
-          ${renderFreeWeaponCards(name, data.pillars, data.sewoon)}
-          ${renderPaidLockFromJijanggan(name)}
-        `;
+        const previewHTML = renderFreeReportSequence(name, data, true);
 
         lastFullResult = fullHTML;
         result.innerHTML = forcePaid && canViewPaidReport() ? fullHTML : previewHTML;

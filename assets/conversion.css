@@ -143,7 +143,11 @@ body .input-band { width: 100%; padding: 105px max(24px,8vw); background: #0d0d0
 body .input-band::before { content: "02 — FREE WEAPON TEST"; display: block; max-width: 1040px; margin: 0 auto 15px; color: #888; font: 900 11px monospace; letter-spacing: .16em; }
 body .input-band::after { content: "무료 분석은 모든 것을 알려주는 대신, 지금 가장 먼저 알아야 할 당신의 무기를 찾습니다."; display: block; max-width: 1040px; margin: 18px auto 0; color: #777; font-size: 12px; text-align: center; }
 body .birth-panel { max-width: 1040px; margin: 0 auto; padding: 42px; color: #eee; border: 1px solid #333; border-radius: 0; background: #151515; box-shadow: 14px 14px 0 #030303; }
-body .birth-panel::before { content: "당신의 첫 번째 무기를 발견하세요."; display: block; margin-bottom: 28px; color: #f4f1e8; font-size: clamp(28px,4vw,48px); font-weight: 950; letter-spacing: -.05em; }
+body .birth-panel::before { display: none; }
+body .free-analysis-heading { grid-column: 1 / -1; margin-bottom: 30px; padding-bottom: 26px; border-bottom: 1px solid #333; }
+body .free-analysis-heading .eyebrow { color: var(--sw-acid); }
+body .free-analysis-heading h2 { margin: 8px 0 12px; color: #f4f1e8; font-size: clamp(28px,4vw,46px); line-height: 1.12; }
+body .free-analysis-heading p:last-child { color: #999; font-size: 13px; }
 body .birth-panel label { color: #aaa; font-size: 12px; }
 body .birth-panel input,body .birth-panel select { color: #eee; border-color: #383838; border-radius: 0; background: #090909; }
 body .unknown-time-control { margin-top: 8px; display: flex; align-items: center; gap: 8px; color: #ddd; cursor: pointer; }
@@ -153,16 +157,15 @@ body .birth-panel select:disabled { opacity: .42; }
 body .birth-panel .button-row { margin-top: 26px; }
 body .birth-panel .button-row button:first-child { width: 100%; min-height: 58px; color: #fff; background: linear-gradient(135deg,var(--sw-acid),var(--sw-orange)); box-shadow: 6px 6px 0 rgba(255,255,255,.1); }
 body .birth-panel .button-row .secondary { display: none; }
-body .paid-access-notice {
-  grid-column: 1 / -1;
-  margin-bottom: 24px;
-  padding: 18px;
-  color: #f4f1e8;
-  border: 1px solid rgba(255,75,43,.55);
-  background: rgba(255,75,43,.1);
+body .paid-report-divider {
+  margin: 70px 0 24px;
+  padding: clamp(28px,5vw,58px);
+  border: 1px solid rgba(255,75,43,.48);
+  background: radial-gradient(circle at 85% 25%,rgba(255,75,43,.16),transparent 36%),#111;
 }
-body .paid-access-notice strong { color: var(--sw-orange); font-size: 18px; }
-body .paid-access-notice p { margin: 5px 0 0; color: #bbb; font-size: 13px; }
+body .paid-report-divider .eyebrow { color: var(--sw-acid); }
+body .paid-report-divider h2 { margin: 12px 0; color: #f4f1e8; font-size: clamp(32px,5vw,58px); line-height: 1.08; }
+body .paid-report-divider p:last-child { color: #aaa; }
 
 body #report { padding-top: 100px; }
 body #report>.section-head .eyebrow { color: var(--sw-acid); }
