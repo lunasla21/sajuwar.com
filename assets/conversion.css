@@ -1,13 +1,15 @@
 :root {
   color-scheme: dark;
-  --sw-acid: #d8ff38;
+  --sw-acid: #ff4b2b;
+  --sw-orange: #ff6a2a;
+  --sw-gold: #e9b650;
   --sw-ink: #070707;
   --sw-paper: #eeeae0;
 }
 
 html body {
   color: var(--sw-paper);
-  background: radial-gradient(circle at 78% 6%, rgba(216,255,56,.08), transparent 27%), #070707;
+  background: radial-gradient(circle at 78% 6%, rgba(255,75,43,.1), transparent 27%), #070707;
 }
 
 body .topbar {
@@ -56,10 +58,10 @@ body .hero::after {
   right: 2vw;
   top: 50%;
   z-index: -1;
-  border: 1px solid rgba(216,255,56,.26);
+  border: 1px solid rgba(255,75,43,.32);
   border-radius: 50%;
   transform: translateY(-50%);
-  box-shadow: inset 0 0 100px rgba(216,255,56,.06),0 0 120px rgba(216,255,56,.05);
+  box-shadow: inset 0 0 100px rgba(255,75,43,.08),0 0 120px rgba(255,75,43,.08);
 }
 body .hero-copy { max-width: 850px; }
 body .hero .eyebrow { color: #aaa; font-size: 11px; letter-spacing: .18em; }
@@ -81,11 +83,28 @@ body .hero-actions a {
   color: #050505;
   border: 0;
   border-radius: 0;
-  background: var(--sw-acid);
+  background: linear-gradient(135deg,var(--sw-acid),var(--sw-orange));
   box-shadow: 6px 6px 0 rgba(255,255,255,.12);
 }
 body .hero-actions a.secondary-link { color: #ccc; border-bottom: 1px solid #555; background: transparent; box-shadow: none; }
-body .hero-map { display: none; }
+body .hero-map {
+  display: block;
+  width: min(38vw,480px);
+  max-height: 720px;
+  min-height: 0;
+  aspect-ratio: 3 / 4.55;
+  justify-self: end;
+  border: 1px solid rgba(233,182,80,.48);
+  background: #090909;
+  box-shadow: 0 26px 80px rgba(0,0,0,.56),0 0 50px rgba(255,75,43,.12);
+}
+body .hero-poster {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
 
 body .journey-strip { display: grid; grid-template-columns: repeat(4,1fr); color: #090909; background: #eeeae0; }
 body .journey-step { min-height: 145px; padding: 22px max(18px,2vw); display: flex; flex-direction: column; border-right: 1px solid #aaa; }
@@ -106,7 +125,7 @@ body .unknown-time-control input { width: 18px; min-height: 18px; height: 18px; 
 body .unknown-time-note { margin-top: 3px; color: #777; font-size: 10px; line-height: 1.45; }
 body .birth-panel select:disabled { opacity: .42; }
 body .birth-panel .button-row { margin-top: 26px; }
-body .birth-panel .button-row button:first-child { width: 100%; min-height: 58px; color: #050505; background: var(--sw-acid); box-shadow: 6px 6px 0 rgba(255,255,255,.1); }
+body .birth-panel .button-row button:first-child { width: 100%; min-height: 58px; color: #fff; background: linear-gradient(135deg,var(--sw-acid),var(--sw-orange)); box-shadow: 6px 6px 0 rgba(255,255,255,.1); }
 body .birth-panel .button-row .secondary { display: none; }
 
 body #report { padding-top: 100px; }
@@ -117,9 +136,9 @@ body #result .box { color: #eee; border-color: #333; border-radius: 0; backgroun
 body #result .section-title,body #result h2,body #result h3,body #result strong { color: #f2eee3; }
 body #result p,body #result li,body #result .small { color: #aaa; }
 body #result .reading-card,body #result .guide-card,body #result .paid-lock-card,body #result .daily-luck-mini { border-color: #333; background: #171717; }
-body #result .upgrade-callout { border: 1px solid rgba(216,255,56,.5); background: radial-gradient(circle at 85% 20%,rgba(216,255,56,.11),transparent 34%),#111; }
+body #result .upgrade-callout { border: 1px solid rgba(255,75,43,.5); background: radial-gradient(circle at 85% 20%,rgba(255,75,43,.12),transparent 34%),#111; }
 body #result .upgrade-callout .eyebrow,body #result .price-badge { color: var(--sw-acid); }
-body #result .upgrade-callout button { min-height: 58px; color: #050505; background: var(--sw-acid); }
+body #result .upgrade-callout button { min-height: 58px; color: #fff; background: linear-gradient(135deg,var(--sw-acid),var(--sw-orange)); }
 body #result .weapon-reveal {
   min-height: 590px;
   padding: clamp(30px,6vw,70px);
@@ -130,14 +149,14 @@ body #result .weapon-reveal {
   text-align: center;
   overflow: hidden;
   position: relative;
-  background: radial-gradient(circle at 50% 42%,rgba(216,255,56,.2),transparent 25%),#101010;
+  background: radial-gradient(circle at 50% 42%,rgba(255,75,43,.2),transparent 25%),#101010;
 }
 body #result .weapon-reveal::before {
   content: "";
   position: absolute;
   width: 330px;
   aspect-ratio: 1;
-  border: 1px dashed rgba(216,255,56,.45);
+  border: 1px dashed rgba(255,75,43,.45);
   border-radius: 50%;
 }
 body #result .weapon-reveal>* { position: relative; z-index: 1; }
@@ -153,7 +172,7 @@ body #result .weapon-reveal-mark {
   background: #090909;
   transform: rotate(45deg);
   font-size: 36px;
-  box-shadow: 0 0 70px rgba(216,255,56,.28);
+  box-shadow: 0 0 70px rgba(255,75,43,.28);
 }
 body #result .weapon-reveal-mark>* { transform: rotate(-45deg); }
 body #result .weapon-reveal h2 { margin-bottom: 14px; font-size: clamp(38px,6vw,62px); }
@@ -162,17 +181,17 @@ body .free-weapon-grid { display: grid; grid-template-columns: repeat(3,1fr); ga
 body #result .free-weapon-card { min-height: 220px; padding: 24px; display: flex; flex-direction: column; }
 body #result .free-weapon-card .eyebrow { color: #777; }
 body #result .free-weapon-card h3 { margin: auto 0 12px; font-size: 24px; }
-body #result .locked-card { border-color: rgba(216,255,56,.42); background: radial-gradient(circle at 80% 10%,rgba(216,255,56,.1),transparent 35%),#151515; }
+body #result .locked-card { border-color: rgba(255,75,43,.42); background: radial-gradient(circle at 80% 10%,rgba(255,75,43,.1),transparent 35%),#151515; }
 body #result .locked-card .eyebrow { color: var(--sw-acid); }
 
-body .strategy-upsell { width: min(1180px,calc(100% - 40px)); margin: 80px auto; padding: clamp(28px,5vw,70px); display: grid; grid-template-columns: 1.1fr .9fr; gap: 60px; align-items: center; border: 1px solid #333; background: radial-gradient(circle at 82% 48%,rgba(216,255,56,.1),transparent 28%),#101010; }
+body .strategy-upsell { width: min(1180px,calc(100% - 40px)); margin: 80px auto; padding: clamp(28px,5vw,70px); display: grid; grid-template-columns: 1.1fr .9fr; gap: 60px; align-items: center; border: 1px solid #333; background: radial-gradient(circle at 82% 48%,rgba(255,75,43,.1),transparent 28%),#101010; }
 body .strategy-upsell[hidden],body .tool-detail-section[hidden] { display: none !important; }
 body .strategy-upsell .eyebrow { color: var(--sw-acid); }
 body .strategy-upsell h2 { margin: 18px 0; color: #f4f1e8; font-size: clamp(40px,6vw,78px); line-height: 1; letter-spacing: -.06em; }
 body .strategy-upsell p { color: #999; }
 body .strategy-price { padding: 28px; border: 1px solid #444; background: #090909; }
 body .strategy-price strong { display: block; color: #fff; font-size: 34px; }
-body .strategy-price a { min-height: 56px; margin-top: 20px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; color: #050505; background: var(--sw-acid); font-weight: 900; }
+body .strategy-price a { min-height: 56px; margin-top: 20px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; color: #fff; background: linear-gradient(135deg,var(--sw-acid),var(--sw-orange)); font-weight: 900; }
 body .footer { color: #888; border-color: #222; background: #050505; }
 body .footer h3 { color: #eee; }
 
@@ -180,8 +199,8 @@ body .footer h3 { color: #eee; }
   body .topbar { height: 62px; padding: 0 18px; }
   body .nav { display: none; }
   body .readability-toggle { font-size: 11px; min-height: 34px; }
-  body .hero { min-height: 555px; padding: 42px 20px 28px; display: block; }
-  body .hero::before { background: linear-gradient(180deg,rgba(7,7,7,.9),rgba(7,7,7,.92)),url("hero-saju-war.jpg") center/cover; }
+  body .hero { min-height: auto; padding: 42px 20px 34px; display: block; }
+  body .hero::before { background: radial-gradient(circle at 80% 20%,rgba(255,75,43,.13),transparent 32%),#070707; }
   body .hero::after { width: 360px; right: -190px; top: 48%; opacity: .65; }
   body .hero h1 { margin-top: 34px; font-size: clamp(58px,18vw,76px); }
   body .hero-manifesto { max-width: 340px; font-size: 20px; }
@@ -189,6 +208,13 @@ body .footer h3 { color: #eee; }
   body .hero-actions { margin-top: 25px; }
   body .hero-actions a { width: 100%; }
   body .hero-actions a.secondary-link { min-height: 42px; }
+  body .hero-map {
+    width: 100%;
+    max-width: 500px;
+    max-height: none;
+    margin: 30px auto 0;
+    aspect-ratio: 3 / 4.55;
+  }
   body .journey-strip { grid-template-columns: 1fr 1fr; }
   body .journey-step { min-height: 76px; padding: 12px; border-bottom: 1px solid #aaa; }
   body .journey-step span { display: none; }
