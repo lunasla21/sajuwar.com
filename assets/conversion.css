@@ -177,10 +177,13 @@ body #result .weapon-reveal-mark {
 body #result .weapon-reveal-mark>* { transform: rotate(-45deg); }
 body #result .weapon-reveal h2 { margin-bottom: 14px; font-size: clamp(38px,6vw,62px); }
 body #result .weapon-reveal-copy { max-width: 600px; font-size: 18px; }
-body .free-weapon-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-body #result .free-weapon-card { min-height: 220px; padding: 24px; display: flex; flex-direction: column; }
+body .free-weapon-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+body #result .free-weapon-card { min-height: 280px; padding: 28px; display: flex; flex-direction: column; }
 body #result .free-weapon-card .eyebrow { color: #777; }
-body #result .free-weapon-card h3 { margin: auto 0 12px; font-size: 24px; }
+body #result .free-weapon-card h3 { margin: auto 0 14px; font-size: 25px; }
+body #result .free-weapon-card p { line-height: 1.8; }
+body #result .weapon-basis { color: #c8aa77; font-size: 12px; }
+body #result .ten-god-cell { color: #e9b650; font-size: 12px; font-weight: 900; }
 body #result .locked-card { border-color: rgba(255,75,43,.42); background: radial-gradient(circle at 80% 10%,rgba(255,75,43,.1),transparent 35%),#151515; }
 body #result .locked-card .eyebrow { color: var(--sw-acid); }
 

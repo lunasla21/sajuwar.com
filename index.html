@@ -4582,45 +4582,54 @@
 
     function getPrimaryWeapon(pillars) {
       const dayStem = splitPillar(pillars.day).gan;
-      const scores = {};
-      const addStem = (stem, weight) => {
-        if (!stem || stem === dayStem) return;
-        const tenGod = getTenGod(dayStem, stem);
-        if (tenGod) scores[tenGod] = (scores[tenGod] || 0) + weight;
+      const monthBranch = splitPillar(pillars.month).ji;
+      const monthMainStem = (hiddenGan[monthBranch] || [])[0];
+      const monthStem = splitPillar(pillars.month).gan;
+      const anchorStem = monthMainStem || monthStem || dayStem;
+      const name = getTenGod(dayStem, anchorStem) || "비견";
+      return {
+        name,
+        desc: tenGodCopy[name] || "원국의 중심 기운을 현실에서 사용하는 힘",
+        dayStem,
+        monthBranch,
+        anchorStem,
+        basis: `일간 ${dayStem}을 기준으로 월지 ${monthBranch}의 본기 ${anchorStem}을 십성으로 환산`
       };
-
-      ["year", "month", "hour"].forEach((key) => addStem(splitPillar(pillars[key]).gan, 3));
-      ["year", "month", "day", "hour"].forEach((key) => {
-        const branch = splitPillar(pillars[key]).ji;
-        (hiddenGan[branch] || []).forEach((stem, index) => addStem(stem, index === 0 ? 2 : 1));
-      });
-
-      const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-      const name = ranked[0]?.[0] || "비견";
-      return { name, desc: tenGodCopy[name] || "원국의 중심 기운을 현실에서 사용하는 힘" };
     }
 
     function renderFreeWeaponCards(name, pillars, sewoon) {
       const weapon = getPrimaryWeapon(pillars);
       const stats = getElementStats(pillars);
       const [strongElement] = getStrongest(stats);
+      const [weakElement] = getWeakest(stats);
+      const monthJi = splitPillar(pillars.month).ji;
+      const monthInfo = seasonInfo[monthJi] || { season: "현재 계절", desc: "월지의 계절과 일간의 힘을 함께 봅니다." };
       const firstYearLuck = sewoon?.list?.[0];
       return `
         <section class="free-weapon-grid" aria-label="${name}님의 무료 전략 카드">
           <article class="box free-weapon-card">
             <p class="eyebrow">YOUR WEAPON</p>
             <h3>「${weapon.name}」</h3>
-            <p>${weapon.desc}</p>
+            <p>${weapon.desc}입니다. 이 이름은 단순 출현 횟수가 아니라 <strong>${weapon.basis}</strong>한 결과입니다.</p>
+            <p class="weapon-basis">아래 만세력의 일간·월지·지장간 본기와 직접 대조할 수 있습니다.</p>
           </article>
           <article class="box free-weapon-card">
             <p class="eyebrow">CURRENT BATTLEFIELD</p>
-            <h3>${strongElement} 기운이 주도하는 전장</h3>
-            <p>${elementCopy[strongElement] || "현재 원국에서 반복되는 힘"}을 먼저 현실 행동으로 바꿔야 합니다.</p>
+            <h3>${monthInfo.season} · ${strongElement} 기운 우세</h3>
+            <p>${monthInfo.desc} 원국 전체에서는 ${strongElement} 기운이 상대적으로 강하고 ${weakElement} 기운은 보완이 필요합니다.</p>
+            <p>강한 기운은 ${elementCopy[strongElement] || "반복되는 힘"}으로 쓰되, 과해질 때의 말투·속도·판단 습관을 함께 조절해야 합니다.</p>
+          </article>
+          <article class="box free-weapon-card">
+            <p class="eyebrow">NEXT MOVE</p>
+            <h3>강점은 쓰고, 과함은 조절하세요</h3>
+            <p>${weapon.name}의 장점을 막연한 성격 설명으로 끝내지 말고, 이번 주에 결과가 남는 행동 하나로 바꾸는 것이 첫 작전입니다.</p>
+            <p>정확한 직업·돈·관계 발현 영역은 원국의 다른 십성과 대운·세운을 함께 연결해야 판단할 수 있습니다.</p>
           </article>
           <article class="box free-weapon-card locked-card">
             <p class="eyebrow">TIMING · LOCKED</p>
             <h3>${firstYearLuck?.year || "다음 세운"}의 Switch</h3>
-            <p>이 무기가 강해지는 구체적인 시기와 영역은 Timing Report에서 열립니다.</p>
+            <p>${firstYearLuck ? `${firstYearLuck.ganji} 세운이 ${firstYearLuck.theme}의 흐름을 움직입니다.` : "세운이 원국의 Weapon을 건드릴 때 현실의 사건과 선택으로 나타납니다."}</p>
+            <p>구체적인 활성화 시기와 돈·직업·관계 중 발현 영역은 Timing Report에서 확인합니다.</p>
           </article>
         </section>
       `;
@@ -5246,6 +5255,13 @@
                 ${cols.map((col) => renderElementCell(splitPillar(col.value).gan, "gan")).join("")}
               </tr>
               <tr>
+                <td class="label">십성</td>
+                ${cols.map((col) => {
+                  const stem = splitPillar(col.value).gan;
+                  return `<td class="ten-god-cell">${escapeHtml(getTenGod(dayGan, stem) || "-")}</td>`;
+                }).join("")}
+              </tr>
+              <tr>
                 <td class="label">지지</td>
                 ${cols.map((col) => renderElementCell(splitPillar(col.value).ji, "ji")).join("")}
               </tr>
@@ -5254,6 +5270,14 @@
                 ${cols.map((col) => {
                   const ji = splitPillar(col.value).ji;
                   return `<td class="hidden-stems">${renderHiddenStems(hiddenGan[ji])}</td>`;
+                }).join("")}
+              </tr>
+              <tr>
+                <td class="label">지장간 십성</td>
+                ${cols.map((col) => {
+                  const ji = splitPillar(col.value).ji;
+                  const gods = (hiddenGan[ji] || []).map((stem) => getTenGod(dayGan, stem));
+                  return `<td class="ten-god-cell">${gods.length ? gods.map(escapeHtml).join(" · ") : "-"}</td>`;
                 }).join("")}
               </tr>
             </table>
@@ -6090,8 +6114,10 @@
             <div class="weapon-reveal-mark">${renderElementGlyph(splitPillar(data.pillars.day).gan)}</div>
             <h2 class="section-title">「${primaryWeapon.name}」</h2>
             <p class="weapon-reveal-copy">당신은 <strong>${primaryWeapon.desc}</strong>을 가지고 있습니다.</p>
-            <p>하지만 무기는 가지고 있다고 항상 사용할 수 있는 것이 아닙니다.<br>이 무기가 강하게 작동하는 시기가 따로 있습니다.</p>
+            <p class="weapon-basis">${primaryWeapon.basis}</p>
+            <p>하지만 무기는 가지고 있다고 항상 사용할 수 있는 것이 아닙니다.<br>원국의 다른 기운과 대운·세운이 연결될 때 강하게 작동합니다.</p>
           </section>
+          ${renderPillars(data.pillars)}
           ${renderFreeWeaponCards(name, data.pillars, data.sewoon)}
           ${renderPaidLockFromJijanggan(name)}
         `;
