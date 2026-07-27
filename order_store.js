@@ -196,6 +196,7 @@ function createOrderStore(baseDir) {
       (purchase) => purchase.user_id === order.user_id && purchase.product_id === order.product_id
     );
     const purchase = {
+      ...(existingIndex >= 0 ? purchases[existingIndex] : {}),
       id: existingIndex >= 0 ? purchases[existingIndex].id : `PUR_${order.id}`,
       user_id: order.user_id,
       product_id: order.product_id,
@@ -285,13 +286,16 @@ function createOrderStore(baseDir) {
     const currentProfile = purchases[index].report_profile || null;
     const currentKey = currentProfile ? reportProfileKey(currentProfile) : "";
 
-    if (currentProfile && currentKey !== nextKey) {
+    const cacheExpiresAt = Date.parse(purchases[index].report_expires_at || "");
+    const hasActiveCache = purchases[index].report_cache && cacheExpiresAt > Date.now();
+
+    if (currentProfile && currentKey !== nextKey && hasActiveCache) {
       throw makeError("This purchase is already assigned to another birth profile", 403, {
         report_profile: currentProfile,
       });
     }
 
-    if (!currentProfile) {
+    if (!currentProfile || currentKey !== nextKey) {
       purchases[index] = {
         ...purchases[index],
         report_profile: normalized,
@@ -302,6 +306,44 @@ function createOrderStore(baseDir) {
     }
 
     return purchases[index];
+  }
+
+  function getReportCache({ user_id, product_id = "premium_report" }) {
+    const purchase = getPurchase({ user_id, product_id });
+    if (!purchase || !purchase.report_cache) return null;
+    const expiresAt = Date.parse(purchase.report_expires_at || "");
+    if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) return null;
+    return {
+      response: purchase.report_cache,
+      profile: purchase.report_profile || null,
+      cached_at: purchase.report_cached_at,
+      expires_at: purchase.report_expires_at,
+    };
+  }
+
+  function saveReportCache({
+    user_id,
+    product_id = "premium_report",
+    profile,
+    response,
+    ttl_ms = 24 * 60 * 60 * 1000,
+  }) {
+    const purchases = listPurchases();
+    const index = purchases.findIndex(
+      (purchase) => purchase.user_id === user_id && purchase.product_id === product_id
+    );
+    if (index === -1) throw makeError("Purchase required", 403);
+    const now = new Date();
+    purchases[index] = {
+      ...purchases[index],
+      report_profile: normalizeReportProfile(profile),
+      report_profile_key: reportProfileKey(profile),
+      report_cache: response,
+      report_cached_at: now.toISOString(),
+      report_expires_at: new Date(now.getTime() + ttl_ms).toISOString(),
+    };
+    writePurchases(purchases);
+    return getReportCache({ user_id, product_id });
   }
 
   function cancelOrder(orderId) {
@@ -355,6 +397,7 @@ function createOrderStore(baseDir) {
     createBankTransferOrder,
     findOrder,
     findUserOrders,
+    getReportCache,
     getPurchase,
     hasPurchase,
     ensureReportProfileAccess,
@@ -363,6 +406,7 @@ function createOrderStore(baseDir) {
     markPurchaseAccess,
     markDepositWaiting,
     revokePurchase,
+    saveReportCache,
   };
 }
 

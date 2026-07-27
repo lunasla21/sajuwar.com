@@ -3704,10 +3704,12 @@
         <span>SAJUWAR</span>
       </a>
       <nav class="nav" aria-label="주요 메뉴">
-        <a href="#sajuForm">WEAPON</a>
-        <a href="#report">REPORTS</a>
-        <a href="#content-map">FREE TOOLS</a>
-        <a href="/lecture.html">ACADEMY</a>
+        <a href="#sajuForm">무료 분석</a>
+        <a href="#content-map">메뉴</a>
+        <a href="#consulting">상담 신청</a>
+        <a href="#premium">유료 해석</a>
+        <a href="/strategy-room.html">QUEST · XP</a>
+        <a href="/payment.html">결제</a>
       </nav>
       <button class="readability-toggle" id="readabilityToggle" type="button" aria-pressed="false">큰글씨</button>
     </header>
@@ -3740,6 +3742,18 @@
       <div class="journey-step"><small>02</small><strong>SWITCH</strong><span>힘이 켜지는 조건</span></div>
       <div class="journey-step"><small>03</small><strong>TIMING</strong><span>움직여야 할 시기</span></div>
       <div class="journey-step"><small>04</small><strong>STRATEGY</strong><span>지금 해야 할 행동</span></div>
+    </section>
+
+    <section class="quest-return" aria-label="SAJU WAR 퀘스트와 커뮤니티">
+      <div>
+        <p class="eyebrow">QUEST SYSTEM · 다시 열림</p>
+        <h2>오늘의 선택을<br>작전으로 바꾸세요.</h2>
+        <p>나의 전장에서 작은 미션을 완료하고 XP를 쌓아보세요. Level, Guild, War Room에서 선택과 실행의 기록을 계속 이어갈 수 있습니다.</p>
+      </div>
+      <div class="quest-return-actions">
+        <a href="/strategy-room.html">오늘의 퀘스트 시작 →</a>
+        <span>QUEST · XP · LEVEL · GUILD · WAR ROOM</span>
+      </div>
     </section>
 
     <section class="input-band" aria-label="사주 입력">
@@ -4709,12 +4723,12 @@
         return;
       }
       paidEntryMode = true;
-      const savedProfile = getSavedSajuProfile();
-      if (savedProfile && applySavedSajuProfile(savedProfile)) {
-        analyze(true);
-      } else {
-        showPaidEntryForm();
-      }
+      openSavedPaidReport().then((opened) => {
+        if (opened) return;
+        const savedProfile = getSavedSajuProfile();
+        if (savedProfile && applySavedSajuProfile(savedProfile)) analyze(true);
+        else showPaidEntryForm();
+      });
     });
 
     function getSavedSajuProfile() {
@@ -4841,6 +4855,41 @@
 
     function canViewPaidReport() {
       return isPaid || hasDeveloperAccess();
+    }
+
+    async function openSavedPaidReport() {
+      if (!accessToken || !canViewPaidReport()) return false;
+      try {
+        const response = await fetch("/api/my/premium-report", {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        if (!response.ok) return false;
+        const saved = await response.json();
+        if (!saved.cached || !saved.response || !saved.profile) return false;
+        const data = saved.response;
+        const profile = saved.profile;
+        const report = cleanText(data.result);
+        lastPremiumContext = {
+          profile,
+          report,
+          pillars: data.pillars,
+          daewoon: data.daewoon,
+          sewoon: data.sewoon,
+          dailyLuck: data.dailyLuck,
+        };
+        lastFullResult = `
+          ${renderPremiumWarDashboard(profile.name || "회원", data, report)}
+          ${renderDeveloperDebugPanel(data.developer_debug)}
+        `;
+        document.getElementById("result").innerHTML = lastFullResult;
+        document.getElementById("strategyUpsell").hidden = false;
+        document.getElementById("report").scrollIntoView({ behavior: "smooth", block: "start" });
+        const expires = new Date(saved.expires_at);
+        showToast(`저장된 리포트를 다시 열었습니다. ${expires.toLocaleString("ko-KR")}까지 열람할 수 있습니다.`);
+        return true;
+      } catch (error) {
+        return false;
+      }
     }
 
     function renderPurchaseRequiredMessage() {
@@ -6044,6 +6093,7 @@
       await refreshPurchaseAccess();
       if (canViewPaidReport()) {
         paidEntryMode = true;
+        if (await openSavedPaidReport()) return;
         const savedProfile = getSavedSajuProfile();
         if (savedProfile) applySavedSajuProfile(savedProfile);
         if (document.getElementById("name").value.trim()) {

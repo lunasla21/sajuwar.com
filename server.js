@@ -796,6 +796,7 @@ ${sewoon.startInfo}
 async function handleAnalyze(req, res) {
   try {
     const { name, birth, time, gender, calendarType, paidReport } = req.body;
+    let paidUser = null;
 
     if (!name || !birth || !time || !gender) {
       return res.status(400).json({
@@ -807,6 +808,7 @@ async function handleAnalyze(req, res) {
     if (paidReport) {
       const user = requireLogin(req, res);
       if (!user) return;
+      paidUser = user;
       try {
         orderStore.ensureReportProfileAccess({
           user_id: user.id,
@@ -938,6 +940,13 @@ async function handleAnalyze(req, res) {
           finalMarkdown: report,
           goldenDatasetGuidance,
           aiBrainContext,
+        });
+      }
+      if (paidReport && paidUser) {
+        orderStore.saveReportCache({
+          user_id: paidUser.id,
+          profile: { name, birth, time, gender, calendarType: safeCalendar },
+          response,
         });
       }
       return res.json({
@@ -1145,6 +1154,13 @@ SAJUWAR 해석 원칙:
         aiBrainContext,
       });
     }
+    if (paidReport && paidUser) {
+      orderStore.saveReportCache({
+        user_id: paidUser.id,
+        profile: { name, birth, time, gender, calendarType: safeCalendar },
+        response,
+      });
+    }
     res.json(response);
   } catch (error) {
     console.error("분석 오류:", error);
@@ -1337,6 +1353,23 @@ app.get("/api/report", (req, res) => {
   if (!canAccessProduct(req, "premium_report")) return sendPurchaseRequired(res);
   markProductAccess(req, "premium_report", "view");
   res.json({ ok: true, message: "report access granted" });
+});
+
+app.get("/api/my/premium-report", (req, res) => {
+  const user = requireLogin(req, res);
+  if (!user) return;
+  if (!orderStore.hasPurchase({ user_id: user.id, product_id: "premium_report" })) {
+    return sendPurchaseRequired(res);
+  }
+  const cached = orderStore.getReportCache({ user_id: user.id, product_id: "premium_report" });
+  if (!cached) {
+    return res.status(404).json({
+      error: "아직 저장된 리포트가 없거나 24시간 열람 기간이 끝났습니다.",
+      cached: false,
+    });
+  }
+  markProductAccess(req, "premium_report", "reopen");
+  res.json({ cached: true, ...cached });
 });
 
 app.post("/api/premium-report/chat", async (req, res) => {
