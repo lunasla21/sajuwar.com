@@ -1,0 +1,187 @@
+:root {
+  color-scheme: dark;
+  --sw-acid: #d8ff38;
+  --sw-ink: #070707;
+  --sw-paper: #eeeae0;
+}
+
+html body {
+  color: var(--sw-paper);
+  background: radial-gradient(circle at 78% 6%, rgba(216,255,56,.08), transparent 27%), #070707;
+}
+
+body .topbar {
+  width: 100%;
+  height: 70px;
+  margin: 0;
+  padding: 0 max(24px,4vw);
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  background: rgba(7,7,7,.9);
+  backdrop-filter: blur(16px);
+}
+body .brand { color: #f4f1e8; letter-spacing: .08em; }
+body .brand-mark {
+  width: 38px;
+  height: 38px;
+  color: #050505;
+  border: 0;
+  border-radius: 0;
+  background: var(--sw-acid);
+  transform: skew(-5deg);
+}
+body .nav { color: #aaa; font-size: 11px; letter-spacing: .1em; }
+body .nav a:hover { color: var(--sw-acid); }
+body .readability-toggle { color: #aaa; border-color: #333; background: #111; }
+
+body .hero {
+  width: 100%;
+  min-height: calc(100svh - 70px);
+  padding: 70px max(24px,8vw);
+  grid-template-columns: 1.2fr .8fr;
+  overflow: hidden;
+  isolation: isolate;
+}
+body .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(90deg,rgba(7,7,7,.97) 0 42%,rgba(7,7,7,.35) 72%,rgba(7,7,7,.75)),url("hero-saju-war.jpg") center right/cover no-repeat;
+}
+body .hero::after {
+  content: "";
+  position: absolute;
+  width: min(52vw,700px);
+  aspect-ratio: 1;
+  right: 2vw;
+  top: 50%;
+  z-index: -1;
+  border: 1px solid rgba(216,255,56,.26);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: inset 0 0 100px rgba(216,255,56,.06),0 0 120px rgba(216,255,56,.05);
+}
+body .hero-copy { max-width: 850px; }
+body .hero .eyebrow { color: #aaa; font-size: 11px; letter-spacing: .18em; }
+body .hero h1 {
+  margin: 24px 0 28px;
+  color: #f4f1e8;
+  font-family: Arial Black,Impact,sans-serif;
+  font-size: clamp(70px,10vw,150px);
+  line-height: .8;
+  letter-spacing: -.075em;
+}
+body .hero h1 span { color: var(--sw-acid); }
+body .hero-manifesto { margin-bottom: 20px; color: #f4f1e8; font-size: clamp(21px,2.4vw,34px); line-height: 1.36; }
+body .hero-manifesto mark { color: inherit; background: none; }
+body .lead { max-width: 600px; color: #aaa; font-size: 15px; line-height: 1.85; }
+body .hero-actions a {
+  min-height: 58px;
+  padding: 0 24px;
+  color: #050505;
+  border: 0;
+  border-radius: 0;
+  background: var(--sw-acid);
+  box-shadow: 6px 6px 0 rgba(255,255,255,.12);
+}
+body .hero-actions a.secondary-link { color: #ccc; border-bottom: 1px solid #555; background: transparent; box-shadow: none; }
+body .hero-map { display: none; }
+
+body .journey-strip { display: grid; grid-template-columns: repeat(4,1fr); color: #090909; background: #eeeae0; }
+body .journey-step { min-height: 145px; padding: 22px max(18px,2vw); display: flex; flex-direction: column; border-right: 1px solid #aaa; }
+body .journey-step:last-child { border-right: 0; }
+body .journey-step small { color: #777; font: 10px monospace; }
+body .journey-step strong { margin-top: auto; font-size: 18px; }
+body .journey-step span { margin-top: 5px; color: #666; font-size: 12px; }
+
+body .input-band { width: 100%; padding: 105px max(24px,8vw); background: #0d0d0d; }
+body .input-band::before { content: "02 — FREE WEAPON TEST"; display: block; max-width: 1040px; margin: 0 auto 15px; color: #888; font: 900 11px monospace; letter-spacing: .16em; }
+body .input-band::after { content: "무료 분석은 모든 것을 알려주는 대신, 지금 가장 먼저 알아야 할 당신의 무기를 찾습니다."; display: block; max-width: 1040px; margin: 18px auto 0; color: #777; font-size: 12px; text-align: center; }
+body .birth-panel { max-width: 1040px; margin: 0 auto; padding: 42px; color: #eee; border: 1px solid #333; border-radius: 0; background: #151515; box-shadow: 14px 14px 0 #030303; }
+body .birth-panel::before { content: "당신의 첫 번째 무기를 발견하세요."; display: block; margin-bottom: 28px; color: #f4f1e8; font-size: clamp(28px,4vw,48px); font-weight: 950; letter-spacing: -.05em; }
+body .birth-panel label { color: #aaa; font-size: 12px; }
+body .birth-panel input,body .birth-panel select { color: #eee; border-color: #383838; border-radius: 0; background: #090909; }
+body .birth-panel .button-row { margin-top: 26px; }
+body .birth-panel .button-row button:first-child { width: 100%; min-height: 58px; color: #050505; background: var(--sw-acid); box-shadow: 6px 6px 0 rgba(255,255,255,.1); }
+body .birth-panel .button-row .secondary { display: none; }
+
+body #report { padding-top: 100px; }
+body #report>.section-head .eyebrow { color: var(--sw-acid); }
+body #report>.section-head h2 { color: #f4f1e8; font-size: clamp(38px,5vw,68px); letter-spacing: -.05em; }
+body #report>.section-head p { color: #888; }
+body #result .box { color: #eee; border-color: #333; border-radius: 0; background: #111; box-shadow: none; }
+body #result .section-title,body #result h2,body #result h3,body #result strong { color: #f2eee3; }
+body #result p,body #result li,body #result .small { color: #aaa; }
+body #result .reading-card,body #result .guide-card,body #result .paid-lock-card,body #result .daily-luck-mini { border-color: #333; background: #171717; }
+body #result .upgrade-callout { border: 1px solid rgba(216,255,56,.5); background: radial-gradient(circle at 85% 20%,rgba(216,255,56,.11),transparent 34%),#111; }
+body #result .upgrade-callout .eyebrow,body #result .price-badge { color: var(--sw-acid); }
+body #result .upgrade-callout button { min-height: 58px; color: #050505; background: var(--sw-acid); }
+body #result .weapon-reveal {
+  min-height: 590px;
+  padding: clamp(30px,6vw,70px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  background: radial-gradient(circle at 50% 42%,rgba(216,255,56,.2),transparent 25%),#101010;
+}
+body #result .weapon-reveal::before {
+  content: "";
+  position: absolute;
+  width: 330px;
+  aspect-ratio: 1;
+  border: 1px dashed rgba(216,255,56,.45);
+  border-radius: 50%;
+}
+body #result .weapon-reveal>* { position: relative; z-index: 1; }
+body #result .weapon-reveal .eyebrow { color: var(--sw-acid); letter-spacing: .18em; }
+body #result .weapon-reveal-mark {
+  width: 125px;
+  height: 125px;
+  margin: 26px 0;
+  display: grid;
+  place-items: center;
+  color: var(--sw-acid);
+  border: 1px solid var(--sw-acid);
+  background: #090909;
+  transform: rotate(45deg);
+  font-size: 36px;
+  box-shadow: 0 0 70px rgba(216,255,56,.28);
+}
+body #result .weapon-reveal-mark>* { transform: rotate(-45deg); }
+body #result .weapon-reveal h2 { margin-bottom: 14px; font-size: clamp(38px,6vw,62px); }
+body #result .weapon-reveal-copy { max-width: 600px; font-size: 18px; }
+
+body .strategy-upsell { width: min(1180px,calc(100% - 40px)); margin: 80px auto; padding: clamp(28px,5vw,70px); display: grid; grid-template-columns: 1.1fr .9fr; gap: 60px; align-items: center; border: 1px solid #333; background: radial-gradient(circle at 82% 48%,rgba(216,255,56,.1),transparent 28%),#101010; }
+body .strategy-upsell .eyebrow { color: var(--sw-acid); }
+body .strategy-upsell h2 { margin: 18px 0; color: #f4f1e8; font-size: clamp(40px,6vw,78px); line-height: 1; letter-spacing: -.06em; }
+body .strategy-upsell p { color: #999; }
+body .strategy-price { padding: 28px; border: 1px solid #444; background: #090909; }
+body .strategy-price strong { display: block; color: #fff; font-size: 34px; }
+body .strategy-price a { min-height: 56px; margin-top: 20px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; color: #050505; background: var(--sw-acid); font-weight: 900; }
+body .footer { color: #888; border-color: #222; background: #050505; }
+body .footer h3 { color: #eee; }
+
+@media (max-width:760px) {
+  body .topbar { height: 62px; padding: 0 18px; }
+  body .nav { display: none; }
+  body .readability-toggle { font-size: 11px; min-height: 34px; }
+  body .hero { min-height: calc(100svh - 62px); padding: 58px 20px 34px; display: block; }
+  body .hero::before { background: linear-gradient(180deg,rgba(7,7,7,.9),rgba(7,7,7,.92)),url("hero-saju-war.jpg") center/cover; }
+  body .hero::after { width: 360px; right: -190px; top: 48%; opacity: .65; }
+  body .hero h1 { margin-top: 48px; font-size: clamp(62px,20vw,86px); }
+  body .hero-manifesto { max-width: 340px; font-size: 20px; }
+  body .lead { max-width: 350px; font-size: 13px; }
+  body .hero-actions { margin-top: 25px; }
+  body .hero-actions a { width: 100%; }
+  body .hero-actions a.secondary-link { min-height: 42px; }
+  body .journey-strip { grid-template-columns: 1fr 1fr; }
+  body .journey-step { min-height: 120px; border-bottom: 1px solid #aaa; }
+  body .input-band { padding: 78px 18px; }
+  body .birth-panel { padding: 30px 18px; }
+  body .field-grid { grid-template-columns: 1fr; }
+  body .strategy-upsell { grid-template-columns: 1fr; gap: 28px; margin-block: 50px; }
+}

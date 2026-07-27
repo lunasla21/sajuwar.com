@@ -14,7 +14,7 @@ const PAYMENT_METHOD = {
 const PRODUCTS = {
   premium_report: {
     id: "premium_report",
-    name: "\uc0ac\uc8fc\uc804\uc7c1 \ud504\ub9ac\ubbf8\uc5c4 \ub9ac\ud3ec\ud2b8",
+    name: "WEAPON TIMING REPORT",
     type: "report",
     amount: 9900,
     accessUrl: "/?paid=1",

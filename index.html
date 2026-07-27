@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>쭈쌤의 사주전쟁 | 무료 AI 사주 분석</title>
-  <meta name="description" content="생년월일만 입력하면 내 강점, 관계, 올해 흐름을 한 장의 전략 카드로 확인하세요." />
+  <title>SAJU WAR | 내 사주의 무기와 타이밍</title>
+  <meta name="description" content="내 사주의 무기는 무엇이고 언제 강해질까? 무료 Weapon Test로 나의 힘을 발견하고 선택의 타이밍을 확인하세요." />
   <style>
     :root {
       color-scheme: light;
@@ -74,6 +74,312 @@
       letter-spacing: -0.04em;
       line-height: 1;
       isolation: isolate;
+    }
+
+    /* 2026 conversion-first home refresh — existing feature styles remain intact */
+    :root {
+      color-scheme: dark;
+      --sw-acid: #d8ff38;
+      --sw-ink: #070707;
+      --sw-panel: #111;
+      --sw-paper: #eeeae0;
+      --sw-line: rgba(255,255,255,.16);
+    }
+
+    body {
+      color: var(--sw-paper);
+      background:
+        radial-gradient(circle at 78% 6%, rgba(216,255,56,.08), transparent 27%),
+        #070707;
+    }
+
+    .topbar {
+      width: 100%;
+      height: 70px;
+      padding: 0 max(24px, 4vw);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      background: rgba(7,7,7,.88);
+      backdrop-filter: blur(16px);
+      position: relative;
+      z-index: 20;
+    }
+
+    .brand { color: #f4f1e8; letter-spacing: .08em; }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      color: #050505;
+      border: 0;
+      background: var(--sw-acid);
+      transform: skew(-5deg);
+    }
+    .nav { color: #aaa; font-size: 11px; letter-spacing: .1em; }
+    .nav a:hover { color: var(--sw-acid); }
+    .readability-toggle {
+      color: #aaa;
+      border-color: #333;
+      background: #111;
+    }
+
+    .hero {
+      width: 100%;
+      min-height: calc(100svh - 70px);
+      padding: 70px max(24px, 8vw);
+      grid-template-columns: 1.2fr .8fr;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(7,7,7,.96) 0 42%, rgba(7,7,7,.3) 72%, rgba(7,7,7,.7)),
+        url("assets/hero-saju-war.jpg") center right / cover no-repeat;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: min(52vw, 700px);
+      aspect-ratio: 1;
+      right: 2vw;
+      top: 50%;
+      z-index: -1;
+      border: 1px solid rgba(216,255,56,.26);
+      border-radius: 50%;
+      transform: translateY(-50%);
+      box-shadow: inset 0 0 100px rgba(216,255,56,.06), 0 0 120px rgba(216,255,56,.05);
+    }
+    .hero-copy { max-width: 850px; }
+    .hero .eyebrow {
+      color: #aaa;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      margin: 24px 0 28px;
+      color: #f4f1e8;
+      font-family: Arial Black, Impact, sans-serif;
+      font-size: clamp(70px, 10vw, 150px);
+      line-height: .8;
+      letter-spacing: -.075em;
+    }
+    .hero h1 span { color: var(--sw-acid); }
+    .hero-manifesto {
+      margin-bottom: 20px;
+      color: #f4f1e8;
+      font-size: clamp(21px, 2.4vw, 34px);
+      line-height: 1.36;
+    }
+    .hero-manifesto mark {
+      color: inherit;
+      background: none;
+    }
+    .lead { max-width: 600px; color: #aaa; font-size: 15px; line-height: 1.85; }
+    .hero-actions a {
+      min-height: 58px;
+      padding: 0 24px;
+      color: #050505;
+      border: 0;
+      background: var(--sw-acid);
+      box-shadow: 6px 6px 0 rgba(255,255,255,.12);
+      font-size: 14px;
+    }
+    .hero-actions a.secondary-link {
+      color: #ccc;
+      border-bottom: 1px solid #555;
+      background: transparent;
+    }
+    .hero-map { display: none; }
+
+    .journey-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      color: #090909;
+      background: #eeeae0;
+      border-top: 1px solid #aaa;
+      border-bottom: 1px solid #aaa;
+    }
+    .journey-step {
+      min-height: 145px;
+      padding: 22px max(18px, 2vw);
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #aaa;
+    }
+    .journey-step:last-child { border-right: 0; }
+    .journey-step small { color: #777; font: 10px monospace; }
+    .journey-step strong { margin-top: auto; font-size: 18px; }
+    .journey-step span { margin-top: 5px; color: #666; font-size: 12px; }
+
+    .input-band {
+      width: 100%;
+      padding: 105px max(24px, 8vw);
+      background: #0d0d0d;
+    }
+    .input-band::before {
+      content: "02 — FREE WEAPON TEST";
+      display: block;
+      max-width: 1040px;
+      margin: 0 auto 15px;
+      color: #888;
+      font: 900 11px monospace;
+      letter-spacing: .16em;
+    }
+    .input-band::after {
+      content: "무료 분석은 모든 것을 알려주는 대신, 지금 가장 먼저 알아야 할 당신의 무기를 찾습니다.";
+      display: block;
+      max-width: 1040px;
+      margin: 18px auto 0;
+      color: #777;
+      font-size: 12px;
+      text-align: center;
+    }
+    .birth-panel {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 42px;
+      color: #eee;
+      border: 1px solid #333;
+      border-radius: 0;
+      background: #151515;
+      box-shadow: 14px 14px 0 #030303;
+    }
+    .birth-panel::before {
+      content: "당신의 첫 번째 무기를 발견하세요.";
+      display: block;
+      margin-bottom: 28px;
+      color: #f4f1e8;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 950;
+      letter-spacing: -.05em;
+    }
+    .birth-panel label { color: #aaa; font-size: 12px; }
+    .birth-panel input, .birth-panel select {
+      color: #eee;
+      border-color: #383838;
+      border-radius: 0;
+      background: #090909;
+    }
+    .birth-panel input:focus, .birth-panel select:focus {
+      outline: 1px solid var(--sw-acid);
+      border-color: var(--sw-acid);
+    }
+    .birth-panel .button-row { margin-top: 26px; }
+    .birth-panel .button-row button:first-child {
+      width: 100%;
+      min-height: 58px;
+      color: #050505;
+      background: var(--sw-acid);
+      box-shadow: 6px 6px 0 rgba(255,255,255,.1);
+    }
+    .birth-panel .button-row .secondary { display: none; }
+
+    .content-band { width: min(1180px, calc(100% - 40px)); }
+    #report { padding-top: 100px; }
+    #report > .section-head .eyebrow { color: var(--sw-acid); }
+    #report > .section-head h2 { color: #f4f1e8; font-size: clamp(38px, 5vw, 68px); letter-spacing: -.05em; }
+    #report > .section-head p { color: #888; }
+    #result .box {
+      color: #eee;
+      border-color: #333;
+      border-radius: 0;
+      background: #111;
+      box-shadow: none;
+    }
+    #result .section-title, #result h2, #result h3, #result strong { color: #f2eee3; }
+    #result p, #result li, #result .small { color: #aaa; }
+    #result .reading-card, #result .guide-card, #result .paid-lock-card,
+    #result .daily-luck-mini {
+      border-color: #333;
+      background: #171717;
+    }
+    #result .upgrade-callout {
+      border: 1px solid rgba(216,255,56,.5);
+      background: radial-gradient(circle at 85% 20%, rgba(216,255,56,.11), transparent 34%), #111;
+    }
+    #result .upgrade-callout .eyebrow, #result .price-badge { color: var(--sw-acid); }
+    #result .upgrade-callout button {
+      min-height: 58px;
+      color: #050505;
+      background: var(--sw-acid);
+    }
+
+    .strategy-upsell {
+      width: min(1180px, calc(100% - 40px));
+      margin: 80px auto;
+      padding: clamp(28px, 5vw, 70px);
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 60px;
+      align-items: center;
+      border: 1px solid #333;
+      background: radial-gradient(circle at 82% 48%, rgba(216,255,56,.1), transparent 28%), #101010;
+    }
+    .strategy-upsell .eyebrow { color: var(--sw-acid); }
+    .strategy-upsell h2 {
+      margin: 18px 0;
+      color: #f4f1e8;
+      font-size: clamp(40px, 6vw, 78px);
+      line-height: 1;
+      letter-spacing: -.06em;
+    }
+    .strategy-upsell p { color: #999; }
+    .strategy-price {
+      padding: 28px;
+      border: 1px solid #444;
+      background: #090909;
+    }
+    .strategy-price strong { display: block; color: #fff; font-size: 34px; }
+    .strategy-price a {
+      min-height: 56px;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      color: #050505;
+      background: var(--sw-acid);
+      font-weight: 900;
+    }
+
+    .footer {
+      color: #888;
+      border-color: #222;
+      background: #050505;
+    }
+    .footer h3 { color: #eee; }
+    .footer a { color: #bbb; }
+
+    @media (max-width: 760px) {
+      .topbar { height: 62px; padding: 0 18px; }
+      .nav { display: none; }
+      .readability-toggle { font-size: 11px; min-height: 34px; }
+      .hero {
+        min-height: calc(100svh - 62px);
+        padding: 58px 20px 34px;
+        display: block;
+      }
+      .hero::before {
+        background:
+          linear-gradient(180deg, rgba(7,7,7,.9), rgba(7,7,7,.9)),
+          url("assets/hero-saju-war.jpg") center / cover;
+      }
+      .hero::after { width: 360px; right: -190px; top: 48%; opacity: .65; }
+      .hero h1 { margin-top: 48px; font-size: clamp(62px, 20vw, 86px); }
+      .hero-manifesto { max-width: 340px; font-size: 20px; }
+      .lead { max-width: 350px; font-size: 13px; }
+      .hero-actions { margin-top: 25px; }
+      .hero-actions a { width: 100%; }
+      .hero-actions a.secondary-link { min-height: 42px; }
+      .journey-strip { grid-template-columns: 1fr 1fr; }
+      .journey-step { min-height: 120px; border-bottom: 1px solid #aaa; }
+      .input-band { padding: 78px 18px; }
+      .birth-panel { padding: 30px 18px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .strategy-upsell { grid-template-columns: 1fr; gap: 28px; margin-block: 50px; }
     }
 
     .brand-mark::before {
@@ -3388,6 +3694,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="/assets/conversion.css" />
 </head>
 <body>
   <div class="app" id="top">
@@ -3397,34 +3704,42 @@
         <span>SAJUWAR</span>
       </a>
       <nav class="nav" aria-label="주요 메뉴">
-        <a href="#report">무료 분석</a>
-        <a href="#content-map">메뉴</a>
-        <a href="#consulting">상담 신청</a>
-        <a href="#premium">유료 해석</a>
-        <a href="/payment.html">결제</a>
+        <a href="#sajuForm">WEAPON</a>
+        <a href="#report">REPORTS</a>
+        <a href="#content-map">FREE TOOLS</a>
+        <a href="/lecture.html">ACADEMY</a>
       </nav>
       <button class="readability-toggle" id="readabilityToggle" type="button" aria-pressed="false">큰글씨</button>
     </header>
 
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">원국부터 보는 AI 사주풀이</p>
-        <h1 id="hero-title">쭈쌤의 사주전쟁</h1>
+        <p class="eyebrow">01 — YOUR FIRST MISSION</p>
+        <h1 id="hero-title">FIND YOUR<br><span>WEAPON.</span></h1>
         <p class="hero-manifesto">
-          사주는 오행의 전쟁터<br><mark>내 무기는 무엇일까</mark>
+          당신에게도 무기가 있다.<br><mark>문제는 언제 꺼내야 하는가다.</mark>
         </p>
         <p class="lead">
-          오행 비율, 원국의 충돌, 육친, 대운과 세운을 순서대로 풀어드립니다.
+          사주는 정해진 미래가 아닙니다.<br>
+          당신이 가진 무기와 그 무기가 강해지는 시기를 분석해<br>
+          선택의 타이밍을 찾는 전략 지도입니다.
         </p>
         <div class="hero-actions" aria-label="주요 행동">
-          <a href="#sajuForm">무료 분석 시작</a>
-          <a class="secondary-link" href="#content-map">메뉴 한눈에 보기</a>
+          <a href="#sajuForm">내 사주의 무기 찾기 →</a>
+          <a class="secondary-link" href="#weapon-system">SAJU WAR 알아보기 ↓</a>
         </div>
       </div>
 
       <div class="hero-map" aria-label="2026 생활명리 핵심 세운 분석 신판 소개">
         <img class="hero-poster" src="assets/life-myeongri-2026.jpg" alt="2026 신판 소개 생활명리 핵심 세운 분석" />
       </div>
+    </section>
+
+    <section class="journey-strip" id="weapon-system" aria-label="SAJU WAR 분석 구조">
+      <div class="journey-step"><small>01</small><strong>WEAPON</strong><span>내가 가진 힘</span></div>
+      <div class="journey-step"><small>02</small><strong>SWITCH</strong><span>힘이 켜지는 조건</span></div>
+      <div class="journey-step"><small>03</small><strong>TIMING</strong><span>움직여야 할 시기</span></div>
+      <div class="journey-step"><small>04</small><strong>STRATEGY</strong><span>지금 해야 할 행동</span></div>
     </section>
 
     <section class="input-band" aria-label="사주 입력">
@@ -3465,7 +3780,7 @@
           </label>
         </div>
         <div class="button-row">
-          <button type="submit">무료 분석 시작</button>
+          <button type="submit">내 사주의 무기 찾기 →</button>
           <button class="secondary" type="button" onclick="openPaidReport()">결제하고 전체보기</button>
           <button class="secondary" type="button" onclick="downloadPDF()">PDF 저장</button>
         </div>
@@ -3514,6 +3829,20 @@
         </div>
       </div>
     </main>
+
+    <section class="strategy-upsell" aria-labelledby="strategy-map-title">
+      <div>
+        <p class="eyebrow">YOUR NEXT BATTLE</p>
+        <h2 id="strategy-map-title">앞으로 10년의<br>전장은 어떻게 움직일까?</h2>
+        <p>하나의 세운이 아니라 대운·세운·월운을 하나의 Strategy Map으로 연결합니다. 핵심·보조 Weapon, Hidden Item, 돈·직업·관계 전략과 지금 해야 할 행동을 확인하세요.</p>
+      </div>
+      <div class="strategy-price">
+        <small>SAJU WAR PREMIUM STRATEGY REPORT</small>
+        <strong>39,800원</strong>
+        <span>PHASE 2 · Strategy Map / PDF</span>
+        <a href="/support">전체 Strategy Map 상담하기 <span>↗</span></a>
+      </div>
+    </section>
 
     <section class="content-band" id="choice-consult">
       <div class="section-head">
@@ -5450,29 +5779,29 @@
     function renderPaidLockFromJijanggan(name) {
       return `
         <section class="box upgrade-callout" id="premium">
-          <p class="eyebrow">유료 구간 시작</p>
-          <h2 class="section-title">지장간 아이템 분석부터 유료 리포트에서 열립니다</h2>
-          <p>${name}님의 원국 입구는 무료로 확인했습니다. 이제부터는 숨은 무기창고인 지장간, 대운 스위치, 세운 타이밍, 돈·일·관계 행동전략까지 연결되는 심화 구간입니다.</p>
-          <span class="price-badge">전체 심화 리포트 9,900원</span>
+          <p class="eyebrow">WEAPON TIMING REPORT</p>
+          <h2 class="section-title">그래서 이 무기는 언제 강해질까?</h2>
+          <p>${name}님의 Weapon은 확인했습니다. 이제 지장간 Hidden Item, 현재 대운의 Switch, 현재·다음 세운을 연결해 무기가 돈·직업·관계 중 어디에서 강하게 작동하는지 확인합니다.</p>
+          <span class="price-badge">WEAPON TIMING REPORT · 9,900원</span>
           <div class="paid-lock-grid">
             <article class="paid-lock-card">
-              <strong>숨은 아이템</strong>
-              <p class="small">겉으로 보이지 않는 재능, 돈맥, 직업 힌트, 관계 패턴을 구체적으로 풉니다.</p>
+              <strong>HIDDEN ITEM</strong>
+              <p class="small">지장간에 숨어 있는 재능, 돈맥, 직업 힌트와 관계 패턴을 공개합니다.</p>
             </article>
             <article class="paid-lock-card">
-              <strong>대운 스위치</strong>
-              <p class="small">어느 10년 운에서 숨은 아이템이 켜지는지 흐름으로 연결합니다.</p>
+              <strong>CURRENT SWITCH</strong>
+              <p class="small">현재 대운에서 어떤 조건이 갖춰질 때 숨은 Item이 켜지는지 확인합니다.</p>
             </article>
             <article class="paid-lock-card">
-              <strong>세운 타이밍</strong>
-              <p class="small">올해와 앞으로의 해에 실제로 움직여야 할 행동 카드를 정리합니다.</p>
+              <strong>ACTIVATION TIMING</strong>
+              <p class="small">현재·다음 세운에서 실제로 움직여야 할 시기와 행동 카드를 정리합니다.</p>
             </article>
             <article class="paid-lock-card">
-              <strong>돈·일·관계 전략</strong>
-              <p class="small">돈, 일, 명예, 관계에서 어떤 방식으로 아이템을 써야 하는지 봅니다.</p>
+              <strong>NEXT MOVE</strong>
+              <p class="small">돈·직업·관계 중 어느 전장에서 어떤 방식으로 무기를 써야 하는지 봅니다.</p>
             </article>
           </div>
-          <button type="button" onclick="location.href='/payment.html'">9,900원으로 유료 리포트 보기</button>
+          <button type="button" onclick="location.href='/payment.html'">내 무기가 강해지는 시기 보기 →</button>
         </section>
       `;
     }
@@ -5668,10 +5997,16 @@
           ${renderDeveloperDebugPanel(data.developer_debug)}
         `;
 
+        const weaponName = itemInfo[splitPillar(data.pillars.day).gan]?.name || "중심 Weapon";
+        const weaponDesc = itemInfo[splitPillar(data.pillars.day).gan]?.desc || "원국의 중심 기운을 현실에서 사용하는 힘";
         const previewHTML = `
-          <section class="box">
-            <h2 class="section-title">${name}님의 무료 전장 리포트</h2>
-            <p>무료 결과에서는 원국 구조, 계절과 강약, 지장간 힌트, 대운·세운·일진의 기본 방향까지 정리합니다. 날짜 선택과 세밀한 월운 판단은 프리미엄 질문에서 이어서 볼 수 있습니다.</p>
+          <section class="box weapon-reveal">
+            <p class="eyebrow">WEAPON DISCOVERED</p>
+            <p>${name}님의 첫 번째 무기</p>
+            <div class="weapon-reveal-mark">${renderElementGlyph(splitPillar(data.pillars.day).gan)}</div>
+            <h2 class="section-title">「${weaponName}」</h2>
+            <p class="weapon-reveal-copy">당신은 <strong>${weaponDesc}</strong>을 가지고 있습니다.</p>
+            <p>하지만 무기는 가지고 있다고 항상 사용할 수 있는 것이 아닙니다.<br>이 무기가 강하게 작동하는 시기가 따로 있습니다.</p>
           </section>
           ${renderPillars(data.pillars)}
           ${renderFreeStructuredReport(name, data.pillars, data.sewoon, data.dailyLuck)}
