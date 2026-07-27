@@ -1096,7 +1096,7 @@ SAJUWAR 해석 원칙:
 
       report = completion.choices[0].message.content;
       const shortChapters = findShortPaidReportChapters(report, 2000);
-      if (shortChapters.length) {
+      if (shortChapters.length && process.env.SAJUWAR_EXPAND_REPORT === "true") {
         const expansion = await createChatCompletionWithTimeout({
           model: "gpt-4.1-mini",
           messages: [

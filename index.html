@@ -6103,9 +6103,9 @@
         const countdown = document.getElementById("countdown");
         const loadingText = document.getElementById("loadingText");
         const loadingBar = document.getElementById("loadingBar");
-        if (countdown) countdown.textContent = count > 0 ? count : "열림";
+        if (countdown) countdown.textContent = count > 0 ? count : "분석 중";
         if (loadingText) loadingText.textContent = messages[Math.abs(count) % messages.length];
-        if (loadingBar) loadingBar.style.width = `${Math.min((10 - count) * 10, 100)}%`;
+        if (loadingBar) loadingBar.style.width = `${Math.min((10 - count) * 9, 90)}%`;
         if (count <= 0) {
           clearInterval(loadingTimer);
           loadingTimer = null;
@@ -6198,23 +6198,59 @@
         return;
       }
 
-      startBattleLoading();
+      const analysisPayload = {
+        name,
+        calendarType,
+        birth: `${year}-${pad(month)}-${pad(day)}`,
+        time: `${pad(hour)}:${pad(minute)}`,
+        timeUnknown,
+        gender,
+        paidReport: Boolean(forcePaid && canViewPaidReport()),
+        developerMode: Boolean(hasDeveloperAccess())
+      };
+      let freePreviewHTML = "";
+
+      if (forcePaid && canViewPaidReport()) {
+        try {
+          const freeResponse = await fetch("/analyze", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...analysisPayload, paidReport: false, developerMode: false })
+          });
+          const freeData = await freeResponse.json();
+          if (freeResponse.ok) {
+            freePreviewHTML = renderFreeReportSequence(name, freeData, false);
+            result.innerHTML = `
+              ${freePreviewHTML}
+              ${renderPaidReportDivider()}
+              <section class="box paid-generation-wait">
+                <p class="eyebrow">PAID REPORT GENERATING</p>
+                <h2 class="section-title">구매한 전체 리포트를 불러오는 중입니다.</h2>
+                <p>무료 분석은 먼저 열렸습니다. 유료 전략 리포트는 최대 1분 안에 이 아래에 이어집니다.</p>
+                <div class="loading-line"><i style="width:72%"></i></div>
+              </section>
+            `;
+            document.getElementById("report").scrollIntoView({ behavior: "smooth", block: "start" });
+          } else {
+            startBattleLoading();
+          }
+        } catch (error) {
+          startBattleLoading();
+        }
+      } else {
+        startBattleLoading();
+      }
 
       try {
+        const requestController = new AbortController();
+        const requestTimeout = setTimeout(() => requestController.abort(), 65000);
         const response = await fetch("/analyze", {
           method: "POST",
           headers: buildAnalyzeHeaders(forcePaid),
-          body: JSON.stringify({
-            name,
-            calendarType,
-            birth: `${year}-${pad(month)}-${pad(day)}`,
-            time: `${pad(hour)}:${pad(minute)}`,
-            timeUnknown,
-            gender,
-            paidReport: Boolean(forcePaid && canViewPaidReport()),
-            developerMode: Boolean(hasDeveloperAccess())
-          })
+          body: JSON.stringify(analysisPayload),
+          signal: requestController.signal,
         });
+        clearTimeout(requestTimeout);
 
         const data = await response.json();
         stopBattleLoading();
@@ -6256,7 +6292,19 @@
         showToast(forcePaid && canViewPaidReport() ? "전체 리포트가 열렸습니다." : "무료 원국 리포트가 열렸습니다.");
       } catch (error) {
         stopBattleLoading();
-        result.innerHTML = `<div class="box">연결 오류가 발생했습니다: ${error.message}</div>`;
+        if (error.name === "AbortError") {
+          result.innerHTML = `
+            ${freePreviewHTML}
+            <section class="box upgrade-callout">
+              <p class="eyebrow">REPORT DELAYED</p>
+              <h2 class="section-title">유료 리포트 생성이 지연되고 있습니다.</h2>
+              <p>무료 분석은 정상적으로 열렸습니다. 잠시 후 구매내역의 ‘리포트 보기’를 누르면 저장된 결과가 바로 열립니다.</p>
+              <button type="button" onclick="openPaidReport()">유료 리포트 다시 불러오기 →</button>
+            </section>
+          `;
+        } else {
+          result.innerHTML = `${freePreviewHTML}<div class="box">연결 오류가 발생했습니다: ${error.message}</div>`;
+        }
       }
     }
 
