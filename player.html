@@ -129,6 +129,17 @@
     .btn[disabled]{opacity:.4;cursor:not-allowed}
     .arrow{font:600 14px "IBM Plex Mono",monospace}
     .trust{margin:12px 0 0;text-align:center;color:var(--muted);font-size:11px}
+    .origin-note{
+      display:flex;align-items:center;gap:10px;margin-top:22px;
+      color:#b8b0a4;font-size:12px;line-height:1.6
+    }
+    .saju-mark{
+      width:34px;height:34px;flex:0 0 34px;
+      display:grid;place-items:center;
+      color:var(--signal);border:1px solid rgba(255,85,56,.38);
+      transform:rotate(-3deg);
+      font-family:serif;font-weight:700
+    }
     .progress{
       height:2px;
       position:absolute;
@@ -290,9 +301,10 @@
     <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
 
     <section class="screen active" data-screen="1">
-      <p class="eyebrow">MISSION 00 · IDENTITY SCAN</p>
+      <p class="eyebrow">명리 기반 · PLAYER SYSTEM</p>
       <h1>YOU ARE NOT<br><span>UNDEFINED.</span></h1>
       <p class="subtitle">당신의 클래스는 아직<br>공개되지 않았습니다.</p>
+      <div class="origin-note"><span class="saju-mark">命</span><span>태어난 날의 오행과 시간 신호를<br>플레이어 데이터로 해석합니다.</span></div>
       <div class="spacer"></div>
       <div class="actions">
         <button class="btn primary next" type="button"><span>PLAYER SCAN 시작</span><span class="arrow">→</span></button>
@@ -307,6 +319,7 @@
         <h2>당신을 설명하는<br>6개의 신호</h2>
         <div class="card">
           <div class="stat"><span>PLAYER ID</span><strong>READY</strong></div>
+          <div class="stat"><span>ORIGIN ELEMENT</span><strong class="locked">LOCKED</strong></div>
           <div class="stat"><span>CLASS</span><strong class="locked">LOCKED</strong></div>
           <div class="stat"><span>CORE WEAPON</span><strong class="locked">LOCKED</strong></div>
           <div class="stat"><span>HIDDEN TALENT</span><strong class="locked">LOCKED</strong></div>
@@ -321,10 +334,10 @@
     <section class="screen" data-screen="3">
       <button class="back" type="button" aria-label="이전 화면">←</button>
       <div class="content">
-        <p class="eyebrow">PRIVATE BY DEFAULT</p>
+        <p class="eyebrow">BIRTH DATA · PRIVATE</p>
         <h2>당신의 데이터는<br>당신의 것입니다.</h2>
         <div class="talent-list">
-          <div class="talent"><span class="option-icon">01</span><div><b>필요한 정보만</b><span class="micro">스캔에 필요한 최소 정보만 받습니다.</span></div></div>
+          <div class="talent"><span class="option-icon">01</span><div><b>명리 좌표만 계산</b><span class="micro">생년월일과 시간은 오행 신호 계산에만 사용합니다.</span></div></div>
           <div class="talent"><span class="option-icon">02</span><div><b>공유는 직접 선택</b><span class="micro">허락 없이 결과를 공개하지 않습니다.</span></div></div>
           <div class="talent"><span class="option-icon">03</span><div><b>결과는 바로 확인</b><span class="micro">가입 없이 무료 클래스를 확인합니다.</span></div></div>
         </div>
@@ -457,15 +470,15 @@
             <div class="sweep"></div>
             <div class="scan-value" id="scanPercent">0%</div>
           </div>
-          <h3 style="margin-top:28px">PLAYER DATA 분석 중<span class="loading-dots"></span></h3>
-          <div class="scan-log" id="scanLog">ORIGIN SIGNAL 연결 중</div>
+          <h3 style="margin-top:28px">명리 좌표 분석 중<span class="loading-dots"></span></h3>
+          <div class="scan-log" id="scanLog">천간 · 지지 좌표 연결 중</div>
         </div>
       </div>
     </section>
 
     <section class="screen reveal" data-screen="12">
       <p class="eyebrow">IDENTITY CONFIRMED</p>
-      <div class="reveal-mark">ID</div>
+      <div class="reveal-mark">命</div>
       <p class="player-id" id="playerId">PLAYER ID · SW-000000</p>
       <h2 id="welcomeName">플레이어 연결 완료</h2>
       <p class="subtitle" style="margin-inline:auto">당신의 클래스 신호가<br>확인되었습니다.</p>
@@ -474,7 +487,7 @@
     </section>
 
     <section class="screen reveal" data-screen="13">
-      <p class="eyebrow">PRIMARY CLASS</p>
+      <p class="eyebrow">오행 신호로 해석한 · PRIMARY CLASS</p>
       <div class="reveal-mark class-symbol" id="classSymbol">T</div>
       <p class="player-id" id="classCode">CLASS 01</p>
       <div class="reveal-title" id="classTitle">THE TACTICIAN<em>전략 설계자</em></div>
@@ -484,9 +497,10 @@
     </section>
 
     <section class="screen" data-screen="14">
-      <p class="eyebrow">CORE WEAPON</p>
+      <p class="eyebrow">타고난 기질의 쓰임 · CORE WEAPON</p>
       <h2>당신의 핵심 무기</h2>
       <div class="card accent">
+        <div class="stat"><span>ORIGIN ELEMENT</span><strong id="originElement">분석 중</strong></div>
         <div class="class-symbol" id="weaponSymbol">01</div>
         <h3 id="weaponName">패턴 감지</h3>
         <p class="subtitle" id="weaponLine">흩어진 신호를 연결해<br>다음 움직임을 먼저 봅니다.</p>
@@ -539,6 +553,7 @@
       <div class="card accent">
         <p class="player-id" id="summaryId">SW-000000</p>
         <h3 id="summaryClass">THE TACTICIAN · 전략 설계자</h3>
+        <div class="stat"><span>ORIGIN ELEMENT</span><strong id="summaryElement">확인 중</strong></div>
         <div class="stat"><span>CORE WEAPON</span><strong id="summaryWeapon">패턴 감지</strong></div>
         <div class="stat"><span>HIDDEN TALENT</span><strong id="summaryTalent">구조화</strong></div>
         <div class="stat"><span>POWER TIMING</span><strong class="locked">LOCKED</strong></div>
@@ -573,6 +588,7 @@
         <p class="player-id" id="cardId">PLAYER ID · SW-000000</p>
         <div class="spacer"></div>
         <div class="reveal-title" id="cardClass">THE TACTICIAN<em>전략 설계자</em></div>
+        <p id="cardElement">ORIGIN ELEMENT · 분석 중</p>
         <p id="cardWeapon">CORE WEAPON · 패턴 감지</p>
         <p class="micro">SAJU WAR · PLAYER SYSTEM</p>
       </div>
@@ -605,6 +621,7 @@
       <p class="eyebrow">DAILY SIGNAL</p>
       <h2>오늘은 넓히기보다<br>선명하게 만들 때입니다.</h2>
       <div class="card accent">
+        <div class="stat"><span>오늘의 오행 신호</span><strong id="dailyElement">木 · GROWTH</strong></div>
         <div class="stat"><span>USE</span><strong>판단력</strong></div>
         <div class="stat"><span>AVOID</span><strong>동시다발 실행</strong></div>
         <div class="stat"><span>ONE MOVE</span><strong>우선순위 1개 고정</strong></div>
@@ -630,6 +647,13 @@
       tactician:{symbol:"T",code:"CLASS 01",en:"THE TACTICIAN",ko:"전략 설계자",line:"복잡한 상황에서 승리의 구조를 찾습니다.",weapon:"패턴 감지",weaponLine:"흩어진 신호를 연결해 다음 움직임을 먼저 봅니다.",talent:"구조화"},
       commander:{symbol:"C",code:"CLASS 02",en:"THE COMMANDER",ko:"전장 지휘관",line:"사람과 자원을 움직여 흐름을 바꿉니다.",weapon:"영향력",weaponLine:"목표를 공유하고 사람의 힘을 한 방향으로 모읍니다.",talent:"동기화"},
       striker:{symbol:"S",code:"CLASS 03",en:"THE STRIKER",ko:"선봉 실행자",line:"결정적인 순간에 먼저 움직입니다.",weapon:"돌파력",weaponLine:"멈춘 상황에 첫 움직임을 만들어 길을 엽니다.",talent:"가속"}
+    };
+    const elementMap={
+      "甲":["木","WOOD · 확장"],"乙":["木","WOOD · 연결"],
+      "丙":["火","FIRE · 발산"],"丁":["火","FIRE · 집중"],
+      "戊":["土","EARTH · 기반"],"己":["土","EARTH · 조율"],
+      "庚":["金","METAL · 결단"],"辛":["金","METAL · 정교"],
+      "壬":["水","WATER · 탐색"],"癸":["水","WATER · 통찰"]
     };
     const screens=[...document.querySelectorAll(".screen")];
     const toast=document.getElementById("toast");
@@ -693,7 +717,7 @@
       if(!state.field){showToast("현재 전장을 선택하세요.");return}
       showScreen(11);
       const percent=document.getElementById("scanPercent"),log=document.getElementById("scanLog");
-      const logs=["ORIGIN SIGNAL 연결 중","CORE CODE 복호화 중","CLASS 패턴 확인 중","PLAYER ID 생성 중"];
+      const logs=["천간 · 지지 좌표 연결 중","오행 세력 판독 중","일간 기질 해석 중","PLAYER CLASS 변환 중"];
       let value=0,index=0;
       const timer=setInterval(()=>{value=Math.min(94,value+Math.ceil(Math.random()*7));percent.textContent=`${value}%`;log.textContent=logs[Math.min(logs.length-1,Math.floor(value/25))]},150);
       try{
@@ -709,6 +733,8 @@
     document.querySelector(".analyze").addEventListener("click",analyze);
     function applyResults(){
       const c=classes[state.classKey]||classes.tactician;
+      const dayPillar=state.apiData?.pillars?.day||"";
+      const element=elementMap[dayPillar.charAt(0)]||["五行","FIVE ELEMENTS · 균형"];
       document.getElementById("playerId").textContent=`PLAYER ID · ${state.playerId}`;
       document.getElementById("welcomeName").textContent=`${state.name} 플레이어 연결 완료`;
       document.getElementById("classSymbol").textContent=c.symbol;
@@ -717,13 +743,16 @@
       document.getElementById("classLine").innerHTML=c.line.replace(" ","<br>");
       document.getElementById("weaponName").textContent=c.weapon;
       document.getElementById("weaponLine").textContent=c.weaponLine;
+      document.getElementById("originElement").textContent=`${element[0]} · ${element[1]}`;
       document.getElementById("summaryName").textContent=`${state.name}의 플레이어 프로필`;
       document.getElementById("summaryId").textContent=state.playerId;
       document.getElementById("summaryClass").textContent=`${c.en} · ${c.ko}`;
+      document.getElementById("summaryElement").textContent=`${element[0]} · ${element[1]}`;
       document.getElementById("summaryWeapon").textContent=c.weapon;
       document.getElementById("summaryTalent").textContent=c.talent;
       document.getElementById("cardId").textContent=`PLAYER ID · ${state.playerId}`;
       document.getElementById("cardClass").innerHTML=`${c.en}<em>${c.ko}</em>`;
+      document.getElementById("cardElement").textContent=`ORIGIN ELEMENT · ${element[0]} · ${element[1]}`;
       document.getElementById("cardWeapon").textContent=`CORE WEAPON · ${c.weapon}`;
       document.getElementById("warId").textContent=state.playerId;
       document.getElementById("warClass").textContent=c.ko;
