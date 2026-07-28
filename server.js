@@ -108,6 +108,9 @@ app.use((req, res, next) => {
   }
   return next();
 });
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "war-preview.html"));
+});
 app.use(express.static(__dirname));
 
 const client = process.env.OPENAI_API_KEY
