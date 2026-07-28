@@ -6,6 +6,14 @@
   <title>SAJU WAR | 내 사주의 무기와 타이밍</title>
   <meta name="description" content="내 사주의 무기는 무엇이고 언제 강해질까? 무료 Weapon Test로 나의 힘을 발견하고 선택의 타이밍을 확인하세요." />
   <style>
+    @font-face {
+      font-family: "Pretendard Variable";
+      font-weight: 45 920;
+      font-style: normal;
+      font-display: swap;
+      src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/woff2/PretendardVariable.woff2") format("woff2");
+    }
+
     :root {
       color-scheme: light;
       --ink: #2b1b12;
@@ -33,7 +41,7 @@
         radial-gradient(circle at 18% 10%, rgba(255, 151, 136, 0.28), transparent 28%),
         radial-gradient(circle at 84% 60%, rgba(132, 218, 183, 0.28), transparent 34%),
         linear-gradient(180deg, #fff1cc 0%, #fff8e9 42%, #ecfff6 76%, #fff7e8 100%);
-      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+      font-family: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
       line-height: 1.6;
     }
 
@@ -171,13 +179,29 @@
       margin-bottom: 20px;
       color: #f4f1e8;
       font-size: clamp(21px, 2.4vw, 34px);
-      line-height: 1.36;
+      font-weight: 520;
+      line-height: 1.48;
+      letter-spacing: -.025em;
+      word-break: keep-all;
     }
     .hero-manifesto mark {
+      display: inline-block;
+      margin-top: 7px;
+      padding: 2px 8px 3px;
       color: inherit;
-      background: none;
+      border-radius: 5px;
+      background: rgba(0, 0, 0, .34);
+      font-weight: 680;
     }
-    .lead { max-width: 600px; color: #aaa; font-size: 15px; line-height: 1.85; }
+    .lead {
+      max-width: 640px;
+      color: #d0c9bd;
+      font-size: 16px;
+      font-weight: 430;
+      line-height: 1.9;
+      letter-spacing: -.018em;
+      word-break: keep-all;
+    }
     .hero-actions a {
       min-height: 58px;
       padding: 0 24px;
@@ -186,6 +210,8 @@
       background: var(--sw-acid);
       box-shadow: 6px 6px 0 rgba(255,255,255,.12);
       font-size: 14px;
+      font-weight: 720;
+      letter-spacing: -.018em;
     }
     .hero-actions a.secondary-link {
       color: #ccc;
@@ -3719,15 +3745,15 @@
         <p class="eyebrow">01 — YOUR FIRST MISSION</p>
         <h1 id="hero-title">FIND YOUR<br><span>WEAPON.</span></h1>
         <p class="hero-manifesto">
-          당신에게도 무기가 있다.<br><mark>문제는 언제 꺼내야 하는가다.</mark>
+          당신 안의 무기는 이미 준비되어 있습니다.<br><mark>중요한 건, 꺼내야 할 순간입니다.</mark>
         </p>
         <p class="lead">
-          사주는 정해진 미래가 아닙니다.<br>
-          당신이 가진 무기와 그 무기가 강해지는 시기를 분석해<br>
-          선택의 타이밍을 찾는 전략 지도입니다.
+          사주는 정해진 운명을 말하지 않습니다.<br>
+          내가 가진 힘과 그 힘이 가장 강해지는 때를 읽어,<br>
+          더 나은 선택의 타이밍을 발견하는 전략 지도입니다.
         </p>
         <div class="hero-actions" aria-label="주요 행동">
-          <a href="#sajuForm">내 사주의 무기 찾기 →</a>
+          <a href="#sajuForm">나의 사주 무기 확인하기 →</a>
           <a class="secondary-link" href="#weapon-system">SAJU WAR 알아보기 ↓</a>
         </div>
       </div>
