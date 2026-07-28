@@ -1209,7 +1209,7 @@ function handleManse(req, res) {
 }
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "player.html"));
+  res.sendFile(path.join(__dirname, "intelligence.html"));
 });
 
 app.get("/api/developer-preview-config", (req, res) => {

@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#faf9f6">
+  <title>SAJUWAR Intelligence</title>
+  <meta name="description" content="명리 데이터와 AI를 결합한 개인 전략 인텔리전스 플랫폼">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+  <style>
+    :root{--paper:#faf9f6;--white:#fff;--ink:#111318;--muted:#686d76;--line:#dedfdc;--navy:#132238;--navy2:#223a59;--gold:#b4975a;--soft:#f1f1ee}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--ink);background:var(--paper);font-family:"Noto Sans KR",sans-serif;-webkit-font-smoothing:antialiased}
+    body.modal-open{overflow:hidden}
+    button,input,select{font:inherit}
+    button,a{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1180px,calc(100% - 48px));margin:auto}
+    .nav{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:12px;font:600 14px "DM Sans",sans-serif;letter-spacing:.16em}
+    .brand-mark{width:26px;height:26px;display:grid;place-items:center;color:var(--white);background:var(--navy);font:500 10px "DM Sans"}
+    .nav-links{display:flex;align-items:center;gap:26px;color:var(--muted);font-size:13px}
+    .button{min-height:48px;padding:0 20px;display:inline-flex;align-items:center;justify-content:center;gap:12px;border:1px solid var(--line);border-radius:7px;background:var(--white);font-weight:600;transition:.2s ease}
+    .button:hover{transform:translateY(-1px);border-color:#b9bab6}
+    .button.primary{color:var(--white);border-color:var(--navy);background:var(--navy)}
+    .button.primary:hover{background:var(--navy2)}
+    .button.text{padding:0;color:var(--navy);border:0;background:transparent}
+    .hero{min-height:720px;padding:102px 0 78px;display:grid;grid-template-columns:1.05fr .95fr;gap:82px;align-items:center}
+    .kicker{margin:0 0 22px;color:var(--gold);font:600 11px "DM Sans";letter-spacing:.16em;text-transform:uppercase}
+    h1,h2,h3,p{margin-top:0}
+    h1{max-width:720px;margin-bottom:28px;font:500 clamp(52px,6vw,82px)/1.03 "Newsreader",serif;letter-spacing:-.045em}
+    h2{margin-bottom:20px;font:500 clamp(38px,4.5vw,62px)/1.08 "Newsreader",serif;letter-spacing:-.04em}
+    h3{margin-bottom:12px;font-size:19px;line-height:1.4;letter-spacing:-.035em}
+    .lead{max-width:590px;color:#4d525a;font-size:18px;line-height:1.8;letter-spacing:-.02em}
+    .hero-actions{display:flex;gap:10px;margin-top:34px}
+    .hero-note{margin-top:14px;color:var(--muted);font-size:12px}
+    .report-preview{padding:30px;border:1px solid var(--line);background:var(--white);box-shadow:0 30px 80px rgba(20,28,38,.08)}
+    .report-head{display:flex;justify-content:space-between;padding-bottom:18px;border-bottom:1px solid var(--line)}
+    .doc-label{color:var(--muted);font:600 10px "DM Sans";letter-spacing:.12em}
+    .doc-title{margin:28px 0 24px;font:500 34px/1.12 "Newsreader";letter-spacing:-.035em}
+    .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .metric{padding:14px;background:var(--soft)}
+    .metric span{display:block;margin-bottom:16px;color:var(--muted);font:500 9px "DM Sans";letter-spacing:.08em}
+    .metric strong{font:500 18px "Newsreader"}
+    .timeline{height:90px;margin:24px 0;display:flex;align-items:flex-end;gap:6px;border-bottom:1px solid var(--line)}
+    .timeline i{flex:1;background:var(--navy);opacity:.18}
+    .timeline i:nth-child(3),.timeline i:nth-child(4){opacity:.78}
+    .summary-line{padding:12px 0;display:flex;justify-content:space-between;border-top:1px solid var(--line);font-size:12px}
+    .section{padding:112px 0;border-top:1px solid var(--line)}
+    .section-head{max-width:720px;margin-bottom:54px}
+    .section-copy{color:var(--muted);font-size:16px;line-height:1.8}
+    .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+    .pillar{min-height:260px;padding:26px;background:var(--white)}
+    .pillar-no{display:block;margin-bottom:70px;color:var(--gold);font:500 11px "DM Sans"}
+    .pillar p{color:var(--muted);font-size:14px;line-height:1.7}
+    .intelligence{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+    .index-list{border-top:1px solid var(--line)}
+    .index-row{padding:19px 0;display:grid;grid-template-columns:42px 1fr auto;gap:14px;border-bottom:1px solid var(--line);align-items:center}
+    .index-row span{color:var(--muted);font:500 11px "DM Sans"}
+    .index-row b{font-size:14px}
+    .index-row em{color:var(--gold);font-style:normal;font-size:12px}
+    .chart-card{padding:30px;background:var(--navy);color:var(--white)}
+    .chart-card .kicker{color:#d5c28f}
+    .chart-title{font:500 34px "Newsreader"}
+    .bar{margin-top:24px}
+    .bar-label{display:flex;justify-content:space-between;margin-bottom:8px;font-size:11px}
+    .bar-track{height:4px;background:rgba(255,255,255,.13)}
+    .bar-track i{display:block;height:100%;background:#d5c28f}
+    .chart-note{margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);color:#ccd2da;font-size:13px;line-height:1.7}
+    .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .plan{padding:30px;display:flex;flex-direction:column;border:1px solid var(--line);background:var(--white)}
+    .plan.featured{border-color:var(--navy);box-shadow:0 24px 60px rgba(19,34,56,.08)}
+    .plan-label{color:var(--gold);font:600 10px "DM Sans";letter-spacing:.13em}
+    .price{margin:26px 0 6px;font:500 42px "Newsreader"}
+    .plan-desc{min-height:56px;color:var(--muted);font-size:13px;line-height:1.6}
+    .plan ul{min-height:248px;margin:28px 0;padding:0;list-style:none}
+    .plan li{padding:8px 0;color:#484d54;font-size:13px}
+    .plan li::before{content:"—";margin-right:9px;color:var(--gold)}
+    .ecosystem{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .service{padding:24px;border-top:1px solid var(--ink)}
+    .service small{color:var(--gold);font:500 10px "DM Sans";letter-spacing:.1em}
+    .service p{color:var(--muted);font-size:13px;line-height:1.65}
+    .closing{padding:120px 0;text-align:center}
+    .closing h2{max-width:760px;margin-inline:auto}
+    footer{padding:30px 0 50px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+    .modal{position:fixed;inset:0;z-index:100;display:none;background:rgba(17,19,24,.46);backdrop-filter:blur(8px)}
+    .modal.open{display:grid;place-items:center;padding:18px}
+    .intake{width:min(680px,100%);max-height:calc(100svh - 36px);overflow:auto;padding:34px;background:var(--white);box-shadow:0 40px 100px rgba(0,0,0,.18)}
+    .intake-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px}
+    .close{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:var(--white)}
+    .step{display:none;animation:fade .35s ease}.step.active{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .field{display:grid;gap:8px;margin-top:22px}
+    .field label{color:var(--muted);font:600 10px "DM Sans";letter-spacing:.1em}
+    .input{width:100%;min-height:56px;padding:0 14px;border:1px solid var(--line);border-radius:6px;background:var(--white);outline:none}
+    .input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(19,34,56,.06)}
+    .input-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:8px}
+    .choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:20px}
+    .choice{min-height:54px;padding:0 16px;text-align:left;border:1px solid var(--line);border-radius:6px;background:var(--white)}
+    .choice.selected{color:var(--white);border-color:var(--navy);background:var(--navy)}
+    .intake-actions{display:flex;justify-content:space-between;gap:10px;margin-top:34px}
+    .analysis{padding:52px 10px;text-align:center}
+    .analysis-ring{width:112px;height:112px;margin:0 auto 30px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;position:relative}
+    .analysis-ring::after{content:"";position:absolute;inset:-1px;border:1px solid transparent;border-top-color:var(--navy);border-radius:50%;animation:spin 1.8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .result{display:none}
+    .result.active{display:block}
+    .result-header{padding-bottom:24px;border-bottom:1px solid var(--line)}
+    .result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+    .result-card{padding:20px;background:var(--soft)}
+    .result-card span{color:var(--muted);font:500 9px "DM Sans";letter-spacing:.08em}
+    .result-card strong{display:block;margin-top:16px;font:500 21px "Newsreader"}
+    .result-action{margin-top:20px;padding:20px;border-left:2px solid var(--gold);background:#f7f4ed}
+    @media(max-width:800px){
+      .shell{width:min(100% - 32px,1180px)}.nav-links a:not(.button){display:none}
+      .hero{min-height:auto;padding:72px 0;grid-template-columns:1fr;gap:52px}
+      h1{font-size:54px}.section{padding:78px 0}
+      .pillars,.plans,.ecosystem{grid-template-columns:1fr}.pillar{min-height:auto}.pillar-no{margin-bottom:38px}
+      .intelligence{grid-template-columns:1fr;gap:36px}.plan ul{min-height:auto}
+      footer{gap:20px;flex-direction:column}.intake{padding:24px}.input-grid,.choice-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="shell nav">
+    <a class="brand" href="#"><span class="brand-mark">SW</span>SAJUWAR INTELLIGENCE</a>
+    <nav class="nav-links">
+      <a href="#platform">Platform</a><a href="#reports">Reports</a><a href="#services">Advisory</a>
+      <button class="button primary open-analysis" type="button">무료 AI 분석</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="shell hero">
+      <div>
+        <p class="kicker">AI-powered Saju Intelligence</p>
+        <h1>삶의 흐름을 읽고,<br>결정의 기준을 만듭니다.</h1>
+        <p class="lead">명리 데이터와 AI 분석을 결합해 성향, 기회, 위험, 타이밍을 하나의 개인 전략 보고서로 제공합니다.</p>
+        <div class="hero-actions">
+          <button class="button primary open-analysis" type="button">무료 AI 분석 시작</button>
+          <a class="button" href="#reports">보고서 살펴보기</a>
+        </div>
+        <p class="hero-note">약 60초 · 가입 없이 시작 · 결과 즉시 확인</p>
+      </div>
+      <article class="report-preview">
+        <div class="report-head"><span class="doc-label">PERSONAL INTELLIGENCE BRIEF</span><span class="doc-label">2026 · CONFIDENTIAL</span></div>
+        <div class="doc-title">Executive<br>Intelligence Summary</div>
+        <div class="metric-grid">
+          <div class="metric"><span>CORE DRIVE</span><strong>확장</strong></div>
+          <div class="metric"><span>DECISION MODE</span><strong>분석형</strong></div>
+          <div class="metric"><span>2026 SIGNAL</span><strong>전환</strong></div>
+        </div>
+        <div class="timeline" aria-label="2026 기회 타임라인"><i style="height:28%"></i><i style="height:42%"></i><i style="height:78%"></i><i style="height:92%"></i><i style="height:58%"></i><i style="height:35%"></i></div>
+        <div class="summary-line"><span>Opportunity Window</span><strong>May — August</strong></div>
+        <div class="summary-line"><span>Primary Recommendation</span><strong>선택과 집중</strong></div>
+      </article>
+    </section>
+
+    <section class="section" id="platform">
+      <div class="shell">
+        <div class="section-head"><p class="kicker">A different category</p><h2>운세가 아니라<br>의사결정 인텔리전스.</h2><p class="section-copy">결과를 단정하지 않습니다. 반복되는 패턴을 설명하고, 다음 기회를 포착하며, 더 나은 선택을 위한 전략을 제시합니다.</p></div>
+        <div class="pillars">
+          <article class="pillar"><span class="pillar-no">01</span><h3>Identity</h3><p>타고난 성향과 판단 방식을 구조적으로 이해합니다.</p></article>
+          <article class="pillar"><span class="pillar-no">02</span><h3>Context</h3><p>왜 특정 사건과 관계가 반복되었는지 맥락을 찾습니다.</p></article>
+          <article class="pillar"><span class="pillar-no">03</span><h3>Timing</h3><p>기회와 위험이 커지는 시기를 타임라인으로 확인합니다.</p></article>
+          <article class="pillar"><span class="pillar-no">04</span><h3>Strategy</h3><p>지금 실행할 우선순위와 의사결정 기준을 제안합니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell intelligence">
+        <div>
+          <p class="kicker">Inside the report</p><h2>한 사람을 위한<br>13개의 분석 관점.</h2>
+          <div class="index-list">
+            <div class="index-row"><span>01</span><b>Executive Summary</b><em>핵심 판단</em></div>
+            <div class="index-row"><span>02</span><b>Core Personality</b><em>기질</em></div>
+            <div class="index-row"><span>03</span><b>Strength & Risk</b><em>강점·취약점</em></div>
+            <div class="index-row"><span>04</span><b>Talent Intelligence</b><em>재능</em></div>
+            <div class="index-row"><span>05</span><b>Career Intelligence</b><em>커리어</em></div>
+            <div class="index-row"><span>06</span><b>Financial Intelligence</b><em>재무</em></div>
+            <div class="index-row"><span>07</span><b>Relationship Intelligence</b><em>관계</em></div>
+            <div class="index-row"><span>08</span><b>Opportunity & Risk Timeline</b><em>타이밍</em></div>
+          </div>
+        </div>
+        <aside class="chart-card">
+          <p class="kicker">Five Elements Intelligence</p>
+          <div class="chart-title">Balance Overview</div>
+          <div class="bar"><div class="bar-label"><span>WOOD · 성장</span><span>82</span></div><div class="bar-track"><i style="width:82%"></i></div></div>
+          <div class="bar"><div class="bar-label"><span>FIRE · 표현</span><span>64</span></div><div class="bar-track"><i style="width:64%"></i></div></div>
+          <div class="bar"><div class="bar-label"><span>EARTH · 안정</span><span>48</span></div><div class="bar-track"><i style="width:48%"></i></div></div>
+          <div class="bar"><div class="bar-label"><span>METAL · 결단</span><span>71</span></div><div class="bar-track"><i style="width:71%"></i></div></div>
+          <div class="bar"><div class="bar-label"><span>WATER · 통찰</span><span>56</span></div><div class="bar-track"><i style="width:56%"></i></div></div>
+          <p class="chart-note">강한 요소를 더 키우는 것보다 부족한 요소를 의사결정 과정에 보완할 때 성과의 변동성이 줄어듭니다.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="reports">
+      <div class="shell">
+        <div class="section-head"><p class="kicker">Intelligence reports</p><h2>필요한 깊이만큼.</h2><p class="section-copy">모든 보고서는 개인 데이터로 생성되며 PDF로 보관할 수 있습니다.</p></div>
+        <div class="plans">
+          <article class="plan"><span class="plan-label">AI QUICK REPORT</span><div class="price">₩9,900</div><p class="plan-desc">핵심을 빠르게 확인하는 첫 번째 인텔리전스 브리프.</p><ul><li>성향·강점·취약점</li><li>현재 흐름</li><li>커리어·관계</li><li>기본 행동 제안</li><li>Instant PDF</li></ul><a class="button" href="/payment.html?product=quick_report">Quick Report 선택</a></article>
+          <article class="plan featured"><span class="plan-label">PREMIUM AI REPORT · RECOMMENDED</span><div class="price">₩28,900</div><p class="plan-desc">연간 흐름과 영역별 전략을 완성하는 메인 리포트.</p><ul><li>Quick Report 전체</li><li>연간·월간 흐름</li><li>오행·숨은 재능</li><li>커리어·사업·재무 전략</li><li>60–100 page PDF</li></ul><a class="button primary" href="/payment.html?product=premium_report">Premium Report 선택</a></article>
+          <article class="plan"><span class="plan-label">MASTER INTELLIGENCE</span><div class="price">₩99,000</div><p class="plan-desc">10년의 선택을 위한 개인 전략서.</p><ul><li>Premium 전체</li><li>원국·용신 심층 분석</li><li>10년 기회·위험 지도</li><li>리더십·투자·가족</li><li>100–200 page Print Edition</li></ul><a class="button" href="/payment.html?product=master_report">Master Report 선택</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="shell">
+        <div class="section-head"><p class="kicker">Human + AI advisory</p><h2>보고서 이후의<br>더 깊은 결정까지.</h2></div>
+        <div class="ecosystem">
+          <article class="service"><small>ADVISORY 01</small><h3>Expert Review</h3><p>AI 보고서를 전문가가 검토하고 핵심 판단을 보완합니다.</p></article>
+          <article class="service"><small>ADVISORY 02</small><h3>Private Consultation</h3><p>커리어, 관계, 재무 의사결정을 위한 1:1 세션입니다.</p></article>
+          <article class="service"><small>ADVISORY 03</small><h3>Business Intelligence</h3><p>사업, 채용, 리더십과 조직 선택을 분석합니다.</p></article>
+          <article class="service"><small>SPECIALIST 01</small><h3>Naming Intelligence</h3><p>개인과 브랜드의 방향을 반영한 프리미엄 작명입니다.</p></article>
+          <article class="service"><small>SPECIALIST 02</small><h3>Relationship Analysis</h3><p>두 사람의 관계 구조와 의사소통 전략을 분석합니다.</p></article>
+          <article class="service"><small>ACADEMY</small><h3>SAJUWAR Institute</h3><p>명리, 연간 흐름, 비즈니스 분석과 전문가 과정을 제공합니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell closing"><p class="kicker">Your personal intelligence</p><h2>답을 예측하지 않습니다.<br>더 나은 판단을 설계합니다.</h2><button class="button primary open-analysis" type="button">무료 AI 분석 시작</button></section>
+  </main>
+  <footer class="shell"><span>© 2026 SAJUWAR Intelligence</span><span>AI 분석은 의사결정을 돕는 참고 정보이며 의료·법률·투자 자문을 대체하지 않습니다.</span></footer>
+
+  <div class="modal" id="analysisModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="intake">
+      <div class="intake-top"><span class="brand"><span class="brand-mark">SW</span>PRIVATE ANALYSIS</span><button class="close" id="closeModal" type="button" aria-label="닫기">×</button></div>
+      <section class="step active" data-step="1"><p class="kicker">Step 1 of 3</p><h2 id="modalTitle">기본 정보를<br>입력하세요.</h2><div class="field"><label for="name">NAME</label><input class="input" id="name" placeholder="이름" autocomplete="name"></div><div class="field"><label>BIRTH DATE</label><div class="input-grid"><select class="input" id="year"></select><select class="input" id="month"></select><select class="input" id="day"></select></div></div><div class="intake-actions"><span></span><button class="button primary next-step" type="button">계속</button></div></section>
+      <section class="step" data-step="2"><p class="kicker">Step 2 of 3</p><h2>분석 기준을<br>완성하세요.</h2><div class="field"><label>BIRTH TIME</label><div class="input-grid" style="grid-template-columns:1fr 1fr"><select class="input" id="hour"></select><select class="input" id="minute"></select></div></div><div class="field"><label>CALENDAR</label><div class="choice-grid"><button class="choice selected" data-group="calendar" data-value="solar" type="button">양력</button><button class="choice" data-group="calendar" data-value="lunar" type="button">음력</button></div></div><div class="field"><label>GENDER</label><div class="choice-grid"><button class="choice" data-group="gender" data-value="female" type="button">여성</button><button class="choice" data-group="gender" data-value="male" type="button">남성</button></div></div><div class="intake-actions"><button class="button prev-step" type="button">이전</button><button class="button primary next-step" type="button">계속</button></div></section>
+      <section class="step" data-step="3"><p class="kicker">Step 3 of 3</p><h2>지금 가장 중요한<br>결정은 무엇인가요?</h2><div class="choice-grid"><button class="choice" data-group="topic" data-value="career" type="button">커리어</button><button class="choice" data-group="topic" data-value="business" type="button">사업</button><button class="choice" data-group="topic" data-value="finance" type="button">재무</button><button class="choice" data-group="topic" data-value="relationship" type="button">관계</button></div><div class="intake-actions"><button class="button prev-step" type="button">이전</button><button class="button primary" id="runAnalysis" type="button">AI 분석 시작</button></div></section>
+      <section class="step" data-step="4"><div class="analysis"><div class="analysis-ring"><span id="analysisPercent">0%</span></div><h3>개인 인텔리전스를 생성하고 있습니다.</h3><p class="section-copy" id="analysisLog">명리 좌표를 계산하는 중</p></div></section>
+      <section class="result" id="result"><div class="result-header"><p class="kicker">AI QUICK INSIGHT</p><h2 id="resultName">Executive Summary</h2><p class="section-copy">현재 데이터에서 가장 먼저 확인된 판단입니다.</p></div><div class="result-grid"><div class="result-card"><span>CORE PATTERN</span><strong id="corePattern">분석적 확장</strong></div><div class="result-card"><span>CURRENT SIGNAL</span><strong>전환 준비</strong></div><div class="result-card"><span>DECISION MODE</span><strong>근거 우선</strong></div><div class="result-card"><span>FOCUS AREA</span><strong id="focusArea">커리어</strong></div></div><div class="result-action"><p class="kicker">RECOMMENDED ACTION</p><h3>선택지를 늘리기보다 판단 기준을 먼저 고정하세요.</h3><p class="section-copy" id="apiExcerpt">다음 단계에서는 기회와 위험 시점을 함께 확인할 수 있습니다.</p></div><div class="intake-actions"><button class="button" id="closeResult" type="button">닫기</button><a class="button primary" href="/payment.html?product=quick_report">전체 Quick Report · ₩9,900</a></div></section>
+    </div>
+  </div>
+
+  <script>
+    const modal=document.getElementById("analysisModal"),steps=[...document.querySelectorAll(".step")],result=document.getElementById("result");
+    const state={step:1,calendar:"solar",gender:"",topic:""};
+    const pad=n=>String(n).padStart(2,"0");
+    function showStep(n){state.step=n;steps.forEach(s=>s.classList.toggle("active",Number(s.dataset.step)===n));result.classList.remove("active")}
+    document.querySelectorAll(".open-analysis").forEach(b=>b.addEventListener("click",()=>{modal.classList.add("open");document.body.classList.add("modal-open");showStep(1)}));
+    function closeModal(){modal.classList.remove("open");document.body.classList.remove("modal-open")}
+    document.getElementById("closeModal").addEventListener("click",closeModal);document.getElementById("closeResult").addEventListener("click",closeModal);
+    modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
+    document.querySelectorAll(".next-step").forEach(b=>b.addEventListener("click",()=>{if(state.step===1&&!document.getElementById("name").value.trim())return alert("이름을 입력하세요.");showStep(state.step+1)}));
+    document.querySelectorAll(".prev-step").forEach(b=>b.addEventListener("click",()=>showStep(state.step-1)));
+    document.querySelectorAll(".choice").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(`[data-group="${b.dataset.group}"]`).forEach(x=>x.classList.remove("selected"));b.classList.add("selected");state[b.dataset.group]=b.dataset.value}));
+    function fill(id,a,b,s,selected){const el=document.getElementById(id);for(let n=a;n<=b;n++){const o=document.createElement("option");o.value=n;o.textContent=n+s;if(n===selected)o.selected=true;el.appendChild(o)}}
+    fill("year",1940,new Date().getFullYear(),"년",1990);fill("month",1,12,"월",1);fill("day",1,31,"일",1);fill("hour",0,23,"시",12);fill("minute",0,59,"분",0);
+    const topicNames={career:"커리어",business:"사업",finance:"재무",relationship:"관계"};
+    document.getElementById("runAnalysis").addEventListener("click",async()=>{
+      if(!state.gender||!state.topic)return alert("성별과 분석 주제를 선택하세요.");
+      showStep(4);let p=0;const percent=document.getElementById("analysisPercent"),log=document.getElementById("analysisLog");
+      const logs=["명리 좌표를 계산하는 중","오행 균형을 분석하는 중","기회와 위험 신호를 정리하는 중","Executive Summary를 작성하는 중"];
+      const timer=setInterval(()=>{p=Math.min(92,p+6);percent.textContent=p+"%";log.textContent=logs[Math.min(3,Math.floor(p/25))]},150);
+      const payload={name:document.getElementById("name").value.trim(),birth:`${document.getElementById("year").value}-${pad(document.getElementById("month").value)}-${pad(document.getElementById("day").value)}`,time:`${pad(document.getElementById("hour").value)}:${pad(document.getElementById("minute").value)}`,gender:state.gender,calendarType:state.calendar,paidReport:false};
+      let data=null;try{const r=await fetch("/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});if(r.ok)data=await r.json()}catch(e){}
+      await new Promise(r=>setTimeout(r,1500));clearInterval(timer);percent.textContent="100%";
+      document.getElementById("resultName").textContent=payload.name+"님의 Executive Summary";
+      document.getElementById("focusArea").textContent=topicNames[state.topic];
+      if(data?.result)document.getElementById("apiExcerpt").textContent=String(data.result).replace(/[#*]/g,"").split("\\n").filter(Boolean).slice(0,2).join(" ").slice(0,170);
+      steps.forEach(s=>s.classList.remove("active"));result.classList.add("active");
+    });
+  </script>
+</body>
+</html>

@@ -110,25 +110,41 @@
     .product-promise{grid-template-columns:1fr}
     .product-promise div{padding:14px 16px}
   </style>
+  <style>
+    :root{--gold:#b4975a;--line:#dedfdc;--panel:#fff}
+    body{color:#111318;background:#faf9f6;font-family:"Noto Sans KR",system-ui,sans-serif}
+    main{padding:76px 22px}
+    .panel,.card{border-color:var(--line);border-radius:8px;background:#fff;box-shadow:0 24px 60px rgba(20,28,38,.06)}
+    h1,h2,h3{color:#111318}
+    p{color:#686d76}
+    #orderFormPanel>p:first-child,#depositPanel>p:first-child{color:#b4975a}
+    label{color:#686d76}
+    input,select,textarea{color:#111318;border-color:var(--line);border-radius:6px;background:#fff}
+    button,a.button{border-radius:7px;color:#fff;background:#132238}
+    .secondary{color:#132238;border-color:var(--line);background:#fff}
+    .summary,.notice,.product-promise div,.auth-gate{border-color:var(--line);border-radius:6px;background:#f1f1ee}
+    .summary dt,.product-promise strong{color:#132238}
+    .summary dd,.auth-gate strong{color:#111318}
+  </style>
 </head>
 <body>
   <main>
     <section class="panel" id="orderFormPanel">
-      <p>UNLOCK STRATEGY PATH</p>
-      <h1>전체 전략 경로를<br>해금합니다.</h1>
-      <p>Power Timing부터 Next Mission까지, 당신의 플레이어 데이터를 완성하세요.</p>
+      <p>SECURE CHECKOUT</p>
+      <h1>개인 인텔리전스<br>보고서를 시작합니다.</h1>
+      <p>선택한 보고서를 확인하고 안전하게 신청하세요.</p>
       <div class="product-promise">
-        <div><strong>HIDDEN TALENT</strong><span>아직 이름 붙이지 않은 보조 능력</span></div>
-        <div><strong>POWER TIMING</strong><span>힘이 가장 강해지는 행동 시점</span></div>
-        <div><strong>NEXT MISSION</strong><span>지금 실행할 단 하나의 전략</span></div>
+        <div><strong>PERSONALIZED</strong><span>개인 명리 데이터 기반 AI 분석</span></div>
+        <div><strong>CONFIDENTIAL</strong><span>민감 정보와 보고서 비공개 처리</span></div>
+        <div><strong>PRINT READY</strong><span>소장과 인쇄를 위한 PDF 제공</span></div>
       </div>
 
       <div class="auth-gate hidden" id="authGate">
-        <strong>해금한 데이터를 보관할 계정이 필요합니다.</strong>
-        <p>로그인하거나 1분 안에 PLAYER ID를 저장하세요.</p>
+        <strong>보고서와 주문 내역을 안전하게 보관할 계정이 필요합니다.</strong>
+        <p>로그인하거나 1분 안에 계정을 만들어 계속하세요.</p>
         <div class="auth-actions">
           <a class="button" href="/login.html?return=/payment.html">로그인</a>
-          <a class="button secondary" href="/signup.html?return=/payment.html">PLAYER ID 저장</a>
+          <a class="button secondary" href="/signup.html?return=/payment.html">계정 만들기</a>
         </div>
       </div>
 
@@ -150,14 +166,14 @@
         <textarea id="application" placeholder="생년월일, 태어난 시간, 상담/리포트 요청 내용을 적어주세요."></textarea>
       </label>
       <div class="actions">
-        <button type="button" id="orderButton" onclick="createOrder()">STRATEGY PATH 해금</button>
-        <a class="button secondary" href="/mypage.html">내 해금 기록</a>
+        <button type="button" id="orderButton" onclick="createOrder()">보고서 신청하기</button>
+        <a class="button secondary" href="/mypage.html">주문 내역</a>
       </div>
     </section>
 
     <section class="panel hidden" id="depositPanel">
-      <p>UNLOCK PENDING</p>
-      <h1>입금이 확인되면<br>전략 경로가 열립니다.</h1>
+      <p>PAYMENT PENDING</p>
+      <h1>입금 확인 후<br>보고서 생성이 시작됩니다.</h1>
       <dl class="summary">
         <dt>주문번호</dt><dd id="orderId"></dd>
         <dt>상품명</dt><dd id="productName"></dd>
