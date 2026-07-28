@@ -6,6 +6,7 @@ require("dotenv").config();
 
 const OpenAI = require("openai");
 const { Solar, Lunar } = require("lunar-javascript");
+const { calculateFourPillars, lunarToSolar } = require("manseryeok");
 const { buildAiBrainContext } = require("./dataset_loader");
 const { PRODUCTS, createOrderStore } = require("./order_store");
 const { createUserStore } = require("./user_store");
@@ -550,6 +551,21 @@ const themeMap = {
 };
 
 function getSaju(year, month, day, hour, minute, calendarType = "solar") {
+  const birthInfo = {
+    year: Number(year),
+    month: Number(month),
+    day: Number(day),
+    hour: Number(hour),
+    minute: Number(minute || 0),
+    isLunar: calendarType === "lunar",
+    isLeapMonth: false,
+    dayBoundary: "midnight",
+  };
+  const precise = calculateFourPillars(birthInfo);
+  const hanja = precise.toHanjaObject();
+  const convertedSolar = calendarType === "lunar"
+    ? lunarToSolar(birthInfo.year, birthInfo.month, birthInfo.day, false)
+    : { year: birthInfo.year, month: birthInfo.month, day: birthInfo.day };
   let solar;
 
   if (calendarType === "lunar") {
@@ -577,11 +593,11 @@ function getSaju(year, month, day, hour, minute, calendarType = "solar") {
   const eightChar = lunar.getEightChar();
 
   return {
-    year: eightChar.getYear(),
-    month: eightChar.getMonth(),
-    day: eightChar.getDay(),
-    hour: eightChar.getTime(),
-    solarDate: `${solar.getYear()}-${String(solar.getMonth()).padStart(2, "0")}-${String(solar.getDay()).padStart(2, "0")}`,
+    year: hanja.year.hanja,
+    month: hanja.month.hanja,
+    day: hanja.day.hanja,
+    hour: hanja.hour.hanja,
+    solarDate: `${convertedSolar.year}-${String(convertedSolar.month).padStart(2, "0")}-${String(convertedSolar.day).padStart(2, "0")}`,
     eightChar,
   };
 }
@@ -1146,6 +1162,7 @@ SAJUWAR 해석 원칙:
       sewoon,
       dailyLuck,
       calendarType: safeCalendar,
+      calculator_version: "manseryeok-2.0.0",
     };
     if (gptFallbackReason) {
       response.fallback = true;
@@ -1377,9 +1394,9 @@ app.get("/api/my/report", (req, res) => {
     return sendPurchaseRequired(res);
   }
   const cached = orderStore.getReportCache({ user_id: user.id, product_id: productId });
-  if (!cached) {
+  if (!cached || cached.response?.calculator_version !== "manseryeok-2.0.0") {
     return res.status(404).json({
-      error: "아직 생성된 리포트가 없습니다.",
+      error: cached ? "정확도 개선 후 다시 생성이 필요한 리포트입니다." : "아직 생성된 리포트가 없습니다.",
       cached: false,
     });
   }

@@ -7,7 +7,7 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "lunar-javascript": "^1.7.7",
-    "manseryeok": "^1.0.1",
+    "manseryeok": "^2.0.0",
     "node-fetch": "^3.3.2",
     "openai": "^6.34.0"
   }
