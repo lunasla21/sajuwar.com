@@ -5,27 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>무통장입금 안내 | 쭈쌤의 사주 전쟁</title>
   <style>
-    :root { --gold:#f2db8d; --line:rgba(242,219,141,.24); --panel:rgba(18,17,14,.86); }
+    :root { --gold:#ff6b55; --line:rgba(255,255,255,.12); --panel:rgba(16,18,24,.94); --accent:#ff4c2f; }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
-      color: #f6efdd;
-      background: radial-gradient(circle at top, #2a2112, #080807 58%);
+      color: #f5f1e9;
+      background: radial-gradient(circle at top, #181226, #05060a 58%);
       font-family: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
       line-height: 1.65;
     }
     main {
-      width: min(920px, calc(100% - 32px));
+      width: min(620px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 46px 0;
+      padding: 0 0 46px;
     }
     .panel, .card {
       border: 1px solid var(--line);
       background: var(--panel);
       box-shadow: 0 24px 80px rgba(0,0,0,.32);
     }
-    .panel { padding: 30px; }
+    .panel { padding: 30px; border-radius: 0 0 18px 18px; }
     h1, h2, h3 { margin-top: 0; color: var(--gold); line-height: 1.25; }
     p { color: #c8bfa9; }
     label { display: grid; gap: 7px; color: #d8caa5; font-weight: 800; }
@@ -46,7 +46,7 @@
       border: 0;
       padding: 0 16px;
       color: #17110a;
-      background: linear-gradient(135deg, #f2db8d, #d8ad4f);
+      background: linear-gradient(135deg, var(--accent), #ff7837);
       font: inherit;
       font-weight: 900;
       cursor: pointer;
@@ -80,6 +80,18 @@
     .auth-gate strong { color: #fff7dc; }
     .auth-actions { display: flex; gap: 8px; }
     .auth-actions a { flex: 1; }
+    .payment-brief { height: 510px; margin: 0; position: relative; overflow: hidden; border: 1px solid var(--line); border-bottom: 0; background: #05060a; }
+    .payment-brief::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 35%,rgba(5,6,10,.12) 56%,#101218 96%),linear-gradient(90deg,rgba(5,6,10,.82),transparent 68%); pointer-events:none; }
+    .payment-character { width:100%; height:100%; object-fit:cover; object-position:64% center; animation:paymentEnter 1s cubic-bezier(.2,.8,.2,1) both,paymentFloat 5s ease-in-out 1s infinite alternate; transform-origin:70% 55%; }
+    @keyframes paymentEnter { from { opacity:0; transform:translateX(26px) scale(1.07); filter:blur(6px); } to { opacity:1; transform:none; filter:none; } }
+    @keyframes paymentFloat { to { transform:scale(1.02) translateY(-4px); } }
+    .payment-scan { position:absolute; left:0; right:0; top:0; z-index:3; height:1px; background:linear-gradient(90deg,transparent,var(--accent),transparent); box-shadow:0 0 12px var(--accent); animation:paymentScan 3.2s linear infinite; }
+    @keyframes paymentScan { to { transform:translateY(510px); } }
+    .payment-copy { position:absolute; left:26px; right:26px; bottom:38px; z-index:4; }
+    .payment-copy small { color:var(--accent); font:700 10px "SFMono-Regular",Consolas,monospace; letter-spacing:.12em; }
+    .payment-copy h2 { max-width:360px; margin:12px 0 8px; color:#fff; font-size:32px; letter-spacing:-.05em; }
+    .payment-copy p { max-width:350px; margin:0; color:#b4b2b7; font-size:13px; }
+    .payment-step { margin-top:14px; color:#777a83; font:600 9px "SFMono-Regular",Consolas,monospace; letter-spacing:.08em; }
     @media (max-width: 720px) {
       .grid { grid-template-columns: 1fr; }
       .summary { grid-template-columns: 1fr; }
@@ -91,6 +103,11 @@
 </head>
 <body>
   <main>
+    <section class="payment-brief" aria-label="결제 안내 전략관">
+      <img class="payment-character" id="paymentCharacter" src="assets/character-forgemaster-v1.png" alt="결제를 안내하는 전략관" />
+      <div class="payment-scan"></div>
+      <div class="payment-copy"><small id="paymentRole">THE FORGEMASTER · PAYMENT LINK</small><h2 id="paymentBriefTitle">선택한 리포트를<br>해금합니다.</h2><p id="paymentBriefCopy">주문 정보를 확인한 뒤 입금 좌표를 연결하겠습니다.</p><div class="payment-step">REPORT SELECTED → ORDER → DEPOSIT CONFIRM</div></div>
+    </section>
     <section class="panel" id="orderFormPanel">
       <p>WEAPON TIMING REPORT</p>
       <h1>내 무기가 강해지는 시기를 확인합니다</h1>
@@ -167,6 +184,24 @@
     let products = [];
     let bankAccount = {};
     let currentOrder = null;
+    const paymentCharacters = {
+      premium_report: { image:"assets/character-forgemaster-v1.png", role:"THE FORGEMASTER · PAYMENT LINK", title:"히든 아이템 리포트를 해금합니다.", copy:"당신 안의 보조 능력과 발동 시기를 분석할 준비를 시작합니다.", accent:"#ff4c2f" },
+      premium_ai_report: { image:"assets/report-strategist-female-v1.png", role:"STRATEGY OFFICER · PAYMENT LINK", title:"연간 전선 전략서를 해금합니다.", copy:"올해의 기회와 위험을 월별 작전 지도로 연결합니다.", accent:"#8269ff" },
+      master_intelligence_report: { image:"assets/character-commander-v1.png", role:"THE COMMANDER · PAYMENT LINK", title:"인생 전장 마스터북을 해금합니다.", copy:"10년의 선택과 타이밍을 하나의 장기 전략으로 지휘합니다.", accent:"#d7b96c" },
+      compatibility_report: { image:"assets/character-oracle-v1.png", role:"THE ORACLE · PAYMENT LINK", title:"두 사람의 관계 전선을 해금합니다.", copy:"끌림과 충돌이 반복되는 이유를 두 사람의 흐름에서 읽습니다.", accent:"#7569ff" }
+    };
+    function updatePaymentCharacter(productId) {
+      const item = paymentCharacters[productId] || paymentCharacters.premium_report;
+      const image = document.getElementById("paymentCharacter");
+      image.style.animation = "none";
+      image.src = item.image;
+      image.alt = item.role;
+      requestAnimationFrame(() => { image.style.animation = ""; });
+      document.getElementById("paymentRole").textContent = item.role;
+      document.getElementById("paymentBriefTitle").innerHTML = item.title.replace(" 해금합니다.", "<br>해금합니다.");
+      document.getElementById("paymentBriefCopy").textContent = item.copy;
+      document.documentElement.style.setProperty("--accent", item.accent);
+    }
 
     function formatMoney(value) {
       return `${Number(value || 0).toLocaleString("ko-KR")}원`;
@@ -227,6 +262,8 @@
       if (requestedProduct && products.some((product) => product.id === requestedProduct)) {
         select.value = requestedProduct;
       }
+      updatePaymentCharacter(select.value);
+      select.addEventListener("change", () => updatePaymentCharacter(select.value));
     }
 
     function selectedProduct() {
