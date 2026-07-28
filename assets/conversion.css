@@ -1,4 +1,5 @@
 @import url("https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css");
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
 
 :root {
   color-scheme: dark;
@@ -79,11 +80,11 @@ body .hero h1 span { color: var(--sw-acid); }
 body .hero-manifesto {
   margin-bottom: 24px;
   color: #f7efe2;
-  font-family: "SUIT Variable", "Pretendard Variable", sans-serif;
+  font-family: "Gowun Dodum", "SUIT Variable", sans-serif;
   font-size: clamp(20px,2.25vw,31px);
-  font-weight: 560;
-  line-height: 1.52;
-  letter-spacing: -.035em;
+  font-weight: 400;
+  line-height: 1.58;
+  letter-spacing: -.02em;
   word-break: keep-all;
   text-shadow: none;
 }
@@ -95,17 +96,17 @@ body .hero-manifesto mark {
   border-radius: 7px;
   background: rgba(0,0,0,.3);
   box-shadow: none;
-  font-weight: 650;
+  font-weight: 400;
   text-shadow: none;
 }
 body .lead {
   max-width: 640px;
   color: rgba(247,239,226,.78);
-  font-family: "SUIT Variable", "Pretendard Variable", sans-serif;
+  font-family: "Gowun Dodum", "SUIT Variable", sans-serif;
   font-size: 16px;
-  font-weight: 410;
-  line-height: 1.92;
-  letter-spacing: -.025em;
+  font-weight: 400;
+  line-height: 2;
+  letter-spacing: -.012em;
   word-break: keep-all;
 }
 body .hero-actions a {
