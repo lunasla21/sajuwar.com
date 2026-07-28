@@ -108,7 +108,7 @@ app.use((req, res, next) => {
   }
   return next();
 });
-app.use(express.static(__dirname));
+app.use(express.static(__dirname, { index: false }));
 
 const client = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
@@ -1209,7 +1209,7 @@ function handleManse(req, res) {
 }
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "player.html"));
 });
 
 app.get("/api/developer-preview-config", (req, res) => {
