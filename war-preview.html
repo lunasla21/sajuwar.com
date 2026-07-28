@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#08090d">
+  <title>SAJU WAR · 전쟁 콘셉트 미리보기</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#08090d;--panel:#12141a;--panel2:#191b22;--text:#f3eee4;--muted:#9c9da3;--line:rgba(255,255,255,.1);--red:#ff4c2f;--orange:#ff6c35;--gold:#d7b96c}
+    *{box-sizing:border-box}
+    html{background:#050609}
+    body{margin:0;color:var(--text);background:#050609;font-family:"Noto Sans KR",sans-serif;-webkit-font-smoothing:antialiased}
+    button,a{color:inherit;font:inherit}a{text-decoration:none}
+    .app{width:min(100%,480px);min-height:100svh;margin:auto;padding-bottom:82px;background:var(--bg);box-shadow:0 0 80px rgba(0,0,0,.6)}
+    .header{height:62px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,9,13,.94);position:sticky;top:0;z-index:20;backdrop-filter:blur(14px)}
+    .logo{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:.08em}.logo-mark{width:28px;height:28px;display:grid;place-items:center;color:#08090d;background:var(--red);font:600 10px "Roboto Mono"}
+    .header-actions{display:flex;gap:8px}.icon-btn{width:36px;height:36px;border:1px solid var(--line);border-radius:10px;background:transparent;font-size:17px}
+    .tabs{height:48px;padding:0 14px;display:flex;gap:22px;align-items:center;overflow:auto;border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:62px;z-index:19;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}.tab{height:48px;flex:none;padding:0;border:0;color:var(--muted);background:none;font-size:13px;font-weight:600;position:relative}.tab.active{color:var(--text)}.tab.active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--red)}
+    .hero{margin:14px;min-height:520px;position:relative;overflow:hidden;border-radius:18px;background:#101116}
+    .hero-slide{position:absolute;inset:0;padding:28px 24px;display:flex;flex-direction:column;opacity:0;transform:scale(1.02);transition:.55s ease;pointer-events:none;background-size:cover;background-position:center}
+    .hero-slide.active{opacity:1;transform:none;pointer-events:auto}.hero-slide::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,5,8,.08),rgba(4,5,8,.2) 35%,rgba(4,5,8,.96) 100%)}.hero-slide>*{position:relative;z-index:1}
+    .hero-one{background-image:url("assets/premium-battlefield-command.webp")}.hero-two{background-image:url("assets/hero-saju-war.jpg")}.hero-three{background-image:url("assets/hero-2026-personal.jpg")}
+    .rank{align-self:flex-end;padding:8px 9px;color:#08090d;background:var(--gold);font:800 10px "Roboto Mono";letter-spacing:.05em}
+    .hero-copy{margin-top:auto}.eyebrow{margin:0 0 10px;color:var(--gold);font:600 10px "Roboto Mono";letter-spacing:.12em}.hero h1{margin:0 0 12px;font:400 50px/.9 Anton,sans-serif;letter-spacing:-.03em}.hero h1 span{color:var(--red)}.hero p{margin:0;color:#d2cdc5;font-size:14px;line-height:1.65}
+    .hero-cta{margin-top:20px;width:100%;min-height:50px;border:0;border-radius:10px;color:#090a0d;background:linear-gradient(135deg,var(--red),var(--orange));font-weight:800}
+    .dots{position:absolute;left:24px;bottom:16px;display:flex;gap:6px;z-index:3}.dot{width:18px;height:3px;border:0;padding:0;background:rgba(255,255,255,.25)}.dot.active{background:var(--red)}
+    .quick{padding:6px 14px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.quick a{padding:14px 6px 12px;text-align:center;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.quick-icon{width:34px;height:34px;margin:0 auto 8px;display:grid;place-items:center;border-radius:10px;color:var(--red);background:rgba(255,76,47,.1);font-weight:800}.quick span{display:block;font-size:11px}
+    .section{padding:28px 14px}.section.dark{background:#0c0d12}.section-head{margin-bottom:16px;display:flex;align-items:end;justify-content:space-between;gap:14px}.section-head h2{margin:0;font-size:22px;letter-spacing:-.045em}.section-head p{margin:5px 0 0;color:var(--muted);font-size:12px}.more{flex:none;color:var(--muted);font-size:11px}
+    .rank-list{display:grid;gap:10px}.rank-card{min-height:150px;display:grid;grid-template-columns:128px 1fr;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.rank-img{position:relative;background-size:cover;background-position:center}.rank-img::after{content:attr(data-rank);position:absolute;top:0;left:0;padding:8px 10px;color:#090a0d;background:var(--gold);font:700 11px "Roboto Mono"}.rank-content{padding:16px;display:flex;flex-direction:column}.rank-content small{color:var(--red);font:600 9px "Roboto Mono";letter-spacing:.08em}.rank-content h3{margin:8px 0 6px;font-size:17px;line-height:1.35}.rank-content p{margin:0;color:var(--muted);font-size:11px;line-height:1.5}.price{margin-top:auto;font-weight:800;font-size:14px}
+    .img-command{background-image:url("assets/premium-battlefield-command.webp")}.img-item{background-image:url("assets/premium-card-item.webp")}.img-match{background-image:url("assets/premium-card-match.webp")}
+    .rail{display:grid;grid-auto-flow:column;grid-auto-columns:72%;gap:10px;overflow:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.rail::-webkit-scrollbar{display:none}.poster{min-height:270px;padding:18px;display:flex;flex-direction:column;position:relative;overflow:hidden;border-radius:15px;background-size:cover;background-position:center;scroll-snap-align:start}.poster::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(6,7,10,.94))}.poster>*{position:relative;z-index:1}.poster small{color:var(--gold);font:600 9px "Roboto Mono";letter-spacing:.08em}.poster h3{margin:auto 0 6px;font-size:21px}.poster p{margin:0;color:#c2c0bb;font-size:11px}.poster-love{background-image:url("assets/card-compatibility-paid.jpg")}.poster-money{background-image:url("assets/card-manse.jpg")}.poster-daily{background-image:url("assets/card-daily.jpg")}
+    .review-score{padding:18px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.review-score strong{font:400 40px Anton}.stars{color:var(--gold);letter-spacing:.12em}.reviews{display:grid;gap:9px;margin-top:10px}.review{padding:16px;border-radius:13px;background:var(--panel2)}.review-top{display:flex;justify-content:space-between;color:var(--muted);font-size:10px}.review p{margin:10px 0 0;font-size:12px;line-height:1.7}
+    .free-banner{padding:22px;border:1px solid rgba(255,76,47,.3);border-radius:16px;background:radial-gradient(circle at 90% 10%,rgba(255,76,47,.18),transparent 42%),var(--panel)}.free-banner h3{margin:8px 0;font-size:22px}.free-banner p{margin:0;color:var(--muted);font-size:12px}.free-banner button{margin-top:18px;width:100%;min-height:48px;border:1px solid var(--red);border-radius:9px;color:var(--red);background:transparent;font-weight:700}
+    .bottom{height:72px;width:min(100%,480px);padding:8px 12px max(8px,env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:50%;bottom:0;transform:translateX(-50%);z-index:30;border-top:1px solid var(--line);background:rgba(10,11,15,.96);backdrop-filter:blur(18px)}.bottom a{display:grid;place-items:center;gap:3px;color:var(--muted);font-size:9px}.bottom a.active{color:var(--text)}.bottom b{font-size:18px}
+    .toast{position:fixed;left:50%;bottom:86px;transform:translate(-50%,20px);width:min(calc(100% - 32px),448px);padding:13px 16px;opacity:0;pointer-events:none;border:1px solid var(--line);border-radius:10px;background:#202229;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(min-width:700px){body{padding-block:24px}.app{border-radius:22px;overflow:hidden}.header{top:24px}.tabs{top:86px}.bottom{bottom:24px;border-radius:0 0 22px 22px}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <a class="logo" href="#"><span class="logo-mark">SW</span>SAJU WAR</a>
+      <div class="header-actions"><button class="icon-btn notify" type="button" aria-label="알림">◌</button><button class="icon-btn" type="button" aria-label="메뉴">☰</button></div>
+    </header>
+    <nav class="tabs" aria-label="콘텐츠 카테고리">
+      <button class="tab active" type="button">전체</button><button class="tab" type="button">무기</button><button class="tab" type="button">타이밍</button><button class="tab" type="button">재물</button><button class="tab" type="button">관계</button><button class="tab" type="button">무료</button>
+    </nav>
+
+    <section class="hero" aria-label="대표 콘텐츠">
+      <article class="hero-slide hero-one active"><span class="rank">TOP 1</span><div class="hero-copy"><p class="eyebrow">SAJU WAR ORIGINAL</p><h1>나의 <span>전투 사주</span></h1><p>내가 가진 무기와 가장 강해지는 시기를<br>한 장의 전략 지도로 확인하세요.</p><button class="hero-cta preview-action" type="button">무료 정찰 시작 →</button></div></article>
+      <article class="hero-slide hero-two"><span class="rank">NEW</span><div class="hero-copy"><p class="eyebrow">WEAPON DISCOVERY</p><h1>FIND YOUR<br><span>WEAPON</span></h1><p>타고난 힘은 이미 준비되어 있습니다.<br>이제 꺼내야 할 순간을 찾으세요.</p><button class="hero-cta preview-action" type="button">내 무기 확인하기 →</button></div></article>
+      <article class="hero-slide hero-three"><span class="rank">2026</span><div class="hero-copy"><p class="eyebrow">YEARLY CAMPAIGN</p><h1>2026<br><span>전선 보고서</span></h1><p>올해의 기회, 위험, 승부처를<br>월별 작전 지도에 정리했습니다.</p><button class="hero-cta preview-action" type="button">2026 작전 열기 →</button></div></article>
+      <div class="dots"><button class="dot active" type="button" aria-label="슬라이드 1"></button><button class="dot" type="button" aria-label="슬라이드 2"></button><button class="dot" type="button" aria-label="슬라이드 3"></button></div>
+    </section>
+
+    <section class="quick" aria-label="빠른 메뉴">
+      <a href="#ranking"><span class="quick-icon">W</span><span>내 무기</span></a><a href="#timing"><span class="quick-icon">T</span><span>타이밍</span></a><a href="#relation"><span class="quick-icon">R</span><span>관계전</span></a><a href="#free"><span class="quick-icon">0</span><span>무료</span></a>
+    </section>
+
+    <section class="section dark" id="ranking">
+      <div class="section-head"><div><h2>지금 가장 많이 선택한 작전</h2><p>SAJU WAR 실시간 인기 분석</p></div><a class="more" href="#">전체보기 →</a></div>
+      <div class="rank-list">
+        <a class="rank-card preview-action" href="#"><div class="rank-img img-command" data-rank="1"></div><div class="rank-content"><small>MASTER REPORT</small><h3>내 인생의 전장 지도</h3><p>무기·타이밍·재물·관계를 한 번에</p><div class="price">39,800원</div></div></a>
+        <a class="rank-card preview-action" href="#"><div class="rank-img img-item" data-rank="2"></div><div class="rank-content"><small>WEAPON REPORT</small><h3>내 사주의 히든 아이템</h3><p>지장간에 숨은 보조 능력 분석</p><div class="price">9,900원</div></div></a>
+        <a class="rank-card preview-action" href="#"><div class="rank-img img-match" data-rank="3"></div><div class="rank-content"><small>RELATION REPORT</small><h3>두 사람의 동맹과 충돌</h3><p>관계의 강점과 반복되는 갈등 지도</p><div class="price">9,900원</div></div></a>
+      </div>
+    </section>
+
+    <section class="section" id="relation">
+      <div class="section-head"><div><h2>연애 전선에 이상 신호가 있다면</h2><p>썸·연애·재회·궁합 작전실</p></div><a class="more" href="#">전체보기 →</a></div>
+      <div class="rail">
+        <a class="poster poster-love preview-action" href="#"><small>RELATION INTEL</small><h3>그 사람과의 전선</h3><p>끌림과 충돌의 이유</p></a>
+        <a class="poster poster-money preview-action" href="#"><small>MONEY INTEL</small><h3>재물 무기 분석</h3><p>돈이 모이는 방식과 시기</p></a>
+        <a class="poster poster-daily preview-action" href="#"><small>DAILY SIGNAL</small><h3>오늘의 작전 카드</h3><p>지금 실행할 단 하나</p></a>
+      </div>
+    </section>
+
+    <section class="section dark" id="timing">
+      <div class="section-head"><div><h2>실시간 작전 후기</h2><p>분석을 완료한 사용자들의 기록</p></div><a class="more" href="#">더보기 →</a></div>
+      <div class="review-score"><div><strong>4.9</strong><div class="stars">★★★★★</div></div><span class="more">1,284 REVIEWS</span></div>
+      <div class="reviews">
+        <article class="review"><div class="review-top"><span>김** · 무기 리포트</span><span>방금 전</span></div><p>제가 왜 늘 같은 방식으로 결정하는지 처음 이해했어요. 특히 시기 설명이 현실적이었습니다.</p></article>
+        <article class="review"><div class="review-top"><span>이** · 관계전 분석</span><span>12분 전</span></div><p>좋다 나쁘다가 아니라 서로 어떻게 움직여야 하는지 알려줘서 실제로 도움이 됐어요.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="free">
+      <div class="free-banner"><p class="eyebrow">FREE RECONNAISSANCE</p><h3>이게 진짜 무료라고?</h3><p>생년월일만 입력하면 핵심 무기와 오늘의 작전을 바로 확인할 수 있습니다.</p><button class="preview-action" type="button">무료 정찰 보고서 받기 →</button></div>
+    </section>
+  </main>
+
+  <nav class="bottom" aria-label="하단 메뉴">
+    <a class="active" href="#"><b>⌂</b><span>홈</span></a><a href="#free"><b>◎</b><span>오늘의 작전</span></a><a href="#ranking"><b>⌕</b><span>탐색</span></a><a href="#"><b>▣</b><span>작전 보관함</span></a>
+  </nav>
+  <div class="toast" id="toast" role="status">미리보기 화면입니다. 본 사이트는 변경되지 않았어요.</div>
+  <script>
+    const slides=[...document.querySelectorAll(".hero-slide")],dots=[...document.querySelectorAll(".dot")],tabs=[...document.querySelectorAll(".tab")];
+    let current=0,auto;
+    function showSlide(index){current=index;slides.forEach((s,i)=>s.classList.toggle("active",i===index));dots.forEach((d,i)=>d.classList.toggle("active",i===index))}
+    function startAuto(){clearInterval(auto);auto=setInterval(()=>showSlide((current+1)%slides.length),4500)}
+    dots.forEach((dot,index)=>dot.addEventListener("click",()=>{showSlide(index);startAuto()}));startAuto();
+    tabs.forEach(tab=>tab.addEventListener("click",()=>{tabs.forEach(t=>t.classList.remove("active"));tab.classList.add("active");document.getElementById(tab.textContent==="무료"?"free":tab.textContent==="관계"?"relation":tab.textContent==="타이밍"?"timing":"ranking")?.scrollIntoView({behavior:"smooth"})}));
+    const toast=document.getElementById("toast");document.querySelectorAll(".preview-action").forEach(el=>el.addEventListener("click",event=>{event.preventDefault();toast.classList.add("show");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>toast.classList.remove("show"),2200)}));
+    document.querySelector(".notify").addEventListener("click",()=>{toast.textContent="새 작전 알림 3개가 있습니다.";toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2200)});
+  </script>
+</body>
+</html>
