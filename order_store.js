@@ -12,26 +12,12 @@ const PAYMENT_METHOD = {
 };
 
 const PRODUCTS = {
-  quick_report: {
-    id: "quick_report",
-    name: "AI QUICK REPORT",
-    type: "report",
-    amount: 9900,
-    accessUrl: "/",
-  },
   premium_report: {
     id: "premium_report",
-    name: "PREMIUM AI REPORT",
+    name: "WEAPON TIMING REPORT",
     type: "report",
-    amount: 28900,
+    amount: 9900,
     accessUrl: "/?paid=1",
-  },
-  master_report: {
-    id: "master_report",
-    name: "MASTER INTELLIGENCE REPORT",
-    type: "report",
-    amount: 99000,
-    accessUrl: "/",
   },
   compatibility_report: {
     id: "compatibility_report",

@@ -1,6 +1,3 @@
-@import url("https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css");
-@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
-
 :root {
   color-scheme: dark;
   --sw-acid: #ff4b2b;
@@ -77,38 +74,9 @@ body .hero h1 {
   letter-spacing: -.075em;
 }
 body .hero h1 span { color: var(--sw-acid); }
-body .hero-manifesto {
-  margin-bottom: 24px;
-  color: #f7efe2;
-  font-family: "Gowun Dodum", "SUIT Variable", sans-serif;
-  font-size: clamp(20px,2.25vw,31px);
-  font-weight: 400;
-  line-height: 1.58;
-  letter-spacing: -.02em;
-  word-break: keep-all;
-  text-shadow: none;
-}
-body .hero-manifesto mark {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 3px 9px 4px;
-  color: #fff5e7;
-  border-radius: 7px;
-  background: rgba(0,0,0,.3);
-  box-shadow: none;
-  font-weight: 400;
-  text-shadow: none;
-}
-body .lead {
-  max-width: 640px;
-  color: rgba(247,239,226,.78);
-  font-family: "Gowun Dodum", "SUIT Variable", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 2;
-  letter-spacing: -.012em;
-  word-break: keep-all;
-}
+body .hero-manifesto { margin-bottom: 20px; color: #f4f1e8; font-size: clamp(21px,2.4vw,34px); line-height: 1.36; }
+body .hero-manifesto mark { color: inherit; background: none; }
+body .lead { max-width: 600px; color: #aaa; font-size: 15px; line-height: 1.85; }
 body .hero-actions a {
   min-height: 58px;
   padding: 0 24px;
@@ -117,10 +85,6 @@ body .hero-actions a {
   border-radius: 0;
   background: linear-gradient(135deg,var(--sw-acid),var(--sw-orange));
   box-shadow: 6px 6px 0 rgba(255,255,255,.12);
-  font-family: "SUIT Variable", "Pretendard Variable", sans-serif;
-  font-size: 14px;
-  font-weight: 680;
-  letter-spacing: -.02em;
 }
 body .hero-actions a.secondary-link { color: #ccc; border-bottom: 1px solid #555; background: transparent; box-shadow: none; }
 body .hero-map {
@@ -309,8 +273,8 @@ body .footer h3 { color: #eee; }
   body .hero::before { background: radial-gradient(circle at 80% 20%,rgba(255,75,43,.13),transparent 32%),#070707; }
   body .hero::after { width: 360px; right: -190px; top: 48%; opacity: .65; }
   body .hero h1 { margin-top: 34px; font-size: clamp(58px,18vw,76px); }
-  body .hero-manifesto { max-width: 350px; font-size: 21px; }
-  body .lead { max-width: 355px; font-size: 15px; }
+  body .hero-manifesto { max-width: 340px; font-size: 20px; }
+  body .lead { max-width: 350px; font-size: 13px; }
   body .hero-actions { margin-top: 25px; }
   body .hero-actions a { width: 100%; }
   body .hero-actions a.secondary-link { min-height: 42px; }

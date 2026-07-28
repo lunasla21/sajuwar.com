@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STRATEGY PATH 해금 | SAJU WAR</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>무통장입금 안내 | 쭈쌤의 사주 전쟁</title>
   <style>
     :root { --gold:#f2db8d; --line:rgba(242,219,141,.24); --panel:rgba(18,17,14,.86); }
     * { box-sizing: border-box; }
@@ -91,60 +88,25 @@
       .auth-actions { flex-direction: column; }
     }
   </style>
-  <style>
-    :root{--gold:#ff5a39;--line:rgba(255,255,255,.1);--panel:#10141c}
-    body{color:#f4f0e8;background:radial-gradient(circle at 80% 8%,rgba(255,85,56,.12),transparent 30%),#07090d;font-family:"Noto Sans KR",system-ui,sans-serif}
-    main{width:min(480px,100%);min-height:100svh;padding:64px 22px}
-    .panel,.card{border-color:var(--line);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.02));box-shadow:0 26px 70px rgba(0,0,0,.28)}
-    .panel{padding:22px}
-    h1,h2,h3{color:#f4f0e8;letter-spacing:-.045em}
-    p{color:#969eaa}
-    #orderFormPanel>p:first-child,#depositPanel>p:first-child{color:#64dfcb;font:600 11px "IBM Plex Mono",monospace;letter-spacing:.12em}
-    label{color:#969eaa;font-weight:500;font-size:12px}
-    input,select,textarea{color:#f4f0e8;border-color:var(--line);border-radius:10px;background:#0c1017}
-    button,a.button{min-height:56px;border-radius:11px;color:#080a0e;background:linear-gradient(135deg,#ff5538,#ff7d33);font-weight:700}
-    .secondary{color:#f4f0e8;border-color:var(--line);background:rgba(255,255,255,.04)}
-    .summary,.notice,.product-promise div,.auth-gate{border-color:var(--line);border-radius:12px;background:rgba(255,255,255,.035)}
-    .summary dt,.product-promise strong{color:#64dfcb;font-family:"IBM Plex Mono",monospace}
-    .summary dd,.auth-gate strong{color:#f4f0e8}
-    .product-promise{grid-template-columns:1fr}
-    .product-promise div{padding:14px 16px}
-  </style>
-  <style>
-    :root{--gold:#b4975a;--line:#dedfdc;--panel:#fff}
-    body{color:#111318;background:#faf9f6;font-family:"Noto Sans KR",system-ui,sans-serif}
-    main{padding:76px 22px}
-    .panel,.card{border-color:var(--line);border-radius:8px;background:#fff;box-shadow:0 24px 60px rgba(20,28,38,.06)}
-    h1,h2,h3{color:#111318}
-    p{color:#686d76}
-    #orderFormPanel>p:first-child,#depositPanel>p:first-child{color:#b4975a}
-    label{color:#686d76}
-    input,select,textarea{color:#111318;border-color:var(--line);border-radius:6px;background:#fff}
-    button,a.button{border-radius:7px;color:#fff;background:#132238}
-    .secondary{color:#132238;border-color:var(--line);background:#fff}
-    .summary,.notice,.product-promise div,.auth-gate{border-color:var(--line);border-radius:6px;background:#f1f1ee}
-    .summary dt,.product-promise strong{color:#132238}
-    .summary dd,.auth-gate strong{color:#111318}
-  </style>
 </head>
 <body>
   <main>
     <section class="panel" id="orderFormPanel">
-      <p>SECURE CHECKOUT</p>
-      <h1>개인 인텔리전스<br>보고서를 시작합니다.</h1>
-      <p>선택한 보고서를 확인하고 안전하게 신청하세요.</p>
+      <p>WEAPON TIMING REPORT</p>
+      <h1>내 무기가 강해지는 시기를 확인합니다</h1>
+      <p>원국과 현재 대운·세운을 연결해 Weapon이 돈·직업·관계 중 어디에서 발현되는지 확인하는 9,900원 리포트입니다.</p>
       <div class="product-promise">
-        <div><strong>PERSONALIZED</strong><span>개인 명리 데이터 기반 AI 분석</span></div>
-        <div><strong>CONFIDENTIAL</strong><span>민감 정보와 보고서 비공개 처리</span></div>
-        <div><strong>PRINT READY</strong><span>소장과 인쇄를 위한 PDF 제공</span></div>
+        <div><strong>HIDDEN ITEM</strong><span>지장간에 숨은 보조 능력</span></div>
+        <div><strong>ACTIVATION</strong><span>현재·다음 세운의 활성화 시기</span></div>
+        <div><strong>NEXT MOVE</strong><span>지금 실행할 행동 전략</span></div>
       </div>
 
       <div class="auth-gate hidden" id="authGate">
-        <strong>보고서와 주문 내역을 안전하게 보관할 계정이 필요합니다.</strong>
-        <p>로그인하거나 1분 안에 계정을 만들어 계속하세요.</p>
+        <strong>주문 내역과 리포트를 안전하게 보관하기 위해 계정이 필요합니다.</strong>
+        <p>상품 내용을 먼저 확인한 뒤 로그인하거나 1분 회원가입으로 결제를 계속할 수 있습니다.</p>
         <div class="auth-actions">
-          <a class="button" href="/login.html?return=/payment.html">로그인</a>
-          <a class="button secondary" href="/signup.html?return=/payment.html">계정 만들기</a>
+          <a class="button" href="/login.html?return=/payment.html">로그인하고 계속</a>
+          <a class="button secondary" href="/signup.html?return=/payment.html">1분 회원가입</a>
         </div>
       </div>
 
@@ -166,14 +128,14 @@
         <textarea id="application" placeholder="생년월일, 태어난 시간, 상담/리포트 요청 내용을 적어주세요."></textarea>
       </label>
       <div class="actions">
-        <button type="button" id="orderButton" onclick="createOrder()">보고서 신청하기</button>
-        <a class="button secondary" href="/mypage.html">주문 내역</a>
+        <button type="button" id="orderButton" onclick="createOrder()">주문 생성하기</button>
+        <a class="button secondary" href="/mypage.html">구매내역 보기</a>
       </div>
     </section>
 
     <section class="panel hidden" id="depositPanel">
-      <p>PAYMENT PENDING</p>
-      <h1>입금 확인 후<br>보고서 생성이 시작됩니다.</h1>
+      <p>입금 안내</p>
+      <h1>입금 후 입금 완료 버튼을 눌러주세요</h1>
       <dl class="summary">
         <dt>주문번호</dt><dd id="orderId"></dd>
         <dt>상품명</dt><dd id="productName"></dd>
@@ -189,7 +151,7 @@
         <button type="button" class="secondary" onclick="copyOrderId()">주문번호 복사</button>
         <button type="button" class="secondary" onclick="copyAccountNumber()">계좌번호 복사</button>
         <button type="button" class="secondary" onclick="copyApplication()">신청내용 복사</button>
-        <button type="button" onclick="markDepositComplete()">입금 완료 알리기</button>
+        <button type="button" onclick="markDepositComplete()">입금 완료</button>
       </div>
       <p class="notice" id="depositNotice">입금 완료 버튼을 누르면 관리자 페이지에 입금대기 주문으로 표시됩니다.</p>
     </section>
