@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#05060a">
+  <title>전략 리포트 해금 | SAJU WAR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#05060a;--panel:#111319;--text:#f3eee6;--muted:#96979f;--line:rgba(255,255,255,.1);--red:#ff4c2f;--violet:#7556ff;--gold:#d7b96c}
+    *{box-sizing:border-box}html{background:#020306}body{margin:0;color:var(--text);background:#020306;font-family:"Noto Sans KR",sans-serif;-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}
+    .page{width:min(100%,480px);min-height:100svh;margin:auto;background:var(--bg);box-shadow:0 0 80px #000}
+    .top{height:62px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:50%;z-index:20;width:min(100%,480px);transform:translateX(-50%);background:rgba(5,6,10,.82);backdrop-filter:blur(16px)}.back{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;font-size:20px}.brand{font-weight:800;letter-spacing:.08em}.step{color:#777982;font:600 9px "Roboto Mono"}
+    .intro{height:620px;position:relative;overflow:hidden;background:#05060a}.intro::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,10,.04),rgba(5,6,10,.1) 45%,#05060a 94%),linear-gradient(90deg,rgba(5,6,10,.83),transparent 67%);pointer-events:none}.strategist{width:100%;height:100%;object-fit:cover;object-position:62% 44%;animation:enter 1.2s cubic-bezier(.2,.8,.2,1) both,breathe 5.5s ease-in-out 1.2s infinite alternate;transform-origin:72% 55%}@keyframes enter{from{opacity:0;transform:translateX(30px) scale(1.07);filter:blur(7px)}to{opacity:1;transform:none;filter:none}}@keyframes breathe{to{transform:scale(1.018) translateY(-4px)}}.scan{position:absolute;left:0;right:0;top:0;z-index:3;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);box-shadow:0 0 12px var(--red);animation:scan 3.6s linear infinite}@keyframes scan{to{transform:translateY(620px)}}.intro-copy{position:absolute;left:24px;right:24px;bottom:40px;z-index:4}.eyebrow{margin:0 0 12px;color:#ff745e;font:600 10px "Roboto Mono";letter-spacing:.12em;opacity:0;animation:line .5s .55s forwards}.intro h1{max-width:310px;margin:0;font-size:38px;line-height:1.18;letter-spacing:-.055em}.intro h1 span{display:block;opacity:0;transform:translateY(10px);animation:line .55s forwards}.intro h1 span:first-child{animation-delay:.85s}.intro h1 span:last-child{color:var(--red);animation-delay:1.18s}.intro-copy>p:last-child{max-width:290px;margin:16px 0 0;color:#b0afb3;font-size:13px;line-height:1.75;opacity:0;animation:line .5s 1.55s forwards}@keyframes line{to{opacity:1;transform:none}}
+    .unlock{padding:20px 16px 46px;background:radial-gradient(circle at 80% 0,rgba(117,86,255,.1),transparent 28%),var(--bg)}.section-head{padding:14px 4px 22px}.section-head small{color:var(--gold);font:600 9px "Roboto Mono";letter-spacing:.12em}.section-head h2{margin:9px 0 5px;font-size:27px;letter-spacing:-.05em}.section-head p{margin:0;color:var(--muted);font-size:12px}
+    .tiers{display:grid;gap:13px}.tier{position:relative;padding:22px 18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,rgba(22,24,31,.96),rgba(10,11,16,.97));overflow:hidden}.tier::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent,var(--red));box-shadow:0 0 12px var(--accent,var(--red))}.tier.recommended{border-color:rgba(255,76,47,.42);box-shadow:0 0 28px rgba(255,76,47,.08)}.tag{display:flex;align-items:center;justify-content:space-between;color:var(--accent,var(--red));font:600 9px "Roboto Mono";letter-spacing:.1em}.recommend{padding:5px 7px;color:#08090d;border-radius:4px;background:var(--red);font-weight:800}.tier h3{margin:13px 0 6px;font-size:22px;letter-spacing:-.045em}.tier-copy{margin:0;color:var(--muted);font-size:12px;line-height:1.6}.features{margin:18px 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:9px 8px;list-style:none}.features li{color:#c8c5bf;font-size:11px}.features li::before{content:"•";margin-right:6px;color:var(--accent,var(--red))}.tier-bottom{padding-top:16px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line)}.price{font-size:23px;font-weight:800}.unlock-btn{padding:12px 14px;border-radius:9px;color:#08090d;background:var(--accent,var(--red));font-size:12px;font-weight:800}.tier:nth-child(2){--accent:#8b72ff}.tier:nth-child(3){--accent:#d7b96c}
+    .trust{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:14px;color:#888a91;background:#0b0c11;font-size:10px;line-height:1.8}.legal{padding:24px 18px 38px;border-top:1px solid var(--line);color:#666870;font-size:9px;line-height:1.8}.legal-links{display:flex;gap:12px;margin-bottom:12px;color:#aaa}
+    @media(min-width:700px){body{padding-block:24px}.page{border-radius:22px;overflow:hidden}.top{top:24px;border-radius:22px 22px 0 0}}
+    @media(prefers-reduced-motion:reduce){.strategist,.scan,.eyebrow,.intro h1 span,.intro-copy>p:last-child{animation:none;opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="top"><a class="back" href="/" aria-label="뒤로">‹</a><div class="brand">SAJU WAR</div><span class="step">REPORT · 02</span></header>
+    <section class="intro">
+      <img class="strategist" src="assets/report-strategist-female-v1.png" alt="전략 리포트를 안내하는 여성 전략관">
+      <div class="scan"></div>
+      <div class="intro-copy">
+        <p class="eyebrow">STRATEGY OFFICER · ONLINE</p>
+        <h1><span>정찰은 끝났습니다.</span><span>이제 전략을 해금합니다.</span></h1>
+        <p>필요한 깊이만 선택하세요.<br>결제는 리포트를 선택한 다음 시작됩니다.</p>
+      </div>
+    </section>
+    <section class="unlock">
+      <header class="section-head"><small>SELECT YOUR INTELLIGENCE</small><h2>어디까지 알고 싶나요?</h2><p>첫 리포트부터 순서대로 확인할 수 있습니다.</p></header>
+      <div class="tiers">
+        <article class="tier recommended">
+          <div class="tag"><span>LEVEL 01 · QUICK REPORT</span><b class="recommend">첫 해금 추천</b></div>
+          <h3>내 무기가 강해지는 시기</h3>
+          <p class="tier-copy">핵심 무기와 현재 흐름, 지금 실행할 행동을 빠르게 확인합니다.</p>
+          <ul class="features"><li>원국 핵심 분석</li><li>히든 아이템</li><li>현재 활성화 시기</li><li>다음 행동 전략</li></ul>
+          <div class="tier-bottom"><strong class="price">9,900원</strong><a class="unlock-btn" href="/payment.html?product=premium_report">이 리포트 해금 →</a></div>
+        </article>
+        <article class="tier">
+          <div class="tag"><span>LEVEL 02 · PREMIUM REPORT</span></div>
+          <h3>연간 전선 전략서</h3>
+          <p class="tier-copy">월별 기회와 위험, 재물·직업·관계의 타이밍을 깊게 분석합니다.</p>
+          <ul class="features"><li>연간·월별 흐름</li><li>오행 심층 분석</li><li>재물·직업 전략</li><li>실행 로드맵</li></ul>
+          <div class="tier-bottom"><strong class="price">28,900원</strong><a class="unlock-btn" href="/payment.html?product=premium_ai_report">프리미엄 해금 →</a></div>
+        </article>
+        <article class="tier">
+          <div class="tag"><span>LEVEL 03 · MASTER REPORT</span></div>
+          <h3>인생 전장 마스터북</h3>
+          <p class="tier-copy">대운과 10년 전략을 포함한 나만의 장기 인생 전략서입니다.</p>
+          <ul class="features"><li>원국 정밀 분석</li><li>10년 대운 전략</li><li>기회·위험 예측</li><li>인생 로드맵</li></ul>
+          <div class="tier-bottom"><strong class="price">99,000원</strong><a class="unlock-btn" href="/payment.html?product=master_intelligence_report">마스터북 해금 →</a></div>
+        </article>
+      </div>
+      <div class="trust">개인 맞춤형 디지털 리포트입니다. 결제 후 생성이 시작되기 전에는 취소할 수 있으며, 생성 또는 열람이 시작된 이후에는 환불이 제한될 수 있습니다.</div>
+    </section>
+    <footer class="legal"><nav class="legal-links"><a href="/terms">이용약관</a><a href="/privacy">개인정보</a><a href="/refund">환불정책</a><a href="/support">문의</a></nav>© 2026 SAJU WAR · J Company · 472-01-04135</footer>
+  </main>
+</body>
+</html>

@@ -19,6 +19,20 @@ const PRODUCTS = {
     amount: 9900,
     accessUrl: "/?paid=1",
   },
+  premium_ai_report: {
+    id: "premium_ai_report",
+    name: "PREMIUM AI REPORT",
+    type: "report",
+    amount: 28900,
+    accessUrl: "/?paid=1",
+  },
+  master_intelligence_report: {
+    id: "master_intelligence_report",
+    name: "MASTER INTELLIGENCE REPORT",
+    type: "report",
+    amount: 99000,
+    accessUrl: "/?paid=1",
+  },
   compatibility_report: {
     id: "compatibility_report",
     name: "\uc720\ub8cc \uad81\ud569 \ub9ac\ud3ec\ud2b8",
