@@ -101,7 +101,7 @@
     function paymentMethodLabel(method) { return method === "bank_transfer" ? "무통장입금" : method; }
     function accessUrl(order) {
       if (order.product_type === "lecture") return `/lecture.html?token=${encodeURIComponent(authToken)}`;
-      return `/?paid=1&token=${encodeURIComponent(authToken)}`;
+      return `/report-view.html?product=${encodeURIComponent(order.product_id)}&token=${encodeURIComponent(authToken)}`;
     }
     function accessLabel(order) { return order.product_type === "lecture" ? "강의보기" : "리포트 보기"; }
     async function loadOrders() {

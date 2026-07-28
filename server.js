@@ -799,6 +799,11 @@ ${sewoon.startInfo}
 async function handleAnalyze(req, res) {
   try {
     const { name, birth, time, gender, calendarType, paidReport } = req.body;
+    const requestedProductId = String(req.body?.product_id || "premium_report");
+    const reportProductIds = ["premium_report", "premium_ai_report", "master_intelligence_report"];
+    const paidProductId = reportProductIds.includes(requestedProductId)
+      ? requestedProductId
+      : "premium_report";
     let paidUser = null;
 
     if (!name || !birth || !time || !gender) {
@@ -815,7 +820,7 @@ async function handleAnalyze(req, res) {
       try {
         orderStore.ensureReportProfileAccess({
           user_id: user.id,
-          product_id: "premium_report",
+          product_id: paidProductId,
           profile: { name, birth, time, gender, calendarType: safeCalendar },
         });
       } catch (error) {
@@ -1161,8 +1166,10 @@ SAJUWAR 해석 원칙:
     if (paidReport && paidUser) {
       orderStore.saveReportCache({
         user_id: paidUser.id,
+        product_id: paidProductId,
         profile: { name, birth, time, gender, calendarType: safeCalendar },
         response,
+        ttl_ms: 10 * 365 * 24 * 60 * 60 * 1000,
       });
     }
     res.json(response);
@@ -1359,19 +1366,36 @@ app.get("/api/report", (req, res) => {
   res.json({ ok: true, message: "report access granted" });
 });
 
+app.get("/api/my/report", (req, res) => {
+  const user = requireLogin(req, res);
+  if (!user) return;
+  const allowedProducts = ["premium_report", "premium_ai_report", "master_intelligence_report"];
+  const productId = allowedProducts.includes(String(req.query.product_id))
+    ? String(req.query.product_id)
+    : "premium_report";
+  if (!orderStore.hasPurchase({ user_id: user.id, product_id: productId })) {
+    return sendPurchaseRequired(res);
+  }
+  const cached = orderStore.getReportCache({ user_id: user.id, product_id: productId });
+  if (!cached) {
+    return res.status(404).json({
+      error: "아직 생성된 리포트가 없습니다.",
+      cached: false,
+    });
+  }
+  markProductAccess(req, productId, "reopen");
+  res.json({ cached: true, product_id: productId, ...cached });
+});
+
 app.get("/api/my/premium-report", (req, res) => {
+  req.query.product_id = "premium_report";
   const user = requireLogin(req, res);
   if (!user) return;
   if (!orderStore.hasPurchase({ user_id: user.id, product_id: "premium_report" })) {
     return sendPurchaseRequired(res);
   }
   const cached = orderStore.getReportCache({ user_id: user.id, product_id: "premium_report" });
-  if (!cached) {
-    return res.status(404).json({
-      error: "아직 저장된 리포트가 없거나 24시간 열람 기간이 끝났습니다.",
-      cached: false,
-    });
-  }
+  if (!cached) return res.status(404).json({ error: "아직 생성된 리포트가 없습니다.", cached: false });
   markProductAccess(req, "premium_report", "reopen");
   res.json({ cached: true, ...cached });
 });

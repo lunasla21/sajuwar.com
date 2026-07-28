@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#05060a">
+  <title>나의 전략 리포트 | SAJU WAR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#05060a;--panel:#111319;--text:#f3eee6;--muted:#96979f;--line:rgba(255,255,255,.1);--red:#ff4c2f;--violet:#7556ff;--gold:#d7b96c}
+    *{box-sizing:border-box}html{background:#020306}body{margin:0;color:var(--text);background:#020306;font-family:"Noto Sans KR",sans-serif;-webkit-font-smoothing:antialiased}button,input,select,a{font:inherit;color:inherit}a{text-decoration:none}
+    .page{width:min(100%,720px);min-height:100svh;margin:auto;background:radial-gradient(circle at 90% 8%,rgba(117,86,255,.1),transparent 30%),var(--bg);box-shadow:0 0 80px #000}.top{height:62px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;background:rgba(5,6,10,.86);backdrop-filter:blur(16px)}.back{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;font-size:20px}.brand{font-weight:800;letter-spacing:.08em}.top a:last-child{color:#999;font-size:11px}
+    .state{min-height:calc(100svh - 62px);padding:34px 20px 50px}.hidden{display:none!important}.eyebrow{margin:0 0 10px;color:#ff725c;font:600 10px "Roboto Mono";letter-spacing:.12em}.state h1{margin:0 0 12px;font-size:34px;line-height:1.2;letter-spacing:-.055em}.lead{margin:0;color:var(--muted);font-size:14px;line-height:1.75}.card{margin-top:24px;padding:20px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,rgba(22,24,31,.96),rgba(9,10,15,.96))}.status-mark{width:62px;height:62px;margin-bottom:20px;display:grid;place-items:center;border:1px solid rgba(255,76,47,.35);border-radius:50%;color:var(--red);font-size:25px;box-shadow:0 0 25px rgba(255,76,47,.1)}.actions{display:grid;gap:9px;margin-top:22px}.button{min-height:52px;border:0;border-radius:10px;display:grid;place-items:center;color:#08090d;background:linear-gradient(135deg,var(--red),#ff7436);font-weight:800}.button.secondary{color:#ddd;border:1px solid var(--line);background:transparent}
+    .profile-summary{display:grid;gap:10px;margin-top:18px}.profile-row{display:flex;justify-content:space-between;gap:15px;padding-bottom:10px;border-bottom:1px solid var(--line);font-size:12px}.profile-row span{color:var(--muted)}.form{display:grid;gap:14px;margin-top:20px}.field{display:grid;gap:7px}.field label{color:var(--gold);font:600 9px "Roboto Mono";letter-spacing:.08em}.input{width:100%;height:52px;padding:0 13px;border:1px solid var(--line);border-radius:9px;color:#fff;background:#0d0f14}.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}.notice{margin-top:14px;color:#74767f;font-size:10px;line-height:1.7}
+    .generating{padding:0;position:relative;overflow:hidden;background:#05060a}.generate-scene{height:100svh;position:relative}.generate-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 38%,rgba(5,6,10,.18) 58%,#05060a 94%),linear-gradient(90deg,rgba(5,6,10,.82),transparent 67%)}.generate-scene img{width:100%;height:100%;object-fit:cover;object-position:64% center;animation:breath 5s ease-in-out infinite alternate}@keyframes breath{to{transform:scale(1.02) translateY(-4px)}}.scan{position:absolute;left:0;right:0;top:0;z-index:3;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);box-shadow:0 0 12px var(--red);animation:scan 2.8s linear infinite}@keyframes scan{to{transform:translateY(100svh)}}.generate-copy{position:absolute;left:24px;right:24px;bottom:54px;z-index:4}.generate-copy h1{max-width:320px}.progress{height:4px;margin:22px 0 10px;overflow:hidden;background:rgba(255,255,255,.08)}.progress i{display:block;width:12%;height:100%;background:linear-gradient(90deg,var(--violet),var(--red),var(--gold));box-shadow:0 0 9px var(--red);transition:width .45s ease}.progress-text{color:#888b94;font:500 9px "Roboto Mono"}
+    .report{padding:30px 20px 70px}.report-cover{padding:26px 22px;border:1px solid rgba(255,76,47,.28);border-radius:18px;background:radial-gradient(circle at 90% 0,rgba(255,76,47,.15),transparent 38%),var(--panel)}.pillars{margin-top:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.pillar{padding:12px 4px;text-align:center;border:1px solid var(--line);border-radius:9px;background:#0b0d12}.pillar small{display:block;color:#777;font:500 8px "Roboto Mono"}.pillar strong{display:block;margin-top:7px;font-size:20px}.report-body{margin-top:16px;padding:24px 20px;border:1px solid var(--line);border-radius:16px;background:#0d0f14;white-space:pre-wrap;color:#ddd8d0;font-size:14px;line-height:2}.report-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}.report-actions button,.report-actions a{min-height:50px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;background:transparent;font-weight:700}.report-actions button{color:#08090d;border:0;background:var(--red)}
+    @media(min-width:760px){body{padding-block:24px}.page{border-radius:22px;overflow:hidden}.top{top:24px}}@media print{body,.page{background:#fff;color:#111}.top,.report-actions{display:none}.report-body,.report-cover{border-color:#ddd;background:#fff;color:#111}.report{padding:0}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="top"><a class="back" href="/mypage.html">‹</a><div class="brand">SAJU WAR</div><a href="/">홈</a></header>
+    <section class="state" id="loading"><p class="eyebrow">ACCESS CHECK</p><h1>구매 권한을 확인합니다.</h1><p class="lead">승인된 리포트와 저장된 분석을 불러오는 중입니다.</p></section>
+    <section class="state hidden" id="waiting"><div class="status-mark">⌛</div><p class="eyebrow">PAYMENT PENDING</p><h1>입금 확인을 기다리고 있습니다.</h1><p class="lead">관리자 확인이 완료되면 이 화면에서 리포트를 생성할 수 있습니다.</p><div class="actions"><a class="button" href="/mypage.html">주문 상태 확인하기</a><a class="button secondary" href="/support">문의하기</a></div></section>
+    <section class="state hidden" id="profile">
+      <p class="eyebrow" id="profileLevel">REPORT UNLOCKED</p><h1 id="profileTitle">리포트 생성 준비가 끝났습니다.</h1><p class="lead">한 사람의 생년월일에 연결됩니다. 아래 정보가 맞는지 확인해주세요.</p>
+      <div class="card">
+        <div class="form">
+          <div class="field"><label>이름</label><input class="input" id="name" autocomplete="name"></div>
+          <div class="field"><label>생년월일</label><input class="input" id="birth" type="date"></div>
+          <div class="field"><label>태어난 시간</label><input class="input" id="time" type="time"></div>
+          <div class="two"><div class="field"><label>달력</label><select class="input" id="calendarType"><option value="solar">양력</option><option value="lunar">음력</option></select></div><div class="field"><label>성별</label><select class="input" id="gender"><option value="">선택</option><option value="female">여성</option><option value="male">남성</option></select></div></div>
+        </div>
+        <button class="button" id="generateButton" type="button" style="width:100%;margin-top:20px">이 정보로 리포트 생성 →</button>
+        <p class="notice">생성이 시작되면 해당 구매권한은 입력한 한 사람의 리포트에 연결됩니다.</p>
+      </div>
+    </section>
+    <section class="state generating hidden" id="generating"><div class="generate-scene"><img src="assets/report-strategist-female-v1.png" alt="리포트를 생성하는 여성 전략관"><div class="scan"></div><div class="generate-copy"><p class="eyebrow">AI STRATEGY ENGINE · ACTIVE</p><h1>당신의 인생 신호를<br>전략으로 변환합니다.</h1><p class="lead" id="generateStatus">원국 좌표를 연결하는 중입니다.</p><div class="progress"><i id="progressBar"></i></div><div class="progress-text" id="progressText">12%</div></div></div></section>
+    <section class="report hidden" id="report">
+      <div class="report-cover"><p class="eyebrow" id="reportLevel">STRATEGY REPORT</p><h1 id="reportTitle">나의 전략 리포트</h1><p class="lead">언제든 마이페이지에서 다시 열어볼 수 있습니다.</p><div class="pillars"><div class="pillar"><small>YEAR</small><strong id="py">—</strong></div><div class="pillar"><small>MONTH</small><strong id="pm">—</strong></div><div class="pillar"><small>DAY</small><strong id="pd">—</strong></div><div class="pillar"><small>HOUR</small><strong id="ph">—</strong></div></div></div>
+      <article class="report-body" id="reportBody"></article>
+      <div class="report-actions"><button type="button" onclick="window.print()">PDF로 저장</button><a href="/mypage.html">마이페이지</a></div>
+    </section>
+  </main>
+  <script>
+    const products={
+      premium_report:{level:"LEVEL 01 · QUICK REPORT",title:"내 무기가 강해지는 시기"},
+      premium_ai_report:{level:"LEVEL 02 · PREMIUM REPORT",title:"연간 전선 전략서"},
+      master_intelligence_report:{level:"LEVEL 03 · MASTER REPORT",title:"인생 전장 마스터북"}
+    };
+    const params=new URLSearchParams(location.search),productId=products[params.get("product")]?params.get("product"):"premium_report";
+    const queryToken=params.get("token")||"",storedToken=localStorage.getItem("sajuwar_auth_token")||"",authToken=queryToken||storedToken;
+    if(queryToken)localStorage.setItem("sajuwar_auth_token",queryToken);
+    let accessPoll;
+    const show=id=>["loading","waiting","profile","generating","report"].forEach(name=>document.getElementById(name).classList.toggle("hidden",name!==id));
+    const headers=()=>({"Content-Type":"application/json",Authorization:`Bearer ${authToken}`});
+    function fillProfile(){try{const saved=JSON.parse(localStorage.getItem("sajuwar_report_profile")||"{}");["name","birth","time","calendarType","gender"].forEach(key=>{if(saved[key])document.getElementById(key).value=saved[key]})}catch(error){}document.getElementById("profileLevel").textContent=products[productId].level;document.getElementById("profileTitle").textContent=products[productId].title+" 생성 준비가 끝났습니다."}
+    function renderReport(data,profile){document.getElementById("reportLevel").textContent=products[productId].level;document.getElementById("reportTitle").textContent=`${profile?.name||""}님의 ${products[productId].title}`;document.getElementById("py").textContent=data.pillars?.year||"—";document.getElementById("pm").textContent=data.pillars?.month||"—";document.getElementById("pd").textContent=data.pillars?.day||"—";document.getElementById("ph").textContent=data.pillars?.hour||"—";document.getElementById("reportBody").textContent=String(data.result||"").replace(/[#*]/g,"").trim();show("report")}
+    async function initialize(){if(!authToken){location.href=`/login.html?return=${encodeURIComponent(`/report-view.html?product=${productId}`)}`;return}const check=await fetch(`/api/purchases/check?product_id=${encodeURIComponent(productId)}`,{headers:headers()});const access=await check.json();if(!access.active){show("waiting");clearTimeout(accessPoll);accessPoll=setTimeout(initialize,10000);return}clearTimeout(accessPoll);const cachedResponse=await fetch(`/api/my/report?product_id=${encodeURIComponent(productId)}`,{headers:headers()});if(cachedResponse.ok){const cached=await cachedResponse.json();renderReport(cached.response,cached.profile);return}fillProfile();show("profile")}
+    document.getElementById("generateButton").addEventListener("click",async()=>{const profile={name:document.getElementById("name").value.trim(),birth:document.getElementById("birth").value,time:document.getElementById("time").value,calendarType:document.getElementById("calendarType").value,gender:document.getElementById("gender").value};if(!profile.name||!profile.birth||!profile.time||!profile.gender){alert("이름, 생년월일, 태어난 시간, 성별을 확인해주세요.");return}localStorage.setItem("sajuwar_report_profile",JSON.stringify(profile));show("generating");let progress=12;const statuses=["원국 좌표를 연결하는 중입니다.","오행의 세력을 분석하는 중입니다.","대운과 세운의 교차점을 찾고 있습니다.","현실 전략을 작성하는 중입니다.","리포트를 최종 검수하고 있습니다."];const timer=setInterval(()=>{progress=Math.min(94,progress+3);document.getElementById("progressBar").style.width=progress+"%";document.getElementById("progressText").textContent=progress+"%";document.getElementById("generateStatus").textContent=statuses[Math.min(statuses.length-1,Math.floor(progress/20))]},900);try{const response=await fetch("/analyze",{method:"POST",headers:headers(),body:JSON.stringify({...profile,paidReport:true,product_id:productId})});const data=await response.json();if(!response.ok)throw new Error(data.result||data.error||"리포트 생성에 실패했습니다.");clearInterval(timer);document.getElementById("progressBar").style.width="100%";document.getElementById("progressText").textContent="100%";setTimeout(()=>renderReport(data,profile),450)}catch(error){clearInterval(timer);alert(error.message);show("profile")}});
+    initialize().catch(()=>show("waiting"));
+  </script>
+</body>
+</html>

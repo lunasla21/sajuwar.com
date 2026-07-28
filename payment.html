@@ -159,6 +159,10 @@
 
   <script>
     const authToken = localStorage.getItem("sajuwar_auth_token") || "";
+    const paymentReturn = `${location.pathname}${location.search}`;
+    const authLinks = document.querySelectorAll("#authGate a");
+    if (authLinks[0]) authLinks[0].href = `/login.html?return=${encodeURIComponent(paymentReturn)}`;
+    if (authLinks[1]) authLinks[1].href = `/signup.html?return=${encodeURIComponent(paymentReturn)}`;
     let authUser = null;
     let products = [];
     let bankAccount = {};
@@ -305,7 +309,7 @@
       currentOrder = data.order;
       document.getElementById("depositNotice").textContent = "입금 확인 대기 상태입니다. 관리자 확인 후 이용 가능합니다.";
       alert("입금 확인 대기로 접수되었습니다.");
-      location.href = "/mypage.html";
+      location.href = `/report-view.html?product=${encodeURIComponent(currentOrder.product_id)}`;
     }
 
     Promise.all([loadMe(), loadProducts()]);
