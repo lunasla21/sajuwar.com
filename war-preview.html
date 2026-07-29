@@ -86,7 +86,7 @@
     <section class="hero" aria-label="대표 콘텐츠">
       <article class="hero-slide hero-one active"><span class="rank">TOP 1</span><div class="hero-copy"><p class="eyebrow">SAJU WAR ORIGINAL</p><h1>나의 <span>전투 사주</span></h1><p>내가 가진 무기와 가장 강해지는 시기를<br>한 장의 전략 지도로 확인하세요.</p><button class="hero-cta open-recon" type="button">무료 정찰 시작 →</button></div></article>
       <article class="hero-slide hero-two"><span class="rank">NEW</span><div class="hero-copy"><p class="eyebrow">WEAPON DISCOVERY</p><h1>FIND YOUR<br><span>WEAPON</span></h1><p>타고난 힘은 이미 준비되어 있습니다.<br>이제 꺼내야 할 순간을 찾으세요.</p><button class="hero-cta open-recon" type="button">내 무기 확인하기 →</button></div></article>
-      <article class="hero-slide hero-three"><span class="rank">2026</span><div class="hero-copy"><p class="eyebrow">YEARLY CAMPAIGN</p><h1>2026<br><span>전선 보고서</span></h1><p>올해의 기회, 위험, 승부처를<br>월별 작전 지도에 정리했습니다.</p><button class="hero-cta preview-action" type="button">2026 작전 열기 →</button></div></article>
+      <article class="hero-slide hero-three"><span class="rank">2026</span><div class="hero-copy"><p class="eyebrow">YEARLY CAMPAIGN</p><h1>2026<br><span>전선 보고서</span></h1><p>올해의 기회, 위험, 승부처를<br>월별 작전 지도에 정리했습니다.</p><button class="hero-cta paid-analysis" data-product="yearly" type="button">2026 작전 열기 →</button></div></article>
       <div class="dots"><button class="dot active" type="button" aria-label="슬라이드 1"></button><button class="dot" type="button" aria-label="슬라이드 2"></button><button class="dot" type="button" aria-label="슬라이드 3"></button></div>
     </section>
 
@@ -215,7 +215,8 @@
       weapon:{badge:"WEAPON REPORT",title:"내 사주의 히든 아이템",desc:"지장간에 잠든 보조 능력과 실제로 꺼내 쓰는 조건을 분석합니다.",price:"9,900원",items:["핵심 무기와 보조 무기","숨은 재능의 발동 조건","약점이 강점으로 바뀌는 환경","이번 달 실전 행동 카드"],product:"premium_report",character:"assets/character-forgemaster-v1.png",role:"THE FORGEMASTER · ONLINE",line:"당신 안의 히든 아이템을 깨우겠습니다.",characterDesc:"지장간에 잠든 보조 능력과 발동 조건을 정밀하게 설계합니다.",accent:"#ff4c2f"},
       relation:{badge:"RELATION REPORT",title:"두 사람의 동맹과 충돌",desc:"서로 끌리는 이유와 반복되는 충돌 지점을 관계 전선으로 보여줍니다.",price:"9,900원",items:["두 사람의 원국 교차 분석","끌림·신뢰·갈등 지점","관계의 위험 시기","대화와 선택의 작전 가이드"],product:"compatibility_report",character:"assets/character-oracle-v1.png",role:"THE ORACLE · ONLINE",line:"두 사람 사이의 숨은 선을 읽겠습니다.",characterDesc:"끌림과 충돌이 반복되는 이유를 관계의 흐름으로 해석합니다.",accent:"#7965ff"},
       money:{badge:"MONEY INTELLIGENCE",title:"재물 전선 분석",desc:"돈이 들어오고 머무는 방식, 크게 움직여야 할 시기를 분석합니다.",price:"9,900원",items:["타고난 재물 획득 방식","수입이 커지는 조건","지출·투자 위험 구간","연도별 재물 작전"],product:"premium_report"},
-      daily:{badge:"DAILY COMMAND",title:"오늘의 작전 카드",desc:"오늘의 기세를 현실 행동 하나로 압축한 데일리 전략입니다.",price:"9,900원",items:["오늘의 핵심 신호","피해야 할 선택","성과를 만드는 한 가지 행동","관계·재물 타이밍"],product:"premium_report"}
+      daily:{badge:"DAILY COMMAND",title:"오늘의 작전 카드",desc:"오늘의 기세를 현실 행동 하나로 압축한 데일리 전략입니다.",price:"9,900원",items:["오늘의 핵심 신호","피해야 할 선택","성과를 만드는 한 가지 행동","관계·재물 타이밍"],product:"premium_report"},
+      yearly:{badge:"2026 YEARLY CAMPAIGN",title:"2026 연간 전선 전략서",desc:"올해의 기회와 위험, 승부처를 월별 작전 지도로 정리합니다.",price:"28,900원",items:["2026 연간 흐름 정밀 분석","월별 기회·위험 타임라인","재물·직업·관계 승부처","실행 시기와 회피 전략"],product:"premium_ai_report",character:"assets/report-strategist-female-v1.png",role:"STRATEGY OFFICER · 2026 BRIEFING",line:"2026년의 전선을 브리핑하겠습니다.",characterDesc:"기회가 열리는 달과 방어가 필요한 구간을 하나의 작전 지도로 연결합니다.",accent:"#8269ff"}
     };
     const productModal=document.getElementById("productModal");
     let characterTimer;
