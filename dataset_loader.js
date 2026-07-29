@@ -125,11 +125,18 @@ function buildAiBrainContext(rootDir, overrides, customerContext) {
     .join(" ");
 
   const masterRuleItems = readJsonl(path.join(datasetPaths.master_rules, "all_rules.jsonl"));
+  const jjussamMethodItems = readJsonl(
+    path.join(datasetPaths.master_rules, "jjussam_method_rules.jsonl")
+  );
   const decisionPriorityItems = readJsonl(path.join(datasetPaths.decision_priority, "all_priorities.jsonl"));
   const goldenCases = readGoldenCases(datasetPaths.golden_dataset);
   const reviewItems = readJsonl(datasetPaths.review_dataset).filter((item) => item.approved === true);
 
-  const selectedMasterRules = selectRelevantItems(masterRuleItems, queryText, 12);
+  const selectedJjussamRules = selectRelevantItems(jjussamMethodItems, queryText, 8);
+  const selectedMasterRules = [
+    ...selectedJjussamRules,
+    ...selectRelevantItems(masterRuleItems, queryText, 12),
+  ];
   const selectedDecisionPriorities = selectRelevantItems(decisionPriorityItems, queryText, 8);
   const selectedGolden = selectRelevantItems(goldenCases, queryText, 1)[0] || null;
   const selectedReviews = reviewItems.slice(-20);
@@ -148,6 +155,7 @@ function buildAiBrainContext(rootDir, overrides, customerContext) {
 
   const sections = {
     master_rules: selectedMasterRules.map((entry) => entry.item),
+    jjussam_method: selectedJjussamRules.map((entry) => entry.item),
     decision_priority: selectedDecisionPriorities.map((entry) => entry.item),
     golden_dataset: selectedGolden
       ? {
@@ -185,6 +193,11 @@ function buildAiBrainContext(rootDir, overrides, customerContext) {
     "",
     "1. Master Rule",
     JSON.stringify(sections.master_rules, null, 2),
+    "",
+    "1-A. Jjussam Method",
+    "Apply these reconstructed counseling rules before generic knowledge rules.",
+    "Preserve their reasoning order, but never expose rule IDs, source labels, or internal datasets.",
+    JSON.stringify(sections.jjussam_method, null, 2),
     "",
     "2. Decision Priority",
     JSON.stringify(sections.decision_priority, null, 2),
