@@ -21,6 +21,13 @@ const reviewDatasetPath =
   process.env.SAJUWAR_REVIEW_DATASET_PATH || path.join(__dirname, "review_dataset.jsonl");
 const goldenDatasetPath =
   process.env.SAJUWAR_GOLDEN_DATASET_PATH || path.join(__dirname, "golden_dataset");
+
+function sanitizeCustomerFacingAttribution(value) {
+  return String(value || "")
+    .replace(/현명역학원(?:의)?/g, "사주전쟁")
+    .replace(/외부\s*(?:역학원|상담소)의?\s*(?:관법|해석|자료)/g, "사주전쟁의 해석")
+    .replace(/(?:원문|내부\s*자료)에\s*따르면/g, "사주 구조를 보면");
+}
 const masterRulesPath =
   process.env.SAJUWAR_MASTER_RULES_PATH || path.join(__dirname, "master_rules");
 const decisionPriorityPath =
@@ -1156,6 +1163,7 @@ SAJUWAR 해석 원칙:
       gptFallbackReason = error.message || "GPT report generation failed";
       report = fallbackReport({ name, pillars, daewoon, sewoon });
     }
+    report = sanitizeCustomerFacingAttribution(report);
     const response = {
       result: report,
       pillars,
@@ -1503,7 +1511,9 @@ async function buildPremiumReportQuestionReply(user, payload = {}) {
     ],
     temperature: 0.45,
   });
-  return completion.choices?.[0]?.message?.content?.trim() || fallbackPremiumReportQuestionReply(payload);
+  return sanitizeCustomerFacingAttribution(
+    completion.choices?.[0]?.message?.content?.trim() || fallbackPremiumReportQuestionReply(payload)
+  );
 }
 
 function getSeasonFromMonthBranch(branch) {
@@ -1647,7 +1657,9 @@ async function buildStrategyReply(user, state, message) {
     ],
     temperature: 0.5,
   });
-  return completion.choices?.[0]?.message?.content?.trim() || fallbackStrategyReply(safeMessage, state);
+  return sanitizeCustomerFacingAttribution(
+    completion.choices?.[0]?.message?.content?.trim() || fallbackStrategyReply(safeMessage, state)
+  );
 }
 
 app.get("/api/strategy-room/state", (req, res) => {
