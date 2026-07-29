@@ -26,7 +26,7 @@
       .intro{height:680px}
       .intro::before{content:"";position:absolute;inset:-16px;z-index:0;background:url("assets/report-strategist-female-v1.png") center/cover no-repeat;filter:blur(10px);opacity:.28;transform:scale(1.04)}
       .intro::after{background:linear-gradient(180deg,rgba(5,6,10,.03),rgba(5,6,10,.08) 48%,#05060a 96%),linear-gradient(90deg,rgba(5,6,10,.9),rgba(5,6,10,.32) 50%,transparent 75%)}
-      .strategist{position:relative;z-index:1;object-fit:contain;object-position:right center}
+      .strategist{position:relative;z-index:1;object-fit:contain;object-position:right center;animation:enterDesktop 1.2s cubic-bezier(.2,.8,.2,1) both,breatheDesktop 5.5s ease-in-out 1.2s infinite alternate}
       .scan{animation-name:scanDesktop}
       .intro-copy{left:54px;right:54px;bottom:66px}
       .eyebrow{margin-bottom:16px;font-size:12px}
@@ -47,6 +47,8 @@
       .trust{margin-top:22px;padding:22px 24px;font-size:12px}
       .legal{padding:28px 46px 42px;font-size:11px}.legal-links{gap:18px}
     }
+    @keyframes enterDesktop{from{opacity:0;transform:translateX(24px);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+    @keyframes breatheDesktop{to{transform:translateY(-3px)}}
     @keyframes scanDesktop{to{transform:translateY(680px)}}
     @media(prefers-reduced-motion:reduce){.strategist,.scan,.eyebrow,.intro h1 span,.intro-copy>p:last-child{animation:none;opacity:1;transform:none}}
   </style>
