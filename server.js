@@ -923,8 +923,67 @@ async function handleAnalyze(req, res) {
     ];
 
     if (!paidReport && !developerPreview) {
+      let freeReport = "";
+      if (client) {
+        try {
+          const freeCompletion = await createChatCompletionWithTimeout({
+            model: "gpt-4.1-mini",
+            messages: [
+              {
+                role: "system",
+                content: [
+                  "너는 SAJUWAR의 무료 원국 정찰 리포트를 작성하는 명리 상담가다.",
+                  "각 고객의 실제 원국이 다르면 문장과 결론도 반드시 달라야 한다.",
+                  "음양, 오행, 일간, 월지의 계절감, 천간·지지 관계, 지장간, 합·충·형, 대운, 현재 세운을 근거로 쓴다.",
+                  "일반적인 성격 문장이나 누구에게나 맞는 위로 문장을 반복하지 않는다.",
+                  "내부 사례의 문장·인물·사건을 복사하지 말고 판단 순서만 활용한다.",
+                  "외부 역학원·상담소 이름, 자료 출처, 규칙명, 데이터셋 이름을 절대 출력하지 않는다.",
+                  "확정적 예언이나 공포 표현을 피하고 가능성·조건·현실 행동으로 설명한다.",
+                  "유료 리포트의 전체 결론을 공개하지 말고 무료 범위에서 가장 중요한 구조와 다음 행동만 보여준다.",
+                ].join("\n"),
+              },
+              {
+                role: "user",
+                content: [
+                  aiBrainContext.prompt,
+                  "",
+                  "[무료 정찰 대상]",
+                  `이름: ${name}`,
+                  `성별: ${genderLabel}`,
+                  `달력: ${calendarLabel}`,
+                  `원국: 년주 ${pillars.year}, 월주 ${pillars.month}, 일주 ${pillars.day}, 시주 ${pillars.hour}`,
+                  hiddenSummary,
+                  `대운: ${daewoon.startInfo}`,
+                  `현재 세운: ${sewoon.startInfo}`,
+                  "",
+                  "[출력 형식]",
+                  `제목: ${name}님의 무료 사주 정찰 리포트`,
+                  "1. 원국의 핵심 — 일간과 월지에서 가장 뚜렷한 기질",
+                  "2. 강한 무기와 취약 지점 — 실제 오행 및 천간·지지 근거",
+                  "3. 현실에서 반복되는 장면 — 일·돈·관계 중 원국 근거가 가장 강한 두 영역",
+                  "4. 지금의 타이밍 — 대운과 현재 세운을 구분한 짧은 판단",
+                  "5. 다음 행동 — 오늘부터 실행할 구체적인 행동 3개",
+                  "",
+                  "각 항목은 2~4개의 짧은 문단으로 쓴다.",
+                  "최소 두 곳에서 실제 간지 또는 오행 근거를 밝힌다.",
+                  "고객 정보에 없는 직업, 결혼, 질병, 투자 사건을 지어내지 않는다.",
+                  "마지막 한 줄은 유료 결제를 강요하지 말고 지금 실행할 행동으로 끝낸다.",
+                ].join("\n"),
+              },
+            ],
+            max_tokens: 2200,
+            temperature: 0.68,
+          });
+          freeReport = freeCompletion.choices?.[0]?.message?.content?.trim() || "";
+        } catch (error) {
+          console.error("무료 개인화 리포트 생성 실패, 로컬 폴백 사용:", error);
+        }
+      }
+      if (!freeReport) {
+        freeReport = fallbackReport({ name, pillars, daewoon, sewoon });
+      }
       return res.json({
-        result: fallbackReport({ name, pillars, daewoon, sewoon }),
+        result: sanitizeCustomerFacingAttribution(freeReport),
         pillars,
         daewoon,
         sewoon,
