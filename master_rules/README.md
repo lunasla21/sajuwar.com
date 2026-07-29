@@ -15,6 +15,7 @@ Prompt Builder는 답변 생성 시 Case보다 Master Rule을 우선 활용한�
 ## Files
 
 - `all_rules.jsonl`: 전체 Master Rule
+- `jjussam_method_rules.jsonl`: 쭈쌤 생활명리 관법을 안전 원칙에 맞게 재구성한 우선 규칙
 - `by_type/*.yaml`: 유형별 Master Rule
 
 ## Counts
