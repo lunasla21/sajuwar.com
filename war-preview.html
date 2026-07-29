@@ -26,7 +26,9 @@
     .hero-one{background-image:url("assets/premium-battlefield-command.webp")}.hero-two{background-image:url("assets/hero-saju-war.jpg")}.hero-three{background-image:url("assets/hero-2026-personal.jpg")}
     .rank{align-self:flex-end;padding:8px 9px;color:#08090d;background:var(--gold);font:800 10px "Roboto Mono";letter-spacing:.05em}
     .hero-copy{margin-top:auto}.eyebrow{margin:0 0 10px;color:var(--gold);font:600 10px "Roboto Mono";letter-spacing:.12em}.hero h1{margin:0 0 12px;font:400 50px/.9 Anton,sans-serif;letter-spacing:-.03em}.hero h1 span{color:var(--red)}.hero p{margin:0;color:#d2cdc5;font-size:14px;line-height:1.65}
-    .hero-cta{margin-top:20px;width:100%;min-height:50px;border:0;border-radius:10px;color:#090a0d;background:linear-gradient(135deg,var(--red),var(--orange));font-weight:800}
+    .hero-cta{margin-top:20px;width:100%;min-height:50px;border:0;border-radius:10px;color:#090a0d;background:linear-gradient(135deg,var(--red),var(--orange));font-weight:800;cursor:pointer;transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
+    .hero-cta:hover{filter:brightness(1.08);box-shadow:0 0 24px rgba(255,76,47,.3)}
+    .hero-cta:active{transform:scale(.985);filter:brightness(.94)}
     .dots{position:absolute;left:24px;bottom:16px;display:flex;gap:6px;z-index:3}.dot{width:18px;height:3px;border:0;padding:0;background:rgba(255,255,255,.25)}.dot.active{background:var(--red)}
     .quick{padding:6px 14px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.quick a{padding:14px 6px 12px;text-align:center;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.quick-icon{width:34px;height:34px;margin:0 auto 8px;display:grid;place-items:center;border-radius:10px;color:var(--red);background:rgba(255,76,47,.1);font-weight:800}.quick span{display:block;font-size:11px}
     .section{padding:28px 14px}.section.dark{background:#0c0d12}.section-head{margin-bottom:16px;display:flex;align-items:end;justify-content:space-between;gap:14px}.section-head h2{margin:0;font-size:22px;letter-spacing:-.045em}.section-head p{margin:5px 0 0;color:var(--muted);font-size:12px}.more{flex:none;color:var(--muted);font-size:11px}
@@ -83,7 +85,7 @@
 
     <section class="hero" aria-label="대표 콘텐츠">
       <article class="hero-slide hero-one active"><span class="rank">TOP 1</span><div class="hero-copy"><p class="eyebrow">SAJU WAR ORIGINAL</p><h1>나의 <span>전투 사주</span></h1><p>내가 가진 무기와 가장 강해지는 시기를<br>한 장의 전략 지도로 확인하세요.</p><button class="hero-cta open-recon" type="button">무료 정찰 시작 →</button></div></article>
-      <article class="hero-slide hero-two"><span class="rank">NEW</span><div class="hero-copy"><p class="eyebrow">WEAPON DISCOVERY</p><h1>FIND YOUR<br><span>WEAPON</span></h1><p>타고난 힘은 이미 준비되어 있습니다.<br>이제 꺼내야 할 순간을 찾으세요.</p><button class="hero-cta preview-action" type="button">내 무기 확인하기 →</button></div></article>
+      <article class="hero-slide hero-two"><span class="rank">NEW</span><div class="hero-copy"><p class="eyebrow">WEAPON DISCOVERY</p><h1>FIND YOUR<br><span>WEAPON</span></h1><p>타고난 힘은 이미 준비되어 있습니다.<br>이제 꺼내야 할 순간을 찾으세요.</p><button class="hero-cta open-recon" type="button">내 무기 확인하기 →</button></div></article>
       <article class="hero-slide hero-three"><span class="rank">2026</span><div class="hero-copy"><p class="eyebrow">YEARLY CAMPAIGN</p><h1>2026<br><span>전선 보고서</span></h1><p>올해의 기회, 위험, 승부처를<br>월별 작전 지도에 정리했습니다.</p><button class="hero-cta preview-action" type="button">2026 작전 열기 →</button></div></article>
       <div class="dots"><button class="dot active" type="button" aria-label="슬라이드 1"></button><button class="dot" type="button" aria-label="슬라이드 2"></button><button class="dot" type="button" aria-label="슬라이드 3"></button></div>
     </section>
