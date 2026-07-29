@@ -80,6 +80,8 @@
     .auth-gate strong { color: #fff7dc; }
     .auth-actions { display: flex; gap: 8px; }
     .auth-actions a { flex: 1; }
+    .payment-top { height: 62px; display: grid; place-items: center; border: 1px solid var(--line); border-bottom: 0; background: rgba(5,6,10,.92); }
+    .payment-top a { color: #f5f1e9; font-weight: 900; letter-spacing: .1em; text-decoration: none; }
     .payment-brief { height: 510px; margin: 0; position: relative; overflow: hidden; border: 1px solid var(--line); border-bottom: 0; background: #05060a; }
     .payment-brief::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 35%,rgba(5,6,10,.12) 56%,#101218 96%),linear-gradient(90deg,rgba(5,6,10,.82),transparent 68%); pointer-events:none; }
     .payment-character { width:100%; height:100%; object-fit:cover; object-position:64% center; animation:paymentEnter 1s cubic-bezier(.2,.8,.2,1) both,paymentFloat 5s ease-in-out 1s infinite alternate; transform-origin:70% 55%; }
@@ -98,7 +100,9 @@
         padding-bottom: 72px;
       }
       .payment-brief { height: 640px; }
-      .payment-character { object-position: 66% top; }
+      .payment-brief::before { content:""; position:absolute; inset:-16px; z-index:0; background:var(--payment-bg) center/cover no-repeat; filter:blur(10px); opacity:.24; transform:scale(1.04); }
+      .payment-brief::after { z-index:2; }
+      .payment-character { position:relative; z-index:1; object-fit:contain; object-position:right center; animation:paymentEnterDesktop 1s cubic-bezier(.2,.8,.2,1) both,paymentFloatDesktop 5s ease-in-out 1s infinite alternate; }
       .payment-brief::after {
         background:
           linear-gradient(180deg,transparent 34%,rgba(5,6,10,.12) 57%,#101218 97%),
@@ -133,6 +137,8 @@
       .summary { grid-template-columns: 180px 1fr; gap: 12px 20px; padding: 24px; }
       .notice, .auth-gate { padding: 20px 22px; }
     }
+    @keyframes paymentEnterDesktop { from { opacity:0; transform:translateX(24px); filter:blur(5px); } to { opacity:1; transform:none; filter:none; } }
+    @keyframes paymentFloatDesktop { to { transform:translateY(-3px); } }
     @keyframes paymentScanDesktop { to { transform:translateY(640px); } }
     @media (max-width: 720px) {
       .grid { grid-template-columns: 1fr; }
@@ -145,6 +151,7 @@
 </head>
 <body>
   <main>
+    <header class="payment-top"><a href="/" aria-label="SAJU WAR 홈">SAJU WAR</a></header>
     <section class="payment-brief" aria-label="결제 안내 전략관">
       <img class="payment-character" id="paymentCharacter" src="assets/character-forgemaster-v1.png" alt="결제를 안내하는 전략관" />
       <div class="payment-scan"></div>
@@ -238,6 +245,7 @@
       image.style.animation = "none";
       image.src = item.image;
       image.alt = item.role;
+      document.querySelector(".payment-brief").style.setProperty("--payment-bg", `url("${item.image}")`);
       requestAnimationFrame(() => { image.style.animation = ""; });
       document.getElementById("paymentRole").textContent = item.role;
       document.getElementById("paymentBriefTitle").innerHTML = item.title.replace(" 해금합니다.", "<br>해금합니다.");
