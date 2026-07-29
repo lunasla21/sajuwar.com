@@ -29,6 +29,8 @@
     .hero-cta{margin-top:20px;width:100%;min-height:50px;border:0;border-radius:10px;color:#090a0d;background:linear-gradient(135deg,var(--red),var(--orange));font-weight:800;cursor:pointer;transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
     .hero-cta:hover{filter:brightness(1.08);box-shadow:0 0 24px rgba(255,76,47,.3)}
     .hero-cta:active{transform:scale(.985);filter:brightness(.94)}
+    .hero-cta.loading{color:#fff;background:linear-gradient(90deg,#ff4c2f,#7b5cff,#ff4c2f);background-size:220% 100%;box-shadow:0 0 30px rgba(255,76,47,.42);animation:ctaSignal .75s linear infinite}
+    @keyframes ctaSignal{to{background-position:-220% 0}}
     .dots{position:absolute;left:24px;bottom:16px;display:flex;gap:6px;z-index:3}.dot{width:18px;height:3px;border:0;padding:0;background:rgba(255,255,255,.25)}.dot.active{background:var(--red)}
     .quick{padding:6px 14px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.quick a{padding:14px 6px 12px;text-align:center;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.quick-icon{width:34px;height:34px;margin:0 auto 8px;display:grid;place-items:center;border-radius:10px;color:var(--red);background:rgba(255,76,47,.1);font-weight:800}.quick span{display:block;font-size:11px}
     .section{padding:28px 14px}.section.dark{background:#0c0d12}.section-head{margin-bottom:16px;display:flex;align-items:end;justify-content:space-between;gap:14px}.section-head h2{margin:0;font-size:22px;letter-spacing:-.045em}.section-head p{margin:5px 0 0;color:var(--muted);font-size:12px}.more{flex:none;color:var(--muted);font-size:11px}
@@ -225,7 +227,7 @@
     document.getElementById("productClose").addEventListener("click",()=>{clearTimeout(characterTimer);productModal.className="product-modal";document.body.style.overflow=""});
     const recon=document.getElementById("recon"),reconSteps=[...document.querySelectorAll(".recon-step")],reconState={calendar:"solar",gender:""};
     function showRecon(name){reconSteps.forEach(step=>step.classList.toggle("active",step.dataset.recon===name));recon.scrollTop=0}
-    document.querySelectorAll(".open-recon").forEach(button=>button.addEventListener("click",()=>{recon.classList.add("open");document.body.style.overflow="hidden";showRecon("form")}));
+    document.querySelectorAll(".open-recon").forEach(button=>button.addEventListener("click",()=>{if(button.disabled)return;const original=button.textContent;button.disabled=true;button.classList.add("loading");button.textContent="정찰망 연결 중…";setTimeout(()=>{recon.classList.add("open");document.body.style.overflow="hidden";showRecon("form");button.disabled=false;button.classList.remove("loading");button.textContent=original},420)}));
     document.getElementById("reconClose").addEventListener("click",()=>{recon.classList.remove("open");document.body.style.overflow=""});
     document.getElementById("reconAgain").addEventListener("click",()=>showRecon("form"));
     document.querySelectorAll(".recon-option").forEach(button=>button.addEventListener("click",()=>{const group=button.dataset.reconGroup;document.querySelectorAll(`[data-recon-group="${group}"]`).forEach(item=>item.classList.remove("selected"));button.classList.add("selected");reconState[group]=button.dataset.value}));
