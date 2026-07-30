@@ -1,17 +1,17 @@
 (function () {
   const visitorKey = "sajuwar_visitor_id";
   const sessionKey = "sajuwar_session_id";
-  const makeId = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}_${Math.random().toString(16).slice(2)}`);
-  let visitorId = localStorage.getItem(visitorKey);
-  if (!visitorId) {
-    visitorId = makeId();
+  const makeId = () => `${Date.now()}_${Math.random().toString(16).slice(2)}_${Math.random().toString(16).slice(2)}`;
+  let visitorId = makeId();
+  let sessionId = makeId();
+  try {
+    visitorId = localStorage.getItem(visitorKey) || visitorId;
     localStorage.setItem(visitorKey, visitorId);
-  }
-  let sessionId = sessionStorage.getItem(sessionKey);
-  if (!sessionId) {
-    sessionId = makeId();
+  } catch (error) {}
+  try {
+    sessionId = sessionStorage.getItem(sessionKey) || sessionId;
     sessionStorage.setItem(sessionKey, sessionId);
-  }
+  } catch (error) {}
   function source() {
     const params = new URLSearchParams(location.search);
     const campaign = params.get("utm_source");
