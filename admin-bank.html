@@ -59,11 +59,27 @@
     .view-tabs { display: flex; gap: 8px; margin: 18px 0 12px; }
     .view-tabs button.active { color: #fff; background: #b83a1e; }
     .hidden { display: none !important; }
+    .analytics-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+    .analytics-card { padding: 16px; border: 1px solid rgba(113,80,44,.16); background: rgba(255,255,255,.82); }
+    .analytics-card span { display: block; color: #705642; font-size: 12px; }
+    .analytics-card b { display: block; margin-top: 5px; color: #8a5b12; font-size: 25px; }
+    .analytics-panels { display: grid; grid-template-columns: 1.25fr .75fr; gap: 12px; }
+    .analytics-panel { padding: 18px; border: 1px solid rgba(113,80,44,.18); background: rgba(255,255,255,.78); }
+    .analytics-panel h3 { margin: 0 0 14px; }
+    .chart { min-height: 210px; display: flex; align-items: end; gap: 7px; padding-top: 18px; overflow-x: auto; }
+    .chart-day { min-width: 34px; flex: 1; display: grid; align-items: end; gap: 5px; text-align: center; }
+    .chart-bar { min-height: 3px; background: linear-gradient(#e66831,#b83a1e); }
+    .chart-day small { color: #80664e; font-size: 9px; }
+    .ranking { display: grid; gap: 10px; }
+    .ranking-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(113,80,44,.12); }
+    .ranking-row b { color: #b83a1e; }
     @media (max-width: 760px) {
       header { align-items: flex-start; flex-direction: column; }
       .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       input, select, button, a { width: 100%; }
       .toolbar { align-items: stretch; }
+      .analytics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .analytics-panels { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -97,6 +113,7 @@
     <div class="view-tabs">
       <button type="button" class="active" id="ordersTab" onclick="showView('orders')">주문·입금 알림</button>
       <button type="button" class="secondary" id="usersTab" onclick="showView('users')">회원 목록</button>
+      <button type="button" class="secondary" id="analyticsTab" onclick="showView('analytics')">방문 분석</button>
     </div>
 
     <div id="ordersView">
@@ -159,6 +176,35 @@
         <div class="empty" id="usersEmpty">회원 정보를 불러오고 있습니다.</div>
       </div>
     </div>
+
+    <div class="hidden" id="analyticsView">
+      <div class="toolbar">
+        <select id="analyticsDays" onchange="loadAnalytics()">
+          <option value="7">최근 7일</option>
+          <option value="30" selected>최근 30일</option>
+          <option value="90">최근 90일</option>
+        </select>
+        <button type="button" class="secondary" onclick="loadAnalytics()">통계 새로고침</button>
+      </div>
+      <div class="analytics-grid">
+        <div class="analytics-card"><span>오늘 방문자</span><b id="analyticsTodayVisitors">0</b></div>
+        <div class="analytics-card"><span>오늘 조회수</span><b id="analyticsTodayViews">0</b></div>
+        <div class="analytics-card"><span>기간 방문자</span><b id="analyticsVisitors">0</b></div>
+        <div class="analytics-card"><span>기간 조회수</span><b id="analyticsViews">0</b></div>
+        <div class="analytics-card"><span>회원가입</span><b id="analyticsSignups">0</b></div>
+        <div class="analytics-card"><span>무료 정찰 시작</span><b id="analyticsFreeStarts">0</b></div>
+        <div class="analytics-card"><span>무료 정찰 완료율</span><b id="analyticsFreeRate">0%</b></div>
+        <div class="analytics-card"><span>상품 클릭</span><b id="analyticsProductClicks">0</b></div>
+      </div>
+      <div class="analytics-panels">
+        <section class="analytics-panel"><h3>날짜별 방문자</h3><div class="chart" id="analyticsChart"></div></section>
+        <section class="analytics-panel"><h3>인기 상품</h3><div class="ranking" id="analyticsProducts"></div></section>
+        <section class="analytics-panel"><h3>인기 카테고리</h3><div class="ranking" id="analyticsCategories"></div></section>
+        <section class="analytics-panel"><h3>유입 경로</h3><div class="ranking" id="analyticsSources"></div></section>
+        <section class="analytics-panel"><h3>인기 페이지</h3><div class="ranking" id="analyticsPages"></div></section>
+        <section class="analytics-panel"><h3>확인된 검색어</h3><div class="ranking" id="analyticsSearchTerms"></div><p class="small">구글·네이버의 전체 검색어는 각 검색도구 연결 후 더 자세히 확인할 수 있습니다.</p></section>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -168,6 +214,7 @@
     let adminKey = localStorage.getItem("sajuwar_admin_key") || "";
     let allOrders = [];
     let allUsers = [];
+    let analyticsData = null;
     document.getElementById("adminKey").value = new URLSearchParams(location.search).get("adminKey") || adminKey;
 
     function formatMoney(value) { return `${Number(value || 0).toLocaleString("ko-KR")}원`; }
@@ -195,20 +242,23 @@
     async function loadOrders() {
       if (!adminKey) return;
       const headers = { "x-sajuwar-admin-key": adminKey };
-      const [ordersResponse, usersResponse] = await Promise.all([
+      const [ordersResponse, usersResponse, analyticsResponse] = await Promise.all([
         fetch("/api/admin/orders", { headers }),
         fetch("/api/admin/users", { headers }),
+        fetch("/api/admin/analytics?days=30", { headers }),
       ]);
-      const [ordersData, usersData] = await Promise.all([ordersResponse.json(), usersResponse.json()]);
-      if (!ordersResponse.ok || !usersResponse.ok) {
-        alert(ordersData.error || usersData.error || "관리자 인증에 실패했습니다.");
+      const [ordersData, usersData, analyticsResult] = await Promise.all([ordersResponse.json(), usersResponse.json(), analyticsResponse.json()]);
+      if (!ordersResponse.ok || !usersResponse.ok || !analyticsResponse.ok) {
+        alert(ordersData.error || usersData.error || analyticsResult.error || "관리자 인증에 실패했습니다.");
         return;
       }
       allOrders = ordersData.orders || [];
       allUsers = usersData.users || [];
+      analyticsData = analyticsResult.analytics || null;
       renderStats();
       renderOrders();
       renderUsers();
+      renderAnalytics();
     }
     function filteredOrders() {
       const keyword = document.getElementById("searchKeyword").value.trim().toLowerCase();
@@ -245,11 +295,46 @@
       document.title = waitingCount > 0 ? `(${waitingCount}) 입금 확인 필요 | SAJU WAR` : "입금확인 관리 | 쭈쌤의 사주 전쟁";
     }
     function showView(view) {
-      const usersOpen = view === "users";
-      document.getElementById("ordersView").classList.toggle("hidden", usersOpen);
-      document.getElementById("usersView").classList.toggle("hidden", !usersOpen);
-      document.getElementById("ordersTab").classList.toggle("active", !usersOpen);
-      document.getElementById("usersTab").classList.toggle("active", usersOpen);
+      ["orders","users","analytics"].forEach((name) => {
+        document.getElementById(`${name}View`).classList.toggle("hidden", name !== view);
+        document.getElementById(`${name}Tab`).classList.toggle("active", name === view);
+      });
+      if (view === "analytics" && !analyticsData) loadAnalytics();
+    }
+    async function loadAnalytics() {
+      if (!adminKey) return;
+      const days = document.getElementById("analyticsDays").value;
+      const response = await fetch(`/api/admin/analytics?days=${encodeURIComponent(days)}`, { headers: { "x-sajuwar-admin-key": adminKey } });
+      const data = await response.json();
+      if (!response.ok) return alert(data.error || "통계를 불러오지 못했습니다.");
+      analyticsData = data.analytics;
+      renderAnalytics();
+    }
+    function rankingHtml(items) {
+      return (items || []).length
+        ? items.map((item) => `<div class="ranking-row"><span>${escapeHtml(item.label)}</span><b>${Number(item.count).toLocaleString("ko-KR")}</b></div>`).join("")
+        : '<div class="small">아직 기록된 데이터가 없습니다.</div>';
+    }
+    function renderAnalytics() {
+      if (!analyticsData) return;
+      const data = analyticsData;
+      document.getElementById("analyticsTodayVisitors").textContent = data.today?.visitors || 0;
+      document.getElementById("analyticsTodayViews").textContent = data.today?.views || 0;
+      document.getElementById("analyticsVisitors").textContent = data.totals?.visitors || 0;
+      document.getElementById("analyticsViews").textContent = data.totals?.views || 0;
+      document.getElementById("analyticsSignups").textContent = data.totals?.signups || 0;
+      document.getElementById("analyticsFreeStarts").textContent = data.totals?.free_starts || 0;
+      document.getElementById("analyticsFreeRate").textContent = `${data.conversion?.free_complete_rate || 0}%`;
+      document.getElementById("analyticsProductClicks").textContent = data.totals?.product_clicks || 0;
+      const maxVisitors = Math.max(1, ...(data.daily || []).map((item) => item.visitors));
+      document.getElementById("analyticsChart").innerHTML = (data.daily || []).map((item) =>
+        `<div class="chart-day" title="${escapeHtml(item.date)} · ${item.visitors}명"><div class="chart-bar" style="height:${Math.max(3, Math.round(item.visitors / maxVisitors * 170))}px"></div><small>${escapeHtml(item.date.slice(5))}</small></div>`
+      ).join("");
+      document.getElementById("analyticsProducts").innerHTML = rankingHtml(data.top_products);
+      document.getElementById("analyticsCategories").innerHTML = rankingHtml(data.top_categories);
+      document.getElementById("analyticsSources").innerHTML = rankingHtml(data.top_sources);
+      document.getElementById("analyticsPages").innerHTML = rankingHtml(data.top_pages);
+      document.getElementById("analyticsSearchTerms").innerHTML = rankingHtml(data.search_terms);
     }
     function renderUsers() {
       const keyword = document.getElementById("userSearchKeyword").value.trim().toLowerCase();
