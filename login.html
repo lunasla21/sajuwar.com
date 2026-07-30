@@ -23,7 +23,7 @@
     <button type="button" onclick="login()">로그인</button>
     <a id="signupLink" href="/signup.html">회원가입</a>
   </main>
-  <script src="/site-insights.js"></script>
+  <script src="/site-core.js"></script>
   <script>
     const requestedReturn = new URLSearchParams(location.search).get("return") || "/mypage.html";
     const safeReturn = requestedReturn.startsWith("/") && !requestedReturn.startsWith("//") ? requestedReturn : "/mypage.html";
