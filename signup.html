@@ -25,6 +25,7 @@
     <button type="button" onclick="signup()">가입하기</button>
     <a id="loginLink" href="/login.html">이미 계정이 있어요</a>
   </main>
+  <script src="/analytics-client.js"></script>
   <script>
     const requestedReturn = new URLSearchParams(location.search).get("return") || "/payment.html";
     const safeReturn = requestedReturn.startsWith("/") && !requestedReturn.startsWith("//") ? requestedReturn : "/payment.html";
@@ -36,6 +37,8 @@
         email: document.getElementById("email").value.trim(),
         phone: document.getElementById("phone").value.trim(),
         password: document.getElementById("password").value,
+        visitor_id: localStorage.getItem("sajuwar_visitor_id") || "",
+        session_id: sessionStorage.getItem("sajuwar_session_id") || "",
       };
       const response = await fetch("/api/auth/signup", {
         method: "POST",
