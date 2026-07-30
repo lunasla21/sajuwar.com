@@ -11,6 +11,7 @@ const { buildAiBrainContext } = require("./dataset_loader");
 const { PRODUCTS, createOrderStore } = require("./order_store");
 const { createUserStore } = require("./user_store");
 const { createStrategyStore } = require("./strategy_store");
+const { createAnalyticsStore } = require("./analytics_store");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,6 +41,7 @@ const bankAccount = {
 const orderStore = createOrderStore(__dirname);
 const userStore = createUserStore(__dirname);
 const strategyStore = createStrategyStore(__dirname);
+const analyticsStore = createAnalyticsStore(__dirname);
 
 async function notifyAdmin(event, payload = {}) {
   const webhookUrl = String(process.env.SAJUWAR_ORDER_WEBHOOK_URL || "").trim();
@@ -120,6 +122,12 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "war-preview.html"));
 });
 app.use(express.static(__dirname));
+
+app.post("/api/analytics/event", (req, res) => {
+  const item = analyticsStore.record(req.body);
+  if (!item) return res.status(400).json({ error: "invalid analytics event" });
+  res.status(202).json({ ok: true });
+});
 
 const client = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
@@ -1355,7 +1363,16 @@ app.get("/api/review-dataset/export", (req, res) => {
 
 app.post("/api/auth/signup", (req, res) => {
   try {
-    res.json(userStore.signup(req.body));
+    const result = userStore.signup(req.body);
+    analyticsStore.record({
+      event: "signup_complete",
+      path: "/signup.html",
+      label: "회원가입 완료",
+      visitor_id: req.body?.visitor_id || "server",
+      session_id: req.body?.session_id || "",
+      source: req.body?.source || "",
+    });
+    res.json(result);
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message });
   }
@@ -1801,6 +1818,11 @@ app.get("/api/admin/orders", (req, res) => {
 app.get("/api/admin/users", (req, res) => {
   if (!requireAdmin(req, res)) return;
   res.json({ users: userStore.listPublicUsers() });
+});
+
+app.get("/api/admin/analytics", (req, res) => {
+  if (!requireAdmin(req, res)) return;
+  res.json({ analytics: analyticsStore.summarize(req.query.days) });
 });
 
 app.post("/api/admin/orders/:id/confirm", (req, res) => {
