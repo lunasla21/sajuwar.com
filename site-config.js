@@ -4,7 +4,7 @@ window.SAJUWAR_SITE_CONFIG = {
   companyName: "J Company",
   representativeName: "박현주",
   businessRegistrationNumber: "472-01-04135",
-  ecommerceRegistrationNumber: "2025-인천-0403",
+  ecommerceRegistrationNumber: "간이과세자 신고면제",
   address: "인천 서구 발로24번길51",
   contactEmail: "support@sajuwar.com",
   contactPhone: "010-8708-0544",
