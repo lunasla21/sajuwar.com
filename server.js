@@ -557,6 +557,104 @@ const hiddenStems = {
   "亥": ["壬", "甲"],
 };
 
+const stemPolarity = {
+  "甲": "양", "乙": "음", "丙": "양", "丁": "음", "戊": "양",
+  "己": "음", "庚": "양", "辛": "음", "壬": "양", "癸": "음",
+};
+const generates = { "목": "화", "화": "토", "토": "금", "금": "수", "수": "목" };
+const controls = { "목": "토", "화": "금", "토": "수", "금": "목", "수": "화" };
+
+function getTenGod(dayStem, targetStem) {
+  const dayEl = stemElement[dayStem];
+  const targetEl = stemElement[targetStem];
+  if (!dayEl || !targetEl) return "";
+  const samePolarity = stemPolarity[dayStem] === stemPolarity[targetStem];
+  if (dayEl === targetEl) return samePolarity ? "비견" : "겁재";
+  if (generates[dayEl] === targetEl) return samePolarity ? "식신" : "상관";
+  if (controls[dayEl] === targetEl) return samePolarity ? "편재" : "정재";
+  if (controls[targetEl] === dayEl) return samePolarity ? "편관" : "정관";
+  if (generates[targetEl] === dayEl) return samePolarity ? "편인" : "정인";
+  return "";
+}
+
+function buildFreeAnalysisEvidence(pillars, sewoon, timeUnknown = false) {
+  const keys = timeUnknown ? ["year", "month", "day"] : ["year", "month", "day", "hour"];
+  const labels = { year: "년주", month: "월주", day: "일주", hour: "시주" };
+  const scores = { "목": 0, "화": 0, "토": 0, "금": 0, "수": 0 };
+  const dayStem = pillars.day[0];
+  const branches = keys.map((key) => pillars[key][1]);
+  const hiddenWeights = [0.8, 0.45, 0.3];
+
+  keys.forEach((key) => {
+    const [stem, branch] = pillars[key];
+    scores[stemElement[stem]] += 1;
+    scores[branchElement[branch]] += key === "month" ? 2 : 1.2;
+    (hiddenStems[branch] || []).forEach((hidden, index) => {
+      scores[stemElement[hidden]] += hiddenWeights[index] || 0.25;
+    });
+  });
+
+  const triples = [
+    ["亥", "卯", "未", "해묘미 삼합 木局"], ["寅", "午", "戌", "인오술 삼합 火局"],
+    ["巳", "酉", "丑", "사유축 삼합 金局"], ["申", "子", "辰", "신자진 삼합 水局"],
+  ];
+  const clashes = [["子", "午"], ["丑", "未"], ["寅", "申"], ["卯", "酉"], ["辰", "戌"], ["巳", "亥"]];
+  const combinations = [["子", "丑"], ["寅", "亥"], ["卯", "戌"], ["辰", "酉"], ["巳", "申"], ["午", "未"]];
+  const harms = [["子", "未"], ["丑", "午"], ["寅", "巳"], ["卯", "辰"], ["申", "亥"], ["酉", "戌"]];
+  const breaks = [["子", "酉"], ["卯", "午"], ["辰", "丑"], ["未", "戌"], ["寅", "亥"], ["巳", "申"]];
+  const relations = [];
+  triples.forEach(([a, b, c, label]) => {
+    if ([a, b, c].every((branch) => branches.includes(branch))) relations.push(label);
+  });
+  const collectPairs = (pairs, suffix) => pairs.forEach(([a, b]) => {
+    if (branches.includes(a) && branches.includes(b)) relations.push(`${a}${b}${suffix}`);
+  });
+  collectPairs(combinations, "六合");
+  collectPairs(clashes, "冲");
+  collectPairs(harms, "害");
+  collectPairs(breaks, "破");
+
+  const pillarEvidence = keys.map((key) => {
+    const [stem, branch] = pillars[key];
+    const hidden = (hiddenStems[branch] || []).map((item) => `${item}(${getTenGod(dayStem, item)})`).join("·");
+    return `${labels[key]} ${pillars[key]}: 천간 ${stem}(${getTenGod(dayStem, stem)}), 지지 ${branch}, 지장간 ${hidden}`;
+  });
+  const ranking = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const currentYears = (sewoon?.list || []).slice(0, 2).map((item) => {
+    const interactions = [];
+    collectYearRelations(item.branch, branches, combinations, "六合", interactions);
+    collectYearRelations(item.branch, branches, clashes, "冲", interactions);
+    collectYearRelations(item.branch, branches, harms, "害", interactions);
+    collectYearRelations(item.branch, branches, breaks, "破", interactions);
+    if (branches.includes(item.branch)) interactions.push(`${item.branch} 반복`);
+    triples.forEach(([a, b, c, label]) => {
+      const members = [a, b, c];
+      if (members.includes(item.branch) && members.filter((branch) => branch !== item.branch).every((branch) => branches.includes(branch))) {
+        interactions.push(`${label} 재강조`);
+      }
+    });
+    return `${item.year} ${item.ganji}: ${item.stem}은 ${getTenGod(dayStem, item.stem)}, 지지 상호작용 ${interactions.join("·") || "뚜렷한 육합·충·해 없음"}`;
+  });
+
+  return [
+    "[서버 계산 검증표 — 아래에 없는 합·충·십성을 지어내지 말 것]",
+    `분석 범위: ${timeUnknown ? "출생시간 미상, 시주를 제외한 3주 기준" : "출생시간 포함 4주 기준"}`,
+    ...pillarEvidence,
+    `오행 참고점수(글자 수가 아닌 월지 가중·지장간 포함): ${ranking.map(([el, score]) => `${el} ${score.toFixed(2)}`).join(" > ")}`,
+    `확인된 원국 관계: ${relations.join(", ") || "완성된 삼합·육합·충·해 없음"}`,
+    ...currentYears,
+    "주의: 참고점수만으로 용신을 확정하지 말고, 합국 역시 계절과 투간 및 전체 구조를 함께 설명할 것.",
+  ].join("\n");
+}
+
+function collectYearRelations(yearBranch, natalBranches, pairs, suffix, output) {
+  pairs.forEach(([a, b]) => {
+    if ((yearBranch === a && natalBranches.includes(b)) || (yearBranch === b && natalBranches.includes(a))) {
+      output.push(`${a}${b}${suffix}`);
+    }
+  });
+}
+
 const themeMap = {
   "목": "성장, 시작, 기획, 교육, 확장",
   "화": "표현, 노출, 인기, 콘텐츠, 홍보",
@@ -830,6 +928,7 @@ ${sewoon.startInfo}
 async function handleAnalyze(req, res) {
   try {
     const { name, birth, time, gender, calendarType, paidReport } = req.body;
+    const timeUnknown = req.body?.timeUnknown === true;
     const requestedProductId = String(req.body?.product_id || "premium_report");
     const reportProductIds = ["premium_report", "premium_ai_report", "master_intelligence_report"];
     const paidProductId = reportProductIds.includes(requestedProductId)
@@ -885,6 +984,7 @@ async function handleAnalyze(req, res) {
     const genderLabel = gender === "male" ? "남성" : "여성";
     const developerPreview = isDeveloperPreviewRequest(req);
     const hiddenSummary = makeHiddenItemSummary(pillars);
+    const freeAnalysisEvidence = buildFreeAnalysisEvidence(pillars, sewoon, timeUnknown);
     const aiBrainContext = buildAiBrainContext(
       __dirname,
       {
@@ -947,7 +1047,9 @@ async function handleAnalyze(req, res) {
                   "내부 사례의 문장·인물·사건을 복사하지 말고 판단 순서만 활용한다.",
                   "외부 역학원·상담소 이름, 자료 출처, 규칙명, 데이터셋 이름을 절대 출력하지 않는다.",
                   "확정적 예언이나 공포 표현을 피하고 가능성·조건·현실 행동으로 설명한다.",
-                  "유료 리포트의 전체 결론을 공개하지 말고 무료 범위에서 가장 중요한 구조와 다음 행동만 보여준다.",
+                  "서버 계산 검증표를 사실 기준으로 사용하고, 검증표에 없는 합·충·형·파·해나 십성을 추측하지 않는다.",
+                  "출생시간 미상인 경우 시주를 해석하지 않고, 3주 분석의 한계를 첫머리에 한 번만 밝힌다.",
+                  "긴 설명을 억지로 줄이지 말고, 무료 범위에서도 독자가 자기 원국의 전쟁 구도를 이해할 수 있게 완결된 글을 쓴다.",
                 ].join("\n"),
               },
               {
@@ -961,26 +1063,36 @@ async function handleAnalyze(req, res) {
                   `달력: ${calendarLabel}`,
                   `원국: 년주 ${pillars.year}, 월주 ${pillars.month}, 일주 ${pillars.day}, 시주 ${pillars.hour}`,
                   hiddenSummary,
+                  "",
+                  freeAnalysisEvidence,
                   `대운: ${daewoon.startInfo}`,
                   `현재 세운: ${sewoon.startInfo}`,
                   "",
                   "[출력 형식]",
                   `제목: ${name}님의 무료 사주 정찰 리포트`,
-                  "1. 원국의 핵심 — 일간과 월지에서 가장 뚜렷한 기질",
-                  "2. 강한 무기와 취약 지점 — 실제 오행 및 천간·지지 근거",
-                  "3. 현실에서 반복되는 장면 — 일·돈·관계 중 원국 근거가 가장 강한 두 영역",
-                  "4. 지금의 타이밍 — 대운과 현재 세운을 구분한 짧은 판단",
-                  "5. 다음 행동 — 오늘부터 실행할 구체적인 행동 3개",
+                  "1. 이 사주의 전쟁터 — 원국과 지장간을 펼쳐 판세를 요약",
+                  "2. 월령과 일간 — 계절 속에서 일간이 실제로 살아 있는 방식",
+                  "3. 오행전쟁의 주도권 — 강한 세력과 과다할 때의 문제",
+                  "4. 일주와 반복되는 십성 — 겉과 속, 경쟁 방식, 현실 장면",
+                  "5. 숨겨놓은 무기 — 지장간이 현실에서 발동하는 조건",
+                  "6. 돈과 일의 흐름 — 재성을 정재·편재로 구분하고 식상생재 등 실제 경로가 있을 때만 설명",
+                  "7. 부족하거나 필요한 기능 — 없는 오행을 곧바로 용신으로 단정하지 말고 기능으로 설명",
+                  "8. 올해의 전쟁 명령 — 세운 천간의 십성과 지지 상호작용을 함께 분석",
+                  "9. 다음 해의 전쟁 명령 — 전년도와 차이를 설명",
+                  "10. 결론 — 강점을 무엇으로 전환해야 하는지 한 문장으로 정리",
                   "",
-                  "각 항목은 2~4개의 짧은 문단으로 쓴다.",
-                  "최소 두 곳에서 실제 간지 또는 오행 근거를 밝힌다.",
+                  "전체 2800~4200자, 각 항목은 1~3개의 읽기 쉬운 문단으로 쓴다.",
+                  "화사 예시처럼 근거 → 전쟁 비유 → 현실 작용 → 주의점 순서로 전개하되 예시 문장은 복사하지 않는다.",
+                  "매 핵심 결론 바로 앞이나 뒤에 실제 간지·십성·오행 근거를 밝힌다.",
+                  "재성을 무조건 월급으로, 관성을 무조건 직장·배우자로, 없는 오행을 무조건 용신으로 단정하지 않는다.",
+                  "현재 연도는 시스템이 제공한 세운 연도를 사용하고 과거 연도를 올해라고 부르지 않는다.",
                   "고객 정보에 없는 직업, 결혼, 질병, 투자 사건을 지어내지 않는다.",
                   "마지막 한 줄은 유료 결제를 강요하지 말고 지금 실행할 행동으로 끝낸다.",
                 ].join("\n"),
               },
             ],
-            max_tokens: 2200,
-            temperature: 0.68,
+            max_tokens: 5200,
+            temperature: 0.52,
           });
           freeReport = freeCompletion.choices?.[0]?.message?.content?.trim() || "";
         } catch (error) {
@@ -997,6 +1109,8 @@ async function handleAnalyze(req, res) {
         sewoon,
         dailyLuck,
         calendarType: safeCalendar,
+        timeUnknown,
+        analysisEvidence: freeAnalysisEvidence,
       });
     }
 

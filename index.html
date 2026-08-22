@@ -5582,6 +5582,14 @@
 
     function renderFreeReportSequence(name, data, includePaidPrompt = true) {
       const primaryWeapon = getPrimaryWeapon(data.pillars);
+      const personalizedReport = cleanText(data.result);
+      const reportContext = {
+        name,
+        strongElement: getStrongest(getElementStats(data.pillars))[0],
+        dayGan: splitPillar(data.pillars.day).gan,
+        hiddenItems: getHiddenItems(data.pillars),
+        sewoonList: data.sewoon?.list || []
+      };
       return `
         <section class="box weapon-reveal">
           <p class="eyebrow">WEAPON DISCOVERED</p>
@@ -5594,6 +5602,16 @@
         </section>
         ${renderPillars(data.pillars)}
         ${renderFreeWeaponCards(name, data.pillars, data.sewoon)}
+        <section class="war-panel free-deep-reading">
+          <div class="war-panel-head">
+            <div>
+              <p class="eyebrow">PERSONALIZED FREE READING</p>
+              <h3>${escapeHtml(name)}님의 사주전쟁 정밀 해설</h3>
+            </div>
+            <span class="badge">${data.timeUnknown ? "3주 기준" : "4주 기준"}</span>
+          </div>
+          ${renderPremiumReportCards(personalizedReport, reportContext)}
+        </section>
         ${includePaidPrompt ? renderPaidLockFromJijanggan(name) : ""}
       `;
     }
