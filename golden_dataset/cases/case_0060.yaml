@@ -7,7 +7,7 @@ metadata:
   title: "계사년(癸巳年): 가게를 폐업했다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "계사년"
   sewoon_ganji: "癸巳年"
@@ -71,3 +71,21 @@ brain:
     - "보조 신호: 극"
     - "보조 신호: 생"
     - "보조 신호: 癸巳"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "기사시(己巳時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "계사년(癸巳年)", summary: "가게 운영 지속을 고민하다 실제 폐업하고 양도·처분 계약의 별도 시기를 상담"}
+  judgment:
+    conclusion: "계수 재성이 들어와도 시간 기토가 극해 고객 돈과 가게 수익 연결이 약하고 계수-정화 충돌·사화 중첩이 사업 피로를 키워 폐업이 먼저 나타난다. 양도 계약은 갑자월·을축월에 별도로 움직일 수 있다."
+    distinctive_point: "재성 유입을 매출 상승으로 보지 않고 실제 사업과 연결되는지 확인하며 폐업과 양도 계약 시점을 분리한다."
+  evidence: ["계수 재성: 돈·고객 문제가 중심", "시간 기토의 계수 극: 고객 돈과 가게 수익 연결 약화", "계수-정화 충돌: 문서·사업 계획 흔들림", "사화 중첩: 사업구조 과열·피로", "갑자월·을축월: 처분 계약 소식 가능성"]
+  counseling:
+    recommended: ["월별 손익 계산", "적자 시 규모 축소", "폐업·양도 절차 분리", "집기·시설·보증금 회수계획", "계약금·잔금 명확화", "폐업 후 생활비 확보"]
+    avoid: ["매출 회복 기대만으로 추가 투입", "계약 전 시설투자", "폐업·양도 동시 급처리", "상대 자금능력 미확인"]
+    timing: ["계사년: 기존 가게 인연 정리·폐업", "갑자월: 계약 소식 가능성", "을축월: 지연 시 다음 계약 기회"]
+  result:
+    actual: ["계사년에 실제 폐업 기록", "양도 계약은 폐업과 동시에 되지 않고 갑자월·을축월 가능성 판단", "실제 계약월 추가 확인"]
+    validated: ["운영 중단", "가게 인연 종료", "폐업·계약 시점 분리", "구체 월 가능성"]
+    follow_up: ["폐업일·계약일 각각 확보", "당시 매출·임대료·고정비 기록"]
+  core_conclusion: "폐업은 먼저 발생하고 가게를 넘기는 계약은 이후 월운에서 별도로 움직일 수 있다."

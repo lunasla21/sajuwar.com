@@ -7,7 +7,7 @@ metadata:
   title: "을미년(乙未年): 세운 해석의 기초적 접근"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "을미년"
   sewoon_ganji: "乙未年"
@@ -73,3 +73,21 @@ brain:
     - "보조 신호: 연간"
     - "보조 신호: 세운 천간"
     - "보조 신호: 세운 지지"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "을사시(乙巳時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "을미년(乙未年)", summary: "단일 적중 사건이 아닌 천간·지지가 직업 상태별로 어떻게 달리 현실화되는지 설명하는 교육 사례"}
+  judgment:
+    conclusion: "을목 인성이 무토 식상을 제어하고 축미충이 관성·재성·식상 지장간을 함께 자극한다. 직장인에게는 업무·인사 변화, 무직자에게는 새 일거리, 사업자에게는 현금·투자 부담으로 다르게 표현된다."
+    distinctive_point: "같은 충도 현재 직업·환경에 따라 정반대 사건이 될 수 있으므로 글자 뜻을 사건으로 고정하지 않는다."
+  evidence: ["을목 인성: 계약·시험·서류·계획", "을목의 무토 극: 기존 업무 중단·수정", "축미충: 직업환경·사회활동 공간 이동", "미토 정화-축토 신금 충돌: 자금 압박 가능성", "미토 을목-축토 기토 충돌: 업무 방식 재편", "미토 기토-축토 계수 충돌: 조직 관계 불안"]
+  counseling:
+    recommended: ["직장인은 인사·업무 변화 대비", "무직자는 일자리·훈련 탐색", "사업자는 현금 유동성 확보", "대여금 회수성 평가", "투자 위험 축소", "계약 조건 확인"]
+    avoid: ["충만 보고 무조건 퇴사", "공격 투자", "회수성 낮은 추가 대여", "손실 만회 투기", "문서 미확인 계약"]
+    timing: ["을미년: 직업·업무·재물·문서 변동성 동시 확대"]
+  result:
+    actual: ["특정 사건 적중보다 세운 해석법 교육 사례", "실제 결과는 상담 당시 상태에 따라 달라짐"]
+    validated: ["천간·지지 병행 원칙", "상태별 상이한 현실화", "지장간 분석", "직장·재물·업무 연결"]
+    follow_up: ["투자 손실·대여금 미회수를 절대 결과로 학습 금지", "상품·계약·채무자 현실자료 병행"]
+  core_conclusion: "세운은 천간 가능성, 지지 현실 충돌, 상담자의 현재 환경을 함께 봐야 사건으로 연결된다."

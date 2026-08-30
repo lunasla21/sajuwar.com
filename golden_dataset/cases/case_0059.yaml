@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 가게 처분 계약은 이루어지지 않는다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -71,3 +71,21 @@ brain:
     - "보조 신호: 월간"
     - "보조 신호: 연간"
     - "보조 신호: 세운 천간"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "경오시(庚午時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "정유년(丁酉年)", summary: "가게 처분을 의뢰하고 계약 직전 기대가 반복되지만 희망가 유지 시 실제 성사 가능성을 상담"}
+  judgment:
+    conclusion: "묘유충은 가게 정리 욕구를 강하게 만들고 정임합은 문의·협상 가능성을 만들지만 축술형과 식상 제어가 계약 기반·절차를 흔들어 최종 도장까지 가기 어렵다."
+    distinctive_point: "가게 인연 종료, 매도 욕구, 매수 문의, 계약 성립을 서로 다른 단계로 본다."
+  evidence: ["정임합: 계약·금전 협상과 매수 문의", "묘유충: 가게 인연 약화와 정리 욕구", "축술형: 계약 기반·재물 흐름 복잡화", "정화의 경금 제어: 절차 지연", "계수 재성 불안: 희망가 유지 어려움"]
+  counseling:
+    recommended: ["급매 회피", "서면 조건 확인", "매수자 자금조달 확인", "권리금 근거자료", "유지비와 희망가로 대기기간 설정"]
+    avoid: ["문의만으로 계약 확신", "계약금 전 선정리", "헐값 급매", "구두 약속 신뢰"]
+    timing: ["정유년: 정리 욕구는 강하지만 계약은 지연 가능"]
+  result:
+    actual: ["원문은 정유년 계약 불성립으로 판단", "계약 직전 기대는 가능하나 최종 도장 어려움", "실제 매도 시기는 추가 확인"]
+    validated: ["정리 욕구", "문의·기대", "최종 지연", "가격을 지키려면 대기"]
+    follow_up: ["실제 정유년 계약 여부", "후속 세운·월운 계약 시점 추적"]
+  core_conclusion: "가게와의 인연이 끝나도 실제 매매 계약은 별도의 조건과 시기를 필요로 한다."

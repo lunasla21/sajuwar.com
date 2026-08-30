@@ -7,7 +7,7 @@ metadata:
   title: "계사년(癸巳年): 승진이 되지 않는다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "계사년"
   sewoon_ganji: "癸巳年"
@@ -72,3 +72,21 @@ brain:
     - "보조 신호: 연간"
     - "보조 신호: 충"
     - "보조 신호: 생"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "임신시(壬申時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "계사년(癸巳年)", summary: "승진보다 인사이동·업무 변경 가능성과 직장 대인 갈등을 상담"}
+  judgment:
+    conclusion: "계수가 갑목 관성을 생해 인사를 움직이지만 경금 식상이 이를 공격하고 인신충이 자리·업무 환경을 흔들어 안정된 직책 상승보다 부서·임무 이동으로 현실화된다."
+    distinctive_point: "관성 활성화를 승진과 동일시하지 않고 식상 충돌과 지지의 자리 안정성을 확인한다."
+  evidence: ["계수의 갑목 생: 직장·인사 활성화", "경금의 갑목 극: 관성 불안과 승진보다 업무 변화", "인신충: 부서·자리 이동", "식상-관성 충돌: 업무 방식과 조직 요구 갈등"]
+  counseling:
+    recommended: ["인사이동을 경력 기회로 활용", "새 업무 빠른 습득", "동료 대화 완화", "성과 문서화", "다음 승진 실적 축적"]
+    avoid: ["승진 확정 간주", "이동을 무조건 불이익으로 해석", "동료 공개 충돌", "실패 즉시 퇴사"]
+    timing: ["계사년: 승진보다 인사이동·업무 변화가 두드러질 수 있음"]
+  result:
+    actual: ["원문은 승진보다 인사이동 가능성을 높게 판단", "실제 발령·승진 결과는 추가 확인 필요"]
+    validated: ["관성 움직임과 승진 분리", "업무·인사이동", "식상-관성 충돌", "인신충의 환경 이동"]
+    follow_up: ["실제 부서 이동·승진 결과", "사례 32·33·46과 실패 원인 비교"]
+  core_conclusion: "관성이 움직여도 식상이 흔들면 승진이 아니라 자리와 업무 변화가 될 수 있다."

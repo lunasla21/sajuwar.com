@@ -7,7 +7,7 @@ metadata:
   title: "경오년(庚午年): 유부녀와 가출"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "경오년"
   sewoon_ganji: "庚午年"
@@ -73,3 +73,21 @@ brain:
     - "보조 신호: 월간"
     - "보조 신호: 연간"
     - "보조 신호: 충"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "갑자시(甲子時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "경오년(庚午年)", summary: "정묘년부터 이어진 기혼 여성과의 관계가 확대되어 갑신월 실제 퇴사와 가출로 이어진 기록"}
+  judgment:
+    conclusion: "이미 존재하던 복잡한 관계를 전제로 경금 식상이 갑목 관성을 극해 직장을, 임수 재성을 생해 이성 관계를, 임수가 병화 인성을 극해 주거·문서 기반을 동시에 움직인 사례다."
+    distinctive_point: "특정 사주가 불륜·가출을 만든다고 단정하지 않고 기존 현실 관계와 세운의 직장·이성·주거 동시 활성화를 결합해 해석한다."
+  evidence: ["경금의 갑목 극: 조직 관계·퇴직 변화", "경금의 임수 생: 기존 이성 관계 활성화", "임수의 병화 극: 주거·문서·생활 기반 변화", "진술충: 가족·생활 기반 불안", "자묘형: 배우자 관계 긴장"]
+  counseling:
+    recommended: ["관계와 직장 결정을 분리", "퇴사 전 재정 계획", "가족의 법적·경제 책임 확인", "가출·동거 충동 억제", "장기 책임 고려"]
+    avoid: ["직장·가정을 감정으로 동시 정리", "무계획 퇴사", "상대에게 경제 과의존", "기존 가족 책임 무시"]
+    timing: ["경오년: 직장·이성 관계 동시 변동", "갑신월: 실제 사표·주거 변화 기록"]
+  result:
+    actual: ["기존 여성 관계가 경오년에 확대", "갑신월 실제 사표", "해당 여성과 집을 나감"]
+    validated: ["직장 변동", "이성 관계 강화", "주거 변화", "갑신월 퇴사", "여러 영역 동시 이동"]
+    follow_up: ["이후 관계 지속 여부", "혼외·결혼 실패 결정론 금지"]
+  core_conclusion: "원국이 불륜을 만든 것이 아니라 이미 있던 관계가 세운에서 직장·주거 변화와 함께 큰 행동으로 확대된 사례다."

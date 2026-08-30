@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 관재구설과 소송"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -70,3 +70,21 @@ brain:
     - "보조 신호: 합"
     - "보조 신호: 형"
     - "보조 신호: 丁酉"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "임자시(壬子時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "정유년(丁酉年)", summary: "좋아 보이는 투자·동업 제안이 계약 분쟁·소송 비용으로 번질 위험과 자산 방어를 상담"}
+  judgment:
+    conclusion: "정임합은 좋은 계약·재물 기회처럼 보이지만 지지 자유파가 기반을 깨뜨려 약속 번복·금전 분쟁 위험을 만든다. 관재구설 확정이 아니라 투자·계약 위험 신호로 다뤄야 한다."
+    distinctive_point: "천간의 합이 지지에서 유지되는지 확인하며 합을 곧 수익·횡재로 보지 않는다."
+  evidence: ["정임합: 투자·계약 기대와 좋아 보이는 제안", "자유파: 계약·자금 기반 파손과 번복·분쟁", "유금 식상 활성화: 새 일·발언 증가와 구설 가능성", "합·파 동시 작용: 외형 조건과 실제 결과 차이"]
+  counseling:
+    recommended: ["계약 법률 검토", "동업자 자금·신용 확인", "구두 약속 회피", "대화·송금 기록", "투자 최소화", "초기 분쟁 조정"]
+    avoid: ["고수익만 보고 투자", "친분 동업", "보증·명의 대여", "계약서 미독 서명", "손실 뒤 감정 대응"]
+    timing: ["정유년: 투자 제안과 분쟁 가능성이 함께 커질 수 있음"]
+  result:
+    actual: ["실제 소송 결과는 원문에 없음", "투자·동업의 관재·법적비용 예방에 초점"]
+    validated: ["천간 호재와 지지 불안 분리", "투자·분쟁 병행 판단", "계약·기록 예방책"]
+    follow_up: ["실제 투자·소송 추적", "관재를 확정 예언이 아닌 위험 신호로 분류"]
+  core_conclusion: "좋은 투자처럼 보여도 지지 기반이 깨지면 분쟁으로 변할 수 있어 자산 보존이 우선이었다."
