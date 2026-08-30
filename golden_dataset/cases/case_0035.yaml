@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 회사를 퇴사하고 사업한 이유"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -72,3 +72,28 @@ brain:
     - "보조 신호: 식상"
     - "보조 신호: 인성"
     - "보조 신호: 일지"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "신사시(辛巳時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "정유년(丁酉年)"
+    summary: "상사·조직 스트레스가 커져 실제 퇴사하고 자신의 기술·재능을 활용한 사업을 시작"
+  judgment:
+    conclusion: "정유년은 기존 직장 관성이 흔들린 뒤 사유합으로 새로운 관성인 사업체·사회적 직함이 형성되어 직장인에서 사업가로 전환하는 해다."
+    distinctive_point: "식상견관을 해고·직장 실패로만 보지 않고 기존 관성이 깨진 뒤 새 관성이 어떻게 만들어지는지 추적한다."
+  evidence:
+    - "정화 식상: 독립심·자기표현과 직접 새 일을 하려는 욕구"
+    - "병정화와 신금 충돌: 상사·조직 반발과 기존 직장 유지 곤란"
+    - "사유합(巳酉合): 사업체·간판·사업자 등록 등 새 관성 틀 형성"
+    - "사해충(巳亥沖): 내면 불안과 기존 직장에서 벗어나려는 마음 극대화"
+    - "해수 인성: 사업 계획·계약을 문서로 구체화"
+  counseling:
+    recommended: ["퇴사 전 사업계획 구체화", "기술·강점을 사업 아이템으로 연결", "사업자 등록·계약·세무 정식 준비", "초기 고정비 최소화", "현실 수익 구조 우선"]
+    avoid: ["상사와 싸운 뒤 충동 퇴사", "수익 구조 없이 사업 시작", "과도한 고정비·대출", "직장 스트레스만을 창업 동기로 삼기"]
+    timing: ["정유년: 기존 직장을 떠나 새 사회적 직함과 사업 구조를 만드는 시기"]
+  result:
+    actual: ["정유년에 실제 퇴사", "자신의 재능·기술 기반 사업 시작", "직장인에서 사업가로 역할 전환"]
+    validated: ["조직 거부감", "실제 퇴사", "독립 욕구", "사업자 역할 전환", "기술 활용 사업"]
+    follow_up: ["업종·초기 투자금 확보", "이후 3년 매출·지속 여부 추적"]
+  core_conclusion: "퇴사는 포기가 아니라 기존 직장 관성이 새 사업 관성으로 교체되며 정체성이 바뀐 전환점이었다."

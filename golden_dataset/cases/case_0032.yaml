@@ -7,7 +7,7 @@ metadata:
   title: "계사년(癸巳年): 승진이 되지 않는다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "계사년"
   sewoon_ganji: "癸巳年"
@@ -71,3 +71,27 @@ brain:
     - "보조 신호: 세운 지지"
     - "보조 신호: 합"
     - "보조 신호: 형"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "기묘시(己卯時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "계사년(癸巳年)"
+    summary: "승진 후보 명단에 올랐고 기대도 높았으나 최종 결정에서 경쟁자에게 밀려 승진 실패"
+  judgment:
+    conclusion: "천간의 계수 인성과 무계합은 승진 문서·보상 가능성을 만들어 후보까지 올리지만, 지지 사신형이 관성을 흔들어 마지막 현실화를 막는다."
+    distinctive_point: "승진 가능성과 실제 승진을 분리하고 천간의 신호가 지지에서 자리를 지켜 현실화될 수 있는지 반드시 확인한다."
+  evidence:
+    - "계수 인성: 인사·승진 발령 문서와 후보 거론 가능성"
+    - "무계합(戊癸合): 문서와 보상이 연결되어 승진 기대 상승"
+    - "사신형(巳申刑): 막판 경쟁자·조직 내부 변수로 결과 변경 가능"
+    - "강한 식상과 관성 충돌: 성과는 드러나도 조직 결정과 부딪치면 승진 보류"
+  counseling:
+    recommended: ["확정 전 결과 단정 금지", "경쟁자와 불필요한 갈등 회피", "상사 관계 안정", "업무 성과 문서화", "다음 기회용 실적 축적"]
+    avoid: ["승진을 미리 확정으로 간주", "경쟁자와 정면충돌", "실패 직후 퇴사", "감정적으로 인사 결과에 항의"]
+    timing: ["계사년: 승진 후보에 오르지만 최종 결과가 꼬일 수 있는 시기"]
+  result:
+    actual: ["실제 승진 후보 명단 등재", "본인의 높은 승진 기대", "최종적으로 강한 경쟁자에게 밀려 승진 실패"]
+    validated: ["승진 후보 선정", "높은 기대감", "최종 변수", "경쟁자 우위", "승진 보류"]
+    follow_up: ["경쟁자 사주·조직 개편 자료로 사신형 현실 작용 분석", "다음 실제 승진 시기 추적"]
+  core_conclusion: "천간에서 승진 문이 열려도 지지 관성이 흔들리면 후보 단계에 그칠 수 있으므로 가능성과 확정을 구분해야 한다."

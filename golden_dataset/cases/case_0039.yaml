@@ -7,7 +7,7 @@ metadata:
   title: "병신년(丙申年): 관재구설과 실효적 예방책"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "병신년"
   sewoon_ganji: "丙申年"
@@ -72,3 +72,28 @@ brain:
     - "보조 신호: 월간"
     - "보조 신호: 연간"
     - "보조 신호: 세운 천간"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "임진시(壬辰時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "병신년(丙申年)"
+    summary: "수입·매출은 나쁘지 않지만 경쟁·시기·오해로 대인 갈등과 관재구설 위험이 있어 실효적 예방법과 수익 운용을 상담"
+  judgment:
+    conclusion: "비겁 강화와 관성 충돌로 사람 문제가 공식 분쟁·구설로 커질 수 있지만 신진합으로 업무·사업 수입은 활발하다. 토 식상을 활용한 업무·환경 변화와 문서화, 발전적 재투자로 흉한 압력을 다른 현실 사건으로 전환한다."
+    distinctive_point: "관재구설에 단순히 조심하라고 끝내지 않고 부서·프로젝트·업무 방식 변화로 기운을 능동적으로 소진시키는 예방책을 찾는다."
+  evidence:
+    - "병화 비겁: 경쟁자·주변인 영향과 시기·질투 증가"
+    - "계수 관성: 비겁 억제 과정이 조직 문제·구설로 공식화될 가능성"
+    - "토 식상: 관성을 조절해 갈등 에너지를 업무·환경 변화로 전환"
+    - "신진합(申辰合): 활동과 재물이 연결되어 매출·수입 흐름은 양호"
+    - "병화와 신금: 번 돈이 외부로 나갈 수 있어 의도적 장기 재투자가 유리"
+  counseling:
+    recommended: ["부서·프로젝트 변화 검토", "업무 프로세스 변경", "중요 대화 기록", "계약·정산 문서화", "수익 일부를 설비·교육·장기 자산에 재투자", "갈등 조기 해결"]
+    avoid: ["동료와 공개 싸움", "구두 계약", "오해 방치", "도발에 즉각 대응", "충동 소비", "무리한 단기 투기"]
+    timing: ["병신년: 수입은 활발하지만 사람 문제·구설을 함께 경계할 시기"]
+  result:
+    actual: ["업무·재물 흐름과 대인 갈등 가능성이 동시에 커짐", "업무 환경 변화·관계 문서화를 예방책으로 제시", "수익을 발전적 재투자로 연결하도록 권고"]
+    validated: ["경쟁 심화", "구설 가능성", "양호한 매출·수입", "재물 외부 유출", "업무 변화의 예방 효과"]
+    follow_up: ["실제 관재·분쟁 발생 여부로 예방 효과 검증", "수익 증가율·재투자 결과 기록"]
+  core_conclusion: "숨는 것보다 비겁-관성 충돌을 업무 변화와 문서 관리로 전환하고 수입을 장기 발전에 재투자하는 것이 실효적 예방책이었다."

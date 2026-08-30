@@ -7,7 +7,7 @@ metadata:
   title: "경오년(庚午年): 자녀 있는 남자를 만나야 한다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "경오년"
   sewoon_ganji: "庚午年"
@@ -68,3 +68,27 @@ brain:
     - "우선 판단축: 일지, 관성/재성, 충합으로 생기는 끌림과 균열"
     - "결론 방식: 감정의 강도보다 책임 구조의 불안정성이 먼저 드러난다"
     - "보조 신호: 庚午"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "계미시(癸未時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "경오년(庚午年)"
+    summary: "배우자 선택 조건과 결혼 뒤 출산·부부 관계의 연결을 상담"
+  judgment:
+    conclusion: "사화 지장간에서 배우자 경금과 자녀 병화가 함께 있고 화극금으로 충돌한다. 특정 조건을 강제하는 뜻이 아니라 자녀 경험이 있는 상대도 배제하지 말고 가족 경험·책임감·양육 태도를 현실적으로 봐야 한다."
+    distinctive_point: "관성 존재만으로 남편복을 단정하지 않고 배우자와 자녀 기운이 같은 지장간에서 어떤 관계를 이루는지 본다."
+  evidence:
+    - "사화 속 경금: 배우자 인연 존재와 특별한 배경의 상대 가능성"
+    - "사화 속 병화: 강한 자녀 기운"
+    - "병화의 경금 극: 출산 뒤 배우자 관계·생활·역할 변화 가능성"
+    - "배우자·자녀 동궁: 부부 문제와 자녀 문제가 강하게 연결"
+  counseling:
+    recommended: ["과거 혼인·자녀 유무만으로 배제하지 않기", "자녀 있는 상대도 현실 후보로 검토", "책임감·양육 태도 확인", "결혼 전 자녀 계획·역할 분담 논의", "상호 가족관계 명확화"]
+    avoid: ["상대 과거만으로 단절", "자녀 문제를 논의하지 않기", "배우자 건강·생활 부담 무시", "명리만으로 실제 성격·책임감 확인을 대신하기"]
+    timing: ["경오년: 배우자 조건과 결혼 관계를 구체적으로 고민하는 시기"]
+  result:
+    actual: ["배우자와 자녀 기운이 강하게 얽힌 구조 확인", "초혼 여부보다 자녀 경험이 관계 부담을 분산할 가능성을 설명"]
+    validated: ["배우자·자녀 문제 연결", "가족 배경 고려", "출산 뒤 부부 변화 가능성", "상대 책임감의 중요성"]
+    follow_up: ["실제 상대의 혼인 이력·자녀 여부 추적", "성격·가치관·재정 상태 등 현실 요소 병행 기록"]
+  core_conclusion: "반드시 자녀 있는 남성과 결혼하라는 결정론이 아니라 배우자 선택에서 가족 경험·책임감·자녀 계획을 핵심 현실 변수로 보라는 사례다."

@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 퇴사와 창업 고민"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -75,3 +75,29 @@ brain:
     - "보조 신호: 일지"
     - "보조 신호: 월간"
     - "보조 신호: 연간"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "무인시(戊寅時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "정유년(丁酉年)"
+    summary: "직장 답답함과 더 많은 수입 기대 때문에 퇴사·창업 여부와 적합한 사업 구조를 상담"
+  judgment:
+    conclusion: "정유년 창업 욕구는 강하지만 무술년 재물 기반이 흔들리므로 즉시 퇴사·독립 창업은 위험하다. 장기적으로는 완전 독립형보다 검증된 브랜드·시스템을 활용하는 사업이 적합하다."
+    distinctive_point: "식상생재만 보고 개인 사업 적합성을 단정하지 않고 그 식상을 누가 공유·소유하는지 본다. 비겁 갑목과 밀접한 병화는 프랜차이즈·가맹점·영업소·동업형에 가깝다."
+  evidence:
+    - "병화와 갑목: 재능·활동 무대를 타인과 공유해 시스템 차용형이 유리"
+    - "정화 식상: 창업·수입 확대 욕구 급증"
+    - "정화의 무토 생: 사업하면 돈을 벌 것이라는 기대 상승"
+    - "진유합(辰酉合): 직업 환경을 바꾸고 새 사업·조직과 연결하려는 마음"
+    - "무술년 갑목의 무토 극: 사업 자금이 경쟁·지출로 유출될 가능성"
+    - "진술충(辰戌沖): 기존 재물 기반이 흔들려 창업 초기 자금난 가능성"
+  counseling:
+    recommended: ["당장 직장 유지", "충분한 준비 기간", "프랜차이즈·가맹점 검토", "검증된 시스템 활용", "무술년 대비 현금 확보", "최소 3~5년 운 검토 후 결정"]
+    avoid: ["정유년 충동적 사표", "경험 없는 단독 창업", "높은 대출 비중", "외형만 보고 대규모 시작", "다음 해 재물운 무시"]
+    timing: ["정유년: 퇴사·창업 욕구 강화", "무술년: 창업 시 자금난·재물 손실 확대 가능"]
+  result:
+    actual: ["정유년에 강한 창업 욕구", "즉시 독립 창업을 만류", "장기 사업도 타인·브랜드 시스템 활용형이 적합하다고 판단"]
+    validated: ["퇴사 욕구", "창업 기대", "단독보다 시스템형 사업 적합", "무술년 자금 부담", "직장 유지 권고"]
+    follow_up: ["실제 퇴사·창업 여부 추적", "프랜차이즈·동업형 실제 성과 비교"]
+  core_conclusion: "창업 욕구와 창업 수익운을 구분하고, 기다리면서 자산을 지키되 향후에는 검증된 타인 시스템을 활용하는 방식이 맞았다."

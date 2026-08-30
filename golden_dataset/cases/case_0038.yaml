@@ -7,7 +7,7 @@ metadata:
   title: "갑오년(甲午年): 사업의 어려움"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "갑오년"
   sewoon_ganji: "甲午年"
@@ -73,3 +73,28 @@ brain:
     - "보조 신호: 세운 지지"
     - "보조 신호: 합"
     - "보조 신호: 형"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "정유시(丁酉時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "갑오년(甲午年)"
+    summary: "장기 사업 정체, 계사년 부동산 처분으로 연명한 뒤 갑오년에 다시 심각한 자금 압박이 발생"
+  judgment:
+    conclusion: "강한 비겁·화기와 군비쟁재로 재물이 남기 어렵고 갑오년 인오술 화국이 재성을 더욱 손상한다. 추가 투자·확장이 아니라 사업 축소, 고정비 절감, 현금 보존이 생존 전략이다."
+    distinctive_point: "오화의 활동성 증가를 수익 증가로 보지 않는다. 화기가 지나치면 더 움직일수록 비용과 손실이 커질 수 있다."
+  evidence:
+    - "군비쟁재: 번 돈이 타인·비용으로 빠져 실제 축적이 적음"
+    - "계사년 인사형: 사업 문제가 발동해 부동산 처분 등 긴급 자금 필요"
+    - "갑오년 인오술 삼합 화국: 화기가 극도로 강해져 재성 금 공격"
+    - "신금·유금 손상: 현금·사업 자금 급속 소진, 매출보다 지출 우위"
+    - "강한 비겁: 동업자·투자자·거래처 금전 분쟁 가능성"
+  counseling:
+    recommended: ["사업 규모 축소", "고정비 강력 절감", "신규 투자 중단", "현금 보유 우선", "정산·계약서 철저 관리", "동업·투자 수익 배분 명확화"]
+    avoid: ["공격적 마케팅", "신규 확장", "추가 대출", "자산을 계속 팔아 사업비 투입", "투기성 손실 만회", "구두 거래"]
+    timing: ["계사년: 자금난 본격화와 자산 처분 가능", "갑오년: 화기 최고조로 사업 자금 소진 위험"]
+  result:
+    actual: ["계사년 자금 압박으로 실제 부동산 처분", "갑오년 자금 부족·높은 지출 지속", "확대보다 방어적 축소가 필요한 상황"]
+    validated: ["장기 사업 부진", "부동산 처분", "자금 압박", "갑오년 현금 부족", "사업 축소", "금전 분쟁 가능성"]
+    follow_up: ["실제 매출·고정비로 손익 정량 분석", "이후 축소·폐업 여부 장기 추적"]
+  core_conclusion: "갑오년의 답은 활동 확대가 아니라 지출 축소, 현금 보존, 분쟁 예방이었다."
