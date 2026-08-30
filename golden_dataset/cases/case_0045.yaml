@@ -7,7 +7,7 @@ metadata:
   title: "을미년(乙未年): 이사보다는 집에 변화가 좋다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "을미년"
   sewoon_ganji: "乙未年"
@@ -73,3 +73,21 @@ brain:
     - "보조 신호: 세운 지지"
     - "보조 신호: 형"
     - "보조 신호: 생"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "무술시(戊戌時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "을미년(乙未年)", summary: "이사·집·가게 매매를 고민하나 원하는 가격 계약이 어렵고, 실제 이동 대신 현 공간 변화 방안을 상담"}
+  judgment:
+    conclusion: "을목 인성은 변화·문서를 움직이지만 축술미 삼형으로 부동산 계약·비용 갈등이 커진다. 헐값 이동보다 현재 공간의 수리·재배치·용도 변경으로 변화 압력을 현실적으로 소진하는 편이 안정적이다."
+    distinctive_point: "변화운이 강해도 실제 이사와 공간 내부 변화 중 어느 쪽이 더 나은지 남은 형충 관계로 구분한다."
+  evidence: ["을목 인성: 이직·이사·매매 계획", "을목의 무토 제어: 기존 업무 변경 욕구", "축술미 삼형: 생활 기반·부동산 계약·비용 복잡화", "술미형: 가정·배우자 긴장", "재성-인성 충돌: 가격·조건 불일치로 거래 지연", "공간 변화: 큰 이동 대신 변화 기운 사용"]
+  counseling:
+    recommended: ["계약 서두르지 않기", "도배·수리", "가구·동선·방 용도 변경", "외부 활동으로 스트레스 분산", "적정가와 손실 비교"]
+    avoid: ["헐값 급매", "무리한 가격 인하", "감정적 이사", "고비용 신규 부동산 즉시 계약"]
+    timing: ["을미년: 축술미 삼형으로 큰 이동보다 내부 환경 변화 우선"]
+  result:
+    actual: ["계약을 서두르지 않고 현 공간 변화 권고", "실제 이사·매매 결과는 추가 확인 필요"]
+    validated: ["이사 욕구", "계약 난항", "가격 양보 경계", "수리·재배치 대안"]
+    follow_up: ["실제 매도·가격 추적", "공간 변화 후 만족도·경제 효과 확인"]
+  core_conclusion: "변화운을 반드시 이사로 쓰지 않고 현재 공간을 적극 바꾸며 거래 시기를 기다리는 선택이 현실적이었다."

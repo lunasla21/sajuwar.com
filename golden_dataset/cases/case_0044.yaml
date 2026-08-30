@@ -7,7 +7,7 @@ metadata:
   title: "갑오년(甲午年): 사업을 시작하면 고생한다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "갑오년"
   sewoon_ganji: "甲午年"
@@ -74,3 +74,21 @@ brain:
     - "보조 신호: 월간"
     - "보조 신호: 세운 지지"
     - "보조 신호: 합"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "무술시(戊戌時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "갑오년(甲午年)", summary: "공인중개사 자격으로 사무실을 개업할지 소속 중개사로 일할지와 갑오·을미년 부동산 흐름을 상담"}
+  judgment:
+    conclusion: "강한 토 식상으로 부동산 적성은 있으나 갑목의 식상 제어와 오오자형으로 갑오년 독립은 시행착오·운영 스트레스가 크다. 정유년까지 소속 중개사로 실무·고객 기반을 쌓는 편이 안전하다."
+    distinctive_point: "적성, 사업 시기, 재물 보존을 분리해 적합 업종이라고 즉시 독립을 권하지 않는다."
+  evidence: ["강한 무토·술토 식상: 부동산·중개·현장 실무 적성", "갑목의 무토 극: 직업 변화 욕구와 사업활동 제약", "오오자형: 조급함·내부 갈등·독립 스트레스", "술토 속 신금: 현장 재물 가능성과 경험·자리의 중요성", "갑오·을미년 목극토: 문서·자산 거래 조건 불리 가능"]
+  counseling:
+    recommended: ["소속 중개사 경험", "단지·상권 분석", "고객 데이터·실무 축적", "투자보다 현금", "향후 저고정비 개업"]
+    avoid: ["무경험 즉시 개업", "과도한 보증금·시설비", "갑오·을미년 무리한 부동산 투자", "단기 수익 기대"]
+    timing: ["갑오년: 변화 욕구는 강하나 독립 신중", "을미년: 재물·문서 보수적 판단", "정유년까지: 경험 축적 우선"]
+  result:
+    actual: ["실제 개업 여부는 원문에 불명확", "즉시 독립보다 소속 경험 권고", "적성은 인정하되 시기 지연"]
+    validated: ["부동산 적성", "독립 욕구", "내부 갈등", "초기 투자 경계", "적성과 시기 분리"]
+    follow_up: ["실제 개업 시기·수익 확인", "건강 상징은 의료 검진과 구분"]
+  core_conclusion: "부동산과 인연은 있지만 갑오년에는 독립보다 실무경험 축적이 자산을 보호했다."

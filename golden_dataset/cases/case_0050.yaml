@@ -7,7 +7,7 @@ metadata:
   title: "갑오년(甲午年): 가게 개업은 북동 방향이 좋다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "갑오년"
   sewoon_ganji: "甲午年"
@@ -72,3 +72,21 @@ brain:
     - "보조 신호: 형"
     - "보조 신호: 극"
     - "보조 신호: 생"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "임인시(壬寅時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "갑오년(甲午年)", summary: "신규 가게 개업, 임대차·시설 초기 지출, 사업장 방향과 동업자 선택을 상담"}
+  judgment:
+    conclusion: "갑경충은 현금이 사라지는 손실만이 아니라 보증금·시설·권리로 전환되는 지출이고 오묘파는 신규 개업 가능성을 만든다. 다만 강한 오화가 재성을 압박하므로 작은 규모와 운영자금 분리가 핵심이며 북동 방향은 검증이 필요한 보조 가설이다."
+    distinctive_point: "재물 충을 소멸과 자산·권리 전환으로 구분하고, 방위는 상권·임대료·접근성·수익 구조와 함께 검증하며 독립 성공 요인으로 단정하지 않는다."
+  evidence: ["갑경충: 보증금·권리금·시설비 등 계약 지출", "오묘파: 기존 환경·직업 구조를 깨고 신규 사업", "강한 오화: 활동 증가와 재성 신금 압박·운영자금 소진", "임계수 관성: 규칙·운영 구조로 화기 조절", "북동 방향: 원문의 보완 가설이며 현실 상권 조건 병행 필요"]
+  counseling:
+    recommended: ["초기 투자 제한", "6개월 이상 운영자금 별도 확보", "임대차계약 정밀 검토", "권리금·시설비 회수성 계산", "북동 후보와 상권 데이터 비교", "동업 역할·지분·정산 문서화", "소규모 검증 시작"]
+    avoid: ["방향만 보고 나쁜 상권 계약", "과도한 보증금·시설비", "운영자금까지 시설에 투입", "구두 동업", "외형용 과잉 투자"]
+    timing: ["갑오년: 신규 사업장 계약·개업 욕구와 초기 지출 통제가 중요한 시기"]
+  result:
+    actual: ["원문은 개업 가능성과 북동 방향을 제시", "실제 방향·매출은 추가 기록 필요", "방위 판단은 미검증 상담 가설로 분류"]
+    validated: ["신규 계약 가능성", "초기 투자 증가", "직업·환경 변화", "소규모 권고", "계약·동업 검증"]
+    follow_up: ["실제 방향·매출 확보", "동일 상권에서 방향 차이 검증", "방위는 현실 변수와 함께 학습"]
+  core_conclusion: "개업 자체보다 초기 투자 통제가 중요하고, 북동 방향은 현실 상권·비용 조건보다 우선할 수 없는 보조 가설이다."

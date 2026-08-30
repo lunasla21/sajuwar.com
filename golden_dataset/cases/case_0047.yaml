@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 가게 운영이 어려운 이유"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -70,3 +70,21 @@ brain:
     - "보조 신호: 충"
     - "보조 신호: 생"
     - "보조 신호: 丁酉"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "계묘시(癸卯時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "정유년(丁酉年)", summary: "고객 유입이 순익으로 이어지지 않고 경쟁·비용·자리·계약·평판 문제로 가게 운영이 어려워 상담"}
+  judgment:
+    conclusion: "손님·돈 움직임은 있지만 묘유충이 가게 자리·계약 기반을 깨고 정계충이 신뢰·평판을 흔들며 강한 화기가 재성을 소진해 실익이 남지 않는다."
+    distinctive_point: "고객 방문·매출 발생과 사업 성공을 구분하고 자리가 돈의 흐름을 받아낼 수 있는지 본다."
+  evidence: ["정화 비겁: 고객과 경쟁자가 함께 늘어 매출 분산", "유금 재성: 돈 움직임 존재", "묘유충: 입지·임대조건과 재물 충돌", "정계충: 고객 약속·평판·신뢰 문제", "강한 화기: 매출이 고정비·인건비·운영비로 소진"]
+  counseling:
+    recommended: ["임대조건 재검토", "고정비·인건비 절감", "경쟁업체 차별화", "불만·리뷰 관리", "이전 가능성 검토", "순이익 기준 판단"]
+    avoid: ["광고비만 증액", "고객 수만으로 호황 판단", "자리 문제 무시", "고객과 감정 충돌", "높은 고정비 유지"]
+    timing: ["정유년: 사업장 인연이 흔들려 매출보다 수익 구조 재정비가 필요한 시기"]
+  result:
+    actual: ["원문은 자리·경쟁·계약·비용 구조에서 운영 난항 원인을 찾음", "폐업·이전 여부는 사례 48과 연계 확인 필요"]
+    validated: ["고객·매출과 실익 불일치", "경쟁", "자리·계약 문제", "고정비", "이전 가능성"]
+    follow_up: ["매출·임대료·고정비 정량 검증", "고객 수·객단가·순이익 분리 기록"]
+  core_conclusion: "장사 부진은 손님 부족만이 아니라 자리와 운영 기반이 흔들려 돈이 남지 않는 문제였다."

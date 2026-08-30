@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 가게 처분 금액은 제값을 받지 못한다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -71,3 +71,21 @@ brain:
     - "보조 신호: 충"
     - "보조 신호: 형"
     - "보조 신호: 극"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "계묘시(癸卯時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "정유년(丁酉年)", summary: "운영이 어려운 가게의 권리금·매매대금과 매수자 가격 인하·급매 경쟁을 상담"}
+  judgment:
+    conclusion: "매매대금은 움직일 수 있으나 정화 비겁과 강한 화기가 경금·유금 재성을 압박하고 묘유충·정계충이 가치·계약·협상력을 흔들어 상당한 가격 양보가 예상된다."
+    distinctive_point: "매매 가능성과 매매금액을 분리하며, 재성 유입을 충분한 실수령액으로 단정하지 않는다."
+  evidence: ["정화 비겁의 경금 극: 매수자 가격 인하·경쟁 매물", "정계충: 협상·신뢰와 조건 유지 곤란", "묘유충: 권리·계약·자리 가치 저평가", "유금과 강한 오화: 비용·양보로 실수령액 감소"]
+  counseling:
+    recommended: ["희망가·최저가 분리", "주변 매물 조사", "시설·권리 근거자료", "세금·비용 포함 실수령액 계산", "장기 미매각 비용과 양보 폭 비교"]
+    avoid: ["최초 희망가 고집", "감정적 기싸움", "시세 무시", "부대비용 누락"]
+    timing: ["정유년: 처분 가능하지만 가격 만족도가 낮을 수 있는 시기"]
+  result:
+    actual: ["원문은 처분해도 제값을 받기 어렵다고 판단", "실제 계약가는 추가 기록 필요"]
+    validated: ["가격 갈등", "권리금 하락", "매물 경쟁", "가치평가 문제", "실수령액 감소"]
+    follow_up: ["희망가·실계약가 확보", "사례 47 운영 부진과 실제 처분 연결 추적"]
+  core_conclusion: "가게가 팔리는 운과 제값을 받는 운을 구분하고 장기 유지 손실까지 계산해 현실적 최저선을 정해야 했다."

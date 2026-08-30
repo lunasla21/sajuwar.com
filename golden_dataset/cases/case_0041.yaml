@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 믿는 도끼에 발등 찍힌다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -70,3 +70,21 @@ brain:
     - "보조 신호: 합"
     - "보조 신호: 형"
     - "보조 신호: 극"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "정유시(丁酉時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "정유년(丁酉年)", summary: "가까운 사람의 투자·공동사업 제안과 금전 위탁을 주의하고 감정보다 손익 계산이 필요한지 상담"}
+  judgment:
+    conclusion: "재물 기회는 나타나지만 중첩된 정화 비겁이 경금 재성을 압박하고 유유자형이 반복 금전 불안을 키운다. 사람을 의심하기보다 신뢰와 금전 관리를 분리해야 한다."
+    distinctive_point: "재성이 들어왔는지가 아니라 그 재물을 누가 건드리는지 보며, 돈의 기회와 분탈 가능성을 함께 판단한다."
+  evidence: ["정화 비겁 중첩: 가까운 사람·경쟁자와 공동 금전 문제", "정화의 경금 극: 사람을 통한 재물 유출 위험", "경금의 갑목 극: 손실이 문서·신뢰·판단 문제로 번질 가능성", "유유자형: 금전 불안·집착과 같은 문제 반복"]
+  counseling:
+    recommended: ["공동투자 손익 계산", "서면 계약", "자금 사용처 직접 확인", "친분과 무관한 금전 원칙", "보증·명의 대여 신중", "현금 흐름 정기 점검"]
+    avoid: ["친분만 믿고 자금 위탁", "수익률만 듣고 투자", "구두 공동사업", "쉬운 보증·명의 대여", "손실 만회용 추가 투입"]
+    timing: ["정유년: 사람과 재물이 강하게 얽혀 객관 검증이 중요한 시기"]
+  result:
+    actual: ["구체 피해 결과는 원문에 없음", "가까운 사람과의 금전 관계를 핵심 위험으로 판단", "손익 계산·계약 확인을 예방책으로 제시"]
+    validated: ["비겁·재성 동시 작동", "사람과 금전의 연결 가능성", "계약 확인", "감정적 판단 회피"]
+    follow_up: ["실제 손실·배신 발생 여부 추적", "상대·금액·계약 형태 확보"]
+  core_conclusion: "재물 기회와 비겁의 분탈 위험이 함께 있으므로 신뢰와 금전 관리를 분리하는 해였다."

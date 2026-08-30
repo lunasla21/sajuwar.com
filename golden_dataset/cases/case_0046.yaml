@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 승진이 되지 않는다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -71,3 +71,21 @@ brain:
     - "보조 신호: 연간"
     - "보조 신호: 세운 천간"
     - "보조 신호: 세운 지지"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "기유시(己酉時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "정유년(丁酉年)", summary: "업무·인사 변화와 경쟁자 부각 속 승진을 기대했으나 최종 승진 실패로 분석"}
+  judgment:
+    conclusion: "정화 비겁 경쟁자가 나타나 평가·지원이 분산되고 정계충으로 관성이, 묘유충으로 인사 기반이 흔들려 승진보다 업무 변화만 현실화될 수 있다."
+    distinctive_point: "비겁을 경쟁자 하나로 끝내지 않고 상사 지원과 인사 문서가 누구에게 분산되는지까지 본다."
+  evidence: ["정화 비겁: 유사 자격 경쟁자와 공로·평가 분산", "갑목 인성: 윗사람 지원이 경쟁자 등장으로 분산", "정계충: 직위·명예와 승진 심사 변수", "묘유충: 인사 기반·승진 문서 흔들림", "갑기합: 승진 없이 담당 업무 변화 가능"]
+  counseling:
+    recommended: ["성과 수치·문서 기록", "경쟁자 과잉 의식 금지", "상사 소통 안정", "인사이동을 경력 자산화", "다음 승진 준비"]
+    avoid: ["경쟁자와 공개 충돌", "승진 확정 간주", "감정적 항의", "실패 직후 퇴사"]
+    timing: ["정유년: 경쟁·인사 변수 확대, 승진보다 업무 변화 우선 가능"]
+  result:
+    actual: ["원문은 승진 실패 구조로 판단", "경쟁자·인사 변수·묘유충을 핵심 원인으로 봄", "후보 순위·결과는 추가 확인 필요"]
+    validated: ["경쟁자 출현", "심사 변수", "업무 변화", "관성·인성 동시 흔들림"]
+    follow_up: ["실제 후보·최종 결과 기록", "경쟁자 존재·평가 차이 확인"]
+  core_conclusion: "경쟁자 등장과 관성·인성 동시 흔들림으로 승진 지원이 분산되는 구조였다."

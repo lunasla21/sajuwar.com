@@ -7,7 +7,7 @@ metadata:
   title: "갑오년(甲午年): 사업의 어려움"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "갑오년"
   sewoon_ganji: "甲午年"
@@ -71,3 +71,21 @@ brain:
     - "보조 신호: 합"
     - "보조 신호: 충"
     - "보조 신호: 극"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "신해시(辛亥時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event: {year: "갑오년(甲午年)", summary: "사업 자금 흐름 악화와 갑오·을미년 매출 감소·부채 증가, 병신년까지 이어질 부담을 상담"}
+  judgment:
+    conclusion: "강한 화토에 비해 신금 재성·해수 관성이 약하고 갑을목 인성이 재물과 충돌한다. 갑오·을미년은 확장보다 현금 방어·비용 축소가 우선이며 병신년에도 사람·운영비·경쟁으로 실속이 분산될 수 있다."
+    distinctive_point: "인성 문서를 좋은 계약으로 단정하지 않고 계약이 재물과 충돌해 자금을 묶는지 본다."
+  evidence: ["약한 신금 재성: 사업 자금 방어력 취약", "갑·을목 인성: 계약 증가가 재성과 충돌하면 자금 묶임", "갑오년 오화: 재물·현금 급속 소진", "을미년 미토: 화토 부담과 자금 압박 장기화", "병신년 병신합: 비겁·재성 연결로 재물 분산"]
+  counseling:
+    recommended: ["현금 최우선", "고정비 절감", "신규 계약 수익성 검토", "외상·미수금 축소", "부채 관리", "손실 품목 정리"]
+    avoid: ["신규 대출로 규모 유지", "적자를 매출 증가로 해결", "무리한 시설투자", "나쁜 지급 조건 계약", "병신년까지 공격 확장"]
+    timing: ["갑오년: 큰 자금난", "을미년: 압박 지속", "병신년: 재물이 비겁과 연결돼 실속 감소"]
+  result:
+    actual: ["원문은 갑오·을미년을 큰 고비로 판단", "매출 하락·부채 증가 가능성", "병신년까지 부담 지속", "구체 수치는 추가 필요"]
+    validated: ["자금 취약", "갑오·을미년 압박", "현금 보존", "신규 계약 경계", "병신년 부담"]
+    follow_up: ["연도별 매출·부채 확보", "축소·폐업·회복 장기 추적"]
+  core_conclusion: "새 계약과 확장보다 현금 보존·비용 축소로 생존 기간을 늘리는 것이 우선이었다."
