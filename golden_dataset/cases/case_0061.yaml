@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 인사발령"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -74,3 +74,13 @@ brain:
     - "보조 신호: 세운 지지"
     - "보조 신호: 형"
     - "보조 신호: 丁酉"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "병인시(丙寅時)"}
+  actual_event: {year: "정유년(丁酉年)", summary: "조직 내부 인사발령 후 업무량·책임 증가와 가정생활 영향 상담"}
+  judgment: {conclusion: "정화 인성·자유파가 발령 문서와 자리 이동을 만들고 유유자형이 이동 뒤 과중 업무를 키운다. 퇴사·승진보다 내부 부서·근무지 변경이 핵심이다.", distinctive_point: "인사운을 승진과 구분하고 이동 이후 업무 부담까지 판단한다."}
+  evidence: ["정화 인성: 인사문서", "자유파: 기존 직장환경 연결 변동", "갑목 관성: 조직 결정 현실화", "유유자형: 반복 스트레스·과중 책임"]
+  counseling: {recommended: ["발령을 경력 기회로 활용", "업무분장·우선순위 명확화", "상사와 업무량 조율", "가정·직장 균형과 부부 소통"], avoid: ["업무 전부 혼자 떠맡기", "발령을 무조건 불이익으로 보기", "직장 스트레스를 가정에 전가"], timing: ["정유년: 인사발령·업무 증가"]}
+  result: {actual: ["원문은 핵심 사건을 인사발령으로 판단", "실제 발령일·부서는 추가 확인"], validated: ["내부 이동", "업무 증가", "생활관계 영향"], follow_up: ["배우자 취업이 관계를 자동 개선한다고 단정 금지", "실제 업무량·인사결과 기록"]}
+  core_conclusion: "정유년은 퇴사보다 조직 내부 이동이며 늘어난 업무 관리가 핵심이었다."

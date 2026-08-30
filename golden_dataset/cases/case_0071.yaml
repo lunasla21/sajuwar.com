@@ -7,7 +7,7 @@ metadata:
   title: "계사년(癸巳年): 가게 폐업했다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "계사년"
   sewoon_ganji: "癸巳年"
@@ -71,3 +71,13 @@ brain:
     - "보조 신호: 세운 지지"
     - "보조 신호: 합"
     - "보조 신호: 충"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "신해시(辛亥時)"}
+  actual_event: {year: "계사년(癸巳年)", summary: "기존 가게 폐업과 다른 가게 이전·자영업 지속 여부 상담"}
+  judgment: {conclusion: "무계합과 사해충으로 현재 가게 인연이 끝나고 갑오·을미년에도 자영업 부담이 이어져 단순 이전보다 급여생활로 업종·근무형태를 바꾸는 편이 유리하다.", distinctive_point: "현재 가게 문제와 자영업 전체 흐름을 구분한다."}
+  evidence: ["무계합: 직업 관계 변화", "사해충: 가게 자리 인연 종료", "갑오년 오오자형: 새 가게에서도 운영 부담 반복"]
+  counseling: {recommended: ["폐업 후 급여생활 검토", "새 가게 계약 지연", "처분 조건 명확화", "추가 운영손실 억제"], avoid: ["폐업 직후 새 가게", "회복 위해 규모 확대", "계약 기대만으로 추가비용"], timing: ["계사년 무오·기미·임술·계해월: 처분 계약 후보"]}
+  result: {actual: ["사례 제목상 계사년 폐업", "여러 월을 계약 후보로 제시", "실제 월 미확인"], validated: ["폐업", "업종·근무형태 전환 권고", "다음 해 연속 분석"], follow_up: ["실제 계약월 확인"]}
+  core_conclusion: "자리만 바꾸기보다 자영업을 정리하고 안정적 급여생활로 전환하는 방향이 핵심이었다."

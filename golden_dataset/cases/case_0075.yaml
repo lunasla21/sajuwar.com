@@ -7,7 +7,7 @@ metadata:
   title: "계사년(癸巳年): 우울증"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "계사년"
   sewoon_ganji: "癸巳年"
@@ -72,3 +72,13 @@ brain:
     - "보조 신호: 세운 지지"
     - "보조 신호: 합"
     - "보조 신호: 충"
+
+curated_case:
+  review_status: "human_curated_medical_safety"
+  subject: {gender: "남성", birth_time: "신유시(辛酉時)"}
+  actual_event: {year: "계사년(癸巳年)", summary: "휴학·군 입대라는 급격한 환경 변화 뒤 심한 심리적 어려움과 우울 증상"}
+  judgment: {conclusion: "무계합·사신형·사해충으로 학교·제도·생활환경과 리듬이 크게 변해 조직 적응 스트레스가 커진 사례다. 정신질환 진단은 사주가 아닌 실제 증상과 의료평가로만 한다.", distinctive_point: "명리는 스트레스 시기 참고에만 쓰고 우울증 진단·치료를 대체하지 않는다."}
+  evidence: ["무계합: 학교·제도 문서 변화", "사신형: 생활환경·조직 적응 부담", "사해충: 내면 안정·생활리듬 변화"]
+  counseling: {recommended: ["우울감·불면·무기력 지속 시 정신건강 전문가", "군·학교 상담체계", "수면·식사·리듬 관리", "가족·주변에 상태 알리기"], avoid: ["우울증을 운세로 설명", "치료를 햇빛·음악만으로 대체", "심한 증상을 혼자 버티기"], timing: ["계사년: 휴학·입대·환경 급변"]}
+  result: {actual: ["계사년 휴학·입대 기록", "이후 우울 증상 설명"], validated: ["환경 변화", "조직 적응 부담", "심리 스트레스"], follow_up: ["갑목 손상만으로 진단하는 해석 제외", "의료자료 없으면 진단·치료 여부 확정 금지"]}
+  core_conclusion: "명리는 심리 부담 시기의 참고 도구일 뿐 정신질환 진단 도구가 아니다."

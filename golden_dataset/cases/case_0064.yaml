@@ -7,7 +7,7 @@ metadata:
   title: "병신년(丙申年): 십 년의 고생 끝에 폐업했다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "병신년"
   sewoon_ganji: "丙申年"
@@ -72,3 +72,13 @@ brain:
     - "보조 신호: 월간"
     - "보조 신호: 연간"
     - "보조 신호: 합"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "무인시(戊寅時)"}
+  actual_event: {year: "무자년~병신년", summary: "무자년 사업 시작, 경인년 이후 장기 자금난, 갑오·을미년 금전·신용·관계 악화 뒤 병신년 폐업"}
+  judgment: {conclusion: "사업 시작·악화·분쟁·폐업을 10년 연속 세운으로 본다. 무계합으로 시작했으나 인신충과 갑경충·을경합·오묘파가 현금·신용·관계를 누적 손상해 병신년 최종 폐업으로 이어졌다.", distinctive_point: "폐업 직전 해가 아니라 사업 생애주기와 누적 원인을 추적한다."}
+  evidence: ["무계합: 사업 시작·문서", "인신충: 기반·재물 변동", "갑경충·을경합: 돈·사람 갈등", "오묘파: 재물·사회 문제", "병신년 인신충: 최종 정리"]
+  counseling: {recommended: ["손익분기점 조기 재검토", "사람·돈 문서화", "무리한 차입 회피", "폐업 뒤 재무 복구"], avoid: ["손실 만회 추가투자", "관계만 믿고 자금 이동", "신용 악화로 규모 유지"], timing: ["무자년: 시작", "경인년 이후: 난항", "갑오·을미년: 문제 심화", "병신년: 폐업"]}
+  result: {actual: ["약 10년 사업 뒤 병신년 폐업"], validated: ["장기 세운 연속성", "자금·관계 누적", "병신년 종료"], follow_up: ["연도별 매출·채무·분쟁자료 추가"]}
+  core_conclusion: "사업 종료는 한 해 흉운이 아니라 장기간 누적된 재물·신용·관계 문제의 마지막 사건이었다."

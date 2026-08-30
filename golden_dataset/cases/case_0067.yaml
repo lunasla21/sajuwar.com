@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 결혼했다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -71,3 +71,13 @@ brain:
     - "보조 신호: 甲午"
     - "보조 신호: 乙卯"
     - "보조 신호: 丙申"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "신묘시(辛卯時)"}
+  actual_event: {year: "병신년~정유년", summary: "병신년 남성 인연 형성 뒤 사례 제목상 정유년 결혼"}
+  judgment: {conclusion: "병화 관성이 새 인연을 현실화할 수 있으나 병신합은 기존 교제 여부에 따라 새 인연 또는 경쟁·관계 변화로 다르게 읽는다.", distinctive_point: "같은 합도 상담 당시 실제 연인이 있는지 먼저 확인하며 운만으로 사건을 고정하지 않는다."}
+  evidence: ["병화 관성: 배우자·연애 상대 등장", "병신합: 현실 관계 상태에 따라 새 인연 또는 기존 관계 변화"]
+  counseling: {recommended: ["상대 성격·가치관 확인", "결혼 전 생활·재정·가족계획 논의", "현실 관계 안정 우선"], avoid: ["합 하나로 배우자 확정", "경쟁자 사주 단정", "검증 없이 결혼 서두르기"], timing: ["병신년: 남성 인연 가능성", "정유년: 제목상 실제 결혼"]}
+  result: {actual: ["사례 제목상 정유년 결혼", "정유년 성립 과정은 원문에 생략"], validated: ["병신년 인연", "현재 관계별 합 해석", "결혼 연결"], follow_up: ["병신년 실제 만남 시작 여부", "정유년 혼인 근거 보강"]}
+  core_conclusion: "연애·결혼 운은 현재 교제 상태를 확인한 뒤 해석해야 한다."

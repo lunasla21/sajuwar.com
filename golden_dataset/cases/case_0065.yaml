@@ -7,7 +7,7 @@ metadata:
   title: "경인년(庚寅年): 사업 운영의 어려움"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "경인년"
   sewoon_ganji: "庚寅年"
@@ -71,3 +71,13 @@ brain:
     - "보조 신호: 월간"
     - "보조 신호: 연간"
     - "보조 신호: 세운 천간"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "정축시(丁丑時)"}
+  actual_event: {year: "경인년(庚寅年)", summary: "매출은 있으나 세금·이자·시설비로 외형 대비 현금이 남지 않는 사업 부담"}
+  judgment: {conclusion: "경금 비겁이 갑목 재성을 압박하고 인목 재성이 술토와 합해 화기로 바뀌어 매출이 세금·이자·유지비·책임으로 전환된다.", distinctive_point: "매출과 순이익·현금 잔존을 분리한다."}
+  evidence: ["경금의 갑목 극: 경쟁·비용으로 재물 손상", "정화의 경금 제어: 힘겹게 유지", "인술합: 재물이 고정비·책임·투자로 전환"]
+  counseling: {recommended: ["월별 손익 계산", "세금·이자 분리 관리", "시설투자 축소", "외형보다 수익성"], avoid: ["매출만 보고 확대", "차입으로 외형 유지", "고정비 방치"], timing: ["경인년: 매출 대비 비용·책임 증가"]}
+  result: {actual: ["원문은 외형보다 실속 부족으로 사업 난항 설명"], validated: ["매출·순익 분리", "세금·이자·운영비", "외형 확대 위험"], follow_up: ["실제 매출·비용 자료 확보"]}
+  core_conclusion: "사업운은 매출액이 아니라 실제 남는 현금으로 판단해야 한다."

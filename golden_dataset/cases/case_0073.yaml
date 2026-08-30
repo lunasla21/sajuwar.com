@@ -7,7 +7,7 @@ metadata:
   title: "계사년(癸巳年): 가게 운영의 난항과 계약 성사의 흐름"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "계사년"
   sewoon_ganji: "癸巳年"
@@ -72,3 +72,13 @@ brain:
     - "보조 신호: 월간"
     - "보조 신호: 연간"
     - "보조 신호: 세운 천간"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "병진시(丙辰時)"}
+  actual_event: {year: "계사년~갑오년", summary: "운영난에서 폐업 결심·매물 의뢰를 거쳐 갑오년 신미월 처분 계약 가능성 분석"}
+  judgment: {conclusion: "계사년 무계합·사신형이 운영·계약 기반을 흔들고 갑자·을축월 식상이 폐업 결심을, 갑오년 병인월이 처분 의뢰를, 신미월 병신합이 문서·대금 결합을 만든다. 오묘파로 가격 양보 가능성이 있다.", distinctive_point: "운영난, 폐업 결심, 매물 의뢰, 협상, 계약을 별도 단계로 읽는다."}
+  evidence: ["무계합: 가게 관계 변화", "사신형: 운영권·계약·자금압박", "갑을목 식상: 정리 실행", "병신합: 문서·처분대금 결합", "오묘파: 희망가 이하 가능성"]
+  counseling: {recommended: ["추가 손실 축소", "폐업·매각 분리 계획", "권리금 최저선", "계약금·잔금 확인"], avoid: ["희망가 고집", "계약 전 추가투자", "매물 의뢰와 성사 동일시"], timing: ["계사년 갑자·을축월: 폐업 결심", "갑오년 병인월: 처분 의뢰", "갑오년 신미월: 계약 가능성"]}
+  result: {actual: ["원문은 운영난이 갑오년 중반 계약으로 마무리되는 흐름 제시", "실제 월·가격 미확인"], validated: ["단계 구분", "계약·가격 분리", "월운 세분"], follow_up: ["실제 신미월 계약 확인"]}
+  core_conclusion: "사업 정리는 운영난부터 계약까지 여러 단계가 서로 다른 시기에 진행된다."

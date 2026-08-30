@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 세금 문제로 고민이 많다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -72,3 +72,13 @@ brain:
     - "보조 신호: 인성"
     - "보조 신호: 비겁"
     - "보조 신호: 일지"
+
+curated_case:
+  review_status: "human_curated_legal_tax_safety"
+  subject: {gender: "여성", birth_time: "신유시(辛酉時)"}
+  actual_event: {year: "계사년~정유년", summary: "계사년 병진월 부동산 매매 뒤 정유년 투자 관련 세금·정산 부담, 특히 정미월 고민"}
+  judgment: {conclusion: "계사년 무계합·사해충이 주거 관계를 움직이고 병진월 병신합이 매매대금·문서를 결합한다. 정유년 유유자형·묘유충은 과거 투자·거래의 세금·신고·정산 후속 부담으로 이어질 수 있다. 세법 판단은 실제 법령·세무자료가 우선이다.", distinctive_point: "매매 계약으로 사건을 끝내지 않고 세금·신고·정산까지 연속 사건으로 추적한다."}
+  evidence: ["무계합: 주거·계약 관계 변화", "사해충: 기존 집 인연 변화", "병신합: 대금·문서 결합과 계약", "유유자형: 문서·판단 반복 스트레스", "묘유충: 과거 거래 재검토·정산"]
+  counseling: {recommended: ["세무전문가 검토", "취득가·매도가·필요경비 증빙", "거래·자금 흐름 정리", "납부기한 확인", "예상세액 별도 확보"], avoid: ["세금을 운세로 판단", "신고기한 초과", "계약·비용증빙 폐기", "납부자금 재투자"], timing: ["계사년 병진월: 매매 계약 기록", "정유년 정미월: 세금·투자 부담 가능"]}
+  result: {actual: ["계사년 병진월 매매 계약 기록", "정유년 투자 세금 고민"], validated: ["매매 시기", "세금 후속 사건", "문서·정산 스트레스"], follow_up: ["실제 세목·세액·투자종류 확인", "세법은 법령·세무자료 기준"]}
+  core_conclusion: "부동산 사건은 계약 뒤 세금·신고·정산까지 추적해야 하며 법률·세무 판단은 현실 자료가 우선이다."

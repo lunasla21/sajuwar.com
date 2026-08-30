@@ -7,7 +7,7 @@ metadata:
   title: "계사년(癸巳年): 중2 학생, 사춘기가 심하다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "계사년"
   sewoon_ganji: "癸巳年"
@@ -73,3 +73,13 @@ brain:
     - "보조 신호: 세운 지지"
     - "보조 신호: 합"
     - "보조 신호: 충"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "계묘시(癸卯時)", life_stage: "중학교 2학년"}
+  actual_event: {year: "계사년(癸巳年)", summary: "사춘기 반항·부모교사 통제 거부·친구 선호·학업 집중 저하"}
+  judgment: {conclusion: "계수 비겁이 자율성·자기주장을 키우고 기토 관성과 긴장해 반항이 커질 수 있다. 실제 행동은 발달·가정·학교환경 영향이 크므로 사주로 문제행동을 확정하지 않는다.", distinctive_point: "사춘기를 성격 결함이 아니라 자율성 욕구와 통제의 충돌로 본다."}
+  evidence: ["계수 비겁: 자아·독립심", "기토 관성 긴장: 부모·교사 지시 거부", "갑오년 갑기합: 공부 의지 일부 회복 가능", "오오자형·오묘파: 노력 대비 성과 답답함"]
+  counseling: {recommended: ["명령보다 선택지", "짧은 공부 단위", "친구·수면 확인", "성적보다 생활리듬", "지속 정서변화 시 전문상담"], avoid: ["행동을 전부 운 탓", "장시간 강압학습", "지속 비교", "반항을 인격 문제로 규정"], timing: ["계사년: 자율성·반항 증가", "갑오년: 의지는 생겨도 성과 지연 가능"]}
+  result: {actual: ["원문은 중2 사춘기·집중 저하를 핵심 현상으로 설명"], validated: ["자기주장", "부모·교사 갈등", "집중 저하", "다음 해 회복 지연"], follow_up: ["실제 성적·학교생활 추가", "발달·환경 병행"]}
+  core_conclusion: "비겁 강화는 단순 고집이 아니라 자율성 요구일 수 있어 구조화된 선택권이 현실적 대응이다."

@@ -7,7 +7,7 @@ metadata:
   title: "경오년(庚午年): 미혼, 결혼이 늦어진다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "경오년"
   sewoon_ganji: "庚午年"
@@ -67,3 +67,13 @@ brain:
     - "결론 방식: 감정의 재결합보다 반복될 생활 압박이 더 크다"
     - "보조 신호: 생"
     - "보조 신호: 庚午"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "병진시(丙辰時)"}
+  actual_event: {year: "경오년(庚午年)", summary: "미혼 상태에서 늦어지는 결혼과 높은 배우자 선택 기준 상담"}
+  judgment: {conclusion: "관성은 강하게 존재하지만 술미형으로 서로 충돌해 인연 부족보다 선택·검증·관계 정착이 복잡해질 수 있다. 정서적으로 편안한 상대가 중요하다.", distinctive_point: "관성의 많음이 빠른 결혼을 보장하지 않으며 관성 간 관계를 본다."}
+  evidence: ["술미형: 배우자 판단·관계 복잡", "강한 관성: 남성 인연 존재", "약한 계수 환경: 정서적 안정감 중요"]
+  counseling: {recommended: ["관계 안정·의사소통 우선", "조건표보다 실제 편안함", "충분한 교제"], avoid: ["늦었다고 서두르기", "상대 과도 평가·시험", "사주로 배우자 수준 단정"], timing: ["경오년: 결혼보다 선택 기준 점검"]}
+  result: {actual: ["실제 결혼 여부 미기록"], validated: ["관성 존재와 속도 분리", "술미형의 정착 난항"], follow_up: ["지적 능력·배우자 수준 단정 금지"]}
+  core_conclusion: "배우자 기운이 많아도 서로 형하면 선택과 정착 과정이 길어질 수 있다."

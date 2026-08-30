@@ -7,7 +7,7 @@ metadata:
   title: "경오년(庚午年): 미혼, 결혼이 늦어진다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "경오년"
   sewoon_ganji: "庚午年"
@@ -73,3 +73,13 @@ brain:
     - "보조 신호: 충"
     - "보조 신호: 생"
     - "보조 신호: 庚午"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "임자시(壬子時)"}
+  actual_event: {year: "경오년(庚午年)", summary: "미혼 상태에서 결혼 지연과 직장·사업 적성 상담"}
+  judgment: {conclusion: "축미충으로 배우자 관계 정착이 늦을 수 있으나 인연 부재는 아니다. 뿌리 약한 갑을목 식상은 활동 대비 재물 축적을 불안하게 해 큰 사업보다 급여생활 기반이 현실적이다.", distinctive_point: "특정 가족 배경의 상대를 운명으로 고정하지 않고 현재 책임감·생활 안정성을 본다."}
+  evidence: ["축미충: 배우자 관계 정착 지연", "미토 속 정화: 간접적 배우자 인연 가능", "뿌리 약한 갑을목: 활동 대비 재물 축적 불안"]
+  counseling: {recommended: ["상대 책임감·경제생활 확인", "직장 안정 유지", "사업은 소규모 부업 검증", "결혼 서두르지 않기"], avoid: ["특정 조건 상대를 필수로 믿기", "스트레스성 충동 창업", "배우자 건강 사주 예언"], timing: ["경오년: 결혼·직업 방향 점검"]}
+  result: {actual: ["실제 결혼·직업 변화 미기록"], validated: ["축미충의 관계 지연", "사업보다 안정 직장 권고"], follow_up: ["배우자 건강·자녀 여부 운명 연결 금지"]}
+  core_conclusion: "배우자 조건은 고정하지 말고 실제 책임감과 생활 안정성을 우선해야 한다."

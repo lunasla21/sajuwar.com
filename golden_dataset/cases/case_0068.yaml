@@ -7,7 +7,7 @@ metadata:
   title: "경오년(庚午年): 미혼, 결혼이 늦어진다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "경오년"
   sewoon_ganji: "庚午年"
@@ -74,3 +74,13 @@ brain:
     - "보조 신호: 형"
     - "보조 신호: 극"
     - "보조 신호: 생"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "임진시(壬辰時)"}
+  actual_event: {year: "경오년(庚午年)", summary: "미혼 상태에서 늦어지는 결혼과 배우자 조건·사회활동 상담"}
+  judgment: {conclusion: "일지 사화 관성이 해수와 충해 관계 타이밍·정착이 흔들릴 수 있으나 인연 부재는 아니다. 결혼 뒤에도 임수 식상의 사회활동이 관계·생활 균형에 도움이 될 수 있다.", distinctive_point: "늦은 결혼을 배우자복 부족이 아니라 배우자 자리 안정에 시간이 필요한 구조로 본다."}
+  evidence: ["사해충: 관계 엇갈림·변화", "강한 화기: 감정·관계 피로", "임수 식상: 사회활동·자기표현의 균형 역할"]
+  counseling: {recommended: ["성실·안정 직업 상대", "결혼 후 직업·사회활동 유지", "감정보다 생활 궁합"], avoid: ["늦었다고 성급 결정", "경제력·책임감 미확인", "운세로 배우자 직업 단정"], timing: ["경오년: 시기보다 조건·안정성 검토"]}
+  result: {actual: ["실제 결혼 결과 미기록"], validated: ["배우자 자리 충", "관계 안정 우선", "사회활동 중요"], follow_up: ["남편 경제력을 사주로 단정 금지"]}
+  core_conclusion: "결혼 지연은 인연 부재보다 관계를 안정적으로 정착시키는 시간이 필요한 문제다."

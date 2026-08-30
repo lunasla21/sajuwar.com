@@ -7,7 +7,7 @@ metadata:
   title: "갑오년(甲午年): 사무실 이전하면 사업이 번창한다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "갑오년"
   sewoon_ganji: "甲午年"
@@ -71,3 +71,13 @@ brain:
     - "보조 신호: 세운 천간"
     - "보조 신호: 합"
     - "보조 신호: 극"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "기묘시(己卯時)"}
+  actual_event: {year: "갑오년(甲午年)", summary: "기존 사무실 유지·이전과 사업 확장을 상담"}
+  judgment: {conclusion: "갑목 재성이 정화를 생하고 정임합·갑기합이 기술·조직·문서·재물을 연결하지만 오묘파로 기존 환경을 깨는 실제 이전이 필요하다고 본다. 이전은 자동 매출 보장이 아니라 비용·입지 검증이 전제다.", distinctive_point: "파를 단순 파괴가 아닌 이전·재배치로 현실 사용하되 환경 변화 효과를 실적 검증 대상으로 둔다."}
+  evidence: ["갑목 재성: 수익 기회", "정임합: 기술·조직 결합", "갑기합: 돈·계약 연결", "오묘파: 기존 환경 변경 필요"]
+  counseling: {recommended: ["후보지 비용·접근성 비교", "고객 동선", "임대조건 확인", "이전비 대비 예상수익"], avoid: ["운만 믿고 고가 이전", "과도한 이전비", "상권·접근성 무시"], timing: ["갑오년: 이전·사업 구조 변화 검토"]}
+  result: {actual: ["원문은 이전을 개선책으로 제시", "실제 이전·매출은 미확인"], validated: ["공간 변화", "재물·문서·사업 연결", "이전과 사업 변화"], follow_up: ["이전 후 매출로 효과 검증"]}
+  core_conclusion: "환경이 좋은 흐름을 받지 못할 때 이전을 현실적 변화로 활용하되 사업성 검증이 먼저다."

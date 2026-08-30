@@ -7,7 +7,7 @@ metadata:
   title: "을미년(乙未年): 이혼"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "을미년"
   sewoon_ganji: "乙未年"
@@ -74,3 +74,13 @@ brain:
     - "보조 신호: 연간"
     - "보조 신호: 세운 지지"
     - "보조 신호: 합"
+
+curated_case:
+  review_status: "human_curated_safety_revised"
+  subject: {gender: "부부", birth_time: "남편 임인시(壬寅時), 부인 기축시(己丑時)"}
+  actual_event: {year: "을미년~병신년", summary: "부인의 강한 이혼 요구와 남편의 위협적 언행 우려 속 관계 정리 시간차 상담"}
+  judgment: {conclusion: "부인 사주의 을미년 축미충이 먼저 배우자 자리를 흔들고, 남편 사주의 병신년 인신충이 뒤이어 관계 단절을 현실화해 양쪽 시간표가 다를 수 있다. 실제 폭력 위험은 사주가 아닌 행동·위험징후로 판단한다.", distinctive_point: "이혼은 부부 양쪽 운의 시차를 비교하되 안전 판단은 명리보다 현실 위험평가를 최우선한다."}
+  evidence: ["부인 축미충: 배우자 자리·가정 변동", "남편 병신년 인신충: 뒤이은 배우자 자리 변화", "시간차: 한쪽 요구 후 다른 쪽 수용 가능성"]
+  counseling: {recommended: ["이혼·재산·주거·자녀 분리 준비", "위협 언행 기록", "폭력 위험 시 안전계획·경찰·법률·상담기관 우선", "법률 기준 확인", "회복 가능성은 실제 행동으로 평가"], avoid: ["사주만 믿고 위협 경시", "폭력 부재 단정", "외도·재혼 결정론", "위험 상황 단독 대면"], timing: ["을미년: 부인 단절 욕구", "병신년: 남편 측 관계 변화 수용 가능성"]}
+  result: {actual: ["원문은 을미년 요구·병신년 정리 가능성을 제시", "실제 확정 시점 미확인"], validated: ["부부 양쪽 시간차", "배우자 자리 충", "요구·수용 시점 분리"], follow_up: ["폭력 부재를 단정한 원문 판단 제외", "실제 위험은 행동기록 우선"]}
+  core_conclusion: "관계 사건은 양쪽의 시간표가 다를 수 있지만 안전 문제에는 사주보다 현실 보호수단이 우선이다."

@@ -7,7 +7,7 @@ metadata:
   title: "갑오년(甲午年): 권고사직"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "갑오년"
   sewoon_ganji: "甲午年"
@@ -72,3 +72,13 @@ brain:
     - "보조 신호: 형"
     - "보조 신호: 생"
     - "보조 신호: 甲午"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "기유시(己酉時)"}
+  actual_event: {year: "갑오년(甲午年)", summary: "본인은 직장 유지를 원하지만 회사 결정에 가까운 권고사직과 을미년 재취업 지연 가능성 상담"}
+  judgment: {conclusion: "갑목 식상이 기토 관성과 합해 직장 관계를 움직이지만 신금 인성이 갑목을 제어해 본인 선택보다 회사 문서가 우위인 비자발적 퇴직 가능성이 높다.", distinctive_point: "퇴사 여부뿐 아니라 누가 관계를 먼저 끊는지 자발·비자발 형태를 구분한다."}
+  evidence: ["갑기합: 새 일과 현재 직장 관계 변화", "신금의 갑목 제어: 회사 문서 우위", "을미년 축미충: 재취업 지연 가능성"]
+  counseling: {recommended: ["권고사직 조건 서면 확인", "퇴직금·실업급여 확인", "선재취업 준비", "을미년까지 생활비"], avoid: ["회사 요구 즉시 서명", "자발퇴사와 권고사직 차이 미확인", "재취업 기간 과소예상"], timing: ["갑오년: 권고사직 가능성", "을미년: 새 직장 계약 지연"]}
+  result: {actual: ["원문은 갑오년 퇴사를 권고사직으로 판단", "실제 사유·재취업은 미확인"], validated: ["자발·비자발 구분", "다음 해 재취업 연결"], follow_up: ["실제 인사문서 확보"]}
+  core_conclusion: "퇴사운은 퇴직 자체와 함께 회사와 본인 중 누가 먼저 관계를 정리하는지 봐야 한다."

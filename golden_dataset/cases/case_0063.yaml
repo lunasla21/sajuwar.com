@@ -7,7 +7,7 @@ metadata:
   title: "계사년(癸巳年): 휴학"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "계사년"
   sewoon_ganji: "癸巳年"
@@ -73,3 +73,13 @@ brain:
     - "보조 신호: 월간"
     - "보조 신호: 연간"
     - "보조 신호: 세운 천간"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "신사시(辛巳時)"}
+  actual_event: {year: "계사년(癸巳年)", summary: "대학 휴학 후 동료와 합숙하는 연습생 생활, 경쟁·현실 난항 뒤 병신년 복학"}
+  judgment: {conclusion: "계수 식상이 정화 관성을 제어해 학교 제도에서 일시 이탈하고 새 훈련조직에 들어간다. 병신년 경쟁구조 재편은 연습생 생활을 정리하고 학업으로 돌아갈 계기가 된다.", distinctive_point: "휴학과 학업 포기를 구분해 진로 실험 뒤 복귀 가능성을 본다."}
+  evidence: ["계수 식상의 정화 제어: 학교 틀 이탈", "세운 사화: 새 훈련조직", "신금 비겁: 경쟁 환경", "병신합: 경쟁구조·진로 재편"]
+  counseling: {recommended: ["휴학 기간·목표 설정", "계약 조건 확인", "객관 평가", "복학 가능성 유지", "진로를 한 선택에 고정하지 않기"], avoid: ["학교 완전 단절", "평가 없이 장기 버티기", "경쟁 결과를 자기 가치로 동일시"], timing: ["계사년: 휴학·진로 실험", "갑오·을미년: 경쟁 부담", "병신년: 정리·복학 가능성"]}
+  result: {actual: ["계사년 휴학·연습생 시작", "병신년 중단·복학 기록"], validated: ["일시 휴학", "경쟁 환경 이동", "복학 재전환"], follow_up: ["실제 활동기간·복학시기 확인", "신금 하나로 예술소질·스타성 확정 금지"]}
+  core_conclusion: "휴학은 다른 가능성을 시험한 일시 이탈이며 학업 포기와 같지 않았다."

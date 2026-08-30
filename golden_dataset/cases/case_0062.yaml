@@ -7,7 +7,7 @@ metadata:
   title: "갑오년(甲午年): 재수하는 학생"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "갑오년"
   sewoon_ganji: "甲午年"
@@ -71,3 +71,13 @@ brain:
     - "보조 신호: 합"
     - "보조 신호: 충"
     - "보조 신호: 형"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "비공개", birth_time: "병술시(丙戌時)"}
+  actual_event: {year: "계사년~갑오년", summary: "목표 대학 불합격 뒤 하향 지원보다 재수를 선택해 갑오년 재도전 가능성을 상담"}
+  judgment: {conclusion: "계사년 계수 식상이 병화 관성과 충돌해 기대 결과가 약하지만 갑오년 갑목이 병화를 생해 재도전 조건은 개선된다. 오오자형의 심리 압박은 별도 관리해야 한다.", distinctive_point: "전년도 불합격 구조와 다음 해 시험 구조를 비교하고 합격과 대학생활 적응도 분리한다."}
+  evidence: ["계사년 계수 식상: 노력과 목표 충돌", "갑오년 갑목: 목표·소속 병화 보강", "병화 관성: 학교·소속", "오오자형: 자기압박", "을미년 오미합: 합격 뒤 적응 가능성"]
+  counseling: {recommended: ["목표와 현재 성적 차이 계산", "취약과목 집중", "모의고사 기반 전략 수정", "학생 의지와 성적 병행"], avoid: ["운만 믿고 상향 고집", "점수 분석 없는 재수", "실패를 자존심 문제로만 보기"], timing: ["계사년: 목표 진학 난항", "갑오년: 재도전 조건 개선", "을미년: 합격 시 적응 가능성"]}
+  result: {actual: ["원문은 갑오년 합격 가능성을 높게 판단", "실제 합격은 미확인"], validated: ["연도별 비교", "다음 세운 연결", "합격·적응 분리"], follow_up: ["실제 대학·결과 확보", "성적·경쟁률·지원전략 병행"]}
+  core_conclusion: "같은 실력도 시험 시기 구조가 달라 재도전의 가치가 달라질 수 있다."
