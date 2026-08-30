@@ -7,7 +7,7 @@ metadata:
   title: "병신년(丙申年): 동거남과 재물의 득실"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "병신년"
   sewoon_ganji: "丙申年"
@@ -74,3 +74,28 @@ brain:
     - "보조 신호: 일지"
     - "보조 신호: 월간"
     - "보조 신호: 연간"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "임신시(壬申時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "병신년(丙申年)"
+    summary: "이혼 뒤 새 남성과 동거를 시작하고 상대의 사업·투자 요구로 본인 돈과 대출금까지 제공하려 한 사례"
+  judgment:
+    conclusion: "새 남성 인연은 강하게 현실화되지만 관성 신금이 일지 재성 진토와 합해 사랑이 재물 유출로 이어질 가능성이 높다. 남자를 피하라는 뜻이 아니라 사랑과 돈을 분리해야 한다."
+    distinctive_point: "합을 무조건 좋은 인연·결혼으로 보지 않고 무엇과 무엇이 합하는지 본다. 이 사례의 관성-재성 합은 관계 결합과 자금 이동을 동시에 뜻한다."
+  evidence:
+    - "식상견관: 기존 결혼 관계의 갈등과 초혼 불안 가능성"
+    - "신진합(申辰合): 남자가 일간의 재물 영역과 직접 연결되어 돈이 움직임"
+    - "병신년 신금 중첩: 새 남성 인연과 동거가 빠르게 현실화"
+    - "합의 심리 작용: 객관적 판단보다 애정·기대가 앞서 상대를 놓기 어려움"
+    - "정유년 유금: 남자 문제와 재물 부담이 다음 해까지 이어질 가능성"
+  counseling:
+    recommended: ["본인 명의 자산 별도 관리", "생활비와 상대 사업 자금 분리", "대여 시 계약서 작성", "상대 사업 수익 구조 확인", "큰돈 요구에 즉답하지 않기"]
+    avoid: ["사랑을 이유로 무조건 돈 지급", "대출받아 상대에게 제공", "본인 명의 대여", "보증·공동채무", "미래 성공 가능성만 믿고 투자"]
+    timing: ["병신년: 새 남성 인연·동거 가능성", "정유년: 남자 관련 재정 문제 지속 가능성"]
+  result:
+    actual: ["병신년에 새 남성과 동거", "남성이 사업·자금 사유로 돈을 요구", "여성이 경제적으로 헌신하려는 성향", "재정 부담이 이후까지 이어짐"]
+    validated: ["새 남성 인연", "동거 시작", "남자로 인한 자금 이동", "돈을 주려는 심리적 집착", "정유년까지 재물 부담 가능성"]
+    follow_up: ["실제 제공액과 회수 여부 확보", "동거 종료 시점과 이후 재산 상태 추적"]
+  core_conclusion: "병신년은 연애운만 강한 해가 아니라 관성-재성 합으로 사랑과 재물 손실이 함께 움직인 해였으며, 핵심 조언은 철저한 재정 분리였다."

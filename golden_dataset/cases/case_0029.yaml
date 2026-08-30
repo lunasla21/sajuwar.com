@@ -7,7 +7,7 @@ metadata:
   title: "계사년(癸巳年): 사업체 폐업과 새로운 진로의 모색"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "계사년"
   sewoon_ganji: "癸巳年"
@@ -72,3 +72,28 @@ brain:
     - "보조 신호: 극"
     - "보조 신호: 생"
     - "보조 신호: 癸巳"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "정해시(丁亥時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "계사년(癸巳年)"
+    summary: "사업 매출·자금 회전 악화로 폐업·이전과 취업 등 새 진로, 실제 처분 계약 시기를 상담"
+  judgment:
+    conclusion: "원국은 식상이 발달한 사업형이지만 계사년에는 계수가 식상을 제어하고 사해충이 기존 사업 기반을 흔든다. 사업 능력의 부재가 아니라 현재 사업장의 수명이 다한 것이므로 정리 뒤 다음 기회를 준비해야 한다."
+    distinctive_point: "타고난 사업 적합성과 특정 시기의 사업 지속 가능성을 분리한다. 사업형 사주라도 현재 사업장을 계속 붙잡아야 하는 것은 아니다."
+  evidence:
+    - "병정화 식상: 아이디어·표현력과 자기 재능 기반 사업 능력"
+    - "계수의 화 기운 제어: 활동 위축, 매출·영업 흐름 정체"
+    - "사해충(巳亥沖): 사업장·생활 기반의 큰 변동과 기존 자리 유지 곤란"
+    - "사화 속 무토 재성 손상: 매출 감소와 자금 회전 악화"
+    - "임신월 정임합(丁壬合): 사업을 가져갈 상대와 문서 계약 성립 가능성"
+  counseling:
+    recommended: ["사업체 폐업·양도 검토", "임신월 계약 기회 활용", "추가 부채 억제", "정리 후 취업 등 새 진로 탐색", "충분한 준비 뒤 재창업"]
+    avoid: ["대출로 적자 보전", "기존 사업장 집착", "근거 없이 매출 회복을 기다리며 버티기", "폐업 직후 큰 재투자", "추가 신용 소진"]
+    timing: ["계사년: 사업 구조가 크게 흔들리는 시기", "임신월: 사업체 양도·처분 계약 가능성"]
+  result:
+    actual: ["계사년에 사업 지속 여부를 심각하게 고민", "매출·자금 회전 악화", "기존 가게 정리 방향으로 진행", "계사년 후반 처분 계약 가능성 확대"]
+    validated: ["사업 부진", "매출 감소", "자금 회전 악화", "기존 사업장 정리 필요", "임신월 계약 가능성", "새 진로 모색"]
+    follow_up: ["실제 계약일·계약 금액 확보", "이후 재취업·재창업 여부 추적"]
+  core_conclusion: "사업 능력을 포기하는 것이 아니라 수명이 다한 현재 사업을 정리하고 새 자리·진로를 준비하는 것이 핵심이었다."

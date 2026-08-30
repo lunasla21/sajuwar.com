@@ -7,7 +7,7 @@ metadata:
   title: "임진년(壬辰年): 회사를 퇴사한 이유"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "임진년"
   sewoon_ganji: "壬辰年"
@@ -71,3 +71,27 @@ brain:
     - "보조 신호: 충"
     - "보조 신호: 형"
     - "보조 신호: 생"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "병인시(丙寅時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "임진년(壬辰年)"
+    summary: "회사와 보상 체계에 대한 회의감이 커져 실제 기존 회사를 퇴사"
+  judgment:
+    conclusion: "임진년에는 진술충이 기존 재물·직업 기반과 술토 속 관성을 발동시켜 조직과의 인연을 움직였다. 퇴사는 단순 감정이 아니라 직업 환경의 실제 변동으로 해석한다."
+    distinctive_point: "충을 단순 파괴나 흉으로 보지 않고 잠자던 기운을 움직이는 발동으로 보며, 무엇이 움직여 현실에서 어디로 연결되는지 판단한다."
+  evidence:
+    - "임수 중첩: 생각과 변화 욕구가 강해져 기존 환경에 머물기 어려움"
+    - "진술충(辰戌沖): 재물·생활 기반과 기존 보상 체계가 움직임"
+    - "술토 지장간 신금 관성의 발동: 조직·직장 변화와 근무처 인연 약화"
+    - "강한 수기: 한곳의 정착보다 새 방향 탐색 성향 활성화"
+  counseling:
+    recommended: ["퇴사 전 다음 수입원 준비", "변화 원인 구체화", "새 분야 준비", "현금 확보", "변화를 실패로만 해석하지 않기"]
+    avoid: ["준비 없는 퇴사", "감정만으로 새 진로 결정", "퇴사 직후 큰 투자", "진술충을 단순 흉운으로만 해석"]
+    timing: ["임진년: 기존 직장과 재물 환경이 크게 움직이는 시기"]
+  result:
+    actual: ["임진년에 실제 퇴사", "기존 회사와 보상 체계에 대한 회의감 확대", "직업 환경 변화 현실화"]
+    validated: ["임진년 직업 변동", "기존 회사 인연 약화", "재물 구조 변화", "진술충의 이동성"]
+    follow_up: ["퇴사 후 실제 진로 확보", "퇴사 당시 연봉·보상 변화 기록"]
+  core_conclusion: "진술충은 손실만이 아니라 기존 직업·재물 틀을 깨고 새 방향으로 움직이게 한 발동이었다."

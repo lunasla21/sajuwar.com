@@ -7,7 +7,7 @@ metadata:
   title: "정유년(丁酉年): 승진했다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "정유년"
   sewoon_ganji: "丁酉年"
@@ -71,3 +71,29 @@ brain:
     - "보조 신호: 연간"
     - "보조 신호: 충"
     - "보조 신호: 형"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "을유시(乙酉時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "정유년(丁酉年)"
+    summary: "조직 내 경쟁·갈등 속 인사 변동이 발생하고 계묘월에 실제 승진"
+  judgment:
+    conclusion: "정유년은 단순 직장 불안이 아니라 조직 권력 구조가 재편되며 성과가 직책·보상으로 이어지는 해다. 천간 식상생재와 지지 관성 재편을 함께 보면 승진 방향이 우세하다."
+    distinctive_point: "유금 추가와 묘유충만 보고 해고를 단정하지 않고, 천간의 식상생재와 관성 내부 자형·재편을 함께 보아 유리한 인사 변화로 해석한다."
+  evidence:
+    - "정화 식상: 업무 능력과 성과가 드러나 상사에게 보임"
+    - "정화→무토 식상생재: 성과가 연봉·직책 보상으로 연결"
+    - "묘유충(卯酉沖): 평소 조직 내 긴장과 경쟁"
+    - "유유자형(酉酉自刑): 조직 내부 인사 이동과 권력 재편"
+    - "관성 강화: 직책·책임 증가와 지위 상승 가능성"
+    - "계묘월: 원국 묘목이 발동해 인사 결과가 현실화"
+  counseling:
+    recommended: ["업무 성과 수치화", "상사·경영진에게 기여도 명확히 제시", "인사이동을 기회로 보기", "갈등에 감정적으로 대응하지 않기", "승진 뒤 책임 증가 대비"]
+    avoid: ["조직 변화가 두려워 먼저 퇴사", "동료와 직접 충돌", "성과를 과도하게 숨김", "인사 변화에 소극적 대응"]
+    timing: ["정유년: 조직 인사 변화와 승진 가능성", "계묘월: 실제 승진이 현실화되는 핵심 시기"]
+  result:
+    actual: ["정유년에 조직 내부 인사 변동", "계묘월 실제 승진", "직책·책임 상승으로 현실화"]
+    validated: ["조직 개편", "인사 변화", "성과 인정", "승진 가능성", "계묘월 실제 승진"]
+    follow_up: ["연봉 상승률·직급 변화 기록", "승진 후 조직 갈등 변화 추적"]
+  core_conclusion: "충과 형이 손실로만 작동한 것이 아니라 식상생재와 관성 재편 속에서 더 높은 자리로 이동하는 통로가 되었다."

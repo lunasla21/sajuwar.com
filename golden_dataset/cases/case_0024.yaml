@@ -7,7 +7,7 @@ metadata:
   title: "갑오년(甲午年): 퇴사와 창업 욕구"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "갑오년"
   sewoon_ganji: "甲午年"
@@ -72,3 +72,28 @@ brain:
     - "보조 신호: 월간"
     - "보조 신호: 연간"
     - "보조 신호: 세운 지지"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "여성", birth_time: "경오시(庚午時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "갑오년(甲午年)"
+    summary: "직장 반발과 독립·창업 욕구가 급증하여 즉시 퇴사·창업 가능성을 상담"
+  judgment:
+    conclusion: "갑오년의 퇴사·창업 욕구는 사업 성공 신호가 아니라 조직 반발과 심리적 충동이 극대화된 흐름이다. 을미년의 재물 손상까지 보면 직장을 유지하며 준비만 해야 한다."
+    distinctive_point: "퇴사하고 싶은 운과 창업해서 돈 버는 운을 분리하고, 반드시 다음 해의 재물 지속 가능성까지 연결한다."
+  evidence:
+    - "갑경충(甲庚沖): 상사·조직과 충돌하고 퇴사 욕구가 강해짐"
+    - "갑목의 무토 극: 창업 자금 등 돈의 이동과 지출 증가"
+    - "오오자형(午午自刑): 심리 불안과 충동적 결정 가능성"
+    - "을미년 을목 비겁: 재성 침범으로 초기 비용·예상 밖 손실 가능성"
+    - "을경합(乙庚合): 사업·직장 구조가 타인과 얽혀 주도권이 약해질 수 있음"
+  counseling:
+    recommended: ["직장 유지", "창업 아이디어는 준비 단계로 제한", "시장 조사와 사업계획서 작성", "현금 축적", "운이 안정된 뒤 재검토"]
+    avoid: ["감정적 사표", "즉흥 창업", "대출 기반 과도한 투자", "갑오년 자신감만으로 사업 확대", "을미년 재물 흐름 무시"]
+    timing: ["갑오년: 퇴사·독립 욕구가 강해지는 시기", "을미년: 사업 자금과 운영 부담이 커질 수 있는 시기"]
+  result:
+    actual: ["갑오년에 직장 회의와 창업 욕구 급증", "상담은 즉시 퇴사·창업을 만류", "을미년까지 보면 직장 유지가 자산 보존에 유리"]
+    validated: ["강한 퇴사 욕구", "조직 갈등", "창업 충동", "을미년 자금 부담", "직장 유지 권고"]
+    follow_up: ["실제 창업 여부와 투자금 확인", "잔류와 퇴사 시나리오의 실제 소득 차이 추적"]
+  core_conclusion: "독립 욕구는 강했지만 실제 창업의 재물 구조는 불리했으므로 움직이기보다 버티는 선택이 중요했다."

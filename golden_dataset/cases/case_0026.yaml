@@ -7,7 +7,7 @@ metadata:
   title: "을미년(乙未年): 사업의 어려움"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "을미년"
   sewoon_ganji: "乙未年"
@@ -74,3 +74,28 @@ brain:
     - "보조 신호: 세운 천간"
     - "보조 신호: 세운 지지"
     - "보조 신호: 합"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "기사시(己巳時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "을미년(乙未年)"
+    summary: "사업 부진과 현금 흐름 악화로 가게를 정리할지 병신년까지 버틸지 상담"
+  judgment:
+    conclusion: "을미년은 확장하거나 억지로 버틸 해가 아니라 기존 사업을 정리할 시기다. 비겁의 재성 침범, 을경합, 술미형이 함께 작동해 다음 해까지 버티면 부담이 더 커질 수 있다."
+    distinctive_point: "미토가 재성이라는 이유로 재물운이라 단정하지 않고, 들어온 재성이 원국 재성과 형을 이루어 보존되는지 충돌하는지를 우선한다."
+  evidence:
+    - "을목 비겁: 경쟁·지출 증가와 돈이 타인에게 빠질 가능성"
+    - "을경합(乙庚合): 사업체와의 관계 변화, 주도권·안정성 약화"
+    - "을목의 기토 극: 현금 소진과 투자금 회수 곤란"
+    - "술미형(戌未刑): 재물 충돌로 수입보다 지출이 커지고 지속 여부 고민"
+    - "병신년 추가 충돌: 을미년에 정리하지 않으면 다음 해 부담 확대 가능성"
+  counseling:
+    recommended: ["사업 정리 구체화", "매출보다 현금 흐름 확인", "고정비·불필요 지출 절감", "가게 처분 가능성 확인", "정리 뒤 재정비 기간"]
+    avoid: ["적자를 대출로 메우며 버티기", "신규 투자 확대", "미련으로 가게 유지", "고위험 투자로 손실 만회", "병신년까지 무조건 버티기"]
+    timing: ["을미년: 가게 정리·사업 구조조정", "병신년: 계속 버틸 경우 더 큰 부담 가능성"]
+  result:
+    actual: ["을미년에 사업 부진과 자금 압박 확대", "가게 유지·정리를 심각하게 고민", "상담은 병신년 전 을미년 정리를 권고"]
+    validated: ["사업 부진", "현금 흐름 악화", "가게 정리 고민", "술미형 재물 부담", "병신년 전 정리 권고"]
+    follow_up: ["실제 폐업 시기와 최종 손익 확보", "업종·고정비 구조와 손실 규모 결합 분석"]
+  core_conclusion: "재성이 들어왔어도 비겁 침범·관성 합·술미형으로 보존되지 않으므로 낡은 사업을 정리해야 다음 기회를 만들 수 있었다."

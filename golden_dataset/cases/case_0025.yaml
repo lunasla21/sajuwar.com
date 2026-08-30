@@ -7,7 +7,7 @@ metadata:
   title: "경오년(庚午年): 미혼, 결혼이 늦어진다"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "경오년"
   sewoon_ganji: "庚午年"
@@ -66,3 +66,27 @@ brain:
     - "결론 방식: 감정의 재결합보다 반복될 생활 압박이 더 크다"
     - "보조 신호: 생"
     - "보조 신호: 庚午"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "기사시(己巳時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "경오년(庚午年)"
+    summary: "미혼 상태가 계속되고 이성 인연은 있으나 오래 유지되지 않아 결혼 지연 원인을 상담"
+  judgment:
+    conclusion: "배우자 인연이 없는 것이 아니라 강한 초기 끌림 뒤 상대 단점을 크게 보며 마음이 식는 신사합형의 반복 패턴 때문에 결혼이 늦어진다."
+    distinctive_point: "재성 유무만으로 배우자복을 판단하지 않고, 만남 이후 관계가 실제로 지속 가능한 구조인지 본다."
+  evidence:
+    - "시간 기토(己土) 재성: 여자 인연 자체는 존재"
+    - "신사합(申巳合): 초기의 강한 끌림과 빠른 연애 시작"
+    - "신사형(申巳刑): 가까워진 뒤 갈등·불만과 상대 단점의 확대"
+    - "합과 형의 동시 작용: 끌림과 실망이 반복되어 짧은 연애가 되기 쉬움"
+  counseling:
+    recommended: ["상대 장단점을 균형 있게 평가", "초기 감정만으로 판단하지 않기", "완벽한 상대보다 조정 가능한 관계를 보기", "충분한 교제 기간", "갈등 때 즉시 단절하지 않기"]
+    avoid: ["작은 단점으로 상대 평가절하", "감정이 식었다고 성급히 이별", "지나치게 높은 이상형 조건", "첫인상만으로 결혼 가능성 결정"]
+    timing: ["경오년: 미혼·결혼 문제와 본인의 연애 패턴을 점검하는 시기"]
+  result:
+    actual: ["경오년에도 미혼 상태 지속", "인연 부족보다 관계 유지 방식이 결혼 지연의 주요 원인으로 판단됨"]
+    validated: ["이성 인연 존재", "연애 초기 강한 끌림", "이후 단점 확대", "연애가 장기 결혼 관계로 이어지기 어려운 구조"]
+    follow_up: ["연애 횟수와 실제 이별 사유 확보", "실제 결혼 연도 추적과 배우자운 안정 시기 분석"]
+  core_conclusion: "결혼 지연의 원인은 배우자 인연의 부재가 아니라 끌림과 갈등이 함께 작동하는 관계 지속 구조였다."

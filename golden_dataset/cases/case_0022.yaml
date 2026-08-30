@@ -7,7 +7,7 @@ metadata:
   title: "계사년(癸巳年): 퇴사 고민과 진로"
   extraction:
     method: "PDF image render + Windows OCR + rule-based case segmentation"
-    status: "auto_extracted_needs_human_review"
+    status: "human_curated_from_verified_case_summary"
 pattern:
   sewoon_year: "계사년"
   sewoon_ganji: "癸巳年"
@@ -70,3 +70,28 @@ brain:
     - "보조 신호: 일지"
     - "보조 신호: 세운 천간"
     - "보조 신호: 세운 지지"
+
+curated_case:
+  review_status: "human_curated"
+  subject: {gender: "남성", birth_time: "무진시(戊辰時)", birth_date: "비공개", calendar: "비공개", region: "비공개"}
+  actual_event:
+    year: "계사년(癸巳年)"
+    summary: "을축월의 원치 않는 인사발령·업무 변경 이후 퇴사와 재취업을 고민"
+  judgment:
+    conclusion: "계사년 변화는 외부 이직보다 회사 내부의 보직 변화 성격이 강하다. 갑오년과 을미년의 구직·재물 불안을 고려하면 퇴사하지 않고 현 조직에서 버티는 편이 안전하다."
+    distinctive_point: "직장 변동을 곧바로 이직운으로 단정하지 않고, 내부 이동인지 외부 이동인지와 이동 뒤 경제적 지속 가능성을 분리해 판단한다."
+  evidence:
+    - "무계합(戊癸合): 봉급과 문서가 연결되어 인사발령·보직 변경 가능성"
+    - "계수의 병화 제어: 기존 업무 흐름에 제동, 다른 업무를 맡을 가능성"
+    - "갑오년 갑목의 재성 무토 극: 퇴사 시 수입원 약화와 경제 공백 장기화 가능성"
+    - "오오자형(午午自刑): 재취업 뒤에도 심리 불안·스트레스와 재퇴사 위험"
+    - "을미년 을목 비겁: 재성 침범이 반복되어 경제 불안이 이어질 수 있음"
+  counseling:
+    recommended: ["현 직장 유지", "새 부서 업무를 경험으로 축적", "재직 상태에서 이직 준비", "현금과 생활비 안정 관리"]
+    avoid: ["감정적 사표", "준비 없는 이직", "자존심으로 보직 변경 거부", "수입 대책 없는 장기 휴식", "갑오년·을미년 충동적 반복 이직"]
+    timing: ["계사년 을축월: 인사발령과 진로 고민 시작", "갑오년: 퇴사 시 경제 공백·재취업 스트레스", "을미년: 직업 불안이 이어질 가능성"]
+  result:
+    actual: ["계사년 인사이동으로 퇴사 고민이 강해짐", "상담은 퇴사보다 잔류를 권고", "후속 운을 고려하면 조직 유지가 경제적으로 더 안전했음"]
+    validated: ["인사발령", "퇴사 욕구", "갑오년 구직 부담", "을미년 직업 불안 가능성", "내부 잔류 권고"]
+    follow_up: ["실제 퇴사 여부와 근속 기간 추적", "발령 후 연봉·업무 만족도 변화 확인"]
+  core_conclusion: "변화가 보이더라도 반드시 회사를 떠나는 것은 아니며, 이 사례는 내부 인사이동을 받아들이는 것이 현실적으로 가장 안전했다."
