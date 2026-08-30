@@ -138,7 +138,8 @@ function buildAiBrainContext(rootDir, overrides, customerContext) {
     ...selectRelevantItems(masterRuleItems, queryText, 12),
   ];
   const selectedDecisionPriorities = selectRelevantItems(decisionPriorityItems, queryText, 8);
-  const selectedGolden = selectRelevantItems(goldenCases, queryText, 1)[0] || null;
+  const selectedGoldenCases = selectRelevantItems(goldenCases, queryText, 3);
+  const selectedGolden = selectedGoldenCases[0] || null;
   const selectedReviews = reviewItems.slice(-20);
 
   const goldenContent = selectedGolden?.item?.content || "";
@@ -157,13 +158,13 @@ function buildAiBrainContext(rootDir, overrides, customerContext) {
     master_rules: selectedMasterRules.map((entry) => entry.item),
     jjussam_method: selectedJjussamRules.map((entry) => entry.item),
     decision_priority: selectedDecisionPriorities.map((entry) => entry.item),
-    golden_dataset: selectedGolden
-      ? {
-          file: selectedGolden.item.file,
-          score: selectedGolden.score,
-          content: trimBlock(selectedGolden.item.content, 6000),
-        }
-      : null,
+    golden_dataset: selectedGoldenCases.length
+      ? selectedGoldenCases.map((entry) => ({
+          file: entry.item.file,
+          score: entry.score,
+          content: trimBlock(entry.item.content, 4500),
+        }))
+      : [],
     brain_dataset: trimBlock(brainDataset, 5000),
     consultation_strategy: trimBlock(consultationStrategy, 2500),
     action_strategy: trimBlock(actionStrategy, 2500),
@@ -204,7 +205,9 @@ function buildAiBrainContext(rootDir, overrides, customerContext) {
     JSON.stringify(sections.decision_priority, null, 2),
     "",
     "3. Golden Brain Case",
-    sections.golden_dataset ? JSON.stringify(sections.golden_dataset, null, 2) : "No golden case selected.",
+    sections.golden_dataset.length
+      ? JSON.stringify(sections.golden_dataset, null, 2)
+      : "No golden case selected.",
     "",
     "4. Consultation Strategy",
     sections.consultation_strategy || "No consultation_strategy field found in selected golden case.",

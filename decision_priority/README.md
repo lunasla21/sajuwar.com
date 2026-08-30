@@ -15,9 +15,10 @@ Master Rule끼리 충돌할 때 어떤 판단을 먼저 적용할지 정리한 S
 
 ## Counts
 
-- total_priorities: 86
-- temporal: 30
+- total_priorities: 94
+- temporal: 31
 - structural: 10
-- signal: 12
-- domain: 31
-- safety: 3
+- signal: 13
+- domain: 34
+- context: 1
+- safety: 5
