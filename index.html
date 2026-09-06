@@ -3707,6 +3707,7 @@
         line-height: 1.86;
       }
     }
+    .birth-time-modes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.birth-time-mode{min-height:44px;border:1px solid var(--line);border-radius:8px;color:#aaa;background:#16171b}.birth-time-mode.active{border-color:var(--red);color:#fff;background:rgba(255,76,47,.12)}.ganji-time-note{display:block;margin-top:8px;color:#888;font-size:11px}
   </style>
   <link rel="stylesheet" href="/assets/conversion.css" />
 </head>
@@ -3792,15 +3793,17 @@
           </label>
           <label>
             태어난 시간
-            <span class="time-row">
+            <span class="birth-time-modes">
+              <button class="birth-time-mode active" type="button" data-main-time-mode="clock">시·분 입력</button>
+              <button class="birth-time-mode" type="button" data-main-time-mode="ganji">간지 입력</button>
+              <button class="birth-time-mode" type="button" data-main-time-mode="unknown">불명</button>
+            </span>
+            <span class="time-row" id="mainClockTime">
               <select id="hour"></select>
               <select id="minute"></select>
             </span>
-            <span class="unknown-time-control">
-              <input id="timeUnknown" type="checkbox" />
-              <span>출생시간을 모릅니다</span>
-            </span>
-            <small class="unknown-time-note">모르는 경우 정오 기준으로 큰 흐름을 분석하며, 세부 타이밍 정확도는 낮아질 수 있습니다.</small>
+            <span id="mainGanjiTime" hidden><select id="mainGanji" style="width:100%"></select><small class="ganji-time-note" id="mainGanjiNote"></small></span>
+            <input id="timeUnknown" type="checkbox" hidden />
           </label>
           <label>
             출생 국가 / 지역
@@ -4744,6 +4747,12 @@
     const birthCountries = {KR:"대한민국",US:"미국",JP:"일본",CN:"중국",CA:"캐나다",AU:"호주",GB:"영국",SG:"싱가포르",VN:"베트남",TH:"태국",PH:"필리핀",OTHER:"기타 국가"};
     function setupBirthLocation(selectedCountry="KR",selectedRegion="서울") {const country=document.getElementById("birthCountry"),region=document.getElementById("birthRegion");country.innerHTML=Object.entries(birthCountries).map(([value,label])=>`<option value="${value}">${label}</option>`).join("");function refresh(){region.innerHTML=(birthRegions[country.value]||birthRegions.OTHER).map(label=>`<option value="${label}">${label}</option>`).join("");if([...region.options].some(option=>option.value===selectedRegion))region.value=selectedRegion}country.value=selectedCountry;country.addEventListener("change",()=>{selectedRegion="";refresh()});refresh()}
     setupBirthLocation();
+    const mainTimeBranches=["子시","丑시","寅시","卯시","辰시","巳시","午시","未시","申시","酉시","戌시","亥시"],mainCountryCorrection={KR:-30,JP:0,CN:-60,US:0,CA:0,AU:0,GB:0,SG:-65,VN:-10,TH:-18,PH:0,OTHER:0};
+    function mainClockText(minutes){const value=(minutes+1440)%1440;return `${pad(Math.floor(value/60))}:${pad(value%60)}`}
+    function renderMainGanjiTimes(){const correction=mainCountryCorrection[document.getElementById("birthCountry").value]??0,shift=-correction,select=document.getElementById("mainGanji");select.innerHTML=mainTimeBranches.map((label,index)=>{const start=(index*120-60+shift+1440)%1440,end=(start+120)%1440,center=(start+60)%1440;return `<option value="${mainClockText(center)}">${label} ${mainClockText(start)}~${mainClockText(end)}</option>`}).join("");document.getElementById("mainGanjiNote").textContent=`출생지 시각 보정 ${correction>0?"+":""}${correction}분 기준`}
+    function syncMainGanjiTime(){const [hourValue,minuteValue]=document.getElementById("mainGanji").value.split(":").map(Number),rounded=Math.round((hourValue*60+minuteValue)/30)*30%1440;document.getElementById("hour").value=pad(Math.floor(rounded/60));document.getElementById("minute").value=pad(rounded%60)}
+    document.getElementById("birthCountry").addEventListener("change",renderMainGanjiTimes);document.getElementById("mainGanji").addEventListener("change",syncMainGanjiTime);renderMainGanjiTimes();
+    document.querySelectorAll("[data-main-time-mode]").forEach(button=>button.addEventListener("click",()=>{document.querySelectorAll("[data-main-time-mode]").forEach(item=>item.classList.toggle("active",item===button));const mode=button.dataset.mainTimeMode;document.getElementById("mainClockTime").hidden=mode!=="clock";document.getElementById("mainGanjiTime").hidden=mode!=="ganji";document.getElementById("timeUnknown").checked=mode==="unknown";if(mode==="ganji")syncMainGanjiTime()}));
     initDeveloperPreviewMode();
     refreshPurchaseAccess().then(() => {
       if (accessParams.get("paid") !== "1") return;
