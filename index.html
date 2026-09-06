@@ -3803,6 +3803,13 @@
             <small class="unknown-time-note">모르는 경우 정오 기준으로 큰 흐름을 분석하며, 세부 타이밍 정확도는 낮아질 수 있습니다.</small>
           </label>
           <label>
+            출생 국가 / 지역
+            <span class="time-row">
+              <select id="birthCountry"></select>
+              <select id="birthRegion"></select>
+            </span>
+          </label>
+          <label>
             기준 / 성별
             <span class="time-row">
               <select id="calendarType">
@@ -4729,10 +4736,14 @@
       for (let m = 1; m <= 12; m++) month.innerHTML += `<option value="${pad(m)}">${m}월</option>`;
       for (let d = 1; d <= 31; d++) day.innerHTML += `<option value="${pad(d)}">${d}일</option>`;
       for (let h = 0; h <= 23; h++) hour.innerHTML += `<option value="${pad(h)}">${h}시</option>`;
-      for (let m = 0; m < 60; m += 5) minute.innerHTML += `<option value="${pad(m)}">${m}분</option>`;
+      for (let m = 0; m < 60; m += 30) minute.innerHTML += `<option value="${pad(m)}">${pad(m)}분</option>`;
     }
 
     fillOptions();
+    const birthRegions = {KR:["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"],US:["뉴욕","로스앤젤레스","시카고","휴스턴","시애틀","기타 지역"],JP:["도쿄","오사카","교토","후쿠오카","삿포로","기타 지역"],CN:["베이징","상하이","광저우","선전","칭다오","기타 지역"],CA:["토론토","밴쿠버","몬트리올","기타 지역"],AU:["시드니","멜버른","브리즈번","퍼스","기타 지역"],GB:["런던","맨체스터","기타 지역"],SG:["싱가포르"],VN:["하노이","호찌민","기타 지역"],TH:["방콕","기타 지역"],PH:["마닐라","세부","기타 지역"],OTHER:["직접 확인 필요"]};
+    const birthCountries = {KR:"대한민국",US:"미국",JP:"일본",CN:"중국",CA:"캐나다",AU:"호주",GB:"영국",SG:"싱가포르",VN:"베트남",TH:"태국",PH:"필리핀",OTHER:"기타 국가"};
+    function setupBirthLocation(selectedCountry="KR",selectedRegion="서울") {const country=document.getElementById("birthCountry"),region=document.getElementById("birthRegion");country.innerHTML=Object.entries(birthCountries).map(([value,label])=>`<option value="${value}">${label}</option>`).join("");function refresh(){region.innerHTML=(birthRegions[country.value]||birthRegions.OTHER).map(label=>`<option value="${label}">${label}</option>`).join("");if([...region.options].some(option=>option.value===selectedRegion))region.value=selectedRegion}country.value=selectedCountry;country.addEventListener("change",()=>{selectedRegion="";refresh()});refresh()}
+    setupBirthLocation();
     initDeveloperPreviewMode();
     refreshPurchaseAccess().then(() => {
       if (accessParams.get("paid") !== "1") return;
@@ -4768,6 +4779,7 @@
       document.getElementById("day").value = day;
       document.getElementById("calendarType").value = profile.calendarType || "solar";
       document.getElementById("gender").value = profile.gender;
+      setupBirthLocation(profile.birthCountry || "KR", profile.birthRegion || "서울");
       document.getElementById("timeUnknown").checked = Boolean(profile.timeUnknown);
       document.getElementById("hour").value = hour || "12";
       document.getElementById("minute").value = minute || "00";
@@ -6231,6 +6243,8 @@
       const hour = timeUnknown ? "12" : document.getElementById("hour").value;
       const minute = timeUnknown ? "0" : document.getElementById("minute").value;
       const gender = document.getElementById("gender").value;
+      const birthCountry = document.getElementById("birthCountry").value;
+      const birthRegion = document.getElementById("birthRegion").value;
       const result = document.getElementById("result");
 
       if (!name || !calendarType || !year || !month || !day || !hour || !minute || !gender) {
@@ -6244,6 +6258,8 @@
         birth: `${year}-${pad(month)}-${pad(day)}`,
         time: `${pad(hour)}:${pad(minute)}`,
         timeUnknown,
+        birthCountry,
+        birthRegion,
         gender,
         paidReport: Boolean(forcePaid && canViewPaidReport()),
         developerMode: Boolean(hasDeveloperAccess())
@@ -6765,6 +6781,8 @@
         birth: `${year}-${pad(month)}-${pad(day)}`,
         time: `${pad(hour)}:${pad(minute)}`,
         timeUnknown,
+        birthCountry,
+        birthRegion,
         gender,
       }));
 

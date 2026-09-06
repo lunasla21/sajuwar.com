@@ -927,7 +927,7 @@ ${sewoon.startInfo}
 
 async function handleAnalyze(req, res) {
   try {
-    const { name, birth, time, gender, calendarType, paidReport } = req.body;
+    const { name, birth, time, gender, calendarType, paidReport, birthCountry = "KR", birthRegion = "서울" } = req.body;
     const timeUnknown = req.body?.timeUnknown === true;
     const requestedProductId = String(req.body?.product_id || "premium_report");
     const reportProductIds = ["premium_report", "premium_ai_report", "master_intelligence_report"];
@@ -1001,6 +1001,7 @@ async function handleAnalyze(req, res) {
         hiddenSummary,
         daewoon,
         sewoon,
+        birthLocation: `${birthCountry} ${birthRegion}`,
       }
     );
     const goldenDatasetGuidance = buildGoldenDatasetGuidance({
@@ -1061,6 +1062,7 @@ async function handleAnalyze(req, res) {
                   `이름: ${name}`,
                   `성별: ${genderLabel}`,
                   `달력: ${calendarLabel}`,
+                  `출생지: ${birthCountry} ${birthRegion}`,
                   `원국: 년주 ${pillars.year}, 월주 ${pillars.month}, 일주 ${pillars.day}, 시주 ${pillars.hour}`,
                   hiddenSummary,
                   "",
@@ -1110,6 +1112,8 @@ async function handleAnalyze(req, res) {
         dailyLuck,
         calendarType: safeCalendar,
         timeUnknown,
+        birthCountry,
+        birthRegion,
         analysisEvidence: freeAnalysisEvidence,
       });
     }
