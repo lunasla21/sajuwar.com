@@ -163,7 +163,7 @@
     <section class="section dark" id="ranking">
       <div class="section-head"><div><h2>지금 가장 많이 선택한 작전</h2><p>SAJU WAR 실시간 인기 분석</p></div><a class="more open-catalog" href="#" data-category="전체">전체보기 →</a></div>
       <div class="rank-list">
-        <a class="rank-card paid-analysis" href="#" data-product="master"><div class="rank-img img-command" data-rank="1"></div><div class="rank-content"><small>MASTER REPORT</small><h3>내 인생의 전장 지도</h3><p>무기·타이밍·재물·관계를 한 번에</p><div class="price">39,800원</div></div></a>
+        <a class="rank-card paid-analysis" href="#" data-product="master"><div class="rank-img img-command" data-rank="1"></div><div class="rank-content"><small>MASTER INTELLIGENCE REPORT</small><h3>인생 전장 마스터북</h3><p>원국·10년 대운·기회와 위험을 한 번에</p><div class="price">99,000원</div></div></a>
         <a class="rank-card paid-analysis" href="#" data-product="weapon"><div class="rank-img img-item" data-rank="2"></div><div class="rank-content"><small>WEAPON REPORT</small><h3>내 사주의 히든 아이템</h3><p>지장간에 숨은 보조 능력 분석</p><div class="price">9,900원</div></div></a>
         <a class="rank-card paid-analysis" href="#" data-product="relation"><div class="rank-img img-match" data-rank="3"></div><div class="rank-content"><small>RELATION REPORT</small><h3>두 사람의 동맹과 충돌</h3><p>관계의 강점과 반복되는 갈등 지도</p><div class="price">9,900원</div></div></a>
       </div>
@@ -277,10 +277,10 @@
         <div class="character-copy"><div class="character-role" id="characterRole">THE COMMANDER · ONLINE</div><h2 id="characterLine">당신의 전장을 지도로 만들겠습니다.</h2><p id="characterDesc">흩어진 신호를 모아 가장 중요한 선택과 타이밍을 지휘합니다.</p><div class="character-continue">ANALYSIS BRIEFING · LOADING</div></div>
       </div>
       <div class="product-detail">
-        <div class="product-badge" id="productBadge">MASTER REPORT</div>
-        <h2 id="productTitle">내 인생의 전장 지도</h2>
-        <p id="productDesc">흩어진 사주 정보를 하나의 전략 지도로 재구성합니다.</p>
-        <div class="product-price" id="productPrice">39,800원</div>
+        <div class="product-badge" id="productBadge">MASTER INTELLIGENCE REPORT</div>
+        <h2 id="productTitle">인생 전장 마스터북</h2>
+        <p id="productDesc">원국과 10년 대운을 연결해 기회와 위험, 장기 인생 전략을 통합합니다.</p>
+        <div class="product-price" id="productPrice">99,000원</div>
         <ul class="product-list" id="productList"></ul>
         <a class="product-pay" id="productPay" href="/reports.html">이 분석 해금하기 →</a>
       </div>
@@ -304,7 +304,7 @@
     const toast=document.getElementById("toast");document.querySelectorAll(".preview-action").forEach(el=>el.addEventListener("click",event=>{event.preventDefault();toast.classList.add("show");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>toast.classList.remove("show"),2200)}));
     document.querySelector(".notify").addEventListener("click",()=>{toast.textContent="새 작전 알림 3개가 있습니다.";toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2200)});
     const paidProducts={
-      master:{badge:"MASTER REPORT",title:"내 인생의 전장 지도",desc:"무기, 재물, 관계, 타이밍을 한 장의 장기 작전으로 통합합니다.",price:"39,800원",items:["사주 원국 정밀 분석","10년 대운·연도별 승부처","재물·직업·관계 통합 전략","위험 구간과 실행 우선순위"],product:"premium_report",character:"assets/character-commander-v1.png",role:"THE COMMANDER · ONLINE",line:"당신의 인생을 전장 지도로 만들겠습니다.",characterDesc:"흩어진 신호를 모아 가장 중요한 선택과 타이밍을 지휘합니다.",accent:"#d7b96c"},
+      master:{badge:"MASTER INTELLIGENCE REPORT",title:"인생 전장 마스터북",desc:"원국과 10년 대운을 연결해 기회와 위험, 장기 인생 전략을 통합합니다.",price:"99,000원",items:["사주 원국 정밀 분석","10년 대운 전략","기회·위험 예측","인생 로드맵"],product:"master_intelligence_report",character:"assets/character-commander-v1.png",role:"THE COMMANDER · ONLINE",line:"당신의 인생을 전장 지도로 만들겠습니다.",characterDesc:"흩어진 신호를 모아 가장 중요한 선택과 타이밍을 지휘합니다.",accent:"#d7b96c"},
       weapon:{badge:"WEAPON REPORT",title:"내 사주의 히든 아이템",desc:"지장간에 잠든 보조 능력과 실제로 꺼내 쓰는 조건을 분석합니다.",price:"9,900원",items:["핵심 무기와 보조 무기","숨은 재능의 발동 조건","약점이 강점으로 바뀌는 환경","이번 달 실전 행동 카드"],product:"premium_report",character:"assets/character-forgemaster-v1.png",role:"THE FORGEMASTER · ONLINE",line:"당신 안의 히든 아이템을 깨우겠습니다.",characterDesc:"지장간에 잠든 보조 능력과 발동 조건을 정밀하게 설계합니다.",accent:"#ff4c2f"},
       relation:{badge:"RELATION REPORT",title:"두 사람의 동맹과 충돌",desc:"서로 끌리는 이유와 반복되는 충돌 지점을 관계 전선으로 보여줍니다.",price:"9,900원",items:["두 사람의 원국 교차 분석","끌림·신뢰·갈등 지점","관계의 위험 시기","대화와 선택의 작전 가이드"],product:"compatibility_report",character:"assets/character-oracle-v1.png",role:"THE ORACLE · ONLINE",line:"두 사람 사이의 숨은 선을 읽겠습니다.",characterDesc:"끌림과 충돌이 반복되는 이유를 관계의 흐름으로 해석합니다.",accent:"#7965ff"},
       money:{badge:"MONEY INTELLIGENCE",title:"재물 전선 분석",desc:"돈이 들어오고 머무는 방식, 크게 움직여야 할 시기를 분석합니다.",price:"9,900원",items:["타고난 재물 획득 방식","수입이 커지는 조건","지출·투자 위험 구간","연도별 재물 작전"],product:"premium_report",character:"assets/character-commander-v1.png",role:"THE TREASURER · ONLINE",line:"재물의 흐름을 전선 위에 표시합니다.",characterDesc:"돈이 들어오고 머무는 조건과 크게 움직여야 할 시기를 찾아냅니다.",accent:"#d7b96c"},
