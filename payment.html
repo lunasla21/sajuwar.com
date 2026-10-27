@@ -158,10 +158,10 @@
       <div class="payment-copy"><small id="paymentRole">THE FORGEMASTER · PAYMENT LINK</small><h2 id="paymentBriefTitle">선택한 리포트를<br>해금합니다.</h2><p id="paymentBriefCopy">주문 정보를 확인한 뒤 입금 좌표를 연결하겠습니다.</p><div class="payment-step">REPORT SELECTED → ORDER → DEPOSIT CONFIRM</div></div>
     </section>
     <section class="panel" id="orderFormPanel">
-      <p>WEAPON TIMING REPORT</p>
-      <h1>내 무기가 강해지는 시기를 확인합니다</h1>
-      <p>원국과 현재 대운·세운을 연결해 Weapon이 돈·직업·관계 중 어디에서 발현되는지 확인하는 9,900원 리포트입니다.</p>
-      <div class="product-promise">
+      <p id="selectedProductBadge">WEAPON TIMING REPORT</p>
+      <h1 id="selectedProductTitle">내 무기가 강해지는 시기를 확인합니다</h1>
+      <p id="selectedProductCopy">원국과 현재 대운·세운을 연결해 나의 무기와 활용 시기를 확인합니다.</p>
+      <div class="product-promise" id="productPromise">
         <div><strong>HIDDEN ITEM</strong><span>지장간에 숨은 보조 능력</span></div>
         <div><strong>ACTIVATION</strong><span>현재·다음 세운의 활성화 시기</span></div>
         <div><strong>NEXT MOVE</strong><span>지금 실행할 행동 전략</span></div>
@@ -242,6 +242,17 @@
     };
     function updatePaymentCharacter(productId) {
       const item = paymentCharacters[productId] || paymentCharacters.premium_report;
+      const selected = products.find(product => product.id === productId);
+      document.getElementById("selectedProductBadge").textContent = selected?.name || "SAJU WAR REPORT";
+      document.getElementById("selectedProductTitle").textContent = item.title;
+      document.getElementById("selectedProductCopy").textContent = item.copy + (selected ? " · " + formatMoney(selected.amount) : "");
+      const promises = {
+        premium_report: [["HIDDEN ITEM", "지장간에 숨은 보조 능력"], ["ACTIVATION", "대운·세운의 활용 시기"], ["NEXT MOVE", "지금 실행할 행동 전략"]],
+        premium_ai_report: [["BATTLEFIELD", "나의 원국과 핵심 무기"], ["TIMING", "연간 흐름과 선택의 시기"], ["STRATEGY", "재물·직업·관계의 행동 전략"]],
+        master_intelligence_report: [["BATTLEFIELD MAP", "원국의 전장과 핵심 무기"], ["HIDDEN ITEM", "지장간 속 아이템과 활용 조건"], ["LONG-TERM STRATEGY", "대운·세운을 연결한 장기 전략"]],
+        compatibility_report: [["ALLIANCE", "두 사람의 강점"], ["FRONTLINE", "관계의 충돌과 소통"], ["NEXT MOVE", "함께 선택할 행동"]]
+      };
+      document.getElementById("productPromise").innerHTML = (promises[productId] || promises.premium_report).map(([title, copy]) => `<div><strong>${title}</strong><span>${copy}</span></div>`).join("");
       const image = document.getElementById("paymentCharacter");
       image.style.animation = "none";
       image.src = item.image;
