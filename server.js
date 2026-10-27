@@ -1161,6 +1161,7 @@ async function handleAnalyze(req, res) {
       if (paidReport && paidUser) {
         orderStore.saveReportCache({
           user_id: paidUser.id,
+          product_id: paidProductId,
           profile: { name, birth, time, gender, calendarType: safeCalendar },
           response,
         });
@@ -1198,6 +1199,7 @@ ${sewoon.startInfo}
 ${sewoon.list.map((s) => `${s.year}년 ${s.ganji}: 천간 ${s.stemElement}, 지지 ${s.branchElement} / ${s.theme}`).join("\n")}
 
 너는 "사주전쟁 SAJU WAR"의 프리미엄 리포트 작가다.
+상품 유형: ${paidProductId === "master_intelligence_report" ? "인생 전장 마스터북: 원국의 전장과 핵심·숨은 무기, 제공된 대운과 세운을 연결해 장기 전략과 시기별 선택지를 특히 깊이 분석한다. 실제 제공된 운의 범위만 사용하고 없는 월운이나 사건은 만들어내지 않는다." : "개인 맞춤 전략 리포트: 사주 근거를 전장, 무기, 숨은 아이템, 대운 스위치와 세운 타이밍으로 이해하기 쉽게 연결한다."}
 
 핵심 세계관:
 - 원국은 타고난 전장이다.
@@ -1278,7 +1280,7 @@ SAJUWAR 해석 원칙:
       "Use SAJUWAR style: saju evidence first, philosophical meaning second, realistic application third, caution fourth, action fifth.",
       "Avoid a wall of text by using clear paragraph rhythm inside each long chapter: core judgment, why it happens, how it appears in daily life, what the customer should do next, cautions, and one counselor-style closing line.",
       "Use more practical detail for work, money, relationships, health management, yearly timing, and immediate action. Do not add new product features; only improve the report content quality.",
-      "The final message must land like a decisive closing: name the year to start, the year by which the customer can secure the desired result, and the exact personal weapon/strength to use at that time.",
+      "The final message must land like a decisive closing: identify a relevant timing from the supplied data, explain uncertainty and the personal weapon/strength to use, and suggest a practical next action without guaranteeing outcomes.",
       "Output style must be counseling-first: why -> real-life manifestation -> next action in every chapter, at least three '맞아.' recognition sentences, restrained metaphor use, one counselor advice line per chapter, and a final practical action instruction.",
     ].join("\n");
 
@@ -1299,7 +1301,7 @@ SAJUWAR 해석 원칙:
           {
             role: "system",
             content:
-              "Authoritative generation order: Master Rule -> Decision Priority -> Golden Brain Case -> Consultation Strategy -> Action Strategy -> Language Style -> Evidence -> Review Dataset -> Customer Information. This order overrides any legacy priority text. Paid reports and Developer Mode previews must share this same AI Brain prompt context. Write in SAJUWAR saju-philosophy style, not generic self-help prose. Every numbered chapter must be at least 2000 Korean characters excluding spaces and must follow saju evidence -> philosophical meaning -> realistic manifestation -> next action -> cautions -> counselor closing line. Reduce repeated '입니다'. Prefer saju-grounded interpretation over random examples. Use 전장/군단/스위치/아이템 only 2-3 times total. Include at least three sentences that make the customer feel '맞아.' End each chapter with one counselor-style advice line. End the whole report with a concrete action instruction.",
+              "Authoritative generation order: Master Rule -> Decision Priority -> Golden Brain Case -> Consultation Strategy -> Action Strategy -> Language Style -> Evidence -> Review Dataset -> Customer Information. This order overrides any legacy priority text. Paid reports and Developer Mode previews must share this same AI Brain prompt context. Write in SAJUWAR saju-philosophy style, not generic self-help prose. Every numbered chapter must be at least 2000 Korean characters excluding spaces and must follow saju evidence -> philosophical meaning -> realistic manifestation -> next action -> cautions -> counselor closing line. Reduce repeated '입니다'. Prefer saju-grounded interpretation over random examples. Make the SAJU WAR worldview visible throughout: 원국은 전장, 지장간은 숨은 아이템, 대운은 스위치, 세운은 실행 타이밍. Use these as clear recurring interpretive anchors, naturally and without repetitive jargon. Explain the actual saju evidence and personal meaning behind each metaphor. Include at least three sentences that make the customer feel '맞아.' End each chapter with one counselor-style advice line. End the whole report with a concrete action instruction.",
           },
           ...(privateRulesGuidance ? [{ role: "system", content: privateRulesGuidance }] : []),
           ...(reconstructedReadingGuidance ? [{ role: "system", content: reconstructedReadingGuidance }] : []),
