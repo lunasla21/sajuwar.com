@@ -30,7 +30,7 @@ const PRODUCTS = {
     id: "master_intelligence_report",
     name: "MASTER INTELLIGENCE REPORT",
     type: "report",
-    amount: 99000,
+    amount: 9900,
     accessUrl: "/report-view.html?product=master_intelligence_report",
   },
   compatibility_report: {

@@ -21,3 +21,6 @@ Validation: Node syntax checks, isolated local HTTP checks, mocked provider call
 
 ## Login reference refinement
 2026-11-08: User repeated the four-provider reference. Login layout now uses full-width stacked yellow/green/white rows, selected report card above providers, and an email form disclosed on demand. No simulated social sign-in; unavailable providers remain visibly marked. No change to authentication or pricing logic in this refinement.
+
+## Masterbook price update
+2026-11-08: User explicitly set 인생 전장 마스터북 to 9,900 KRW. Update catalog and all purchase surfaces consistently; existing orders retain their recorded amount. This pricing-only change does not alter report content or the eight-document principles reviewed above.
