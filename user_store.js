@@ -87,7 +87,7 @@ function createUserStore(baseDir) {
   function login({ email, password }) {
     const safeEmail = normalizeEmail(email);
     const users = readUsers();
-    const index = users.findIndex((user) => user.email === safeEmail);
+    const index = users.findIndex((user) => user.email === safeEmail && user.password_hash);
     if (index === -1) {
       const error = new Error("이메일 또는 비밀번호가 올바르지 않습니다.");
       error.status = 401;
@@ -109,6 +109,22 @@ function createUserStore(baseDir) {
     };
     writeUsers(users);
     return { user: publicUser(users[index]), token };
+  }
+
+  function socialLogin({ provider, subject, name, email }) {
+    if (!["kakao", "naver", "google"].includes(provider) || !subject) throw new Error("Invalid social identity");
+    const users = readUsers();
+    let user = users.find(item => item.social_provider === provider && item.social_subject === String(subject));
+    if (!user) {
+      user = { id: `USER_${Date.now()}_${crypto.randomBytes(4).toString("hex")}`,
+        name: String(name || "전략가").slice(0, 100), email: normalizeEmail(email), phone: "",
+        social_provider: provider, social_subject: String(subject), sessions: [], created_at: new Date().toISOString() };
+      users.push(user);
+    }
+    const token = makeToken();
+    user.sessions = [...(user.sessions || []), { token, created_at: new Date().toISOString() }];
+    writeUsers(users);
+    return { user: publicUser(user), token };
   }
 
   function findByToken(token) {
@@ -134,7 +150,7 @@ function createUserStore(baseDir) {
     return readUsers().map(publicUser);
   }
 
-  return { findByToken, listPublicUsers, login, logout, signup };
+  return { findByToken, listPublicUsers, login, logout, signup, socialLogin };
 }
 
 module.exports = { createUserStore };

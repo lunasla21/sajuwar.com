@@ -1,52 +1,13 @@
-<!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>로그인 | 쭈쌤의 사주 전쟁</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fff8e9; color: #2b1b12; font-family: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; }
-    main { width: min(460px, calc(100% - 32px)); padding: 26px; border: 1px solid rgba(113,80,44,.18); background: rgba(255,250,239,.9); box-shadow: 0 24px 80px rgba(126,82,35,.16); }
-    h1 { margin-top: 0; }
-    label { display: grid; gap: 7px; margin-top: 12px; font-weight: 900; color: #705642; }
-    input { min-height: 46px; border: 1px solid rgba(113,80,44,.22); padding: 0 12px; font: inherit; background: #fff; }
-    button, a { min-height: 46px; display: grid; place-items: center; width: 100%; margin-top: 14px; border: 0; color: #2b1b12; background: linear-gradient(135deg,#ffe6a3,#d99b2e); font: inherit; font-weight: 900; text-decoration: none; cursor: pointer; }
-    a { color: #6d4310; border: 1px solid rgba(137,91,31,.28); background: #fffaf0; }
-  </style>
-</head>
-<body>
-  <main>
-    <h1>로그인</h1>
-    <label>이메일<input id="email" type="email" autocomplete="email" /></label>
-    <label>비밀번호<input id="password" type="password" autocomplete="current-password" /></label>
-    <button type="button" onclick="login()">로그인</button>
-    <a id="signupLink" href="/signup.html">회원가입</a>
-  </main>
-  <script src="/site-core.js"></script>
-  <script>
-    const requestedReturn = new URLSearchParams(location.search).get("return") || "/mypage.html";
-    const safeReturn = requestedReturn.startsWith("/") && !requestedReturn.startsWith("//") ? requestedReturn : "/mypage.html";
-    document.getElementById("signupLink").href = `/signup.html?return=${encodeURIComponent(safeReturn)}`;
-
-    async function login() {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: document.getElementById("email").value.trim(),
-          password: document.getElementById("password").value,
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        alert(data.error || "로그인에 실패했습니다.");
-        return;
-      }
-      localStorage.setItem("sajuwar_auth_token", data.token);
-      localStorage.setItem("sajuwar_user", JSON.stringify(data.user));
-      location.href = safeReturn;
-    }
-  </script>
-</body>
-</html>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>로그인 | 쭈쌤의 사주전쟁</title><link rel="icon" href="/assets/sajuwar-mark.svg"><link rel="stylesheet" href="/commerce.css"><link rel="stylesheet" href="/login.css"></head><body class="login-page">
+<main class="commerce-shell"><header class="commerce-header"><a class="brand" href="/"><img src="/assets/sajuwar-mark.svg" alt="">쭈쌤의 사주전쟁</a><span class="login-heading">로그인</span></header><div class="commerce-body">
+<div class="login-intro" id="loginIntro"><p class="eyebrow">SAJU WAR</p><h1>내 작전실 시작하기</h1><p class="muted">구매한 리포트와 나의 전략을 한곳에서 확인하세요.</p></div>
+<div class="product-ticket" id="productTicket" hidden><img src="/assets/character-forgemaster-v1.png" alt="전장 분석 전략관"><div><small>● 이어서 볼 리포트</small><strong id="productName"></strong><span class="muted" id="productPrice"></span></div></div>
+<div class="form-message" id="message" role="status" aria-live="polite"></div>
+<div class="social-buttons">
+<button class="social kakao" data-provider="kakao" disabled><span class="symbol" aria-hidden="true">TALK</span>카카오로 시작하기<em>준비 중</em></button>
+<button class="social naver" data-provider="naver" disabled><span class="symbol" aria-hidden="true">N</span>네이버로 시작하기<em>준비 중</em></button>
+<button class="social google" data-provider="google" disabled><span class="symbol" aria-hidden="true">G</span>구글로 시작하기<em>준비 중</em></button>
+<button class="social" id="emailToggle" aria-expanded="false" aria-controls="emailPanel"><span class="symbol" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="2" y="5" width="28" height="22" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="m3 7 13 10L29 7" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg></span>이메일로 시작하기<span class="arrow" aria-hidden="true">→</span></button>
+</div>
+<form class="email-panel" id="emailPanel" hidden><label class="field">이메일<input id="email" type="email" autocomplete="email" required></label><label class="field">비밀번호<input id="password" type="password" autocomplete="current-password" required></label><button class="button" id="loginSubmit">이메일 로그인</button><a class="button secondary" id="signupLink" href="/signup.html">이메일 회원가입</a></form>
+<nav class="legal-links"><a href="/terms">이용약관</a><a href="/privacy">개인정보처리방침</a></nav></div><footer class="login-footer"><nav aria-label="바로가기"><a href="/">홈</a><a href="/reports.html">리포트</a><a href="/mypage.html">내 작전실</a></nav><p class="login-caption">쭈쌤의 사주전쟁 · 나의 무기를 발견하는 곳</p></footer></main><script src="/site-core.js"></script><script src="/login-client.js" defer></script></body></html>

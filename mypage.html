@@ -98,8 +98,9 @@
       }[char]));
     }
     function statusClass(status) { return status === "확인완료" ? "confirmed" : "waiting"; }
-    function paymentMethodLabel(method) { return method === "bank_transfer" ? "무통장입금" : method; }
+    function paymentMethodLabel(method) { return method === "bank_transfer" ? "무통장입금" : method === "toss" ? "카드·간편결제" : method; }
     function accessUrl(order) {
+      if (order.product_id === "compatibility_report") return "/index.html#compatibility-paid";
       if (order.product_type === "lecture") return `/lecture.html?token=${encodeURIComponent(authToken)}`;
       return `/report-view.html?product=${encodeURIComponent(order.product_id)}&token=${encodeURIComponent(authToken)}`;
     }

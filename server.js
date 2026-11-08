@@ -1,4 +1,4 @@
-﻿const express = require("express");
+const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
@@ -102,6 +102,7 @@ app.use((req, res, next) => {
   const requestPath = req.path.replace(/\\/g, "/");
   if (
     requestPath === "/review_dataset.jsonl" ||
+    requestPath.startsWith("/data/") ||
     requestPath.startsWith("/golden_dataset/") ||
     requestPath.startsWith("/master_rules/") ||
     requestPath.startsWith("/decision_priority/")
@@ -1521,6 +1522,9 @@ app.get("/api/auth/me", (req, res) => {
   res.json({ user });
 });
 
+require("./oauth_routes").registerOAuthRoutes(app, userStore);
+require("./payment_routes").registerPaymentRoutes(app, { orderStore, requireLogin });
+
 app.get("/api/products", (req, res) => {
   res.json({ products: Object.values(PRODUCTS), bankAccount });
 });
@@ -1529,12 +1533,16 @@ app.post("/api/orders/bank-transfer", (req, res) => {
   try {
     const user = requireLogin(req, res);
     if (!user) return;
+    if (!process.env.SAJUWAR_BANK_NAME || !process.env.SAJUWAR_BANK_ACCOUNT || !process.env.SAJUWAR_BANK_HOLDER) return res.status(503).json({ error: "무통장입금 준비 중입니다." });
+    if (req.body.terms_accepted !== true) return res.status(400).json({ error: "주문 내용과 이용약관을 확인해주세요." });
     const order = orderStore.createBankTransferOrder({
       ...req.body,
+      payment_method: "bank_transfer",
+      payment_mode: null,
       user_id: user.id,
       name: user.name,
-      email: user.email,
-      phone: user.phone,
+      email: user.email || String(req.body.email || "").trim(),
+      phone: user.phone || String(req.body.phone || "").trim(),
     });
     void notifyAdmin("order_created", {
       order_id: order.id,
@@ -1954,6 +1962,7 @@ app.post("/api/admin/orders/:id/confirm", (req, res) => {
     if (!requireAdmin(req, res)) return;
     const order = orderStore.findOrder(req.params.id);
     if (!order) return res.status(404).json({ error: "order not found" });
+    if (order.payment_method === "toss") return res.status(409).json({ error: "카드 주문은 PG 승인 확인으로만 처리할 수 있습니다." });
     res.json(orderStore.activatePurchase(order));
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message });
