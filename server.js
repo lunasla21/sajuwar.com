@@ -99,7 +99,9 @@ function sendPurchaseRequired(res) {
 }
 
 app.use((req, res, next) => {
-  const requestPath = req.path.replace(/\\/g, "/");
+  let requestPath;
+  try { requestPath = path.posix.normalize(decodeURIComponent(req.path).replace(/\\/g, "/").replace(/\/+/g, "/")); }
+  catch { return res.status(400).send("Invalid path"); }
   if (
     requestPath === "/review_dataset.jsonl" ||
     requestPath.startsWith("/data/") ||
@@ -1536,6 +1538,7 @@ app.get("/api/auth/me", (req, res) => {
   res.json({ user });
 });
 
+require("./birth_profile_store").registerBirthProfileRoutes(app, { baseDir: __dirname, requireLogin });
 require("./oauth_routes").registerOAuthRoutes(app, userStore);
 require("./payment_routes").registerPaymentRoutes(app, { orderStore, requireLogin });
 

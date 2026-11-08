@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#05060a">
+  <link rel="stylesheet" href="/birth-profiles.css">
   <title>나의 전략 리포트 | SAJU WAR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +27,8 @@
     <section class="state hidden" id="waiting"><div class="status-mark">⌛</div><p class="eyebrow">PAYMENT PENDING</p><h1>입금 확인을 기다리고 있습니다.</h1><p class="lead">관리자 확인이 완료되면 이 화면에서 리포트를 생성할 수 있습니다.</p><div class="actions"><a class="button" href="/mypage.html">주문 상태 확인하기</a><a class="button secondary" href="/support">문의하기</a></div></section>
     <section class="state hidden" id="profile">
       <p class="eyebrow" id="profileLevel">REPORT UNLOCKED</p><h1 id="profileTitle">리포트 생성 준비가 끝났습니다.</h1><p class="lead">한 사람의 생년월일에 연결됩니다. 아래 정보가 맞는지 확인해주세요.</p>
+      <div class="profile-picker" data-birth-profile-picker></div>
+      <p class="profile-select-note">새로 생성할 리포트의 사주를 선택하세요. 이미 생성한 리포트의 분석 대상은 변경되지 않습니다.</p>
       <div class="card">
         <div class="form">
           <div class="field"><label>이름</label><input class="input" id="name" autocomplete="name"></div>
@@ -60,6 +63,13 @@
     function fillProfile(){try{const saved=JSON.parse(localStorage.getItem("sajuwar_report_profile")||"{}");["name","birth","time","calendarType","gender"].forEach(key=>{if(saved[key])document.getElementById(key).value=saved[key]});document.getElementById("timeUnknown").checked=saved.timeUnknown===true;document.getElementById("time").disabled=saved.timeUnknown===true;savedBirthLocation={birthCountry:saved.birthCountry||"KR",birthRegion:saved.birthRegion||"서울"}}catch(error){}document.getElementById("profileLevel").textContent=products[productId].level;document.getElementById("profileTitle").textContent=products[productId].title+" 생성 준비가 끝났습니다."}
     let currentProfile={};
     let savedBirthLocation={birthCountry:"KR",birthRegion:"서울"};
+    document.addEventListener("sajuwar:birth-profile-selected", event => {
+      const profile = event.detail;
+      ["name","birth","time","calendarType","gender"].forEach(key => { document.getElementById(key).value = profile[key]; });
+      document.getElementById("timeUnknown").checked = profile.timeUnknown;
+      document.getElementById("time").disabled = profile.timeUnknown;
+      savedBirthLocation={birthCountry:profile.birthCountry,birthRegion:profile.birthRegion};
+    });
     document.getElementById("timeUnknown").addEventListener("change",event=>{document.getElementById("time").disabled=event.target.checked});
     function renderReport(data,profile){currentProfile=profile||{};document.getElementById("reportLevel").textContent=products[productId].level;document.getElementById("reportTitle").textContent=`${profile?.name||""}님의 ${products[productId].title}`;document.getElementById("metaName").textContent=profile?.name||"—";document.getElementById("metaBirth").textContent=profile?.calendarType==="lunar"?`${profile.birth} 음력 → ${data.pillars?.solarDate||"—"} 양력`:`${profile?.birth||"—"} 양력`;document.getElementById("metaTime").textContent=profile?.timeUnknown?"시간 미상":profile?.time||"—";document.getElementById("metaType").textContent=profile?.gender==="male"?"남성":"여성";document.getElementById("py").textContent=data.pillars?.year||"—";document.getElementById("pm").textContent=data.pillars?.month||"—";document.getElementById("pd").textContent=data.pillars?.day||"—";document.getElementById("ph").textContent=profile?.timeUnknown?"미상":data.pillars?.hour||"—";document.getElementById("reportBody").textContent=String(data.result||"").replace(/[#*]/g,"").trim();show("report")}
     async function initialize(){if(!authToken){location.href=`/login.html?return=${encodeURIComponent(`/report-view.html?product=${productId}`)}`;return}const check=await fetch(`/api/purchases/check?product_id=${encodeURIComponent(productId)}`,{headers:headers()});const access=await check.json();if(!access.active){show("waiting");clearTimeout(accessPoll);accessPoll=setTimeout(initialize,10000);return}clearTimeout(accessPoll);const cachedResponse=await fetch(`/api/my/report?product_id=${encodeURIComponent(productId)}`,{headers:headers()});if(cachedResponse.ok){const cached=await cachedResponse.json();renderReport(cached.response,cached.profile);return}fillProfile();show("profile")}
@@ -68,5 +78,6 @@
     initialize().catch(()=>show("waiting"));
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/birth-profile-picker.js" defer></script>
 </body>
 </html>

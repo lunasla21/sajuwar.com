@@ -19,6 +19,7 @@
   <meta name="twitter:title" content="사주전쟁관 | SAJU WAR">
   <meta name="twitter:description" content="내가 가진 무기와 가장 강해지는 시기를 한 장의 전략 지도로 확인하세요.">
   <meta name="twitter:image" content="https://www.sajuwar.com/assets/premium-battlefield-command.webp?v=20260729">
+  <link rel="stylesheet" href="/birth-profiles.css">
   <link rel="icon" type="image/svg+xml" href="/assets/sajuwar-mark.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -140,6 +141,7 @@
           <a class="menu-link" href="#relation"><span>관계전 분석</span><small>RELATION</small></a>
           <a class="menu-link paid-analysis" href="#" data-product="yearly"><span>2026 전선 보고서</span><small>YEARLY</small></a>
           <a class="menu-link" href="#free"><span>전투 유형 미리보기</span><small>FREE</small></a>
+          <a class="menu-link" href="/birth-profiles.html"><span>내 사주 보관함</span><small>PROFILES</small></a>
           <a class="menu-link" href="/reports.html"><span>작전 보관함</span><small>MY REPORTS</small></a>
         </nav>
         <div class="menu-sub"><a href="/terms">이용약관</a><a href="/privacy">개인정보처리방침</a><a href="/refund">환불정책</a><a href="/support">고객지원</a></div>
@@ -246,6 +248,7 @@
         <p class="eyebrow">FREE RECONNAISSANCE · 01</p>
         <h2>정찰 좌표를<br>입력하세요.</h2>
         <p class="recon-lead">입력한 생년월일시로 전투 유형과 핵심 무기의 첫 단서를 확인합니다.</p>
+        <div class="profile-picker" data-birth-profile-picker></div>
         <div class="recon-field"><label for="reconName">이름</label><input class="recon-input" id="reconName" placeholder="이름" autocomplete="name"></div>
         <div class="recon-field"><label>생년월일</label><div class="recon-grid"><select class="recon-input" id="reconYear"></select><select class="recon-input" id="reconMonth"></select><select class="recon-input" id="reconDay"></select></div></div>
         <div class="recon-field"><label>태어난 시간</label><div class="birth-time-modes"><button class="birth-time-mode active" type="button" data-time-mode="clock">시·분 입력</button><button class="birth-time-mode" type="button" data-time-mode="ganji">간지 입력</button><button class="birth-time-mode" type="button" data-time-mode="unknown">불명</button></div><div class="recon-grid two" id="reconClockTime"><select class="recon-input" id="reconHour"></select><select class="recon-input" id="reconMinute"></select></div><div id="reconGanjiTime" hidden><select class="recon-input" id="reconGanji"></select><p class="ganji-time-note" id="reconGanjiNote"></p></div><input id="reconTimeUnknown" type="checkbox" hidden></div>
@@ -264,7 +267,7 @@
         <div class="war-briefing"><img src="/assets/sajuwar-battlefield-v2.webp" alt="사주전쟁 전장 미리보기"><div class="war-briefing-copy"><small>YOUR BATTLE TYPE</small><h3 id="previewType">전투 유형 확인 중</h3><p id="previewWeapon"></p></div></div>
         <section class="war-card"><div class="war-card-code">FIRST CLUE</div><h3>내 무기의 첫 단서</h3><p id="previewSummary"></p><p id="previewBasis" style="font-size:11px;color:#9c9da3"></p></section>
         <section class="war-card"><h3>내 전장 전체는 어떻게 펼쳐질까?</h3><p>1,000원 사주에서 원국의 전장·강점과 취약점·숨은 무기·대운과 세운·실행 전략을 확인하세요.</p><p>무료 미리보기는 여기까지입니다. 전체 풀이는 구매 후 이용할 수 있어요.</p></section>
-        <div class="result-actions"><a href="/payment.html?product=premium_report">1,000원으로 내 전장 전체 열기 →</a><button id="reconAgain" type="button">다른 전투 유형 확인하기</button></div>
+        <div class="result-actions"><a href="/payment.html?product=premium_report">1,000원으로 내 전장 전체 열기 →</a><button id="reconAgain" type="button">다른 전투 유형 확인하기</button></div><p class="profile-save-hint"><a href="/birth-profiles.html?draft=1">이 사주 저장하기 →</a> · 로그인하면 다시 불러올 수 있어요.</p>
       </div>
     </div>
   </section>
@@ -347,7 +350,26 @@
     function syncGanjiTime(){const [hour,minute]=document.getElementById("reconGanji").value.split(":").map(Number);document.getElementById("reconHour").value=hour;document.getElementById("reconMinute").value=minute}
     document.getElementById("reconGanji").addEventListener("change",syncGanjiTime);
     document.querySelectorAll("[data-time-mode]").forEach(button=>button.addEventListener("click",()=>{document.querySelectorAll("[data-time-mode]").forEach(item=>item.classList.toggle("active",item===button));const mode=button.dataset.timeMode;document.getElementById("reconClockTime").hidden=mode!=="clock";document.getElementById("reconGanjiTime").hidden=mode!=="ganji";document.getElementById("reconTimeUnknown").checked=mode==="unknown";if(mode==="ganji")syncGanjiTime()}));
+    document.addEventListener("sajuwar:birth-profile-selected", event => {
+      const profile = event.detail;
+      document.getElementById("reconName").value = profile.name;
+      const [year, month, day] = profile.birth.split("-");
+      const yearSelect = document.getElementById("reconYear");
+      if (![...yearSelect.options].some(option => option.value === year)) yearSelect.add(new Option(year + "년", year));
+      yearSelect.value = year; document.getElementById("reconMonth").value = Number(month); document.getElementById("reconDay").value = Number(day);
+      document.getElementById("reconCountry").value = profile.birthCountry;
+      document.getElementById("reconCountry").dispatchEvent(new Event("change"));
+      const regionSelect = document.getElementById("reconRegion");
+      if (![...regionSelect.options].some(option => option.value === profile.birthRegion)) regionSelect.add(new Option(profile.birthRegion, profile.birthRegion));
+      regionSelect.value = profile.birthRegion;
+      document.querySelector('[data-recon-group="calendar"][data-value="' + profile.calendarType + '"]').click();
+      document.querySelector('[data-recon-group="gender"][data-value="' + profile.gender + '"]').click();
+      document.querySelector('[data-time-mode="' + (profile.timeUnknown ? "unknown" : "clock") + '"]').click();
+      const [hour, minute] = profile.time.split(":"); document.getElementById("reconHour").value = Number(hour); document.getElementById("reconMinute").value = Number(minute);
+      recon.classList.add("open"); document.body.style.overflow = "hidden"; showRecon("form");
+    });
     document.getElementById("reconStart").addEventListener("click",async()=>{const name=document.getElementById("reconName").value.trim();if(!name)return alert("이름을 입력해주세요.");if(!reconState.gender)return alert("성별을 선택해주세요.");const timeUnknown=document.getElementById("reconTimeUnknown").checked;showRecon("scan");let percent=0;const percentEl=document.getElementById("scanPercent"),statusEl=document.getElementById("scanStatus"),statuses=["천간 · 지지 좌표 연결 중","오행 세력 계산 중","나의 전투 유형 확인 중","전투 유형 미리보기 준비 중"];const timer=setInterval(()=>{percent=Math.min(93,percent+5);percentEl.textContent=percent+"%";statusEl.textContent=statuses[Math.min(3,Math.floor(percent/25))]},130);const payload={name,birth:`${document.getElementById("reconYear").value}-${pad(document.getElementById("reconMonth").value)}-${pad(document.getElementById("reconDay").value)}`,time:timeUnknown?"12:00":`${pad(document.getElementById("reconHour").value)}:${pad(document.getElementById("reconMinute").value)}`,timeUnknown,birthCountry:document.getElementById("reconCountry").value,birthRegion:document.getElementById("reconRegion").value,gender:reconState.gender,calendarType:reconState.calendar,paidReport:false};localStorage.setItem("sajuwar_report_profile",JSON.stringify(payload));try{const response=await fetch("/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});const data=await response.json();if(!response.ok)throw new Error(data.result||"분석에 실패했습니다.");clearInterval(timer);percentEl.textContent="100%";statusEl.textContent="정찰 완료";await new Promise(resolve=>setTimeout(resolve,350));document.getElementById("reportTitle").textContent=`${name}님의 전투 유형`;document.getElementById("previewType").textContent=data.preview?.type||"나의 전투 유형";document.getElementById("previewWeapon").textContent="핵심 무기 · "+(data.preview?.weapon||"");document.getElementById("previewSummary").textContent=data.preview?.summary||"";document.getElementById("previewBasis").textContent=data.preview?.basis||"";showRecon("result")}catch(error){clearInterval(timer);alert(error.message);showRecon("form")}});
   </script>
+<script src="/birth-profile-picker.js" defer></script>
 </body>
 </html>

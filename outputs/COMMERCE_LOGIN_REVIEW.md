@@ -32,3 +32,10 @@ Reviewed applicable principles from all eight documents previously listed: disco
 Conflict level: 0. User approved the exact free-preview + paid-full-reading split.
 Decision: return only bounded preview data for unauthenticated/unpaid analysis, generate the migrated full reading only after server-side purchase checks, preserve birth input across checkout, and retain the 9,900 KRW masterbook for deeper analysis.
 Validation: analysis endpoint/alias access checks, absence of full reading/timelines in public payloads, authorized entry generation and caching, unknown-time profile persistence, rejection of cross-product access and different-profile reuse; inline JavaScript syntax checks.
+
+## Saved birth profiles — 2026-11-08
+
+Feature: Account-owned birth profiles for self, spouse, partner, parent, child, friend or a custom relationship; create, edit, delete and select for previews or ungenerated reports.
+Eight-document review: Brand/Master retain weapon-discovery and strategy-room framing. Product Bible explicitly includes birth_profiles and family/partner profiles (onboarding backend and future expansion). AI Constitution/Knowledge/METHOD: stored relationship is a label, never a deterministic judgment or a new AI interpretation rule. Experience/Lore: a simple personal archive and clear input reuse, without currency, fear or paid advantage. Save requires login and uses per-user API authorization; other people's information is entered with their permission.
+Conflict level: 0. Decision: implement within existing account and single-instance persistence model. Saving/editing/deleting a profile does not modify a purchased report, its binding, or its permissions. No pricing change.
+Validation: CRUD, cross-user isolation, immutable ownership, date/time/custom-relation checks, unknown time, persistence, corrupted-store protection and login-required routes. Existing commerce and report-access checks continue to apply.

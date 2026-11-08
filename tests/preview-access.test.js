@@ -56,3 +56,17 @@ test('paid entry returns and stores the migrated reading, retains unknown-time p
   assert.equal((await analyze('/analyze', { ...profile, paidReport: true, product_id: 'master_intelligence_report' }, auth.token)).status, 403);
   assert.equal((await analyze('/analyze', { ...profile, birth: '1991-01-15', paidReport: true }, auth.token)).status, 403);
 });
+
+
+test('stored files cannot be read through static or encoded paths', async () => {
+  const dataDir = path.join(__dirname, '..', 'data');
+  const fileName = 'static-access-test-' + process.pid + '.json';
+  const file = path.join(dataDir, fileName);
+  fs.mkdirSync(dataDir, { recursive: true }); fs.writeFileSync(file, '{"test":"must remain private"}');
+  try {
+    for (const route of ['/data/' + fileName, '/%64ata/' + fileName, '/data%2F' + fileName, '//data//' + fileName]) {
+      const response = await fetch(origin + route);
+      assert.equal(response.status, 404, route);
+    }
+  } finally { fs.unlinkSync(file); try { fs.rmdirSync(dataDir); } catch {} }
+});
