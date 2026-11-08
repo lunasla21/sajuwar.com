@@ -24,3 +24,11 @@ Validation: Node syntax checks, isolated local HTTP checks, mocked provider call
 
 ## Masterbook price update
 2026-11-08: User explicitly set 인생 전장 마스터북 to 9,900 KRW. Update catalog and all purchase surfaces consistently; existing orders retain their recorded amount. This pricing-only change does not alter report content or the eight-document principles reviewed above.
+
+## Free preview and paid entry migration — 2026-11-08
+
+Feature: Keep a short free battle-type / weapon / interpretation preview; move the existing full free reading into the 1,000 KRW product.
+Reviewed applicable principles from all eight documents previously listed: discovery before upsell (Product/Experience), weapon and strategy language (Brand/Master/Lore), evidence and uncertain interpretation (Knowledge/AI Constitution/METHOD). The free type is explicitly a day-stem sample, not a complete-chart judgment. No fear or scarcity copy.
+Conflict level: 0. User approved the exact free-preview + paid-full-reading split.
+Decision: return only bounded preview data for unauthenticated/unpaid analysis, generate the migrated full reading only after server-side purchase checks, preserve birth input across checkout, and retain the 9,900 KRW masterbook for deeper analysis.
+Validation: analysis endpoint/alias access checks, absence of full reading/timelines in public payloads, authorized entry generation and caching, unknown-time profile persistence, rejection of cross-product access and different-profile reuse; inline JavaScript syntax checks.

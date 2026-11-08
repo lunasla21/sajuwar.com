@@ -3774,9 +3774,9 @@
     <section class="input-band" aria-label="사주 입력">
       <form class="panel birth-panel" id="sajuForm">
         <div class="free-analysis-heading">
-          <p class="eyebrow">FREE REPORT · 무료 분석</p>
+          <p class="eyebrow">FREE PREVIEW · 전투 유형</p>
           <h2>생년월일을 입력하고<br>내 사주의 무기를 분석하세요.</h2>
-          <p>무료 리포트를 먼저 확인한 뒤, 구매한 유료 리포트가 아래에 이어집니다.</p>
+          <p>무료로 전투 유형의 첫 단서를 확인하고, 1,000원 사주에서 전체 전장을 열어보세요.</p>
         </div>
         <div class="field-grid">
           <label>
@@ -3852,9 +3852,9 @@
             </div>
           </div>
           <div>
-            <p class="eyebrow">무료 리포트 안내</p>
-            <h2 class="section-title">입력하면 원국 풀이가 시작됩니다</h2>
-            <p class="small">월지의 계절, 일간의 강약, 오행 비율, 원국에서 충돌하는 기운을 먼저 정리합니다.</p>
+            <p class="eyebrow">전투 유형 미리보기 안내</p>
+            <h2 class="section-title">입력하면 나의 전투 유형을 확인합니다</h2>
+            <p class="small">전투 유형·핵심 무기 한 가지·짧은 해석을 확인합니다. 전체 풀이는 1,000원 사주에서 이어집니다.</p>
             <div class="guide-grid" style="margin-top:18px">
               <article class="guide-card">
                 <strong>1. 원국의 계절</strong>
@@ -5602,6 +5602,10 @@
     }
 
     function renderFreeReportSequence(name, data, includePaidPrompt = true) {
+      if (data.access_level === "preview") {
+        const sample = data.preview || {};
+        return `<section class="box weapon-reveal"><p class="eyebrow">FREE WEAPON PREVIEW</p><h2>${escapeHtml(name)}님의 전투 유형</h2><h3>${escapeHtml(sample.type || "")}</h3><p>핵심 무기 · ${escapeHtml(sample.weapon || "")}</p><p>${escapeHtml(sample.summary || "")}</p><p>${escapeHtml(sample.basis || "")}</p><a class="button" href="/payment.html?product=premium_report">1,000원으로 내 전장 전체 열기 →</a></section>`;
+      }
       const primaryWeapon = getPrimaryWeapon(data.pillars);
       const personalizedReport = cleanText(data.result);
       const reportContext = {
@@ -6354,7 +6358,7 @@
           loadReviewHistory();
         }
         document.getElementById("report").scrollIntoView({ behavior: "smooth", block: "start" });
-        showToast(forcePaid && canViewPaidReport() ? "전체 리포트가 열렸습니다." : "무료 원국 리포트가 열렸습니다.");
+        showToast(forcePaid && canViewPaidReport() ? "전체 리포트가 열렸습니다." : "전투 유형 미리보기가 열렸습니다.");
       } catch (error) {
         stopBattleLoading();
         if (error.name === "AbortError") {

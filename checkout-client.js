@@ -5,7 +5,7 @@
   const message = $('message');
   let products = [], user, config, order, bank;
   const descriptions = {
-    premium_report: ['원국의 전장과 핵심 무기', '지장간에 숨은 보조 능력과 활용 조건', '대운·세운의 흐름과 실행 전략'],
+    premium_report: ['원국의 전장·강점·취약점 분석', '지장간에 숨은 무기와 활용 조건', '대운·세운의 흐름과 실행 전략'],
     premium_ai_report: ['나의 원국과 핵심 무기', '연간 흐름과 월별 기회·주의 구간', '재물·직업·관계의 행동 전략'],
     master_intelligence_report: ['원국 정밀 분석과 숨은 아이템', '10년 대운과 장기 전장 지도', '중요한 선택과 타이밍 전략'],
     compatibility_report: ['두 사람의 강점과 관계 흐름', '반복되는 충돌과 소통 지점', '함께 선택할 행동 가이드'],

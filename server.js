@@ -952,7 +952,7 @@ async function handleAnalyze(req, res) {
         orderStore.ensureReportProfileAccess({
           user_id: user.id,
           product_id: paidProductId,
-          profile: { name, birth, time, gender, calendarType: safeCalendar },
+          profile: { name, birth, time, gender, calendarType: safeCalendar, timeUnknown, birthCountry, birthRegion },
         });
       } catch (error) {
         return res.status(error.status || 403).json({
@@ -977,13 +977,17 @@ async function handleAnalyze(req, res) {
       year: pillarsRaw.year,
       month: pillarsRaw.month,
       day: pillarsRaw.day,
-      hour: pillarsRaw.hour,
+      hour: timeUnknown ? "미상" : pillarsRaw.hour,
       solarDate: pillarsRaw.solarDate,
     };
 
     const calendarLabel = safeCalendar === "lunar" ? "음력" : "양력";
     const genderLabel = gender === "male" ? "남성" : "여성";
     const developerPreview = isDeveloperPreviewRequest(req);
+    if (!paidReport && !developerPreview) {
+      res.set("Cache-Control", "no-store");
+      return res.json(require("./preview_report").buildFreePreview({ name, pillars, timeUnknown, calendarType: safeCalendar }));
+    }
     const hiddenSummary = makeHiddenItemSummary(pillars);
     const freeAnalysisEvidence = buildFreeAnalysisEvidence(pillars, sewoon, timeUnknown);
     const aiBrainContext = buildAiBrainContext(
@@ -1032,17 +1036,17 @@ async function handleAnalyze(req, res) {
       },
     ];
 
-    if (!paidReport && !developerPreview) {
-      let freeReport = "";
+    if (paidReport && paidProductId === "premium_report") {
+      let entryReport = "";
       if (client) {
         try {
-          const freeCompletion = await createChatCompletionWithTimeout({
+          const entryCompletion = await createChatCompletionWithTimeout({
             model: "gpt-4.1-mini",
             messages: [
               {
                 role: "system",
                 content: [
-                  "너는 SAJUWAR의 무료 원국 정찰 리포트를 작성하는 명리 상담가다.",
+                  "너는 SAJUWAR의 1,000원 사주 전장 리포트를 작성하는 명리 상담가다.",
                   "각 고객의 실제 원국이 다르면 문장과 결론도 반드시 달라야 한다.",
                   "음양, 오행, 일간, 월지의 계절감, 천간·지지 관계, 지장간, 합·충·형, 대운, 현재 세운을 근거로 쓴다.",
                   "일반적인 성격 문장이나 누구에게나 맞는 위로 문장을 반복하지 않는다.",
@@ -1051,7 +1055,7 @@ async function handleAnalyze(req, res) {
                   "확정적 예언이나 공포 표현을 피하고 가능성·조건·현실 행동으로 설명한다.",
                   "서버 계산 검증표를 사실 기준으로 사용하고, 검증표에 없는 합·충·형·파·해나 십성을 추측하지 않는다.",
                   "출생시간 미상인 경우 시주를 해석하지 않고, 3주 분석의 한계를 첫머리에 한 번만 밝힌다.",
-                  "긴 설명을 억지로 줄이지 말고, 무료 범위에서도 독자가 자기 원국의 전쟁 구도를 이해할 수 있게 완결된 글을 쓴다.",
+                  "긴 설명을 억지로 줄이지 말고, 입문 리포트에서도 독자가 자기 원국의 전쟁 구도를 이해할 수 있게 완결된 글을 쓴다.",
                   "SAJU WAR의 세계관을 각 항목의 해석에 자연스럽게 녹인다. 원국은 전장, 일간은 전장의 주인공, 오행은 세력, 지장간은 숨겨진 아이템, 대운은 환경을 바꾸는 스위치, 세운은 행동의 타이밍으로 풀어라.",
                   "전쟁 단어만 나열하지 말고 실제 간지와 오행 근거가 어떤 전장과 무기, 현실의 선택으로 이어지는지 구체적으로 설명한다.",
                   "독자에게 직접 브리핑하듯 친근하고 생생하게 쓰되 공포, 승패 단정, 근거 없는 사건이나 과장된 예측은 피한다.",
@@ -1063,7 +1067,7 @@ async function handleAnalyze(req, res) {
                 content: [
                   aiBrainContext.prompt,
                   "",
-                  "[무료 정찰 대상]",
+                  "[사주 전장 분석 대상]",
                   `이름: ${name}`,
                   `성별: ${genderLabel}`,
                   `달력: ${calendarLabel}`,
@@ -1076,7 +1080,7 @@ async function handleAnalyze(req, res) {
                   `현재 세운: ${sewoon.startInfo}`,
                   "",
                   "[출력 형식]",
-                  `제목: ${name}님의 무료 사주 정찰 리포트`,
+                  `제목: ${name}님의 사주 전장 리포트`,
                   "1. 이 사주의 전쟁터 — 원국과 지장간을 펼쳐 판세를 요약",
                   "2. 월령과 일간 — 계절 속에서 일간이 실제로 살아 있는 방식",
                   "3. 오행전쟁의 주도권 — 강한 세력과 과다할 때의 문제",
@@ -1101,16 +1105,20 @@ async function handleAnalyze(req, res) {
             max_tokens: 5200,
             temperature: 0.52,
           });
-          freeReport = freeCompletion.choices?.[0]?.message?.content?.trim() || "";
+          entryReport = entryCompletion.choices?.[0]?.message?.content?.trim() || "";
         } catch (error) {
-          console.error("무료 개인화 리포트 생성 실패, 로컬 폴백 사용:", error);
+          console.error("입문 전장 리포트 생성 실패, 로컬 폴백 사용:", error);
         }
       }
-      if (!freeReport) {
-        freeReport = fallbackReport({ name, pillars, daewoon, sewoon });
+      if (!entryReport) {
+        entryReport = fallbackReport({ name, pillars, daewoon, sewoon });
       }
-      return res.json({
-        result: sanitizeCustomerFacingAttribution(freeReport),
+      const entryResponse = {
+        access_level: "paid",
+        product_id: "premium_report",
+        calculator_version: "manseryeok-2.0.0",
+        report_version: "entry-battlefield-v1",
+        result: sanitizeCustomerFacingAttribution(entryReport),
         pillars,
         daewoon,
         sewoon,
@@ -1120,7 +1128,13 @@ async function handleAnalyze(req, res) {
         birthCountry,
         birthRegion,
         analysisEvidence: freeAnalysisEvidence,
+      };
+      orderStore.saveReportCache({
+        user_id: paidUser.id, product_id: paidProductId,
+        profile: { name, birth, time, gender, calendarType: safeCalendar, timeUnknown, birthCountry, birthRegion },
+        response: entryResponse, ttl_ms: 10 * 365 * 24 * 60 * 60 * 1000,
       });
+      return res.json(entryResponse);
     }
 
     if (!client) {
@@ -1167,7 +1181,7 @@ async function handleAnalyze(req, res) {
         orderStore.saveReportCache({
           user_id: paidUser.id,
           product_id: paidProductId,
-          profile: { name, birth, time, gender, calendarType: safeCalendar },
+          profile: { name, birth, time, gender, calendarType: safeCalendar, timeUnknown, birthCountry, birthRegion },
           response,
         });
       }
@@ -1385,7 +1399,7 @@ SAJUWAR 해석 원칙:
       orderStore.saveReportCache({
         user_id: paidUser.id,
         product_id: paidProductId,
-        profile: { name, birth, time, gender, calendarType: safeCalendar },
+        profile: { name, birth, time, gender, calendarType: safeCalendar, timeUnknown, birthCountry, birthRegion },
         response,
         ttl_ms: 10 * 365 * 24 * 60 * 60 * 1000,
       });
@@ -1995,6 +2009,9 @@ app.post("/analyze", handleAnalyze);
 app.post("/api/saju", handleAnalyze);
 app.post("/api/manse", handleManse);
 
-app.listen(PORT, () => {
-  console.log(`사주전쟁 서버 실행 중: http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`사주전쟁 서버 실행 중: http://localhost:${PORT}`);
+  });
+}
+module.exports = { app };

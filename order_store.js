@@ -14,7 +14,7 @@ const PAYMENT_METHOD = {
 const PRODUCTS = {
   premium_report: {
     id: "premium_report",
-    name: "내 사주 전장 열기",
+    name: "1,000원 사주 · 내 사주 전장 열기",
     type: "report",
     amount: 1000,
     accessUrl: "/report-view.html?product=premium_report",
@@ -270,6 +270,9 @@ function createOrderStore(baseDir) {
       time: String(profile.time || "").trim(),
       gender: String(profile.gender || "").trim(),
       calendarType: String(profile.calendarType || "solar").trim(),
+      timeUnknown: profile.timeUnknown === true,
+      birthCountry: String(profile.birthCountry || "KR").trim(),
+      birthRegion: String(profile.birthRegion || "서울").trim(),
     };
   }
 
@@ -281,6 +284,9 @@ function createOrderStore(baseDir) {
       normalized.time,
       normalized.gender,
       normalized.calendarType,
+      normalized.timeUnknown ? "unknown" : "known",
+      normalized.birthCountry,
+      normalized.birthRegion,
     ].join("|");
   }
 
