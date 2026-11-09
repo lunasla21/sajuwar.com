@@ -5,7 +5,7 @@ window.SAJUWAR_SITE_CONFIG = {
   representativeName: "박현주",
   businessRegistrationNumber: "472-01-04135",
   ecommerceRegistrationNumber: "2026-인천미추홀-1249",
-  address: "인천 서구 발로24번길51",
+  address: "경기도 안양시 동안구 부림로113",
   contactEmail: "support@sajuwar.com",
   contactPhone: "010-8708-0544",
   privacyOfficerName: "개인정보 보호책임자",
